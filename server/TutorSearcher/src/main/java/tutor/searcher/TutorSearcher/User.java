@@ -23,21 +23,27 @@ public class User {
 	public int getUserId() {
 		return UserId;
 	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public String getEmail() {
 		return email;
 	}
+	
 	public Boolean getAccountType() {
 		return accountType;
 	}
+	
 	public List<TutorRequest> getPendingRequests() {
 		return pendingRequests;
 	}
+	
 	public List<TutorRequest> getAcceptedRequests() {
 		return acceptedRequests;
 	}
+	
 	public List<TutorRequest> getRejectedRequests() {
 		return rejectedRequests;
 	}
