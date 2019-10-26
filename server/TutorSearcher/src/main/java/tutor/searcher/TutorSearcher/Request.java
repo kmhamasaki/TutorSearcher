@@ -1,13 +1,17 @@
 package tutor.searcher.TutorSearcher;
 
-import java.util.Map;
+import java.io.Serializable;
+import java.util.HashMap;
 
-public class Request {
+public class Request implements Serializable {
+
+	private static final long serialVersionUID = 1;
+
 	private String requestType;
-	private Map<String,String> attributes;
+	private HashMap<String, String> attributes;
 	
 	
-	public Request(String requestType, Map<String, String> attributes) {
+	public Request(String requestType, HashMap<String, String> attributes) {
 		this.requestType = requestType;
 		this.attributes = attributes;
 	}
@@ -16,7 +20,7 @@ public class Request {
 		return requestType;
 	}
 
-	public Map<String,String> getAttributes() {
+	public HashMap<String, String> getAttributes() {
 		return attributes;
 	}
 	
