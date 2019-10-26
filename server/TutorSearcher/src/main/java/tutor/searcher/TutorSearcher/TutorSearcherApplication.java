@@ -8,7 +8,8 @@ public class TutorSearcherApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TutorSearcherApplication.class, args);
-		System.out.println("application running");
+		System.out.println("Application Running.");
 	}
+
 
 }
