@@ -55,7 +55,36 @@ public class Controller {
 		requestThread.sendResponse(request2);
 
 		requestThreadsSockets.remove(requestThread);
-
+		if(request.getRequestType() == "signup") {
+			
+			// return User object to send back
+			int userID = dbConnect.addUser(request.get("email"), request.get("passwordHash"), 
+					request.get("name"), request.get("accountType") == "tutor" ? true : false);
+			
+			// if not successful in adding it
+			if(userID == -1) {
+				// send error message to the frontend
+				return;
+			}
+			
+			// if tutor add classes, expecting classes as strings separated by spaces
+			if(request.get("accountType") == "tutor") {
+				String[] classes = request.get("classes").split(" "); 
+        for (String className : classes) {
+        	dbConnect.addTutorToClass(userID, className);
+        }
+			}
+		} else if (request.getRequestType() == "login") {
+			dbConnect.authenticate(request.get("email"), request.get("passwordHash"));
+		} else if (request.getRequestType() == "updateinfo") {
+			
+		} else if (request.getRequestType() == "search") {
+			
+		} else if (request.getRequestType() == "newrequest") {
+			
+		} else if (request.getRequestType() == "viewrequests") {
+			
+		}
 		return;
 	}
 
