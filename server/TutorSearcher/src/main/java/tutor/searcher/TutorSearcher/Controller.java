@@ -47,12 +47,8 @@ public class Controller {
 
 	void processRequest(Request request, RequestThread requestThread) {
 
-		HashMap<String, String> attributes = new HashMap<String, String>();
-		attributes.put("hello", "world");
-
-		Request request2 = new Request("sendBackFromServer!!!!", attributes);
-
-		requestThread.sendResponse(request2);
+		HashMap<String, String> respAttr = new HashMap<String, String>();
+		String respType = "";
 
 		requestThreadsSockets.remove(requestThread);
 		if(request.getRequestType() == "signup") {
@@ -63,19 +59,25 @@ public class Controller {
 			
 			// if not successful in adding it
 			if(userID == -1) {
-				// send error message to the frontend
-				return;
-			}
-			
-			// if tutor add classes, expecting classes as strings separated by spaces
-			if(request.get("accountType") == "tutor") {
-				String[] classes = request.get("classes").split(" "); 
-        for (String className : classes) {
-        	dbConnect.addTutorToClass(userID, className);
-        }
+				respType = "Error:emailexists";
+			} else {
+					respType = "Success";
+					respAttr.put("userID", Integer.toString(userID));
+					if(request.get("accountType") == "tutor") {
+					// if tutor add classes, expecting classes as strings separated by spaces
+					String[] classes = request.get("classes").split(" "); 
+	        for (String className : classes) {
+	        	dbConnect.addTutorToClass(userID, className);
+	        }
+				}
 			}
 		} else if (request.getRequestType() == "login") {
-			dbConnect.authenticate(request.get("email"), request.get("passwordHash"));
+			User user = dbConnect.authenticate(request.get("email"), request.get("passwordHash"));
+			if(user == null) {
+				respType = "Error:wrongemailpw";
+			} else {
+				
+			}
 		} else if (request.getRequestType() == "updateinfo") {
 			
 		} else if (request.getRequestType() == "search") {
@@ -85,6 +87,8 @@ public class Controller {
 		} else if (request.getRequestType() == "viewrequests") {
 			
 		}
+		requestThread.sendResponse(new Request(respType, respAttr));
+
 		return;
 	}
 
