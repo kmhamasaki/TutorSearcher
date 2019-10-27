@@ -1,16 +1,52 @@
 package tutor.searcher.TutorSearcher;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.stereotype.Component;
+
+@Component
 public class DBConnect {
+	
+	@Autowired
+	private JdbcTemplate jdbc;
 	int getUserID(String email) {
 		return 0;
 	}
 	String getPassword(String email) {
-		return "pw";
+		String query = "SELECT password_hash FROM users WHERE users.email = '" + email + "'";
+		String result = jdbc.queryForObject(query, String.class);
+		//String resultString jdbc.query
+//		jdbc.query(query, 
+//				new PreparedStatementSetter() {
+//					public void setValues(PreparedStatement preparedStatement) throws SQLException {
+//						preparedStatement.setString(1,  email);
+//					}
+//				}, 
+//				 new ResultSetExtractor<String>() {
+//		            public String extractData(ResultSet resultSet) throws SQLException,
+//		              DataAccessException {
+//		                if (resultSet.next()) {
+//		                	System.out.println("result");
+//		                	System.out.println(resultSet.toString());
+//		                    return resultSet.getObject(1).toString();
+//		                }
+//		                return null;
+//		            }
+//          });
+		return result;
 	}
-	int getAccountType(String email) {
-		return 0;
+	boolean getAccountType(String email) {
+		String query = "SELECT tutor FROM users WHERE users.email = '" + email + "'";
+		Boolean result = jdbc.queryForObject(query, Boolean.class);
+		return result;
 	}
 	List<TutorRequest> getRequests(int userID) {
 		return null; 

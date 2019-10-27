@@ -6,18 +6,31 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Hashtable;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class Controller {
+	
+	@Autowired
 	private DBConnect dbConnect;
+	
 	private static Hashtable<RequestThread, Socket> requestThreadsSockets = new Hashtable<RequestThread, Socket>();
 
 	int port = 6789;
 
 	private static ServerSocket ss = null;
 
-	Controller() {
+	@PostConstruct
+	void startController() {
 		System.out.println("Launching --Controller--");
 		System.out.println();
-
+		System.out.println("postconstruct");
+		System.out.println("password:" + dbConnect.getPassword("alicesle@usc.edu"));
+		System.out.println("done");
+		
 		try {
 
 			System.out.println("Attempting to bind to port " + port);
