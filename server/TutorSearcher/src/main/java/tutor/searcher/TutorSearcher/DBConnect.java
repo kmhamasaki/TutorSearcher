@@ -72,7 +72,7 @@ public class DBConnect {
 	User authenticate(String email, String passwordHash) {
 		// check db to see email and password Hash
 		
-		//return User object with info.
+		//return null if wrong login info
 		return null;
 	}
 	Boolean addTutorToClass(int tutorID, String className) {

@@ -2,7 +2,7 @@ package tutor.searcher.TutorSearcher;
 import java.util.List;
 
 public class User {
-	private int UserId;
+	private int UserID;
 	private String name;
 	private String email;
 	private Boolean accountType;
@@ -12,7 +12,7 @@ public class User {
 	
 	public User(int userId, String name, String email, Boolean accountType, List<TutorRequest> pendingRequests,
 			List<TutorRequest> acceptedRequests, List<TutorRequest> rejectedRequests) {
-		UserId = userId;
+		this.UserID = userId;
 		this.name = name;
 		this.email = email;
 		this.accountType = accountType;
@@ -21,7 +21,7 @@ public class User {
 		this.rejectedRequests = rejectedRequests;
 	}
 	public int getUserId() {
-		return UserId;
+		return UserID;
 	}
 	
 	public String getName() {
