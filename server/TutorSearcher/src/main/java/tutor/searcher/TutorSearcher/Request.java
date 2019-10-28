@@ -24,6 +24,10 @@ public class Request implements Serializable {
 		return attributes;
 	}
 	
+	public String get(String key) {
+		return attributes.get(key);
+	}
+	
 	
 	
 	
