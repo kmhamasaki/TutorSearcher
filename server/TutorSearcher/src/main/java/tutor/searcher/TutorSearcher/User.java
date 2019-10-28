@@ -44,6 +44,7 @@ public class User {
 	
 	public String getFirstName() {
 		return firstName;
+
 	}
 	
 	public String getLastName() {

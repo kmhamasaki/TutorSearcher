@@ -136,8 +136,7 @@ public class Controller {
 		} else if (request.getRequestType() == "updateinfo") {
 			
 		} else if (request.getRequestType() == "search") {
-			List<Tutor> tutors = dbConnect.searchTutors((List<Integer>)request.get("times"), 
-					(String)request.get("className"));
+
 		} else if (request.getRequestType() == "newrequest") {
 			
 		} else if (request.getRequestType() == "viewrequests") {
