@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -58,43 +59,85 @@ public class Controller {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	void processRequest(Request request, RequestThread requestThread) {
 
-		HashMap<String, String> respAttr = new HashMap<String, String>();
+		HashMap<String, Object> respAttr = new HashMap<String, Object>();
 		String respType = "";
 
 		requestThreadsSockets.remove(requestThread);
+		
+		/** 
+		 * Signup
+		 * Incoming requestType: "email"
+		 * Incoming attributes -- (Should this be a User object?)
+		 * 	String "email"
+		 *	String "passwordHash"
+		 *	String "firstName"
+		 *	String "lastName"
+		 *	String "phoneNumber"
+		 *	String "accountType" - ("tutor" or "tutee")
+		 *	List<Integer> "availability"
+		 * Outgoing requestTypes
+		 *	"Error: email exists"
+		 *	"Error: not USC email"
+		 *	"Success"
+		 * Outgoing attributes
+		 *  String "userID"
+		 */		
 		if(request.getRequestType() == "signup") {
-			
-			// return User object to send back
-			int userID = dbConnect.addUser(request.get("email"), request.get("passwordHash"), 
-					request.get("name"), request.get("accountType") == "tutor" ? true : false);
-			
-			// if not successful in adding it
-			if(userID == -1) {
-				respType = "Error:emailexists";
+			// If not a USC email, return error
+			if(((String)request.get("email")).indexOf("@usc.edu") == -1) {
+				respType = "Error: not USC email";
 			} else {
+				// get UserID to send back
+				int userID = dbConnect.addUser((String)request.get("email"), 
+						(String)request.get("passwordHash"), 
+						(String)request.get("firstName"), 
+						(String)request.get("lastName"), 
+						(String)request.get("phoneNumber"),
+						request.get("accountType") == "tutor" ? true : false,
+						(List<Integer>)request.get("availability"));
+				
+				// if not successful in adding it
+				if(userID == -1) {
+					respType = "Error: email exists";
+				} else {
 					respType = "Success";
 					respAttr.put("userID", Integer.toString(userID));
 					if(request.get("accountType") == "tutor") {
-					// if tutor add classes, expecting classes as strings separated by spaces
-					String[] classes = request.get("classes").split(" "); 
-	        for (String className : classes) {
-	        	dbConnect.addTutorToClass(userID, className);
-	        }
+			    for (String className : (List<String>) request.get("classes")) {
+			        dbConnect.addTutorToClass(userID, className);
+			    	}
+					}
 				}
 			}
-		} else if (request.getRequestType() == "login") {
-			User user = dbConnect.authenticate(request.get("email"), request.get("passwordHash"));
+		} 
+		
+		/** 
+		 * Login
+		 * Incoming requestType: "login"
+		 * Incoming attributes
+		 *  String "email"
+		 *  String "passwordHash"
+		 * Outgoing requestTypes:
+		 *  "Error: wrong email or password"
+		 *  "Success"
+		 */
+		else if (request.getRequestType() == "login") {
+			User user = dbConnect.authenticate((String)request.get("email"), 
+					request.get("passwordHash").toString());
 			if(user == null) {
-				respType = "Error:wrongemailpw";
+				respType = "Error: wrong email or password";
 			} else {
-				
+				respType = "Success";
+				respAttr.put("User", user);
 			}
 		} else if (request.getRequestType() == "updateinfo") {
 			
 		} else if (request.getRequestType() == "search") {
-			
+			List<Tutor> tutors = dbConnect.searchTutors((List<Integer>)request.get("times"), 
+					(String)request.get("className"));
 		} else if (request.getRequestType() == "newrequest") {
 			
 		} else if (request.getRequestType() == "viewrequests") {

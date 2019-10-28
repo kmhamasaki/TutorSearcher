@@ -1,5 +1,7 @@
 package tutor.searcher.TutorSearcher;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +19,17 @@ public class DBConnect {
 	
 	@Autowired
 	private JdbcTemplate jdbc;
+	private Connection conn;
 	private int numUsers = 0;
+	
+	public DBConnect(String SQLName, String username, String password) {
+		try {
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/" + SQLName + "?user="
+					+ username + "&password=" + password + "&useSSL=false&serverTimezone=UTC");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	int getUserID(String email) {
 		return 0;
@@ -54,25 +66,71 @@ public class DBConnect {
 		return null; 
 	}
 	
-	int addUser(String email, String passwordHash, String name, Boolean accountType) {
+	int addUser(String email, String passwordHash, String firstName, String lastName, String phoneNumber,
+			Boolean accountType, List<Integer> availability) {
 		
-		// add stuff to db, make sure to increment numUsers, which is the UserID
-		
-		//if user email, already exists,
-		// return -1;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try
+		{
+			// Check if email already exists
+			ps = conn.prepareStatement("SELECT * FROM users where email=?");
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				return -1;
+			}
+			
+			String availString = (accountType ? availability.toString() : "");
+			
+			ps = conn.prepareStatement("INSERT INTO users (user_id, email, password_hash, tutor, phone_num,"
+					+ "first_name, last_name, availability) VALUES (?,?,?,?,?,?,?,?)");
+			ps.setInt(1, ++numUsers);
+			ps.setString(2, email);
+			ps.setString(3, passwordHash);
+			ps.setBoolean(4, accountType);
+			ps.setString(5, phoneNumber);
+			ps.setString(6, firstName);
+			ps.setString(7, lastName);
+			ps.setString(8, availString);
+			
+
+			ps.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}	
 		return numUsers;
 				
 	}
 	Boolean updateRequestStatus(int requestID, int newStatus) {
 		return false;
 	}
-	List<Tutor> searchTutors(String times, String className) {
+	List<Tutor> searchTutors(List<Integer> times, String className) {
 		return null;
 	}
+	
 	User authenticate(String email, String passwordHash) {
-		// check db to see email and password Hash
+		// check Database to see email and password Hash
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 		
-		//return null if wrong login info
+		try {
+			ps = conn.prepareStatement("SELECT * FROM users where email=?");
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				if(rs.getString("password_hash").equals(passwordHash)) {
+					//int userID, String firstName, String lastName, String email, String phoneNumber, Boolean accountType
+					return new User(rs.getInt("user_id"), rs.getString("first_name"), rs.getString("last_name"),
+							rs.getString("email"), rs.getString("phone_num"), rs.getBoolean("tutor"));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		// return null if wrong login info
 		return null;
 	}
 	Boolean addTutorToClass(int tutorID, String className) {

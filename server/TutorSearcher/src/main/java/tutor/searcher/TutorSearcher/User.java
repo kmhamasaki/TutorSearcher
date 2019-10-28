@@ -3,29 +3,51 @@ import java.util.List;
 
 public class User {
 	private int UserID;
-	private String name;
+	private String firstName;
+	private String lastName;
 	private String email;
+	private String phoneNumber;
 	private Boolean accountType;
 	private List<TutorRequest> pendingRequests;
 	private List<TutorRequest> acceptedRequests;
 	private List<TutorRequest> rejectedRequests;
 	
-	public User(int userId, String name, String email, Boolean accountType, List<TutorRequest> pendingRequests,
+	public User(int userId, String firstName, String lastName,
+			String email, String phoneNumber, Boolean accountType, List<TutorRequest> pendingRequests,
 			List<TutorRequest> acceptedRequests, List<TutorRequest> rejectedRequests) {
 		this.UserID = userId;
-		this.name = name;
+		this.firstName = firstName;
+		this.lastName = firstName;
 		this.email = email;
+		this.phoneNumber = phoneNumber;
 		this.accountType = accountType;
 		this.pendingRequests = pendingRequests;
 		this.acceptedRequests = acceptedRequests;
 		this.rejectedRequests = rejectedRequests;
 	}
+	
+	
+	public User(int userID, String firstName, String lastName, String email, String phoneNumber, Boolean accountType) {
+		super();
+		UserID = userID;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.accountType = accountType;
+	}
+
+
 	public int getUserId() {
 		return UserID;
 	}
 	
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
 	}
 	
 	public String getEmail() {

@@ -8,23 +8,24 @@ public class Request implements Serializable {
 	private static final long serialVersionUID = 1;
 
 	private String requestType;
-	private HashMap<String, String> attributes;
+	private HashMap<String, Object> attributes;
 	
 	
-	public Request(String requestType, HashMap<String, String> attributes) {
+	public Request(String requestType, HashMap<String, Object> respAttr) {
 		this.requestType = requestType;
-		this.attributes = attributes;
+		this.attributes = respAttr;
 	}
+
 
 	public String getRequestType() {
 		return requestType;
 	}
 
-	public HashMap<String, String> getAttributes() {
+	public HashMap<String, Object> getAttributes() {
 		return attributes;
 	}
 	
-	public String get(String key) {
+	public Object get(String key) {
 		return attributes.get(key);
 	}
 	

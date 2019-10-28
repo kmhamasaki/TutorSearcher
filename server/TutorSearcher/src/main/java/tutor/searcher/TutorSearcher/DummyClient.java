@@ -39,7 +39,7 @@ public class DummyClient extends Thread {
     }
 
     public void dummyRequest() {
-        HashMap<String, String> attributes = new HashMap<String, String>();
+        HashMap<String, Object> attributes = new HashMap<String, Object>();
         attributes.put("hello", "world");
 
         Request req = new Request("testing", attributes);

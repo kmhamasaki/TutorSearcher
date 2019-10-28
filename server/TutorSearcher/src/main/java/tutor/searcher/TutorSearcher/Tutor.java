@@ -6,10 +6,10 @@ public class Tutor extends User {
 	List<List<Boolean>> timeAvailabilities;
 	List<String> classesTutoring;
 	
-	public Tutor(int userId, String name, String email, Boolean accountType, List<TutorRequest> pendingRequests,
+	public Tutor(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType, List<TutorRequest> pendingRequests,
 			List<TutorRequest> acceptedRequests, List<TutorRequest> rejectedRequests, List<List<Boolean>> 
 			timeAvailabilities, List<String> classesTutoring) {
-		super(userId, name, email, accountType, pendingRequests, acceptedRequests, rejectedRequests);
+		super(userId, firstName, lastName, email, phoneNumber, accountType, pendingRequests, acceptedRequests, rejectedRequests);
 		this.timeAvailabilities = timeAvailabilities;
 		this.classesTutoring = classesTutoring;
 		return;
@@ -36,4 +36,5 @@ public class Tutor extends User {
 	void rejectRequest(TutorRequest request) {
 		return;
 	}
+	
 }
