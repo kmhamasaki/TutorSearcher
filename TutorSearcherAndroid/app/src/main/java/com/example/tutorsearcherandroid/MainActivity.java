@@ -1,7 +1,6 @@
 package com.example.tutorsearcherandroid;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +9,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
+    TextView response;
+    EditText editTextAddress, editTextPort;
+    Button buttonConnect, buttonClear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
