@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -14,22 +16,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button1 = findViewById(R.id.button1);
-        Button button2 = findViewById(R.id.button2);
+        Button login = findViewById(R.id.login);
+        Button register = findViewById(R.id.register);
+        TextView textView5 = findViewById(R.id.textView5);
 
-        button1.setOnClickListener(this);
-        button2.setOnClickListener(this);
-
+        login.setOnClickListener(this);
+        register.setOnClickListener(this);
+        textView5.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.button1:
-                openLoginActivity("tutor");
+            case R.id.login:
+                EditText username = findViewById(R.id.username);
+                EditText password = findViewById(R.id.password);
+                username.setVisibility(View.VISIBLE);
+                password.setVisibility(View.VISIBLE);
+
+                Button login = findViewById(R.id.login);
+                Button register = findViewById(R.id.register);
+                login.setVisibility(View.INVISIBLE);
+                register.setVisibility(View.INVISIBLE);
+
+                Button bigLogin = findViewById(R.id.bigLogin);
+                bigLogin.setVisibility(View.VISIBLE);
+
+                TextView textView4 = findViewById(R.id.textView4);
+                TextView textView5 = findViewById(R.id.textView5);
+                textView4.setVisibility(View.VISIBLE);
+                textView5.setVisibility(View.VISIBLE);
+
+
                 break;
-            case R.id.button2:
-                openLoginActivity("tutee");
+            case R.id.register:
+                openLoginActivity("asdf");
+                break;
+
+            case R.id.textView5:
+                openLoginActivity("yas");
                 break;
         }
     }
