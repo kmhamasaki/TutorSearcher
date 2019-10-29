@@ -2,6 +2,7 @@ package com.example.tutorsearcherandroid;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,9 +26,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.button1:
+                openLoginActivity("tutor");
                 break;
             case R.id.button2:
+                openLoginActivity("tutee");
                 break;
         }
+    }
+
+    public void openLoginActivity(String accountType){
+        Intent i = new Intent(this,LoginActivity.class);
+        i.putExtra("accountType",accountType);
+        startActivity(i);
     }
 }

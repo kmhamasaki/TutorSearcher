@@ -2,7 +2,7 @@
     <string name="app_name">Tutor Searcher</string>
     <string name="tutor">Tutor</string>
     <string name="tutee">Tutee</string>
-    <string name="title_activity_sample_login">Sign in</string>
+    <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
