@@ -6,8 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -267,7 +269,7 @@ public class DBConnect {
 	
 	List<Tutor> searchTutors(List<Integer> times, String className) {
 		String query = "SELECT * FROM users, classes WHERE classes.class_name=? AND classes.tutor_id=users.user_id";
-		List<Tutor> result = jdbc.query(query, 
+		List<Tutor> tutors = jdbc.query(query, 
 		new PreparedStatementSetter() {
 			public void setValues(PreparedStatement preparedStatement) throws SQLException {
 				preparedStatement.setString(1,  className);
@@ -296,7 +298,60 @@ public class DBConnect {
                 return result;
             }
 		});
+		
+		
+		
+		List<Tutor> result = sortTutors(tutors, times);
+		
 		return result;
+		
+	}
+	
+	class SortTutorsByTime implements Comparator<Tutor> {
+		private List<Integer> time;
+		public SortTutorsByTime(List<Integer> time) {
+			this.time = time;
+		}
+		
+		public int compare(Tutor a, Tutor b) {
+			List<Integer> timesA = a.getTimeAvailabilities();
+			List<Integer> timesB = b.getTimeAvailabilities();
+			System.out.println("comparing " + a.getEmail() + ", " + b.getEmail());
+			int numA = 0;
+			int numB = 0;
+			for (Integer i : time) {
+				if (timesA.contains(i)) {
+					numA++;
+				}
+				if (timesB.contains(i)) {
+					numB++;
+				}
+			}
+			
+			System.out.println("numa: " + numA + " numb: " + numB);
+			System.out.println("numb - numa : " + (numA - numB));
+			return numB - numA;
+		}
+		
+	}
+	
+	private List<Tutor> sortTutors(List<Tutor> tutors, List<Integer> time) {
+		PriorityQueue<Tutor> pq = new PriorityQueue<>(tutors.size(), new SortTutorsByTime(time));
+		tutors.sort(new SortTutorsByTime(time));
+//		for (Tutor t : tutors) {
+//			pq.add(t);
+//		}
+////		Object[] tutors = pq.toArray();
+////		for (Object t : tutors) {
+////			Tutor hello = (Tutor)t;
+////			System.out.println(hello.getEmail());
+////		}
+//		
+//		ArrayList<Tutor> result = new ArrayList<>();
+//		for (int i = 0; i < tutors.size(); i++) {
+//			result.add(pq.poll());
+//		}
+		return tutors;
 	}
 	
 	User authenticate(String email, String passwordHash) {
@@ -322,6 +377,7 @@ public class DBConnect {
 		// return null if wrong login info
 		return null;
 	}
+	
 	Boolean addTutorToClass(int tutorID, String className) {
 		String query = "INSERT INTO classes (class_name, tutor_id) VALUES (?,?)";
 		return jdbc.execute(query,new PreparedStatementCallback<Boolean>(){  
@@ -338,9 +394,11 @@ public class DBConnect {
 		    });  
 		
 	}
+	
+	//removes class from classes table abut also needs to remove requests that are to that tutor & class
 	Boolean removeTutorFromClass(int tutorID, String className) {
 		String query = "DELETE FROM classes WHERE tutor_id=? AND class_name=?";
-		return jdbc.execute(query, new PreparedStatementCallback<Boolean> () {
+		jdbc.execute(query, new PreparedStatementCallback<Boolean> () {
 			@Override
 			public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
 				ps.setInt(1, tutorID);
@@ -349,6 +407,20 @@ public class DBConnect {
 				return ps.execute();
 			}
 		});
+		
+		String query2 = "DELETE FROM requests WHERE tutor_id=? AND class=?";
+		jdbc.execute(query2, new PreparedStatementCallback<Boolean> () {
+			@Override
+			public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
+				ps.setInt(1, tutorID);
+				ps.setString(2, className);
+				
+				return ps.execute();
+			}
+		});
+		
+		
+		return true;
 	}
 
 	public JdbcTemplate getJdbc() {
