@@ -3,16 +3,23 @@ package tutor.searcher.TutorSearcher;
 import java.util.List;
 
 public class Tutor extends User {
-	List<List<Boolean>> timeAvailabilities;
+	String timeAvailabilities;
 	List<String> classesTutoring;
 	
 	public Tutor(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType, List<TutorRequest> pendingRequests,
-			List<TutorRequest> acceptedRequests, List<TutorRequest> rejectedRequests, List<List<Boolean>> 
+			List<TutorRequest> acceptedRequests, List<TutorRequest> rejectedRequests, String 
 			timeAvailabilities, List<String> classesTutoring) {
 		super(userId, firstName, lastName, email, phoneNumber, accountType, pendingRequests, acceptedRequests, rejectedRequests);
 		this.timeAvailabilities = timeAvailabilities;
 		this.classesTutoring = classesTutoring;
 		return;
+	}
+	
+	public Tutor(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
+			String availability) {
+		super(userId, firstName, lastName, email, phoneNumber, accountType);
+		this.timeAvailabilities = availability;
+		
 	}
 	
 	// Availability represented as String of numbers deliminated by spaces

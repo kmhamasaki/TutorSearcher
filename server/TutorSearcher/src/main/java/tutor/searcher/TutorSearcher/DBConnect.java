@@ -12,6 +12,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -265,7 +266,37 @@ public class DBConnect {
 	}
 	
 	List<Tutor> searchTutors(List<Integer> times, String className) {
-		return null;
+		String query = "SELECT * FROM users, classes WHERE classes.class_name=? AND classes.tutor_id=users.user_id";
+		List<Tutor> result = jdbc.query(query, 
+		new PreparedStatementSetter() {
+			public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				preparedStatement.setString(1,  className);
+			}
+		}, 
+		 new ResultSetExtractor<List<Tutor>>() {
+            public List<Tutor> extractData(ResultSet resultSet) throws SQLException,
+              DataAccessException {
+            	ArrayList<Tutor> result = new ArrayList<>();
+                while (resultSet.next()) {
+                	System.out.println("tutor search");
+//                	(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
+        			//String availability)
+                	
+                	int userID = resultSet.getInt("user_id");
+                	String firstName = resultSet.getString("first_name");
+                	String lastName = resultSet.getString("last_name");
+                	String email = resultSet.getString("email");
+                	String phoneNumber = resultSet.getString("phone_number");
+                	Boolean accountType = resultSet.getBoolean("tutor");
+                	String availability = resultSet.getString("availability");
+                	
+                	result.add(new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability));
+                	
+                }
+                return result;
+            }
+		});
+		return result;
 	}
 	
 	User authenticate(String email, String passwordHash) {
@@ -292,10 +323,32 @@ public class DBConnect {
 		return null;
 	}
 	Boolean addTutorToClass(int tutorID, String className) {
-		return false;
+		String query = "INSERT INTO classes (class_name, tutor_id) VALUES (?,?)";
+		return jdbc.execute(query,new PreparedStatementCallback<Boolean>(){  
+		    @Override  
+		    public Boolean doInPreparedStatement(PreparedStatement ps)  
+		            throws SQLException, DataAccessException {  
+		              
+		        ps.setString(1, className);  
+		        ps.setInt(2, tutorID);  
+		              
+		        return ps.execute();  
+		              
+		    }  
+		    });  
+		
 	}
 	Boolean removeTutorFromClass(int tutorID, String className) {
-		return false;
+		String query = "DELETE FROM classes WHERE tutor_id=? AND class_name=?";
+		return jdbc.execute(query, new PreparedStatementCallback<Boolean> () {
+			@Override
+			public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
+				ps.setInt(1, tutorID);
+				ps.setString(2, className);
+				
+				return ps.execute();
+			}
+		});
 	}
 
 	public JdbcTemplate getJdbc() {
