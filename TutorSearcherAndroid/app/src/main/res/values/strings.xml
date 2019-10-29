@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Tutor Searcher</string>
+    <string name="welcome_message">Welcome to Tutor Searcher</string>
     <string name="tutor">Tutor</string>
     <string name="tutee">Tutee</string>
     <string name="title_activity_login">Sign in</string>
@@ -12,4 +13,10 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+    <string name="no_account_message">Don\'t have an account?</string>
+    <string name="prompt_user_to_register">Register for account now.</string>
+    <string name="title_activity_availability">AvailabilityActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 </resources>
