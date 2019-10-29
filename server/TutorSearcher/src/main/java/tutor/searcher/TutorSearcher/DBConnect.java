@@ -5,13 +5,18 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -31,13 +36,20 @@ public class DBConnect {
 		}
 	}
 	
+	public DBConnect(JdbcTemplate jdbc) {
+		
+		this.jdbc = jdbc;
+	}
+	
+	public DBConnect() {
+		
+	}
 	int getUserID(String email) {
 		return 0;
 	}
 	String getPassword(String email) {
 		String query = "SELECT password_hash FROM users WHERE users.email = '" + email + "'";
 		String result = jdbc.queryForObject(query, String.class);
-		//String resultString jdbc.query
 //		jdbc.query(query, 
 //				new PreparedStatementSetter() {
 //					public void setValues(PreparedStatement preparedStatement) throws SQLException {
@@ -62,8 +74,38 @@ public class DBConnect {
 		Boolean result = jdbc.queryForObject(query, Boolean.class);
 		return result;
 	}
+	
 	List<TutorRequest> getRequests(int userID) {
-		return null; 
+		String query = "SELECT * FROM requests, users WHERE requests.tutee_id=? AND requests.tutor_id=users.user_id";
+		List<TutorRequest> result = jdbc.query(query, 
+		new PreparedStatementSetter() {
+			public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				preparedStatement.setInt(1,  userID);
+			}
+		}, 
+		 new ResultSetExtractor<List<TutorRequest>>() {
+            public List<TutorRequest> extractData(ResultSet resultSet) throws SQLException,
+              DataAccessException {
+            	ArrayList<TutorRequest> result = new ArrayList<>();
+                while (resultSet.next()) {
+                	System.out.println("result");
+//                	(int requestID, int tuteeID, int tutorID, String time, int status, Date timecreated)
+                	int requestID = resultSet.getInt("id");
+                	int tuteeID = resultSet.getInt("tutee_id");
+                	int tutorID = resultSet.getInt("tutor_id");
+                	String className = resultSet.getString("class");
+                	String time = resultSet.getString("time");
+                	int status = resultSet.getInt("status");
+                	Date timeCreated = resultSet.getDate("time_created");
+                	System.out.print(requestID);
+                	System.out.println(className + " " + time);
+                	
+                    result.add(new TutorRequest(requestID, tuteeID, tutorID, time, status, timeCreated, className));
+                }
+                return result;
+            }
+		});
+		return result; 
 	}
 	
 	int addUser(String email, String passwordHash, String firstName, String lastName, String phoneNumber,
@@ -103,9 +145,125 @@ public class DBConnect {
 		return numUsers;
 				
 	}
-	Boolean updateRequestStatus(int requestID, int newStatus) {
-		return false;
+	
+	// what kind of error checking do we need for this? do i need to check for some stuff
+	// in the backend logic?
+	// to keep in mind: when a tutor accepts a tutee's request, that availability msut go off of the tutor's
+	// time availability, and simultaneously tutee's requests for same class and time must die 
+	int addRequest(int tuteeID, int tutorID, String className, String time, int status) {
+		String query = "INSERT INTO requests (tutee_id, tutor_id, class, time, status, time_created) "
+				+ "VALUES (?, ?, ?, ?, ?, ?)";
+//		jdbc.execute(query, new PreparedStatementCallback<Boolean>() {
+//			@Override  
+//		    public Boolean doInPreparedStatement(PreparedStatement ps)  
+//		            throws SQLException, DataAccessException {  
+//		              
+//		        ps.setInt(1,tuteeID);  
+//		        ps.setInt(2,tutorID);  
+//		        ps.setString(3,className);  
+//		        ps.setString(4,  time);
+//		        ps.setInt(5, status);
+//		        ps.setDate(6, new java.sql.Date(System.currentTimeMillis()));
+//		              
+//		        return ps.execute();  
+//		              
+//		    }  
+//		});
+		
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbc.update(
+		    new PreparedStatementCreator() {
+		    	@Override
+		        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+		            PreparedStatement ps =
+		                connection.prepareStatement(query, new String[] {"id"});
+		            ps.setInt(1,tuteeID);  
+			        ps.setInt(2,tutorID);  
+			        ps.setString(3,className);  
+			        ps.setString(4,  time);
+			        ps.setInt(5, status);
+			        ps.setDate(6, new java.sql.Date(System.currentTimeMillis()));
+		            return ps;
+		        }
+		    },
+		    keyHolder);
+		System.out.println(keyHolder.getKey().intValue());
+		return keyHolder.getKey().intValue();
 	}
+	// status
+	// 0 = waiting approval
+	// 1 = approved
+	// 2 = rejected
+	//what is the return boolean for? 
+	//untested
+	Boolean updateRequestStatus(int requestID, int newStatus) {
+		final String query = "UPDATE requests SET requests.status=? WHERE requests.id=?";
+		jdbc.update(
+			new PreparedStatementCreator() {
+				@Override
+				public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+					PreparedStatement ps = connection.prepareStatement(query);
+					ps.setInt(1, newStatus);
+					ps.setInt(2, requestID);
+					return ps;
+				}
+			}
+		);
+		
+		if (newStatus == 1) {
+			//now need to find all the requests with same class / same time and reject them 
+			//should it be DELETED or REJECTED?
+			
+			final String query2 = "SELECT * FROM requests WHERE id=?";
+			TutorRequest request = jdbc.query(query2, 
+					new PreparedStatementSetter() {
+				public void setValues(PreparedStatement preparedStatement) throws SQLException {
+					preparedStatement.setInt(1,  requestID);
+				}
+			}, 
+			 new ResultSetExtractor<TutorRequest>() {
+	            public TutorRequest extractData(ResultSet resultSet) throws SQLException,
+	              DataAccessException {
+	            	TutorRequest request = null;
+	            	if (resultSet.next()) {
+//	                	(int requestID, int tuteeID, int tutorID, String time, int status, Date timecreated)
+	                	int requestID = resultSet.getInt("id");
+	                	int tuteeID = resultSet.getInt("tutee_id");
+	                	int tutorID = resultSet.getInt("tutor_id");
+	                	String className = resultSet.getString("class");
+	                	String time = resultSet.getString("time");
+	                	int status = resultSet.getInt("status");
+	                	Date timeCreated = resultSet.getDate("time_created");
+	                	System.out.print(requestID);
+	                	System.out.println(className + " " + time);
+	                	
+	                    request = new TutorRequest(requestID, tuteeID, tutorID, time, status, timeCreated, className);
+	                }
+	                return request;
+	            }
+			});
+			
+			//WARNING: this assumes tutoring is in 1 HR BLOCKS only 
+			//this deletes requests from the same class and same tutee / same time and same tutee
+			jdbc.update(new PreparedStatementCreator() {
+				@Override
+				public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+					String query = "UPDATE requests SET requests.status=? WHERE (requests.class=? "
+							+ "OR requests.time=?) AND requests.tutee_id=?";
+					PreparedStatement ps = connection.prepareStatement(query);
+					ps.setInt(1, 2);
+					ps.setString(2, request.getClassName());
+					ps.setString(3, request.getTime());
+					ps.setInt(4, request.getTuteeID());
+					return ps;
+				}
+			});
+						
+		}
+		//still don't know what this boolean is supposed to be for. might jsut take it out 
+		return true;
+	}
+	
 	List<Tutor> searchTutors(List<Integer> times, String className) {
 		return null;
 	}
@@ -138,5 +296,13 @@ public class DBConnect {
 	}
 	Boolean removeTutorFromClass(int tutorID, String className) {
 		return false;
+	}
+
+	public JdbcTemplate getJdbc() {
+		return jdbc;
+	}
+
+	public void setJdbc(JdbcTemplate jdbc) {
+		this.jdbc = jdbc;
 	}
 }

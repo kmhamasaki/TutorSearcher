@@ -10,9 +10,11 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 @Component
+@ConditionalOnProperty(prefix = "spring.", name = "not-testing")
 public class Controller {
 	
 	@Autowired
@@ -28,9 +30,6 @@ public class Controller {
 	void startController() {
 		System.out.println("Launching --Controller--");
 		System.out.println();
-		System.out.println("postconstruct");
-		System.out.println("password:" + dbConnect.getPassword("alicesle@usc.edu"));
-		System.out.println("done");
 		
 		try {
 
