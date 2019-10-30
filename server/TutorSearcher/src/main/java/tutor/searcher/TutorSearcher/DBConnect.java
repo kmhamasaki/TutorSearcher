@@ -45,7 +45,16 @@ public class DBConnect {
 	}
 	
 	public DBConnect() {
-		
+		try {
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/" + "TutorSearcher" + "?user="
+					+ "root" + "&password=" + "password" + "&useSSL=false&serverTimezone=UTC");
+			PreparedStatement ps = null;
+
+			ps = conn.prepareStatement("DELETE from users");
+			ps.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	int getUserID(String email) {
 		return 0;

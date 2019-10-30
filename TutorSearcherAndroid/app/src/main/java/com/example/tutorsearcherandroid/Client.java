@@ -20,9 +20,9 @@ public class Client extends AsyncTask<Void, Void, Void> {
     private ObjectOutputStream oos;
     private TextView textResponse;
     private String response = "";
-    public Request ret;
-    public String requestType;
-    HashMap<String,Object> attributes;
+    private Request returnRequest;
+    private String incomingRequestType;
+    private HashMap<String,Object> incomingAttributes;
     /*
      * Constructor
      */
@@ -35,45 +35,13 @@ public class Client extends AsyncTask<Void, Void, Void> {
      * Connect to server
      */
 
-    public Request doRequest(String requestType, HashMap<String, Object> attributes) {
-        Socket socket = null;
-        Request serverData = null;
-        try {
-            socket = new Socket(address, port);
-            oos = new ObjectOutputStream(socket.getOutputStream());
-            ois = new ObjectInputStream(socket.getInputStream());
+    Client(String incomingRequestType, HashMap<String,Object> incomingAttributes) {
+        this.incomingAttributes = incomingAttributes;
+        this.incomingRequestType = incomingRequestType;
+    }
 
-            //Preprocessing and serialization of data
-            Request frontEndData = new Request(requestType, attributes);
-            oos.writeObject(frontEndData);
-            oos.flush();
-
-            // Wait for server response
-            serverData = (Request) ois.readObject();
-
-            //Process Request
-            response += serverData.getRequestType();
-            System.out.println(response);
-        }
-        catch (Exception e) {
-            e.getCause();
-            e.printStackTrace();
-        }
-        finally {
-            if (socket != null) {
-                try {
-                    //Close socket and object streams
-                    socket.close();
-                    oos.close();
-                    ois.close();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }
-        return serverData;
-
+    public Request getResponse() {
+        return returnRequest;
     }
 
     @Override
@@ -86,7 +54,7 @@ public class Client extends AsyncTask<Void, Void, Void> {
             ois = new ObjectInputStream(socket.getInputStream());
             System.out.println("87");
             //Preprocessing and serialization of data
-            Request frontEndData = new Request(requestType, attributes);
+            Request frontEndData = new Request(incomingRequestType, incomingAttributes);
             oos.writeObject(frontEndData);
             oos.flush();
 
@@ -114,61 +82,7 @@ public class Client extends AsyncTask<Void, Void, Void> {
                 }
             }
         }
-        ret = serverData;
-//
-//        System.out.println("In doInBackground");
-//        Socket socket = null;
-//
-//        try {
-//            //Initialize socket and object streams
-//            socket = new Socket(address, port);
-//            oos = new ObjectOutputStream(socket.getOutputStream());
-//            ois = new ObjectInputStream(socket.getInputStream());
-//
-//            //Preprocessing and serialization of data
-//            HashMap<String, Object> userInputs = new HashMap<>();
-//            userInputs.put("email","haseyama@usc.edu");
-//            userInputs.put("password","password");
-//            Request frontEndData = new Request("login", userInputs);
-//            oos.writeObject(frontEndData);
-//            oos.flush();
-//
-//            // Wait for server response
-//            Request serverData = (Request) ois.readObject();
-//
-//            //Process Request
-//            response += serverData.getRequestType();
-//            System.out.println(response);
-//        }
-//        catch (UnknownHostException e) {
-//            // TODO Display error to user
-//            e.printStackTrace();
-//            response = "UnknownHostException: " + e.toString();
-//        }
-//        catch (IOException e) {
-//            // TODO Display error to user
-//            e.printStackTrace();
-//            response = "IOException: " + e.toString();
-//        }
-//        catch(ClassNotFoundException e){
-//            // TODO Display error to user
-//            e.printStackTrace();
-//            response = "ClassNotFoundException: " + e.toString();
-//        }
-//        finally {
-//            if (socket != null) {
-//                try {
-//                    //Close socket and object streams
-//                    socket.close();
-//                    oos.close();
-//                    ois.close();
-//                } catch (IOException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//        return null;
+        returnRequest = serverData;
         return null;
     }
 

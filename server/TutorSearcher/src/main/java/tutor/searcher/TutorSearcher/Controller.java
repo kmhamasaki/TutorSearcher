@@ -63,7 +63,6 @@ public class Controller {
 
 		HashMap<String, Object> respAttr = new HashMap<String, Object>();
 		String respType = "";
-		System.out.print("Here at 66");
 		requestThreadsSockets.remove(requestThread);
 		
 		/** 
