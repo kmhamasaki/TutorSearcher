@@ -18,4 +18,14 @@
     <string name="title_activity_availability">AvailabilityActivity</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+    <string-array name="class_array">
+        <item>CSCI 102</item>
+        <item>CSCI 103</item>
+        <item>CSCI 104</item>
+        <item>CSCI 109</item>
+        <item>CSCI 170</item>
+        <item>CSCI 201</item>
+        <item>CSCI 270</item>
+    </string-array>
+    <string name="title_activity_home">HomeActivity</string>
 </resources>

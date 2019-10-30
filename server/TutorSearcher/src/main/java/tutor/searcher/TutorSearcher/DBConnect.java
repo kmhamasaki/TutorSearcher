@@ -281,6 +281,22 @@ public class DBConnect {
 		return true;
 	}
 	
+	void updateUserInformation(User user) {
+		jdbc.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				String query = "UPDATE users SET password_hash=?, phone_number=?, first_name=?, last_name=? WHERE user_id=?";
+				PreparedStatement ps = connection.prepareStatement(query);
+				ps.setString(1, user.getPasswordHash());
+				ps.setString(2, user.getPhoneNumber());
+				ps.setString(3, user.getFirstName());
+				ps.setString(4, user.getLastName());
+				ps.setInt(5, user.getUserId());
+				return ps;
+			}
+		});
+	}
+	
 	List<Tutor> searchTutors(List<Integer> times, String className) {
 		String query = "SELECT * FROM users, classes WHERE classes.class_name=? AND classes.tutor_id=users.user_id";
 		List<Tutor> tutors = jdbc.query(query, 

@@ -8,13 +8,15 @@ public class User {
 	private String email;
 	private String phoneNumber;
 	private Boolean accountType;
+	private String passwordHash;
 	private List<TutorRequest> pendingRequests;
 	private List<TutorRequest> acceptedRequests;
 	private List<TutorRequest> rejectedRequests;
 	
 	public User(int userId, String firstName, String lastName,
-			String email, String phoneNumber, Boolean accountType, List<TutorRequest> pendingRequests,
+			String email, String phoneNumber, String passwordHash, Boolean accountType, List<TutorRequest> pendingRequests,
 			List<TutorRequest> acceptedRequests, List<TutorRequest> rejectedRequests) {
+		this.passwordHash = passwordHash;
 		this.UserID = userId;
 		this.firstName = firstName;
 		this.lastName = firstName;
@@ -27,6 +29,17 @@ public class User {
 	}
 	
 	
+	public User(int userID, String firstName, String lastName, String email, String phoneNumber, String passwordHash, Boolean accountType) {
+		super();
+		UserID = userID;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.accountType = accountType;
+		this.passwordHash = passwordHash;
+	}
+
 	public User(int userID, String firstName, String lastName, String email, String phoneNumber, Boolean accountType) {
 		super();
 		UserID = userID;
@@ -37,16 +50,35 @@ public class User {
 		this.accountType = accountType;
 	}
 
-
 	public int getUserId() {
 		return UserID;
 	}
 	
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+
 	public String getFirstName() {
 		return firstName;
 
 	}
 	
+	public String getPasswordHash() {
+		return passwordHash;
+	}
+
+
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
+	}
+
+
 	public String getLastName() {
 		return lastName;
 	}

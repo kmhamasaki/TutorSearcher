@@ -23,12 +23,10 @@ public class Client extends AsyncTask<Void, Void, Void> {
     private Request returnRequest;
     private String incomingRequestType;
     private HashMap<String,Object> incomingAttributes;
+
     /*
      * Constructor
      */
-    Client(TextView textResponse){
-        this.textResponse = textResponse;
-    }
 
     Client() {}
     /*
@@ -56,6 +54,7 @@ public class Client extends AsyncTask<Void, Void, Void> {
             //Preprocessing and serialization of data
             Request frontEndData = new Request(incomingRequestType, incomingAttributes);
             oos.writeObject(frontEndData);
+
             oos.flush();
 
             // Wait for server response
