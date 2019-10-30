@@ -45,7 +45,16 @@ public class DBConnect {
 	}
 	
 	public DBConnect() {
-		
+		try {
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/" + "TutorSearcher" + "?user="
+					+ "root" + "&password=" + "password" + "&useSSL=false&serverTimezone=UTC");
+			PreparedStatement ps = null;
+
+			ps = conn.prepareStatement("DELETE from users");
+			ps.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	int getUserID(String email) {
 		return 0;
@@ -116,7 +125,12 @@ public class DBConnect {
 		
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-
+		System.out.println(email);
+		System.out.println(passwordHash);
+		System.out.println(firstName);
+		System.out.println(lastName);
+		System.out.println(phoneNumber);
+		System.out.println(accountType);
 		try
 		{
 			// Check if email already exists
@@ -265,6 +279,22 @@ public class DBConnect {
 		}
 		//still don't know what this boolean is supposed to be for. might jsut take it out 
 		return true;
+	}
+	
+	void updateUserInformation(User user) {
+		jdbc.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				String query = "UPDATE users SET password_hash=?, phone_number=?, first_name=?, last_name=? WHERE user_id=?";
+				PreparedStatement ps = connection.prepareStatement(query);
+				ps.setString(1, user.getPasswordHash());
+				ps.setString(2, user.getPhoneNumber());
+				ps.setString(3, user.getFirstName());
+				ps.setString(4, user.getLastName());
+				ps.setInt(5, user.getUserId());
+				return ps;
+			}
+		});
 	}
 	
 	List<Tutor> searchTutors(List<Integer> times, String className) {

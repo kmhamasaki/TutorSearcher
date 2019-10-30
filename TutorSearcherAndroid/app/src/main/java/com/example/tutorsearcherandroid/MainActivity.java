@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 // if authentication is finished, go to home page
                 openHomeActivity("");
-
                 break;
         }
     }
@@ -84,8 +83,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(i);
     }
 
-    public void openHomeActivity(String accountType){
+    public void openHomeActivity(String accountType) {
         Intent i = new Intent(this, HomeActivity.class);
+    }
+
+    public void openLoginActivity(String accountType){
+        Intent i = new Intent(this,HomeActivity.class);
         i.putExtra("accountType",accountType);
         startActivity(i);
         finish();
