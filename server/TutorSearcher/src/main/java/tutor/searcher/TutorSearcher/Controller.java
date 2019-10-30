@@ -133,14 +133,36 @@ public class Controller {
 				respAttr.put("User", user);
 			}
 		} else if (request.getRequestType() == "updateinfo") {
+			User user = (User)request.getAttributes().get("user");
+			try {
+				dbConnect.updateUserInformation(user);
+			}
+			catch (Exception e) {
+				System.out.println(e.getMessage());
+				respType = "Error updating information";
+				return;
+			}
 			
+			respType = "Success";
 			
 		} else if (request.getRequestType() == "search") {
+			int userID = (int)request.getAttributes().get("userID");
+			List<Tutor> requests = dbConnect.getRequests(userID);
+			respType = "Success";
+			respAttr.put("requests", requests);
 
 		} else if (request.getRequestType() == "newrequest") {
+			int tuteeID = (int)request.getAttributes().get("tuteeID");
+			int tutorID = (int)request.getAttributes().get("tutorID");
+			String className = (String)request.getAttributes().get("className");
+			String time = (String)request.getAttributes().get("time");
+			int status = (int)request.getAttributes().get("status");
+
+			dbConnect.addRequest(tuteeID, tutorID, className, time, status);
 			
 		} else if (request.getRequestType() == "viewrequests") {
-			
+			int userID = (int)request.getAttributes().get("userID");
+			List<TutorRequest> requests = dbConnect.getRequests(userID);
 		}
 		requestThread.sendResponse(new Request(respType, respAttr));
 
