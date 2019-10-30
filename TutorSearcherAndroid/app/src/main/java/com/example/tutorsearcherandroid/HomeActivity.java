@@ -40,4 +40,8 @@ public class HomeActivity extends AppCompatActivity {
     public void onClickViewRequests(View view) {
         //redirects to requests screen
     }
+
+    public void onClickLogout(View view) {
+        //logs user out and redirects to login page
+    }
 }

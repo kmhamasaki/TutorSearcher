@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void openLoginActivity(String accountType){
-        Intent i = new Intent(this,LoginActivity.class);
+        Intent i = new Intent(this,HomeActivity.class);
         i.putExtra("accountType",accountType);
         startActivity(i);
     }
