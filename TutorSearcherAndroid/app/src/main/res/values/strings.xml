@@ -31,4 +31,5 @@
         <item>CSCI 270</item>
     </string-array>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="submit">Submit</string>
 </resources>
