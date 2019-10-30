@@ -124,7 +124,7 @@ public class Controller {
 		 *  "Error: wrong email or password"
 		 *  "Success"
 		 */
-		else if (request.getRequestType() == "login") {
+		else if (request.getRequestType().equals("login")) {
 			User user = dbConnect.authenticate((String)request.get("email"), 
 					request.get("passwordHash").toString());
 			if(user == null) {
@@ -146,7 +146,7 @@ public class Controller {
 			
 			respType = "Success";
 			
-		} else if (request.getRequestType() == "search") {
+		} else if (request.getRequestType().equals( "search")) {
 			String availability = (String)request.getAttributes().get("availability");
 			String[] timesStr = availability.split(" ");
 			List<Integer> times = new ArrayList<>();
@@ -158,7 +158,7 @@ public class Controller {
 			respType = "Success";
 			respAttr.put("results", tutors);
 
-		} else if (request.getRequestType() == "newrequest") {
+		} else if (request.getRequestType().equals("newrequest")) {
 			int tuteeID = (int)request.getAttributes().get("tuteeID");
 			int tutorID = (int)request.getAttributes().get("tutorID");
 			String className = (String)request.getAttributes().get("className");
@@ -167,7 +167,7 @@ public class Controller {
 
 			dbConnect.addRequest(tuteeID, tutorID, className, time, status);
 			
-		} else if (request.getRequestType() == "viewrequests") {
+		} else if (request.getRequestType().equals("viewrequests")) {
 			int userID = (int)request.getAttributes().get("userID");
 			List<TutorRequest> requests = dbConnect.getRequests(userID);
 			respType = "Success";
