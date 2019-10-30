@@ -24,7 +24,7 @@ public class Signup extends AppCompatActivity {
         attr.put("firstName",  ((android.widget.TextView)findViewById(R.id.first_name)).getText().toString());
         attr.put("lastName",  ((android.widget.TextView)findViewById(R.id.last_name)).getText().toString());
         attr.put("phoneNumber",  ((android.widget.TextView)findViewById(R.id.phone)).getText().toString());
-        android.widget.RadioGroup rg = findViewById(R.id.button_group);
+        android.widget.RadioGroup rg = findViewById(R.id.tutorTuteeRadioSelector);
 
         //System.out.println(((android.widget.RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString());
 
