@@ -21,16 +21,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button login = findViewById(R.id.login);
         Button register = findViewById(R.id.register);
+        Button bigLogin = findViewById(R.id.bigLogin);
         TextView textView5 = findViewById(R.id.textView5);
 
         login.setOnClickListener(this);
         register.setOnClickListener(this);
+        bigLogin.setOnClickListener(this);
         textView5.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            // handle when user clicks "sign in" at the start
             case R.id.login:
                 EditText username = findViewById(R.id.username);
                 EditText password = findViewById(R.id.password);
@@ -50,21 +53,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 textView4.setVisibility(View.VISIBLE);
                 textView5.setVisibility(View.VISIBLE);
 
-
                 break;
+
+                //  handle case when user clicks "register" at the start
             case R.id.register:
-                openLoginActivity("asdf");
+                openSignupActivity();
                 break;
 
+                // handle case when user clicks "register" if he doesn't have an account
             case R.id.textView5:
-                openLoginActivity("yas");
+                openSignupActivity();
+                break;
+
+                // handle case when user clicks "sign in" after entering his user and pass
+            case R.id.bigLogin:
+                // authentication function <- FUNCTION NEEDS TO RETURN ACCOUNT TYPE (tutor or tutee)
+                // FILL IN CAM
+
+                // process errors
+
+                // if authentication is finished, go to home page
+                openHomeActivity("");
                 break;
         }
+    }
+
+    public void openSignupActivity(){
+        Intent i = new Intent(this, Signup.class);
+        startActivity(i);
+    }
+
+    public void openHomeActivity(String accountType) {
+        Intent i = new Intent(this, HomeActivity.class);
     }
 
     public void openLoginActivity(String accountType){
         Intent i = new Intent(this,HomeActivity.class);
         i.putExtra("accountType",accountType);
         startActivity(i);
+        finish();
     }
 }

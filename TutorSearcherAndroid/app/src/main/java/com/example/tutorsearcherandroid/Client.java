@@ -3,7 +3,6 @@ package com.example.tutorsearcherandroid;
 import android.widget.TextView;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
@@ -21,56 +20,53 @@ public class Client extends AsyncTask<Void, Void, Void> {
     private ObjectOutputStream oos;
     private TextView textResponse;
     private String response = "";
-    private Request request;
+    private Request returnRequest;
+    private String incomingRequestType;
+    private HashMap<String,Object> incomingAttributes;
 
     /*
      * Constructor
      */
-    Client(TextView textResponse, Request fRequest){
-        this.textResponse = textResponse;
-        this.request = fRequest;
-    }
 
+    Client() {}
     /*
      * Connect to server
      */
+
+    Client(String incomingRequestType, HashMap<String,Object> incomingAttributes) {
+        this.incomingAttributes = incomingAttributes;
+        this.incomingRequestType = incomingRequestType;
+    }
+
+    public Request getResponse() {
+        return returnRequest;
+    }
+
     @Override
     protected Void doInBackground(Void... arg0) {
-
-        System.out.println("In doInBackground");
         Socket socket = null;
-
+        Request serverData = null;
         try {
-            //Initialize socket and object streams
             socket = new Socket(address, port);
             oos = new ObjectOutputStream(socket.getOutputStream());
             ois = new ObjectInputStream(socket.getInputStream());
-
+            System.out.println("87");
             //Preprocessing and serialization of data
-            oos.writeObject(request);
+            Request frontEndData = new Request(incomingRequestType, incomingAttributes);
+            oos.writeObject(frontEndData);
+
             oos.flush();
 
             // Wait for server response
-            Request serverData = (Request) ois.readObject();
+            serverData = (Request) ois.readObject();
 
             //Process Request
             response += serverData.getRequestType();
             System.out.println(response);
         }
-        catch (UnknownHostException e) {
-            // TODO Display error to user
+        catch (Exception e) {
+            e.getCause();
             e.printStackTrace();
-            response = "UnknownHostException: " + e.toString();
-        }
-        catch (IOException e) {
-            // TODO Display error to user
-            e.printStackTrace();
-            response = "IOException: " + e.toString();
-        }
-        catch(ClassNotFoundException e){
-            // TODO Display error to user
-            e.printStackTrace();
-            response = "ClassNotFoundException: " + e.toString();
         }
         finally {
             if (socket != null) {
@@ -85,12 +81,15 @@ public class Client extends AsyncTask<Void, Void, Void> {
                 }
             }
         }
+        returnRequest = serverData;
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        textResponse.setText(response);
-        super.onPostExecute(result);
+        //textResponse.setText(response);
+        //super.onPostExecute(result);
     }
+
+
 }
