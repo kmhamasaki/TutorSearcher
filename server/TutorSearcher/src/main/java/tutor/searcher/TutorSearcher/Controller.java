@@ -3,6 +3,7 @@ package tutor.searcher.TutorSearcher;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -146,10 +147,16 @@ public class Controller {
 			respType = "Success";
 			
 		} else if (request.getRequestType() == "search") {
-			int userID = (int)request.getAttributes().get("userID");
-			List<Tutor> requests = dbConnect.getRequests(userID);
+			String availability = (String)request.getAttributes().get("availability");
+			String[] timesStr = availability.split(" ");
+			List<Integer> times = new ArrayList<>();
+			for (int i = 0; i < timesStr.length; i++) {
+				times.add(Integer.parseInt(timesStr[i]));
+			}
+			String className = (String)request.getAttributes().get("className");
+			List<Tutor> tutors = dbConnect.searchTutors(times, className);
 			respType = "Success";
-			respAttr.put("requests", requests);
+			respAttr.put("results", tutors);
 
 		} else if (request.getRequestType() == "newrequest") {
 			int tuteeID = (int)request.getAttributes().get("tuteeID");
@@ -163,6 +170,8 @@ public class Controller {
 		} else if (request.getRequestType() == "viewrequests") {
 			int userID = (int)request.getAttributes().get("userID");
 			List<TutorRequest> requests = dbConnect.getRequests(userID);
+			respType = "Success";
+			respAttr.put("requests", requests);
 		}
 		requestThread.sendResponse(new Request(respType, respAttr));
 
