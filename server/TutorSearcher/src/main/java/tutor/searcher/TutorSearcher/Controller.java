@@ -68,7 +68,7 @@ public class Controller {
 		
 		/** 
 		 * Signup
-		 * Incoming requestType: "email"
+		 * Incoming requestType: "email" 
 		 * Incoming attributes -- (Should this be a User object?)
 		 * 	String "email"
 		 *	String "passwordHash"
@@ -133,6 +133,7 @@ public class Controller {
 				respAttr.put("User", user);
 			}
 		} else if (request.getRequestType() == "updateinfo") {
+			
 			
 		} else if (request.getRequestType() == "search") {
 
