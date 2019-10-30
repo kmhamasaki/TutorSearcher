@@ -7,10 +7,11 @@ public class Tutor extends User {
 	List<Integer> timeAvailabilities;
 	List<String> classesTutoring;
 	
-	public Tutor(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType, List<TutorRequest> pendingRequests,
+	public Tutor(int userId, String firstName, String lastName, String email, String phoneNumber, String passwordHash, Boolean accountType, List<TutorRequest> pendingRequests,
 			List<TutorRequest> acceptedRequests, List<TutorRequest> rejectedRequests, String 
 			timeAvailabilities, List<String> classesTutoring) {
-		super(userId, firstName, lastName, email, phoneNumber, accountType, pendingRequests, acceptedRequests, rejectedRequests);
+		//int userID, String firstName, String lastName, String email, String phoneNumber, String passwordHash, Boolean accountType
+		super(userId, firstName, lastName, email, phoneNumber, passwordHash, accountType, pendingRequests, acceptedRequests, rejectedRequests);
 		String[] timesStr = timeAvailabilities.split(" ");
 		this.timeAvailabilities = new ArrayList<>();
 		for (int i = 0; i < timesStr.length; i++) {
@@ -18,6 +19,17 @@ public class Tutor extends User {
 		}
 		this.classesTutoring = classesTutoring;
 		return;
+	}
+	
+	public Tutor(int userId, String firstName, String lastName, String email, String phoneNumber, String passwordHash, Boolean accountType,
+			String availability) {
+		super(userId, firstName, lastName, email, phoneNumber, passwordHash, accountType);
+		String[] timesStr = availability.split(" ");
+		this.timeAvailabilities = new ArrayList<>();
+		for (int i = 0; i < timesStr.length; i++) {
+			this.timeAvailabilities.add(Integer.parseInt(timesStr[i]));
+		}
+		
 	}
 	
 	public Tutor(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
