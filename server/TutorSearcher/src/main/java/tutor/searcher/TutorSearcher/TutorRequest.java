@@ -7,22 +7,40 @@ import java.util.List;
 public class TutorRequest {
 	private int requestID;
 	private int tuteeID;
+	private String tuteeName;
+	private String tutorName;
 	private int tutorID;
-	private int date;
-	private List<Integer> time;
+	private String time;
 	private int status;
-	private Date timecreated;
+	private Date timeCreated;
+	private String className;
 	
 	
-	public TutorRequest(int requestID, int tuteeID, int tutorID, int date, List<Integer> time, int status,
-			Date timecreated) {
+	public TutorRequest(int requestID, int tuteeID, int tutorID, String time, int status,
+			Date timecreated, String className) {
 		this.requestID = requestID;
 		this.tuteeID = tuteeID;
 		this.tutorID = tutorID;
-		this.date = date;
 		this.time = time;
 		this.status = status;
-		this.timecreated = timecreated;
+		this.timeCreated = timecreated;
+		this.className = className;
+	}
+
+	public String getTuteeName() {
+		return tuteeName;
+	}
+
+	public void setTuteeName(String tuteeName) {
+		this.tuteeName = tuteeName;
+	}
+
+	public String getTutorName() {
+		return tutorName;
+	}
+
+	public void setTutorName(String tutorName) {
+		this.tutorName = tutorName;
 	}
 
 	public int getRequestID() {
@@ -36,20 +54,13 @@ public class TutorRequest {
 	public int getTutorID() {
 		return tutorID;
 	}
+
 	
-	public int getDate() {
-		return date;
-	}
-	
-	public void setDate(int date) {
-		this.date = date;
-	}
-	
-	public List<Integer> getTime() {
+	public String getTime() {
 		return time;
 	}
 	
-	public void setTime(List<Integer> time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 	
@@ -61,7 +72,15 @@ public class TutorRequest {
 		this.status = status;
 	}
 	
-	public Date getTimecreated() {
-		return timecreated;
+	public Date getTimeCreated() {
+		return timeCreated;
+	}
+
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
 	}
 }

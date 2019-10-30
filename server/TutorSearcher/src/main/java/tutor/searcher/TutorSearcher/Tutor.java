@@ -1,18 +1,34 @@
 package tutor.searcher.TutorSearcher;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Tutor extends User {
-	List<List<Boolean>> timeAvailabilities;
+	List<Integer> timeAvailabilities;
 	List<String> classesTutoring;
 	
 	public Tutor(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType, List<TutorRequest> pendingRequests,
-			List<TutorRequest> acceptedRequests, List<TutorRequest> rejectedRequests, List<List<Boolean>> 
+			List<TutorRequest> acceptedRequests, List<TutorRequest> rejectedRequests, String 
 			timeAvailabilities, List<String> classesTutoring) {
 		super(userId, firstName, lastName, email, phoneNumber, accountType, pendingRequests, acceptedRequests, rejectedRequests);
-		this.timeAvailabilities = timeAvailabilities;
+		String[] timesStr = timeAvailabilities.split(" ");
+		this.timeAvailabilities = new ArrayList<>();
+		for (int i = 0; i < timesStr.length; i++) {
+			this.timeAvailabilities.add(Integer.parseInt(timesStr[i]));
+		}
 		this.classesTutoring = classesTutoring;
 		return;
+	}
+	
+	public Tutor(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
+			String availability) {
+		super(userId, firstName, lastName, email, phoneNumber, accountType);
+		String[] timesStr = availability.split(" ");
+		this.timeAvailabilities = new ArrayList<>();
+		for (int i = 0; i < timesStr.length; i++) {
+			this.timeAvailabilities.add(Integer.parseInt(timesStr[i]));
+		}
+		
 	}
 	
 	// Availability represented as String of numbers deliminated by spaces
@@ -35,6 +51,14 @@ public class Tutor extends User {
 	}
 	void rejectRequest(TutorRequest request) {
 		return;
+	}
+
+	public List<Integer> getTimeAvailabilities() {
+		return timeAvailabilities;
+	}
+
+	public void setTimeAvailabilities(List<Integer> timeAvailabilities) {
+		this.timeAvailabilities = timeAvailabilities;
 	}
 	
 }
