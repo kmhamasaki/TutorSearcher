@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Tutor extends User {
 	List<Integer> timeAvailabilities;
+	String timeAvailability;
 	List<String> classesTutoring;
 	
 	public Tutor(int userId, String firstName, String lastName, String email, String phoneNumber, String passwordHash, Boolean accountType, List<TutorRequest> pendingRequests,
@@ -12,34 +13,27 @@ public class Tutor extends User {
 			timeAvailabilities, List<String> classesTutoring) {
 		//int userID, String firstName, String lastName, String email, String phoneNumber, String passwordHash, Boolean accountType
 		super(userId, firstName, lastName, email, phoneNumber, passwordHash, accountType, pendingRequests, acceptedRequests, rejectedRequests);
-		String[] timesStr = timeAvailabilities.split(" ");
-		this.timeAvailabilities = new ArrayList<>();
-		for (int i = 0; i < timesStr.length; i++) {
-			this.timeAvailabilities.add(Integer.parseInt(timesStr[i]));
-		}
+		this.timeAvailability = timeAvailabilities;
 		this.classesTutoring = classesTutoring;
-		return;
 	}
 	
 	public Tutor(int userId, String firstName, String lastName, String email, String phoneNumber, String passwordHash, Boolean accountType,
 			String availability) {
 		super(userId, firstName, lastName, email, phoneNumber, passwordHash, accountType);
-		String[] timesStr = availability.split(" ");
-		this.timeAvailabilities = new ArrayList<>();
-		for (int i = 0; i < timesStr.length; i++) {
-			this.timeAvailabilities.add(Integer.parseInt(timesStr[i]));
-		}
+		this.timeAvailability = availability;
+
 		
 	}
 	
 	public Tutor(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
 			String availability) {
 		super(userId, firstName, lastName, email, phoneNumber, accountType);
-		String[] timesStr = availability.split(" ");
-		this.timeAvailabilities = new ArrayList<>();
-		for (int i = 0; i < timesStr.length; i++) {
-			this.timeAvailabilities.add(Integer.parseInt(timesStr[i]));
-		}
+		this.timeAvailability = availability;
+//		String[] timesStr = availability.split(" ");
+//		this.timeAvailabilities = new ArrayList<>();
+//		for (int i = 0; i < timesStr.length; i++) {
+//			this.timeAvailabilities.add(Integer.parseInt(timesStr[i]));
+//		}
 		
 	}
 	
