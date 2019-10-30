@@ -42,8 +42,7 @@ public class SearchTutor extends AppCompatActivity {
 
 //                attributes.put("class","CSCI 103");
 //                attributes.put("time","1,10,11,20");
-                request = new Request("search", attributes);
-                Client myClient = new Client(serverResponse, request);
+                Client myClient = new Client("search", attributes);
                 myClient.execute();
             }
         });
