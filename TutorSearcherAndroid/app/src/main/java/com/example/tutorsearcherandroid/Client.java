@@ -21,12 +21,14 @@ public class Client extends AsyncTask<Void, Void, Void> {
     private ObjectOutputStream oos;
     private TextView textResponse;
     private String response = "";
+    private Request request;
 
     /*
      * Constructor
      */
-    Client(TextView textResponse){
+    Client(TextView textResponse, Request fRequest){
         this.textResponse = textResponse;
+        this.request = fRequest;
     }
 
     /*
@@ -45,11 +47,7 @@ public class Client extends AsyncTask<Void, Void, Void> {
             ois = new ObjectInputStream(socket.getInputStream());
 
             //Preprocessing and serialization of data
-            HashMap<String, String> userInputs = new HashMap<>();
-            userInputs.put("email","haseyama@usc.edu");
-            userInputs.put("password","password");
-            Request frontEndData = new Request("login",userInputs);
-            oos.writeObject(frontEndData);
+            oos.writeObject(request);
             oos.flush();
 
             // Wait for server response
