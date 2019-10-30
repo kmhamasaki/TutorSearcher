@@ -53,18 +53,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.register:
-                openLoginActivity("asdf");
+                openSignupAcritivity();
                 break;
 
             case R.id.textView5:
-                openLoginActivity("yas");
+                openSignupAcritivity();
                 break;
         }
     }
 
-    public void openLoginActivity(String accountType){
-        Intent i = new Intent(this,LoginActivity.class);
-        i.putExtra("accountType",accountType);
+    public void openSignupAcritivity(){
+        Intent i = new Intent(this,Signup.class);
         startActivity(i);
     }
 }

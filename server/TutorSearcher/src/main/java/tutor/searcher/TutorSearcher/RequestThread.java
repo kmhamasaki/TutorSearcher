@@ -30,6 +30,7 @@ public class RequestThread extends Thread {
         while(!end) {
             try {
                 Request req = (Request) ois.readObject();
+                System.out.print("Run at 33");
                 controller.processRequest(req, this);
             } catch (IOException e) {
                 // This exception get's thrown a lot.

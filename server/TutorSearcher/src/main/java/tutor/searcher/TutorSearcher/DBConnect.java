@@ -116,7 +116,12 @@ public class DBConnect {
 		
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-
+		System.out.println(email);
+		System.out.println(passwordHash);
+		System.out.println(firstName);
+		System.out.println(lastName);
+		System.out.println(phoneNumber);
+		System.out.println(accountType);
 		try
 		{
 			// Check if email already exists

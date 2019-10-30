@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import tutor.searcher.TutorSearcher.Request;
+
+import java.util.HashMap;
 
 public class Signup extends AppCompatActivity {
 
@@ -13,7 +16,22 @@ public class Signup extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
     }
 
-    public void SignupButtonClick(View view) {
+    public void onClick(View view) {
+        Client client = new Client();
+        HashMap<String, Object> attr = new HashMap<>();
+
+        attr.put("email", findViewById(R.id.email));
+        attr.put("passwordHash", findViewById(R.id.password));
+        attr.put("firstName", findViewById(R.id.first_name));
+        attr.put("lastName", findViewById(R.id.last_name));
+        attr.put("phoneNumber", findViewById(R.id.phone));
+        attr.put("accountType", true);
+        System.out.println("Sending from SignupButtonClick");
+        client.attributes = attr;
+        client.requestType = "signup";
+        client.execute();
+
+        //System.out.println(req.getRequestType());
         // Pass all inputs to backend
 
         // Error if not all inputs set

@@ -194,7 +194,7 @@
         android:backgroundTint="#E91E63"
         android:text="Sign up!"
         android:textColorHighlight="#E91E63"
-        android:onClick="SignupButtonClick"
+        android:onClick="onClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
