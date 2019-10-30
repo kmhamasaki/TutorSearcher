@@ -63,7 +63,6 @@ public class Controller {
 
 		HashMap<String, Object> respAttr = new HashMap<String, Object>();
 		String respType = "";
-
 		requestThreadsSockets.remove(requestThread);
 		
 		/** 
@@ -84,10 +83,11 @@ public class Controller {
 		 * Outgoing attributes
 		 *  String "userID"
 		 */		
-		if(request.getRequestType() == "signup") {
+		if(request.getRequestType().equals("signup")) {
 			// If not a USC email, return error
 			if(((String)request.get("email")).indexOf("@usc.edu") == -1) {
 				respType = "Error: not USC email";
+				System.out.println((String)request.get("email"));
 			} else {
 				// get UserID to send back
 				int userID = dbConnect.addUser((String)request.get("email"), 
@@ -142,6 +142,7 @@ public class Controller {
 		} else if (request.getRequestType() == "viewrequests") {
 			
 		}
+		System.out.print(respType);
 		requestThread.sendResponse(new Request(respType, respAttr));
 
 		return;
