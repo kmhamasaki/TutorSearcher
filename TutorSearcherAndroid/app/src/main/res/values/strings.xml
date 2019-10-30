@@ -27,4 +27,5 @@
         <item>CSCI 201</item>
         <item>CSCI 270</item>
     </string-array>
+    <string name="title_activity_home">HomeActivity</string>
 </resources>
