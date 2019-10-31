@@ -27,18 +27,18 @@ public class ViewRequests extends AppCompatActivity {
 
 //        List<TutorRequest> requests = viewrequests.incomingAttributes.requests
 
-        TableLayout requests_table_layout = (TableLayout) findViewById(R.id.requests_table_layout);
-
-        for (int i = 0; i <2; i++) {
-
-            TableRow row = new TableRow(this);
-            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-            row.setLayoutParams(lp);
-            TextView tv = new TextView(this);
-            tv.setText("Testing");
-            row.addView(tv);
-            requests_table_layout.addView(row, i);
-        }
+//        TableLayout requests_table_layout = (TableLayout) findViewById(R.id.requests_table_layout);
+//
+//        for (int i = 0; i <2; i++) {
+//
+//            TableRow row = new TableRow(this);
+//            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+//            row.setLayoutParams(lp);
+//            TextView tv = new TextView(this);
+//            tv.setText("Testing");
+//            row.addView(tv);
+//            requests_table_layout.addView(row, i);
+//        }
 
 
 //
