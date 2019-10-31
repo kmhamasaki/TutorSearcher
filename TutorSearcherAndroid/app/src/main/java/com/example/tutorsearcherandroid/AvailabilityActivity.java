@@ -15,6 +15,17 @@ public class AvailabilityActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_availability);
 
+        Bundle extras = getIntent().getExtras();
+        // find out if user is coming into this page from search page (tutee) or profile page (tutor)
+        String sourcePage = extras.getString("SourcePage");
+        if(sourcePage.equals("SearchTutor")){
+            setTitle(R.string.title_activity_search_tutor);
+        }
+        else if(sourcePage.equals("EditProfile")){
+            setTitle("replace later");
+        }
+
+
         Button submitButton = findViewById(R.id.submitButton);
 
         submitButton.setOnClickListener(this);

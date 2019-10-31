@@ -3,6 +3,7 @@ package com.example.tutorsearcherandroid;
 import androidx.appcompat.app.AppCompatActivity;
 import tutor.searcher.TutorSearcher.Request;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -44,7 +45,14 @@ public class SearchTutor extends AppCompatActivity {
 //                attributes.put("time","1,10,11,20");
                 Client myClient = new Client("search", attributes);
                 myClient.execute();
+                openAvailabilityActivity();
             }
         });
+    }
+
+    protected void openAvailabilityActivity(){
+        Intent i = new Intent(this, AvailabilityActivity.class);
+        i.putExtra("SourcePage","SearchTutor");
+        startActivity(i);
     }
 }
