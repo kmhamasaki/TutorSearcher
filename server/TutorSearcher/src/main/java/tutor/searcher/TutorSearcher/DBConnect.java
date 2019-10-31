@@ -30,32 +30,26 @@ public class DBConnect {
 	private Connection conn;
 	private int numUsers = 0;
 	
-	public DBConnect(String SQLName, String username, String password) {
-		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/" + SQLName + "?user="
-					+ username + "&password=" + password + "&useSSL=false&serverTimezone=UTC");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	public DBConnect() {
+		
 	}
-	
 	public DBConnect(JdbcTemplate jdbc) {
 		
 		this.jdbc = jdbc;
 	}
-	
-	public DBConnect() {
-		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/" + "TutorSearcher" + "?user="
-					+ "root" + "&password=" + "password" + "&useSSL=false&serverTimezone=UTC");
-			PreparedStatement ps = null;
-
-			ps = conn.prepareStatement("DELETE from users");
-			ps.executeUpdate();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	
+//	public DBConnect() {
+//		try {
+//			conn = DriverManager.getConnection("jdbc:mysql://localhost/" + "TutorSearcher" + "?user="
+//					+ "root" + "&password=" + "password" + "&useSSL=false&serverTimezone=UTC");
+//			PreparedStatement ps = null;
+//
+//			ps = conn.prepareStatement("DELETE from users");
+//			ps.executeUpdate();
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 	int getUserID(String email) {
 		return 0;
 	}
@@ -121,45 +115,89 @@ public class DBConnect {
 	}
 	
 	int addUser(String email, String passwordHash, String firstName, String lastName, String phoneNumber,
-			Boolean accountType, List<Integer> availability) {
+			Boolean accountType, String availability) {
 		
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		System.out.println(email);
-		System.out.println(passwordHash);
-		System.out.println(firstName);
-		System.out.println(lastName);
-		System.out.println(phoneNumber);
-		System.out.println(accountType);
-		try
-		{
-			// Check if email already exists
-			ps = conn.prepareStatement("SELECT * FROM users where email=?");
-			ps.setString(1, email);
-			rs = ps.executeQuery();
-			if(rs.next()) {
-				return -1;
-			}
-			
-			String availString = (accountType ? availability.toString() : "");
-			
-			ps = conn.prepareStatement("INSERT INTO users (user_id, email, password_hash, tutor, phone_num,"
-					+ "first_name, last_name, availability) VALUES (?,?,?,?,?,?,?,?)");
-			ps.setInt(1, ++numUsers);
-			ps.setString(2, email);
-			ps.setString(3, passwordHash);
-			ps.setBoolean(4, accountType);
-			ps.setString(5, phoneNumber);
-			ps.setString(6, firstName);
-			ps.setString(7, lastName);
-			ps.setString(8, availString);
-			
-
-			ps.executeUpdate();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}	
-		return numUsers;
+		String query = "SELECT * FROM users WHERE email=?";
+		Boolean exists = jdbc.query(query, 
+				new PreparedStatementSetter() {
+					public void setValues(PreparedStatement preparedStatement) throws SQLException {
+						preparedStatement.setString(1,  email);
+					}
+				}, 
+				 new ResultSetExtractor<Boolean>() {
+		            public Boolean extractData(ResultSet resultSet) throws SQLException,
+		              DataAccessException {
+		            	if (resultSet.next()) {
+		            		return true;
+		            	}
+		            	return false;
+		            }
+				});
+		
+		if (exists) {
+			return -1;
+		}
+		
+		String insertQuery = "INSERT INTO users (email, password_hash, tutor, phone_number,"
+			+ "first_name, last_name, availability) VALUES (?,?,?,?,?,?,?)";
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbc.update(
+		    new PreparedStatementCreator() {
+		    	@Override
+		        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+		            PreparedStatement ps =
+		                connection.prepareStatement(insertQuery, new String[] {"id"});
+		            ps.setString(1,email);  
+			        ps.setString(2,passwordHash);  
+			        ps.setBoolean(3,accountType);  
+			        ps.setString(4, phoneNumber);
+			        ps.setString(5, firstName);
+			        ps.setString(6, lastName);
+			        ps.setString(7, availability);
+		            return ps;
+		        }
+		    },
+		    keyHolder);
+		System.out.println(keyHolder.getKey().intValue());
+		return keyHolder.getKey().intValue();
+		
+//		PreparedStatement ps = null;
+//		ResultSet rs = null;
+//		System.out.println(email);
+//		System.out.println(passwordHash);
+//		System.out.println(firstName);
+//		System.out.println(lastName);
+//		System.out.println(phoneNumber);
+//		System.out.println(accountType);
+//		try
+//		{
+//			// Check if email already exists
+//			ps = conn.prepareStatement("SELECT * FROM users where email=?");
+//			ps.setString(1, email);
+//			rs = ps.executeQuery();
+//			if(rs.next()) {
+//				return -1;
+//			}
+//			
+//			String availString = (accountType ? availability.toString() : "");
+//			
+//			ps = conn.prepareStatement("INSERT INTO users (user_id, email, password_hash, tutor, phone_num,"
+//					+ "first_name, last_name, availability) VALUES (?,?,?,?,?,?,?,?)");
+//			ps.setInt(1, ++numUsers);
+//			ps.setString(2, email);
+//			ps.setString(3, passwordHash);
+//			ps.setBoolean(4, accountType);
+//			ps.setString(5, phoneNumber);
+//			ps.setString(6, firstName);
+//			ps.setString(7, lastName);
+//			ps.setString(8, availString);
+//			
+//
+//			ps.executeUpdate();
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//		}	
+//		return numUsers;
 				
 	}
 	
@@ -386,26 +424,68 @@ public class DBConnect {
 	
 	User authenticate(String email, String passwordHash) {
 		// check Database to see email and password Hash
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+//		PreparedStatement ps = null;
+//		ResultSet rs = null;
+//		
+//		try {
+//			ps = conn.prepareStatement("SELECT * FROM users where email=?");
+//			ps.setString(1, email);
+//			rs = ps.executeQuery();
+//			if(rs.next()) {
+//				if(rs.getString("password_hash").equals(passwordHash)) {
+//					//int userID, String firstName, String lastName, String email, String phoneNumber, Boolean accountType
+//					return new User(rs.getInt("user_id"), rs.getString("first_name"), rs.getString("last_name"),
+//							rs.getString("email"), rs.getString("phone_num"), rs.getBoolean("tutor"));
+//				}
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		// return null if wrong login info
+//		return null;
+		String query = "SELECT * FROM users WHERE email=?";
+		User u = jdbc.query(query, 
+				new PreparedStatementSetter() {
+					public void setValues(PreparedStatement preparedStatement) throws SQLException {
+						preparedStatement.setString(1,  email);
+					}
+				}, 
+				 new ResultSetExtractor<User>() {
+		            public User extractData(ResultSet resultSet) throws SQLException,
+		              DataAccessException {
+		                if (resultSet.next()) {
+		                	System.out.println("authenticated");
+//		                	(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
+		        			//String availability)
+		                	if (resultSet.getString("password_hash").equals(passwordHash)) {
+		                		int userID = resultSet.getInt("user_id");
+			                	String firstName = resultSet.getString("first_name");
+			                	String lastName = resultSet.getString("last_name");
+			                	String email = resultSet.getString("email");
+			                	String phoneNumber = resultSet.getString("phone_number");
+			                	Boolean accountType = resultSet.getBoolean("tutor");
+			                	String availability = resultSet.getString("availability");
+			                	if (accountType) {
+			                		return new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability);
+			                	}
+			                	else {
+			                		return new Tutee(userID, firstName, lastName, email, phoneNumber, accountType);
+			                	}
+		                	}
+		                	else {
+		                		return null;
+		                	}
+		                	
+		                	
+		                	
+		                }
+		                return null;
+		            }
+				});
 		
-		try {
-			ps = conn.prepareStatement("SELECT * FROM users where email=?");
-			ps.setString(1, email);
-			rs = ps.executeQuery();
-			if(rs.next()) {
-				if(rs.getString("password_hash").equals(passwordHash)) {
-					//int userID, String firstName, String lastName, String email, String phoneNumber, Boolean accountType
-					return new User(rs.getInt("user_id"), rs.getString("first_name"), rs.getString("last_name"),
-							rs.getString("email"), rs.getString("phone_num"), rs.getBoolean("tutor"));
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		return u;
 		
-		// return null if wrong login info
-		return null;
 	}
 	
 	Boolean addTutorToClass(int tutorID, String className) {

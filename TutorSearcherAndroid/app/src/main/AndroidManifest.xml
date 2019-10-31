@@ -18,10 +18,17 @@
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Signup" />
+
         <activity
             android:name=".AvailabilityActivity"
             android:label="@string/title_activity_availability"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".SearchTutor" />
+        <activity
+            android:name=".HomeActivity"
+            android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Signup" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

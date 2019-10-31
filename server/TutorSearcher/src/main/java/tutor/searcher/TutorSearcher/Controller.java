@@ -3,6 +3,7 @@ package tutor.searcher.TutorSearcher;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -96,7 +97,7 @@ public class Controller {
 						(String)request.get("lastName"), 
 						(String)request.get("phoneNumber"),
 						request.get("accountType") == "tutor" ? true : false,
-						(List<Integer>)request.get("availability"));
+						(String)request.get("availability"));
 				
 				// if not successful in adding it
 				if(userID == -1) {
@@ -123,7 +124,7 @@ public class Controller {
 		 *  "Error: wrong email or password"
 		 *  "Success"
 		 */
-		else if (request.getRequestType() == "login") {
+		else if (request.getRequestType().equals("login")) {
 			User user = dbConnect.authenticate((String)request.get("email"), 
 					request.get("passwordHash").toString());
 			if(user == null) {
@@ -133,14 +134,44 @@ public class Controller {
 				respAttr.put("User", user);
 			}
 		} else if (request.getRequestType() == "updateinfo") {
+			User user = (User)request.getAttributes().get("user");
+			try {
+				dbConnect.updateUserInformation(user);
+			}
+			catch (Exception e) {
+				System.out.println(e.getMessage());
+				respType = "Error updating information";
+				return;
+			}
 			
+			respType = "Success";
 			
-		} else if (request.getRequestType() == "search") {
+		} else if (request.getRequestType().equals( "search")) {
+			String availability = (String)request.getAttributes().get("availability");
+			String[] timesStr = availability.split(" ");
+			List<Integer> times = new ArrayList<>();
+			for (int i = 0; i < timesStr.length; i++) {
+				times.add(Integer.parseInt(timesStr[i]));
+			}
+			String className = (String)request.getAttributes().get("className");
+			List<Tutor> tutors = dbConnect.searchTutors(times, className);
+			respType = "Success";
+			respAttr.put("results", tutors);
 
-		} else if (request.getRequestType() == "newrequest") {
+		} else if (request.getRequestType().equals("newrequest")) {
+			int tuteeID = (int)request.getAttributes().get("tuteeID");
+			int tutorID = (int)request.getAttributes().get("tutorID");
+			String className = (String)request.getAttributes().get("className");
+			String time = (String)request.getAttributes().get("time");
+			int status = (int)request.getAttributes().get("status");
+
+			dbConnect.addRequest(tuteeID, tutorID, className, time, status);
 			
-		} else if (request.getRequestType() == "viewrequests") {
-			
+		} else if (request.getRequestType().equals("viewrequests")) {
+			int userID = (int)request.getAttributes().get("userID");
+			List<TutorRequest> requests = dbConnect.getRequests(userID);
+			respType = "Success";
+			respAttr.put("requests", requests);
 		}
 		System.out.print(respType);
 		requestThread.sendResponse(new Request(respType, respAttr));
