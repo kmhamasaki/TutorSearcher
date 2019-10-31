@@ -12,12 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".TabbedAvailabilityActivity"
+            android:label="@string/title_activity_tabbed_availability"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".AvailabilityActivity"
             android:label="@string/title_activity_availability" />
-
         <activity
             android:name=".SearchTutor"
-            android:label="@string/title_activity_search_tutor"/>
+            android:label="@string/title_activity_search_tutor" />
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"

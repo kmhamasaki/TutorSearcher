@@ -51,7 +51,7 @@ public class SearchTutor extends AppCompatActivity {
     }
 
     protected void openAvailabilityActivity(){
-        Intent i = new Intent(this, AvailabilityActivity.class);
+        Intent i = new Intent(this, TabbedAvailabilityActivity.class);
         i.putExtra("SourcePage","SearchTutor");
         startActivity(i);
     }
