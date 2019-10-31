@@ -14,16 +14,7 @@
         <TableLayout
             android:id="@+id/requests_table_layout"
             android:layout_width="match_parent"
-            android:layout_height="10dp">
-
-            <TableRow android:id="@+id/request_row">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="asdada" />
-            </TableRow>
-
-        </TableLayout>
+            android:layout_height="10dp"/>
         
     </ScrollView>
     
