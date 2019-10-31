@@ -8,7 +8,7 @@ import tutor.searcher.TutorSearcher.Request;
 
 import java.util.HashMap;
 
-public class Signup extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
