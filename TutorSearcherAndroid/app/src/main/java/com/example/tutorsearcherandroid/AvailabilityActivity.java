@@ -30,7 +30,7 @@ public class AvailabilityActivity extends AppCompatActivity implements View.OnCl
     }
 
     public void openNextActivity(){
-        Intent i = new Intent(this, Signup.class);
+        Intent i = new Intent(this, SignupActivity.class);
         startActivity(i);
         finish();
     }

@@ -79,18 +79,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void openSignupActivity(){
-        Intent i = new Intent(this, Signup.class);
+        Intent i = new Intent(this, SignupActivity.class);
         startActivity(i);
     }
 
     public void openHomeActivity(String accountType) {
         Intent i = new Intent(this, HomeActivity.class);
-    }
-
-    public void openLoginActivity(String accountType){
-        Intent i = new Intent(this,HomeActivity.class);
-        i.putExtra("accountType",accountType);
         startActivity(i);
         finish();
     }
+
 }
