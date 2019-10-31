@@ -97,7 +97,7 @@ public class Controller {
 						(String)request.get("lastName"), 
 						(String)request.get("phoneNumber"),
 						request.get("accountType") == "tutor" ? true : false,
-						(List<Integer>)request.get("availability"));
+						(String)request.get("availability"));
 				
 				// if not successful in adding it
 				if(userID == -1) {
