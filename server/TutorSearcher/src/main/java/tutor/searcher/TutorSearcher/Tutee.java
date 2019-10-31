@@ -9,6 +9,11 @@ public class Tutee extends User {
 		super(userId, firstName, lastName, email, phoneNumber, passwordHash, accountType, pendingRequests, acceptedRequests, rejectedRequests);
 	}
 
+	public Tutee(int userID, String firstName, String lastName, String email, String phoneNumber, Boolean accountType) {
+		// TODO Auto-generated constructor stub
+		super(userID, firstName, lastName, email, phoneNumber, accountType);
+	}
+
 	void sendRequest(TutorRequest request) {
 		return;
 	}
