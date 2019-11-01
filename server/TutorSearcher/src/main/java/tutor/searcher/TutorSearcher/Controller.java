@@ -33,7 +33,6 @@ public class Controller {
 		System.out.println();
 		
 		try {
-			dbConnect = new DBConnect();
 			System.out.println("Attempting to bind to port " + port);
 			ss = new ServerSocket(port);
 			System.out.println("Successfully bound to port " + port);

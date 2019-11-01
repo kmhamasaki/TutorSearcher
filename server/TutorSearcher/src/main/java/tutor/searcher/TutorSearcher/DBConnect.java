@@ -139,7 +139,7 @@ public class DBConnect {
 		}
 		
 		String insertQuery = "INSERT INTO users (email, password_hash, tutor, phone_number,"
-			+ "first_name, last_name, availability) VALUES (?,?,?,?,?,?,?)";
+			+ "first_name, last_name) VALUES (?,?,?,?,?,?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbc.update(
 		    new PreparedStatementCreator() {
