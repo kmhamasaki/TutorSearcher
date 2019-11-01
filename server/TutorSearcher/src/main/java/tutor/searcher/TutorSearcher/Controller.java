@@ -27,45 +27,13 @@ public class Controller {
 
 	private static ServerSocket ss = null;
 
-	Controller() {
-		System.out.println("Controller constructor");
-		System.out.println("Launching --Controller--");
-		System.out.println();
-		
-		try {
-
-			System.out.println("Attempting to bind to port " + port);
-			ss = new ServerSocket(port);
-			System.out.println("Successfully bound to port " + port);
-			System.out.println();
-
-		} catch (IOException e) {
-
-			System.out.println("Unable to bind to port " + port);
-			System.out.println();
-		}
-
-		while (true) {
-			Socket controllerThreadsSocket = null;
-			try {
-				controllerThreadsSocket = ss.accept();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			// Keep track of the sockets and threads to effectively log out user
-			RequestThread rt = new RequestThread(controllerThreadsSocket, this);
-			requestThreadsSockets.put(rt, controllerThreadsSocket);
-		}
-	}
-	
 	@PostConstruct
 	void startController() {
 		System.out.println("Launching --Controller--");
 		System.out.println();
 		
 		try {
-
+			dbConnect = new DBConnect();
 			System.out.println("Attempting to bind to port " + port);
 			ss = new ServerSocket(port);
 			System.out.println("Successfully bound to port " + port);

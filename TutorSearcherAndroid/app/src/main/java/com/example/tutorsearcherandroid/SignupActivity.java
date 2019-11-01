@@ -96,7 +96,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void openAvailabilityActivity() {
-        Intent i = new Intent(this, AvailabilityActivity.class);
+        Intent i = new Intent(this, TabbedAvailabilityActivity.class);
         startActivity(i);
         finish();
     }
