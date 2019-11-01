@@ -105,10 +105,10 @@ public class Controller {
 				} else {
 					respType = "Success";
 					respAttr.put("userID", Integer.toString(userID));
-					if(request.get("accountType") == "tutor") {
-				    for (String className : (List<String>) request.get("classes")) {
-				        dbConnect.addTutorToClass(userID, className);
-				    }
+						if(request.get("accountType") == "tutor") {
+					    for (String className : (List<String>) request.get("classes")) {
+					        dbConnect.addTutorToClass(userID, className);
+					    }
 					}
 				}
 			}
