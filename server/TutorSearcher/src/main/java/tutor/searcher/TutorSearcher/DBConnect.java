@@ -115,7 +115,7 @@ public class DBConnect {
 	}
 	
 	int addUser(String email, String passwordHash, String firstName, String lastName, String phoneNumber,
-			Boolean accountType, String availability) {
+			Boolean accountType) {
 		
 		String query = "SELECT * FROM users WHERE email=?";
 		Boolean exists = jdbc.query(query, 
@@ -153,7 +153,6 @@ public class DBConnect {
 			        ps.setString(4, phoneNumber);
 			        ps.setString(5, firstName);
 			        ps.setString(6, lastName);
-			        ps.setString(7, availability);
 		            return ps;
 		        }
 		    },
