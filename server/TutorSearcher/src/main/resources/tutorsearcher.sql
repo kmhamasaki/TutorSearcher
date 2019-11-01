@@ -10,7 +10,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema tutorsearcher
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `tutorsearcher` ;
 
 -- -----------------------------------------------------
 -- Schema tutorsearcher
@@ -34,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `tutorsearcher`.`users` (
   UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
+AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
