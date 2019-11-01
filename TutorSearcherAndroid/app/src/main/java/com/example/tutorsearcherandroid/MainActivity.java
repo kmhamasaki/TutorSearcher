@@ -7,6 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import tutor.searcher.TutorSearcher.Request;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -70,9 +76,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // authentication function <- FUNCTION NEEDS TO RETURN ACCOUNT TYPE (tutor or tutee)
                 // FILL IN CAM
 
-                // process errors
 
-                // if authentication is finished, go to home page
+                HashMap<String, Object> attr = new HashMap<>();
+                attr.put("email",((android.widget.TextView)findViewById(R.id.username)).getText().toString());
+                String unhashedPassword = ((android.widget.TextView)findViewById(R.id.password)).getText().toString();
+
+                //Hash Password using MD5
+                String hashedPassword = "";
+                try{
+                    MessageDigest md = MessageDigest.getInstance("MD5");
+                    byte[] messageDigest = md.digest(unhashedPassword.getBytes());
+                    BigInteger no = new BigInteger(1, messageDigest);
+                    hashedPassword = no.toString(16);
+                    while (hashedPassword.length() < 32) {
+                        hashedPassword = "0" + hashedPassword;
+                    }
+                    System.out.println(hashedPassword);
+                }catch(NoSuchAlgorithmException e){
+                    e.printStackTrace();
+                }
+                attr.put("passwordHash", hashedPassword);
+
+                //TODO: Connect to backend
+                //Pass all inputs to backend
+//                Client client = new Client("login",attr);
+//                client.execute();
+
+                // process errors
+//                Request response = client.getResponse();
+                
+//                if(response.getRequestType().equals("Error: wrong email or password")){
+//                    System.out.println("Error: wrong email or password");
+//                    //TODO: Reveal error message
+//                }else{
+//                    // if authentication is finished, go to home page
+//                    openHomeActivity("Tutee");
+//                    break;
+//                }
                 openHomeActivity("Tutee");
                 break;
         }
@@ -89,5 +129,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(i);
         finish();
     }
+
 
 }
