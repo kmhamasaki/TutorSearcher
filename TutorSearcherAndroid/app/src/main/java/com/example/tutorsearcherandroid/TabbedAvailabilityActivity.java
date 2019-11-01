@@ -59,6 +59,10 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
             pageTitle.setText("Edit Availability");
             submitButton.setText("Save");
         }
+        else if(sourcePage.equals("Signup")){
+            pageTitle.setText("Set Your Availability");
+            submitButton.setText("Save");
+        }
     }
 
     public void onFragmentInteraction(Uri uri){
@@ -95,6 +99,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
 
         if(sourcePage.equals("SearchTutor")){
             // ***INSERT CODE TO SEND TO BACKEND HERE***
+                // we can probably create a function for this because it's used all the time?
 
             // proceed to search result page
         }
@@ -103,6 +108,15 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
 
 
             // return back to edit profile page
+        }
+        else if(sourcePage.equals("Signup")){
+            // ***INSERT CODE TO SEND TO BACKEND HERE***
+
+
+            // go to home page
+            Intent i = new Intent(this, HomeActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
         }
 
     }

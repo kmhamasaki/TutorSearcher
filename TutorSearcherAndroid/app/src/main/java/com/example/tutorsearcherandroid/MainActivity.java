@@ -132,8 +132,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void openHomeActivity(String accountType) {
         Intent i = new Intent(this, HomeActivity.class);
         i.putExtra("AccountType", accountType);
-        startActivity(i);
         finish();
+        startActivity(i);
     }
 
 
