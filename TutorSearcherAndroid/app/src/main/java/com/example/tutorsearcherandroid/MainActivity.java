@@ -99,24 +99,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 //TODO: Connect to backend
                 //Pass all inputs to backend
+                System.out.println(attr.get("email"));
+                System.out.println(attr.get("passwordHash"));
                 Client client = new Client("login",attr);
                 client.execute();
 
                 // process errors
-                Request response = client.getResponse();
-                if(response == null){
-                    System.out.println("DB Connection Error");
+
+                Request response = null;
+                while(response == null) {
+                    response = client.getResponse();
                 }
-                else if(response.getRequestType().equals("Error: wrong email or password")){
+                if(response.getRequestType().equals("Error: wrong email or password")){
                     System.out.println("Error: wrong email or password");
                     //TODO: Reveal error message
                 }else{
                     // if authentication is finished, go to home page
+                    System.out.println(response.getRequestType());
                     openHomeActivity("Tutee");
                     break;
                 }
-                openHomeActivity("Tutee");
-                break;
+//                openHomeActivity("Tutee");
+//                break;
         }
     }
 
