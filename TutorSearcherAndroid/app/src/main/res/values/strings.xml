@@ -29,6 +29,10 @@
         <item>CSCI 170</item>
         <item>CSCI 201</item>
         <item>CSCI 270</item>
+        <item>CSCI 310</item>
+        <item>CSCI 356</item>
+        <item>CSCI 360</item>
+        <item>CSCI 401</item>
     </string-array>
     <string name="title_activity_home">HomeActivity</string>
     <string name="submit">Submit</string>
