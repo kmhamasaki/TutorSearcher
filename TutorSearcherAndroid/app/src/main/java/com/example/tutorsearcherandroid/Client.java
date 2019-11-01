@@ -44,6 +44,7 @@ public class Client extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... arg0) {
+        System.out.println("Client.doInBackground");
         Socket socket = null;
         Request serverData = null;
         try {

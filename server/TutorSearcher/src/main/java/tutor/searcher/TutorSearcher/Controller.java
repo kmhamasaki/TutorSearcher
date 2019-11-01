@@ -33,7 +33,6 @@ public class Controller {
 		System.out.println();
 		
 		try {
-
 			System.out.println("Attempting to bind to port " + port);
 			ss = new ServerSocket(port);
 			System.out.println("Successfully bound to port " + port);
@@ -79,39 +78,34 @@ public class Controller {
 		 *	List<Integer> "availability"
 		 * Outgoing requestTypes
 		 *	"Error: email exists"
-		 *	"Error: not USC email"
 		 *	"Success"
 		 * Outgoing attributes
 		 *  String "userID"
 		 */		
 		if(request.getRequestType().equals("signup")) {
-			// If not a USC email, return error
-			if(((String)request.get("email")).indexOf("@usc.edu") == -1) {
-				respType = "Error: not USC email";
-				System.out.println((String)request.get("email"));
+			// get UserID to send back
+			String email = (String) request.get("email");
+			String passwordHash = (String)request.get("passwordHash");
+			String firstName = (String)request.get("firstName");
+			String lastName = (String)request.get("lastName");
+			String phoneNumber = (String)request.get("phoneNumber");
+
+			Boolean accountType = (Boolean)request.get("accountType");
+			int userID = dbConnect.addUser(email, passwordHash, firstName, lastName, phoneNumber, accountType);
+
+			// if not successful in adding it
+			if(userID == -1) {
+				respType = "Error: email exists";
 			} else {
-				// get UserID to send back
-				int userID = dbConnect.addUser((String)request.get("email"), 
-						(String)request.get("passwordHash"), 
-						(String)request.get("firstName"), 
-						(String)request.get("lastName"), 
-						(String)request.get("phoneNumber"),
-						request.get("accountType") == "tutor" ? true : false,
-						(String)request.get("availability"));
-				
-				// if not successful in adding it
-				if(userID == -1) {
-					respType = "Error: email exists";
-				} else {
-					respType = "Success";
-					respAttr.put("userID", Integer.toString(userID));
-					if(request.get("accountType") == "tutor") {
-				    for (String className : (List<String>) request.get("classes")) {
-				        dbConnect.addTutorToClass(userID, className);
-				    }
+				respType = "Success";
+				respAttr.put("userID", Integer.toString(userID));
+				if(request.get("accountType") == "tutor") {
+					for (String className : (List<String>) request.get("classes")) {
+						dbConnect.addTutorToClass(userID, className);
 					}
 				}
 			}
+
 		} 
 		
 		/** 
