@@ -1,10 +1,10 @@
 package tutor.searcher.TutorSearcher;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 
-public class TutorRequest {
+public class TutorRequest implements Serializable {
 	private int requestID;
 	private int tuteeID;
 	private String tuteeName;
