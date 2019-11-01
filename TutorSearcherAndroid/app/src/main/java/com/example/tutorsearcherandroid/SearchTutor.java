@@ -11,13 +11,10 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.HashMap;
 
-public class SearchTutor extends AppCompatActivity {
-    TextView serverResponse;
+public class SearchTutor extends AppCompatActivity implements View.OnClickListener{
     Spinner classSpinner;
     Button submitButton;
-    Request request;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,28 +28,20 @@ public class SearchTutor extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         classSpinner.setAdapter(adapter);
 
-        //Temp Response View
-        serverResponse = findViewById(R.id.responseText);
-
         //Submit Button
         submitButton = findViewById(R.id.submit_button);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HashMap<String,Object> attributes = new HashMap<String,Object>();
+        submitButton.setOnClickListener(this);
+    }
 
-//                attributes.put("class","CSCI 103");
-//                attributes.put("time","1,10,11,20");
-                Client myClient = new Client("search", attributes);
-                myClient.execute();
-                openAvailabilityActivity();
-            }
-        });
+    public void onClick(View v){
+        openAvailabilityActivity();
     }
 
     protected void openAvailabilityActivity(){
         Intent i = new Intent(this, TabbedAvailabilityActivity.class);
         i.putExtra("SourcePage","SearchTutor");
+        String className = classSpinner.getSelectedItem().toString();
+        i.putExtra("ClassName",className);
         startActivity(i);
     }
 }
