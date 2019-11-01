@@ -16,9 +16,6 @@
             android:label="@string/title_activity_tabbed_availability"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".AvailabilityActivity"
-            android:label="@string/title_activity_availability" />
-        <activity
             android:name=".SearchTutor"
             android:label="@string/title_activity_search_tutor" />
         <activity
