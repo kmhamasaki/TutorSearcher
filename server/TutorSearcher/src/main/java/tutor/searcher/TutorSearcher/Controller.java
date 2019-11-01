@@ -102,6 +102,7 @@ public class Controller {
 				if(request.get("accountType") == "tutor") {
 					for (String className : (List<String>) request.get("classes")) {
 						dbConnect.addTutorToClass(userID, className);
+				
 					}
 				}
 			}
