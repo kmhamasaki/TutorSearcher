@@ -61,7 +61,7 @@ public class Controller {
 
 	@SuppressWarnings("unchecked")
 	void processRequest(Request request, RequestThread requestThread) {
-
+		System.out.println(request.getRequestType());
 		HashMap<String, Object> respAttr = new HashMap<String, Object>();
 		String respType = "";
 		requestThreadsSockets.remove(requestThread);

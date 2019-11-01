@@ -455,7 +455,6 @@ public class DBConnect {
 		            public User extractData(ResultSet resultSet) throws SQLException,
 		              DataAccessException {
 		                if (resultSet.next()) {
-		                	System.out.println("authenticated");
 //		                	(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
 		        			//String availability)
 		                	if (resultSet.getString("password_hash").equals(passwordHash)) {
@@ -466,6 +465,8 @@ public class DBConnect {
 			                	String phoneNumber = resultSet.getString("phone_number");
 			                	Boolean accountType = resultSet.getBoolean("tutor");
 			                	String availability = resultSet.getString("availability");
+			                	System.out.println("authenticated");
+			                	System.out.println(firstName + " " + lastName);
 			                	if (accountType) {
 			                		return new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability);
 			                	}

@@ -40,9 +40,11 @@ public class DummyClient extends Thread {
 
     public void dummyRequest() {
         HashMap<String, Object> attributes = new HashMap<String, Object>();
-        attributes.put("hello", "world");
+        attributes.put("email", "alicesle@usc.edu");
+        attributes.put("passwordHash", "newpassword");
+        
 
-        Request req = new Request("testing", attributes);
+        Request req = new Request("login", attributes);
         sendRequest(req);
     }
 
