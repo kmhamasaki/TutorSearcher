@@ -32,6 +32,10 @@
     <string name="submit">Submit</string>
     <string name="title_activity_search_tutor">Search for a Tutor</string>
     <string name="title_activity_tabbed_availability">TabbedAvailabilityActivity</string>
+    <string name="logout">Logout</string>
+    <string name="search_for_tutor">Search for a Tutor</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="view_requests">View Requests</string>
 
 
     <string name="monday_short">Mon</string>

@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // process errors
 
                 // if authentication is finished, go to home page
-                openHomeActivity("");
+                openHomeActivity("Tutee");
                 break;
         }
     }
@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void openHomeActivity(String accountType) {
         Intent i = new Intent(this, HomeActivity.class);
+        i.putExtra("AccountType", accountType);
         startActivity(i);
         finish();
     }
