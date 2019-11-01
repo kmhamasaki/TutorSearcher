@@ -19,8 +19,6 @@
     <string name="no_account_message">Don\'t have an account?</string>
     <string name="prompt_user_to_register">Register for account now.</string>
     <string name="title_activity_availability">AvailabilityActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
     <string-array name="class_array">
         <item>CSCI 102</item>
         <item>CSCI 103</item>
@@ -29,7 +27,30 @@
         <item>CSCI 170</item>
         <item>CSCI 201</item>
         <item>CSCI 270</item>
+        <item>CSCI 310</item>
+        <item>CSCI 356</item>
+        <item>CSCI 360</item>
+        <item>CSCI 401</item>
     </string-array>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home">Welcome to Tutor Searcher</string>
     <string name="submit">Submit</string>
+    <string name="title_activity_search_tutor">Search for a Tutor</string>
+    <string name="title_activity_tabbed_availability">TabbedAvailabilityActivity</string>
+    <string name="logout">Logout</string>
+    <string name="search_for_tutor">Search for a Tutor</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="view_requests">View Requests</string>
+
+
+    <string name="monday_short">Mon</string>
+    <string name="tuesday_short">Tue</string>
+    <string name="wednesday_short">Wed</string>
+    <string name="thursday_short">Thu</string>
+    <string name="friday_short">Fri</string>
+    <string name="saturday_short">Sat</string>
+    <string name="sunday_short">Sun</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

@@ -21,15 +21,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         Button viewRequestButton = findViewById(R.id.view_requests_button);
         Button searchButton = findViewById(R.id.search_button);
         Button updateProfileButton = findViewById(R.id.update_profile_button);
