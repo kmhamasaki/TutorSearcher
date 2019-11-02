@@ -10,6 +10,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.regex.*;
 
@@ -55,6 +58,9 @@ public class SignupActivity extends AppCompatActivity {
             RadioButton selectedButton = findViewById(selectedId);
             attr.put("accountType", (selectedButton.getText().equals("Tutee")));
             System.out.println(selectedButton.getText());
+            //HashPassword
+            passwordHash = hashPassword(passwordHash);
+            System.out.println(passwordHash);
 
             attr.put("email", email);
             attr.put("passwordHash", passwordHash);
@@ -108,6 +114,23 @@ public class SignupActivity extends AppCompatActivity {
          */
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
+    }
+
+    private String hashPassword(String unhashedPassword){
+        String hashedPassword = "";
+        try{
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(unhashedPassword.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            hashedPassword = no.toString(16);
+            while (hashedPassword.length() < 32) {
+                hashedPassword = "0" + hashedPassword;
+            }
+            return hashedPassword;
+        }catch(NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
 }

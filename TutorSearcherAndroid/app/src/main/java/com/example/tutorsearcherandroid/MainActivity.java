@@ -82,19 +82,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String unhashedPassword = ((android.widget.TextView)findViewById(R.id.password)).getText().toString();
 
                 //Hash Password using MD5
-                String hashedPassword = "";
-                try{
-                    MessageDigest md = MessageDigest.getInstance("MD5");
-                    byte[] messageDigest = md.digest(unhashedPassword.getBytes());
-                    BigInteger no = new BigInteger(1, messageDigest);
-                    hashedPassword = no.toString(16);
-                    while (hashedPassword.length() < 32) {
-                        hashedPassword = "0" + hashedPassword;
-                    }
-                    System.out.println(hashedPassword);
-                }catch(NoSuchAlgorithmException e){
-                    e.printStackTrace();
-                }
+                String hashedPassword = hashPassword(unhashedPassword);
+                System.out.println(hashedPassword);
                 attr.put("passwordHash", hashedPassword);
 
                 //TODO: Connect to backend
@@ -115,7 +104,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     //TODO: Reveal error message
                 }else{
                     // if authentication is finished, go to home page
-                    System.out.println(response.getRequestType());
+                    System.out.println("Success: Logging in user - ");
+                    //TODO: Save user information in session
                     openHomeActivity("Tutee");
                     break;
                 }
@@ -136,5 +126,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(i);
     }
 
+    private String hashPassword(String unhashedPassword){
+        String hashedPassword = "";
+        try{
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(unhashedPassword.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            hashedPassword = no.toString(16);
+            while (hashedPassword.length() < 32) {
+                hashedPassword = "0" + hashedPassword;
+            }
+            return hashedPassword;
+        }catch(NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 
 }
