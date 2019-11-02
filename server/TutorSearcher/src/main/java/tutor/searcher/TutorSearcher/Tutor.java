@@ -1,9 +1,10 @@
 package tutor.searcher.TutorSearcher;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tutor extends User {
+public class Tutor extends User implements Serializable {
 	List<Integer> timeAvailabilities;
 	String timeAvailability;
 	List<String> classesTutoring;

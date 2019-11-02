@@ -60,7 +60,7 @@ public class Controller {
 
 	@SuppressWarnings("unchecked")
 	void processRequest(Request request, RequestThread requestThread) {
-
+		System.out.println(request.getRequestType());
 		HashMap<String, Object> respAttr = new HashMap<String, Object>();
 		String respType = "";
 		requestThreadsSockets.remove(requestThread);
@@ -102,6 +102,7 @@ public class Controller {
 				if(request.get("accountType") == "tutor") {
 					for (String className : (List<String>) request.get("classes")) {
 						dbConnect.addTutorToClass(userID, className);
+			
 					}
 				}
 			}

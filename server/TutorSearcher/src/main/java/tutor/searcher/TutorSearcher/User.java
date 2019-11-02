@@ -2,7 +2,7 @@ package tutor.searcher.TutorSearcher;
 import java.io.Serializable;
 import java.util.List;
 
-public class User implements Serializable{
+public class User implements Serializable {
 	private static final long serialVersionUID = 1;
 	private int UserID;
 	private String firstName;
