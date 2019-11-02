@@ -82,39 +82,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String unhashedPassword = ((android.widget.TextView)findViewById(R.id.password)).getText().toString();
 
                 //Hash Password using MD5
-                String hashedPassword = "";
-                try{
-                    MessageDigest md = MessageDigest.getInstance("MD5");
-                    byte[] messageDigest = md.digest(unhashedPassword.getBytes());
-                    BigInteger no = new BigInteger(1, messageDigest);
-                    hashedPassword = no.toString(16);
-                    while (hashedPassword.length() < 32) {
-                        hashedPassword = "0" + hashedPassword;
-                    }
-                    System.out.println(hashedPassword);
-                }catch(NoSuchAlgorithmException e){
-                    e.printStackTrace();
-                }
+                String hashedPassword = hashPassword(unhashedPassword);
+                System.out.println(hashedPassword);
                 attr.put("passwordHash", hashedPassword);
 
                 //TODO: Connect to backend
                 //Pass all inputs to backend
-//                Client client = new Client("login",attr);
-//                client.execute();
+                System.out.println(attr.get("email"));
+                System.out.println(attr.get("passwordHash"));
+                Client client = new Client("login",attr);
+                client.execute();
 
                 // process errors
-//                Request response = client.getResponse();
-                
-//                if(response.getRequestType().equals("Error: wrong email or password")){
-//                    System.out.println("Error: wrong email or password");
-//                    //TODO: Reveal error message
-//                }else{
-//                    // if authentication is finished, go to home page
-//                    openHomeActivity("Tutee");
-//                    break;
-//                }
-                openHomeActivity("Tutee");
-                break;
+
+                Request response = null;
+                while(response == null) {
+                    response = client.getResponse();
+                }
+                if(response.getRequestType().equals("Error: wrong email or password")){
+                    System.out.println("Error: wrong email or password");
+                    //TODO: Reveal error message
+                }else{
+                    // if authentication is finished, go to home page
+                    System.out.println("Success: Logging in user - ");
+                    //TODO: Save user information in session
+                    openHomeActivity("Tutee");
+                    break;
+                }
+//                openHomeActivity("Tutee");
+//                break;
         }
     }
 
@@ -130,5 +126,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         finish();
     }
 
+    private String hashPassword(String unhashedPassword){
+        String hashedPassword = "";
+        try{
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(unhashedPassword.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            hashedPassword = no.toString(16);
+            while (hashedPassword.length() < 32) {
+                hashedPassword = "0" + hashedPassword;
+            }
+            return hashedPassword;
+        }catch(NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 
 }
