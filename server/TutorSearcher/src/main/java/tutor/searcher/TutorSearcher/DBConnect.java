@@ -236,7 +236,8 @@ public class DBConnect {
 			        ps.setString(3,className);  
 			        ps.setString(4,  time);
 			        ps.setInt(5, status);
-			        ps.setDate(6, new java.sql.Date(System.currentTimeMillis()));
+			        Date date = new Date();
+			        ps.setString(6, date.toString());
 		            return ps;
 		        }
 		    },
@@ -488,6 +489,17 @@ public class DBConnect {
 	}
 	
 	Boolean addTutorToClass(int tutorID, ArrayList<String> className) {
+		//delete all classes tutor is tutoring first (want overwrite)
+		String deleteQuery = "DELETE FROM classes WHERE tutor_id=?";
+		jdbc.execute(deleteQuery, new PreparedStatementCallback<Boolean> () {
+			@Override
+			public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
+				ps.setInt(1, tutorID);
+				
+				return ps.execute();
+			}
+		});
+		
 		String values = "";
 		for (int i = 0; i < className.size(); i++) {
 			if (i == className.size() - 1) {

@@ -162,7 +162,7 @@ public class Controller {
 		 *  String className
 		 * outgoing attributes:
 		 * 	String responseType "Success" 
-		 * 	List<Tutor> tutors 
+		 * 	List<Tutor> results 
 		 */
 		else if (request.getRequestType().equals("search")) {
 			ArrayList<Integer> times = (ArrayList<Integer>)request.getAttributes().get("availability");
