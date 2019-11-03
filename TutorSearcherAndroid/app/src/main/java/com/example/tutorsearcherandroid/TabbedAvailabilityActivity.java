@@ -134,7 +134,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
             // go to home page
             Intent i = new Intent(this, HomeActivity.class);
             i.putExtra("UserId",UserId);
-            i.putExtra("AccountType", UserId);
+            i.putExtra("AccountType", AccountType);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
         }
