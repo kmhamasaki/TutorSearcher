@@ -165,12 +165,7 @@ public class Controller {
 		 * 	List<Tutor> tutors 
 		 */
 		else if (request.getRequestType().equals("search")) {
-			String availability = (String)request.getAttributes().get("availability");
-			String[] timesStr = availability.split(" ");
-			List<Integer> times = new ArrayList<>();
-			for (int i = 0; i < timesStr.length; i++) {
-				times.add(Integer.parseInt(timesStr[i]));
-			}
+			ArrayList<Integer> times = (ArrayList<Integer>)request.getAttributes().get("availability");
 			String className = (String)request.getAttributes().get("className");
 			List<Tutor> tutors = dbConnect.searchTutors(times, className);
 			respType = "Success";
