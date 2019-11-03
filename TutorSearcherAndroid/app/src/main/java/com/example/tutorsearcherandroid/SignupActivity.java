@@ -56,7 +56,7 @@ public class SignupActivity extends AppCompatActivity {
             RadioGroup rg = findViewById(R.id.tutorTuteeRadioSelector);
             int selectedId = rg.getCheckedRadioButtonId();
             RadioButton selectedButton = findViewById(selectedId);
-            attr.put("accountType", (selectedButton.getText().equals("Tutee")));
+            attr.put("accountType", (!selectedButton.getText().equals("Tutee")));
             System.out.println(selectedButton.getText());
             //HashPassword
             passwordHash = hashPassword(passwordHash);
@@ -88,9 +88,10 @@ public class SignupActivity extends AppCompatActivity {
             else if (selectedButton.getText().equals("Tutee")) {
                 openHomeActivity();
             }
-
             // Success, tutee, go to availability page.
-            openAvailabilityActivity();
+            else {
+                openAvailabilityActivity();
+            }
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -98,13 +99,21 @@ public class SignupActivity extends AppCompatActivity {
 
     public void openHomeActivity(){
         Intent i = new Intent(this, HomeActivity.class);
+        // this destroys all activities before this page
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }
 
     public void openAvailabilityActivity() {
         Intent i = new Intent(this, TabbedAvailabilityActivity.class);
+        i.putExtra("SourcePage","Signup");
+        // this destroys all activities before this page
+        /* we are doing this because once the tutor has filled in the sign up page, he has technically
+        already signed up and his account details are in our database. so he should not be able to press
+        the back button
+         */
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
-        finish();
     }
 
     private String hashPassword(String unhashedPassword){
