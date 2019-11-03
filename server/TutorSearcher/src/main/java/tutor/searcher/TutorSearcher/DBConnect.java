@@ -532,6 +532,29 @@ public class DBConnect {
 		
 		return true;
 	}
+	
+	
+	//overwrites whatever is in there.
+	//do we need separate functions for UPDATE and ADD? 
+	void updateTutorAvailability(int userID, List<Integer> availability) {
+		
+		final String query = "UPDATE users SET availability=? WHERE user_id=?";
+		jdbc.update(
+			new PreparedStatementCreator() {
+				@Override
+				public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+					String availabilityStr = "";
+					for (int i = 0; i < availability.size(); i++) {
+						availabilityStr += availability.get(i).toString() + " ";
+					}
+					PreparedStatement ps = connection.prepareStatement(query);
+					ps.setString(1, availabilityStr);
+					ps.setInt(2, userID);
+					return ps;
+				}
+			}
+		); 
+	}
 
 	public JdbcTemplate getJdbc() {
 		return jdbc;
