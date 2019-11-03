@@ -68,7 +68,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void openMainActivity() {
         //logs user out and redirects to login page
         Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         finish();
+        startActivity(i);
     }
 }
