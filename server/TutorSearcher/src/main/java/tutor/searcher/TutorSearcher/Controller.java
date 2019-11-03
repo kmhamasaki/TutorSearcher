@@ -167,11 +167,25 @@ public class Controller {
 			List<TutorRequest> requests = dbConnect.getRequests(userID);
 			respType = "Success";
 			respAttr.put("requests", requests);
-		} else if (request.getRequestType().equals("updateavailability")) {
+		} else if (request.getRequestType().equals("updaterequeststatus")) {
+			int requestID = (int)request.getAttributes().get("requestID");
+			int newStatus = (int)request.getAttributes().get("newStatus");
+			dbConnect.updateRequestStatus(requestID, newStatus);
+		}
+		
+		else if (request.getRequestType().equals("updateavailability")) {
 			int tutorID = (int)request.getAttributes().get("tutorID");
 			ArrayList<Integer> availability = (ArrayList<Integer>)request.getAttributes().get("availability");
 			dbConnect.updateTutorAvailability(tutorID, availability);
 			
+		} else if (request.getRequestType().equals("addclass")) {
+			int tutorID = (int)request.getAttributes().get("tutorID");
+			String className = (String)request.getAttributes().get("className");
+			dbConnect.addTutorToClass(tutorID, className);
+		} else if (request.getRequestType().equals("removeclass")) {
+			int tutorID = (int)request.getAttributes().get("tutorID");
+			String className = (String)request.getAttributes().get("className");
+			dbConnect.removeTutorFromClass(tutorID, className);
 		}
 		System.out.print(respType);
 		requestThread.sendResponse(new Request(respType, respAttr));
