@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import tutor.searcher.TutorSearcher.Request;
+import tutor.searcher.TutorSearcher.Tutee;
+import tutor.searcher.TutorSearcher.Tutor;
+import tutor.searcher.TutorSearcher.User;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -105,12 +108,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }else{
                     // if authentication is finished, go to home page
                     System.out.println("Success: Logging in user - ");
-                    //TODO: Save user information in session
-                    openHomeActivity("Tutee");
-                    break;
+                    //Save User Information and Redirect to Appropriate Home Page
+                    attr = response.getAttributes();
+
+                    if(attr.get("User").getClass() == Tutor.class){
+                        System.out.println("Logging in Tutor");
+                        Tutor tutor = (Tutor) attr.get("User");
+                        int userId = tutor.getUserId();
+                        openHomeActivity("Tutor", userId);
+                        break;
+                    }else {
+                        System.out.println("Logging in Tutee");
+                        Tutee tutee = (Tutee) attr.get("User");
+                        int userId = tutee.getUserId();
+                        openHomeActivity("Tutee", userId);
+                        break;
+                    }
                 }
-//                openHomeActivity("Tutee");
-//                break;
         }
     }
 
@@ -119,9 +133,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(i);
     }
 
-    public void openHomeActivity(String accountType) {
+    public void openHomeActivity(String accountType, int userId) {
         Intent i = new Intent(this, HomeActivity.class);
         i.putExtra("AccountType", accountType);
+        i.putExtra("UserId", userId);
         finish();
         startActivity(i);
     }
