@@ -51,7 +51,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
         TextView pageTitle = (TextView)findViewById(R.id.tabbed_availability_title);
         Button submitButton = (Button)findViewById(R.id.submitButton);
 
-        if(sourcePage.equals("SearchTutor")){
+8        if(sourcePage.equals("SearchTutor")){
             pageTitle.setText(R.string.title_activity_search_tutor);
             submitButton.setText("Search");
         }
