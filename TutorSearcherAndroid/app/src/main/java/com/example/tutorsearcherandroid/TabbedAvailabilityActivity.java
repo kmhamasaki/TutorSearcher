@@ -115,6 +115,13 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
             System.out.println(className);
             Client client = new Client("search", attr);
             client.execute();
+            Request response = null;
+            while(response == null) {
+                response = client.getResponse();
+            }
+            System.out.println("Test " + response.getRequestType());
+
+            openSearchResultsActivity(response);
             // proceed to search result page
         }
         else if(sourcePage.equals("EditProfile")){
@@ -146,5 +153,11 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
             startActivity(i);
         }
 
+    }
+
+    public void openSearchResultsActivity(Request response) {
+        Intent i = new Intent(this, SearchResultsActivity.class);
+        i.putExtra("TutorList",response);
+        startActivity(i);
     }
 }
