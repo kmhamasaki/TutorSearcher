@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ChooseClasses"></activity>
+        <activity android:name=".ViewRequests"></activity>
         <activity android:name=".SearchResultsActivity"></activity>
         <activity
             android:name=".TabbedAvailabilityActivity"
