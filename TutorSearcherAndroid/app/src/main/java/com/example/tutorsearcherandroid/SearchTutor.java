@@ -17,6 +17,8 @@ public class SearchTutor extends AppCompatActivity implements View.OnClickListen
     Button submitButton;
 
     private String UserId;
+    private String AccountType;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class SearchTutor extends AppCompatActivity implements View.OnClickListen
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             UserId = extras.getString("UserId");
+            AccountType = extras.getString("AccountType");
         }
     }
 
@@ -48,8 +51,10 @@ public class SearchTutor extends AppCompatActivity implements View.OnClickListen
         Intent i = new Intent(this, TabbedAvailabilityActivity.class);
         i.putExtra("SourcePage","SearchTutor");
         String className = classSpinner.getSelectedItem().toString();
-        i.putExtra("ClassName",className);
-        i.putExtra("UserId",UserId);
+        i.putExtra("ClassName", className);
+        i.putExtra("UserId", UserId);
+        i.putExtra("AccountType", AccountType);
+
 
         startActivity(i);
     }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 public class UpdateProfile extends AppCompatActivity {
 
     private String UserId;
+    private String AccountType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

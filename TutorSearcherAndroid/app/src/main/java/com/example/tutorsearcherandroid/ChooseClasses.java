@@ -20,6 +20,8 @@ public class ChooseClasses extends AppCompatActivity {
     private ArrayList<String> selectedClasses = new ArrayList<>();
     private String sourcePage;
     private String UserId;
+    private String AccountType;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class ChooseClasses extends AppCompatActivity {
         if (extras != null) {
             sourcePage = extras.getString("SourcePage");
             UserId = extras.getString("UserId");
+            AccountType = extras.getString("AccountType");
         }
     }
 
@@ -61,8 +64,8 @@ public class ChooseClasses extends AppCompatActivity {
     public void openAvailabilityActivity() {
         Intent i = new Intent(this, TabbedAvailabilityActivity.class);
         i.putExtra("SourcePage","Signup");
-        i.putExtra("UserId","UserId");
-
+        i.putExtra("UserId", UserId);
+        i.putExtra("AccountType", AccountType);
         // this destroys all activities before this page
         /* we are doing this because once the tutor has filled in the sign up page, he has technically
         already signed up and his account details are in our database. so he should not be able to press
