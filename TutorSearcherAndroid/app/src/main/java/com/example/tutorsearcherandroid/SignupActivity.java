@@ -84,13 +84,14 @@ public class SignupActivity extends AppCompatActivity {
                 t.show();
             }
 
-            // Success, tutor, go to home page
+            // Success, tutee, go to home page
             else if (selectedButton.getText().equals("Tutee")) {
                 openHomeActivity();
             }
-            // Success, tutee, go to availability page.
+            // Success, tutor, go to availability page.
             else {
-                openAvailabilityActivity();
+                openClassesActivity();
+                //openAvailabilityActivity();
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -104,15 +105,9 @@ public class SignupActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void openAvailabilityActivity() {
-        Intent i = new Intent(this, TabbedAvailabilityActivity.class);
-        i.putExtra("SourcePage","Signup");
-        // this destroys all activities before this page
-        /* we are doing this because once the tutor has filled in the sign up page, he has technically
-        already signed up and his account details are in our database. so he should not be able to press
-        the back button
-         */
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+    public void openClassesActivity() {
+        Intent i = new Intent(this, ChooseClasses.class);
         startActivity(i);
     }
 
