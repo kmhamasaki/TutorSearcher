@@ -19,7 +19,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager rLayoutManager;
 
     private String UserId;
-
+    private String AccountType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,13 +57,15 @@ public class SearchResultsActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             UserId = extras.getString("UserId");
+            AccountType = extras.getString("AccountType");
         }
     }
 
     public void openHomeActivity(String accountType) {
         Intent i = new Intent(this, HomeActivity.class);
 //        i.putExtra("AccountType", accountType);
-        i.putExtra("UserId",UserId);
+        i.putExtra("UserId", UserId);
+        i.putExtra("AccountType", AccountType);
 
         startActivity(i);
         finish();

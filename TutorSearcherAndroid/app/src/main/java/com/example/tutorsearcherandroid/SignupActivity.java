@@ -21,6 +21,7 @@ import tutor.searcher.TutorSearcher.Request;
 public class SignupActivity extends AppCompatActivity {
 
     private String UserId;
+    private String AccountType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,8 @@ public class SignupActivity extends AppCompatActivity {
             RadioGroup rg = findViewById(R.id.tutorTuteeRadioSelector);
             int selectedId = rg.getCheckedRadioButtonId();
             RadioButton selectedButton = findViewById(selectedId);
-            attr.put("accountType", (!selectedButton.getText().equals("Tutee")));
+            attr.put("accountType", (!selectedButton.getText().toString().equals("Tutee")));
+            AccountType = selectedButton.getText().toString();
             System.out.println(selectedButton.getText());
             //HashPassword
             passwordHash = hashPassword(passwordHash);
@@ -105,7 +107,8 @@ public class SignupActivity extends AppCompatActivity {
 
     public void openHomeActivity(){
         Intent i = new Intent(this, HomeActivity.class);
-        i.putExtra("UserId",UserId);
+        i.putExtra("UserId", UserId);
+        i.putExtra("AccountType", AccountType);
 
         // this destroys all activities before this page
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -116,7 +119,8 @@ public class SignupActivity extends AppCompatActivity {
     public void openClassesActivity() {
         Intent i = new Intent(this, ChooseClasses.class);
         i.putExtra("SourcePage","Signup");
-        i.putExtra("UserId",UserId);
+        i.putExtra("UserId", UserId);
+        i.putExtra("AccountType", AccountType);
 
         startActivity(i);
     }

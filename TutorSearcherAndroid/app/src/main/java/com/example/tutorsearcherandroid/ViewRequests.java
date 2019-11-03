@@ -17,9 +17,16 @@ import tutor.searcher.TutorSearcher.TutorRequest;
 public class ViewRequests extends AppCompatActivity {
 
     private String UserId;
+    private String AccountType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            UserId = extras.getString("UserId");
+            AccountType = extras.getString("AccountType");
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_requests);
 

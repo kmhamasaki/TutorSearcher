@@ -15,6 +15,7 @@ import android.widget.Button;
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
 
     private String UserId;
+    private String AccountType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             UserId = extras.getString("UserId");
+            AccountType = extras.getString("AccountType");
         }
     }
 
@@ -65,7 +67,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void openSearchActivity() {
         //redirects to search screens
         Intent i = new Intent(this, SearchTutor.class);
-        i.putExtra("UserId",UserId);
+        i.putExtra("UserId", UserId);
+        i.putExtra("AccountType", AccountType);
 
         startActivity(i);
     }

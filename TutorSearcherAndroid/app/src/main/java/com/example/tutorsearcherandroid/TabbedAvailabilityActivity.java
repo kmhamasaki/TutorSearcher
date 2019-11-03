@@ -36,6 +36,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
     private ArrayList<Integer> selectedTimes = new ArrayList<>();
     private String sourcePage;
     private String UserId;
+    private String AccountType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
         if (extras != null) {
             sourcePage = extras.getString("SourcePage");
             UserId = extras.getString("UserId");
+            AccountType = extras.getString("AccountType");
         }
         // update Title AND Submit button message
         TextView pageTitle = (TextView)findViewById(R.id.tabbed_availability_title);
@@ -130,7 +132,8 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
 
             // go to home page
             Intent i = new Intent(this, HomeActivity.class);
-            i.putExtra("UserId","UserId");
+            i.putExtra("UserId",UserId);
+            i.putExtra("AccountType", AccountType);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
         }
