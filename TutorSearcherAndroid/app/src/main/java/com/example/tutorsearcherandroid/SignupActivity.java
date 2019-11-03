@@ -20,10 +20,13 @@ import tutor.searcher.TutorSearcher.Request;
 
 public class SignupActivity extends AppCompatActivity {
 
+    private String UserId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
     }
 
     public void onClick(View view) {
@@ -76,21 +79,24 @@ public class SignupActivity extends AppCompatActivity {
             Request response = client.getResponse();
             System.out.println(response.getRequestType());
 
-
             // Error if email already exists
             if (response.getRequestType().equals("Error: email exists")) {
                 Toast t = Toast.makeText(this, "Email already in use.",
                         Toast.LENGTH_LONG);
                 t.show();
+                return;
             }
 
-            // Success, tutor, go to home page
-            else if (selectedButton.getText().equals("Tutee")) {
+            UserId = (String) response.getAttributes().get("userID");
+
+            // Success, tutee, go to home page
+            if (selectedButton.getText().equals("Tutee")) {
                 openHomeActivity();
             }
-            // Success, tutee, go to availability page.
+            // Success, tutor, go to availability page.
             else {
-                openAvailabilityActivity();
+                openClassesActivity();
+                //openAvailabilityActivity();
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -99,20 +105,19 @@ public class SignupActivity extends AppCompatActivity {
 
     public void openHomeActivity(){
         Intent i = new Intent(this, HomeActivity.class);
+        i.putExtra("UserId",UserId);
+
         // this destroys all activities before this page
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }
 
-    public void openAvailabilityActivity() {
-        Intent i = new Intent(this, TabbedAvailabilityActivity.class);
+
+    public void openClassesActivity() {
+        Intent i = new Intent(this, ChooseClasses.class);
         i.putExtra("SourcePage","Signup");
-        // this destroys all activities before this page
-        /* we are doing this because once the tutor has filled in the sign up page, he has technically
-        already signed up and his account details are in our database. so he should not be able to press
-        the back button
-         */
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        i.putExtra("UserId",UserId);
+
         startActivity(i);
     }
 

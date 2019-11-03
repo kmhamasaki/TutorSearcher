@@ -25,6 +25,9 @@ import com.example.tutorsearcherandroid.ui.main.SectionsPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+
+import tutor.searcher.TutorSearcher.Request;
 
 public class TabbedAvailabilityActivity extends AppCompatActivity
     implements DateFragment.OnFragmentInteractionListener{
@@ -32,6 +35,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
     private static final int[] CHECKBOX_ID = new int[]{R.id.time1,R.id.time2,R.id.time3,R.id.time4,R.id.time5,R.id.time6,R.id.time7,R.id.time8};
     private ArrayList<Integer> selectedTimes = new ArrayList<>();
     private String sourcePage;
+    private String UserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             sourcePage = extras.getString("SourcePage");
+            UserId = extras.getString("UserId");
         }
         // update Title AND Submit button message
         TextView pageTitle = (TextView)findViewById(R.id.tabbed_availability_title);
@@ -110,11 +115,22 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
             // return back to edit profile page
         }
         else if(sourcePage.equals("Signup")){
-            // ***INSERT CODE TO SEND TO BACKEND HERE***
+            try {
+                HashMap<String, Object> attr = new HashMap<>();
+                attr.put("times", text);
+
+                Client client = new Client("addavailability", attr);
+                client.execute().get();
+                Request response = client.getResponse();
+                System.out.println(response.getRequestType());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 
             // go to home page
             Intent i = new Intent(this, HomeActivity.class);
+            i.putExtra("UserId","UserId");
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
         }

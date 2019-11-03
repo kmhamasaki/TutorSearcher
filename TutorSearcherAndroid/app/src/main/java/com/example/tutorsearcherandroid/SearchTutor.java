@@ -16,6 +16,8 @@ public class SearchTutor extends AppCompatActivity implements View.OnClickListen
     Spinner classSpinner;
     Button submitButton;
 
+    private String UserId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,11 @@ public class SearchTutor extends AppCompatActivity implements View.OnClickListen
         //Submit Button
         submitButton = findViewById(R.id.submit_button);
         submitButton.setOnClickListener(this);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            UserId = extras.getString("UserId");
+        }
     }
 
     public void onClick(View v){
@@ -42,6 +49,8 @@ public class SearchTutor extends AppCompatActivity implements View.OnClickListen
         i.putExtra("SourcePage","SearchTutor");
         String className = classSpinner.getSelectedItem().toString();
         i.putExtra("ClassName",className);
+        i.putExtra("UserId",UserId);
+
         startActivity(i);
     }
 }

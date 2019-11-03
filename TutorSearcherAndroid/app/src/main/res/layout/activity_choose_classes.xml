@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChooseClasses">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:layout_marginBottom="176dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:layout_editor_absoluteX="-30dp">
+
+        <CheckBox
+            android:id="@+id/CSCI102"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CSCI 102"
+            android:textSize="18sp" />
+
+        <CheckBox
+            android:id="@+id/CSCI103"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CSCI 103"
+            android:textSize="18sp" />
+
+        <CheckBox
+            android:id="@+id/CSCI104"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CSCI 104"
+            android:textSize="18sp" />
+
+        <CheckBox
+            android:id="@+id/CSCI109"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CSCI 109"
+            android:textSize="18sp" />
+
+        <CheckBox
+            android:id="@+id/CSCI170"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CSCI 170"
+            android:textSize="18sp" />
+
+        <CheckBox
+            android:id="@+id/CSCI201"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CSCI 201"
+            android:textSize="18sp" />
+
+        <CheckBox
+            android:id="@+id/CSCI270"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CSCI 270"
+            android:textSize="18sp" />
+
+        <CheckBox
+            android:id="@+id/CSCI310"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CSCI 310"
+            android:textSize="18sp" />
+
+        <CheckBox
+            android:id="@+id/CSCI356"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CSCI 356"
+            android:textSize="18sp" />
+
+        <CheckBox
+            android:id="@+id/CSCI360"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CSCI 360"
+            android:textSize="18sp" />
+
+        <CheckBox
+            android:id="@+id/CSCI401"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CSCI 401"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="119dp"
+        android:layout_marginLeft="119dp"
+        android:layout_marginTop="79dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginRight="120dp"
+        android:text="Choose Classes"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/continueButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="163dp"
+        android:layout_marginLeft="163dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="155dp"
+        android:layout_marginRight="155dp"
+        android:layout_marginBottom="57dp"
+        android:text="Continue"
+        android:onClick="onClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
