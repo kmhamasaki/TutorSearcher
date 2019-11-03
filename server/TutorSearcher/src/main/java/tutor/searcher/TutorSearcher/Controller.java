@@ -99,12 +99,7 @@ public class Controller {
 			} else {
 				respType = "Success";
 				respAttr.put("userID", Integer.toString(userID));
-				if(request.get("accountType") == "tutor") {
-					for (String className : (List<String>) request.get("classes")) {
-						dbConnect.addTutorToClass(userID, className);
-			
-					}
-				}
+				
 			}
 
 		} 
@@ -128,6 +123,23 @@ public class Controller {
 				respType = "Success";
 				respAttr.put("User", user);
 			}
+		/**
+		 * incoming requestType: "updateinfo"
+		 * updates user profile information
+		 * expects a User object filled with *all variables below* filled, as it will
+		 * overwrite DB information based on what is in this user object
+		 * incoming attributes
+		 * 	User user
+		 * inside the user object:
+		 * private String firstName;
+			private String lastName;
+			private String phoneNumber;
+			private String passwordHash;
+			
+			outgoing attributes:
+				String error message "Error updating information"
+				or String "success"
+		 */
 		} else if (request.getRequestType() == "updateinfo") {
 			User user = (User)request.getAttributes().get("user");
 			try {
@@ -136,12 +148,23 @@ public class Controller {
 			catch (Exception e) {
 				System.out.println(e.getMessage());
 				respType = "Error updating information";
-				return;
+				//return;
 			}
 			
 			respType = "Success";
 			
-		} else if (request.getRequestType().equals( "search")) {
+		} 
+		/**
+		 * requestType: "search"
+		 * searches for tutors that match class & availability 
+		 * incoming attributes:
+		 * 	String availability - availability as a string, separated by spaces
+		 *  String className
+		 * outgoing attributes:
+		 * 	String responseType "Success" 
+		 * 	List<Tutor> tutors 
+		 */
+		else if (request.getRequestType().equals("search")) {
 			String availability = (String)request.getAttributes().get("availability");
 			String[] timesStr = availability.split(" ");
 			List<Integer> times = new ArrayList<>();
@@ -153,43 +176,98 @@ public class Controller {
 			respType = "Success";
 			respAttr.put("results", tutors);
 
-		} else if (request.getRequestType().equals("newrequest")) {
+		} 
+		/**
+		 * requestType "newrequest"
+		 * incoming attributes
+		 * 	int tuteeID
+		 * 	int tutorID
+		 * 	String className
+		 * 	String time
+		 *  outgoing attributes
+		 *  String respType
+		 */
+		else if (request.getRequestType().equals("newrequest")) {
 			int tuteeID = (int)request.getAttributes().get("tuteeID");
 			int tutorID = (int)request.getAttributes().get("tutorID");
 			String className = (String)request.getAttributes().get("className");
 			String time = (String)request.getAttributes().get("time");
-			int status = (int)request.getAttributes().get("status");
+			//int status = (int)request.getAttributes().get("status");
+			try {
+				dbConnect.addRequest(tuteeID, tutorID, className, time, 0);
 
-			dbConnect.addRequest(tuteeID, tutorID, className, time, status);
+			}
+			catch (Exception e) {
+				System.out.println(e.getMessage());
+				respType = "Error " + e.getMessage();
+			}
+			respType = "Success";
 			
-		} else if (request.getRequestType().equals("viewrequests")) {
+		} 
+		/**
+		 * requestType "viewrequests"
+		 * incoming attributes
+		 * 	int userID
+		 *  outgoing attributes
+		 *  String respType 
+		 *  List<TutorRequest> requests
+		 */
+		else if (request.getRequestType().equals("viewrequests")) {
 			int userID = (int)request.getAttributes().get("userID");
 			List<TutorRequest> requests = dbConnect.getRequests(userID);
 			respType = "Success";
 			respAttr.put("requests", requests);
-		} else if (request.getRequestType().equals("updaterequeststatus")) {
+		} 
+		/**
+		 * requestType "updaterequeststatus" 
+		 * incoming attributes
+		 * int requestID
+		 * int status ( 0 = waiting approval, 1 = approved, 2 = rejected ) 
+		 * 
+		 */
+		else if (request.getRequestType().equals("updaterequeststatus")) {
 			int requestID = (int)request.getAttributes().get("requestID");
 			int newStatus = (int)request.getAttributes().get("newStatus");
 			dbConnect.updateRequestStatus(requestID, newStatus);
 		}
-		
+		/**
+		 * requestType "updateavailability"
+		 * incoming attributes
+		 * 	int tutorID
+		 * 	List<Integer> availability 
+		 * 
+		 */
 		else if (request.getRequestType().equals("updateavailability")) {
 			int tutorID = (int)request.getAttributes().get("tutorID");
-			ArrayList<Integer> availability = (ArrayList<Integer>)request.getAttributes().get("availability");
+			List<Integer> availability = (List<Integer>)request.getAttributes().get("availability");
 			dbConnect.updateTutorAvailability(tutorID, availability);
 			
-		} else if (request.getRequestType().equals("addclass")) {
+		}
+		/**
+		 * requestType "addclass"
+		 * incoming attributes
+		 * 	int tutorID
+		 * 	ArrayList<String> className
+		 */
+		else if (request.getRequestType().equals("addclass")) {
 			int tutorID = (int)request.getAttributes().get("tutorID");
-			String className = (String)request.getAttributes().get("className");
+			ArrayList<String> className = (ArrayList<String>)request.get("className");
 			dbConnect.addTutorToClass(tutorID, className);
-		} else if (request.getRequestType().equals("removeclass")) {
+		}
+		/**
+		 * requestType "removeclass"
+		 * incoming attributes
+		 * 	int tutorID
+		 * 	String className
+		 */
+		else if (request.getRequestType().equals("removeclass")) {
 			int tutorID = (int)request.getAttributes().get("tutorID");
 			String className = (String)request.getAttributes().get("className");
 			dbConnect.removeTutorFromClass(tutorID, className);
 		}
 		System.out.print(respType);
 		requestThread.sendResponse(new Request(respType, respAttr));
-
+ 
 		return;
 	}
 
