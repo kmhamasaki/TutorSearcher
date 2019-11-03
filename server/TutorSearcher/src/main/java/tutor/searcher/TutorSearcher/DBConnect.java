@@ -571,9 +571,9 @@ public class DBConnect {
 	}
 	
 	//get availability
-	String getTutorAvailability(int tutorID) {
+	ArrayList<Integer> getTutorAvailability(int tutorID) {
 		String query = "SELECT * FROM users WHERE user_id=?";
-		String availabilities = jdbc.query(query, 
+		String availability = jdbc.query(query, 
 		new PreparedStatementSetter() {
 			public void setValues(PreparedStatement preparedStatement) throws SQLException {
 				preparedStatement.setInt(1,  tutorID);
@@ -594,7 +594,11 @@ public class DBConnect {
                 return null;
             }
 		});
-		
+		String[] timesStr = availability.split(" ");
+		ArrayList<Integer> availabilities = new ArrayList<>();
+		for (int i = 0; i < timesStr.length; i++) {
+			availabilities.add(Integer.parseInt(timesStr[i]));
+		}
 		return availabilities;
 	}
 	
