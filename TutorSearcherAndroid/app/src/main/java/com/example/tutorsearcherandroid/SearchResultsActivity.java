@@ -10,6 +10,7 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
 
+import tutor.searcher.TutorSearcher.Request;
 import tutor.searcher.TutorSearcher.Tutor;
 import tutor.searcher.TutorSearcher.TutorRequest;
 
@@ -20,6 +21,7 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     private String UserId;
     private String AccountType;
+    private List<Tutor> TutorList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +60,11 @@ public class SearchResultsActivity extends AppCompatActivity {
         if (extras != null) {
             UserId = extras.getString("UserId");
             AccountType = extras.getString("AccountType");
+            Request response = (Request) extras.get("TutorList");
+            TutorList = (List<Tutor>) response.get("results");
+        }
+        if(TutorList != null){
+            
         }
     }
 
