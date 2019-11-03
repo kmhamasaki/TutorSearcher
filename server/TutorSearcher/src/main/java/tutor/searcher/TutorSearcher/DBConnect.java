@@ -545,7 +545,7 @@ public class DBConnect {
 				public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 					String availabilityStr = "";
 					for (int i = 0; i < availability.size(); i++) {
-						availabilityStr += availability.get(i).toString();
+						availabilityStr += availability.get(i).toString() + " ";
 					}
 					PreparedStatement ps = connection.prepareStatement(query);
 					ps.setString(1, availabilityStr);
