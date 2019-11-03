@@ -21,77 +21,77 @@
             android:id="@+id/CSCI102"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CSCI102"
+            android:text="CSCI 102"
             android:textSize="18sp" />
 
         <CheckBox
             android:id="@+id/CSCI103"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CSCI103"
+            android:text="CSCI 103"
             android:textSize="18sp" />
 
         <CheckBox
             android:id="@+id/CSCI104"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CSCI104"
+            android:text="CSCI 104"
             android:textSize="18sp" />
 
         <CheckBox
             android:id="@+id/CSCI109"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CSCI109"
+            android:text="CSCI 109"
             android:textSize="18sp" />
 
         <CheckBox
             android:id="@+id/CSCI170"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CSCI170"
+            android:text="CSCI 170"
             android:textSize="18sp" />
 
         <CheckBox
             android:id="@+id/CSCI201"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CSCI201"
+            android:text="CSCI 201"
             android:textSize="18sp" />
 
         <CheckBox
             android:id="@+id/CSCI270"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CSCI270"
+            android:text="CSCI 270"
             android:textSize="18sp" />
 
         <CheckBox
             android:id="@+id/CSCI310"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CSCI310"
+            android:text="CSCI 310"
             android:textSize="18sp" />
 
         <CheckBox
             android:id="@+id/CSCI356"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CSCI356"
+            android:text="CSCI 356"
             android:textSize="18sp" />
 
         <CheckBox
             android:id="@+id/CSCI360"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CSCI360"
+            android:text="CSCI 360"
             android:textSize="18sp" />
 
         <CheckBox
             android:id="@+id/CSCI401"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CSCI401"
+            android:text="CSCI 401"
             android:textSize="18sp" />
     </LinearLayout>
 

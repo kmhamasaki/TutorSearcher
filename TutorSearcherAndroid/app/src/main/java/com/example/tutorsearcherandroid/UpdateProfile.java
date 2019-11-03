@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 public class UpdateProfile extends AppCompatActivity {
 
+    private String UserId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

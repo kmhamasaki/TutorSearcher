@@ -16,6 +16,8 @@ import tutor.searcher.TutorSearcher.TutorRequest;
 
 public class ViewRequests extends AppCompatActivity {
 
+    private String UserId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

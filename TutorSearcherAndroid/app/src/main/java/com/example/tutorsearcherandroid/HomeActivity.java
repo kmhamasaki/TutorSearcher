@@ -14,6 +14,8 @@ import android.widget.Button;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private String UserId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         searchButton.setOnClickListener(this);
         updateProfileButton.setOnClickListener(this);
         logoutButton.setOnClickListener(this);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            UserId = extras.getString("UserId");
+        }
     }
 
 
@@ -58,6 +65,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void openSearchActivity() {
         //redirects to search screens
         Intent i = new Intent(this, SearchTutor.class);
+        i.putExtra("UserId",UserId);
+
         startActivity(i);
     }
 

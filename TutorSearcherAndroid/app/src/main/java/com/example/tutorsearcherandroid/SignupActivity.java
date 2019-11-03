@@ -20,10 +20,13 @@ import tutor.searcher.TutorSearcher.Request;
 
 public class SignupActivity extends AppCompatActivity {
 
+    private String UserId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
     }
 
     public void onClick(View view) {
@@ -76,16 +79,18 @@ public class SignupActivity extends AppCompatActivity {
             Request response = client.getResponse();
             System.out.println(response.getRequestType());
 
-
             // Error if email already exists
             if (response.getRequestType().equals("Error: email exists")) {
                 Toast t = Toast.makeText(this, "Email already in use.",
                         Toast.LENGTH_LONG);
                 t.show();
+                return;
             }
 
+            UserId = (String) response.getAttributes().get("userID");
+
             // Success, tutee, go to home page
-            else if (selectedButton.getText().equals("Tutee")) {
+            if (selectedButton.getText().equals("Tutee")) {
                 openHomeActivity();
             }
             // Success, tutor, go to availability page.
@@ -100,6 +105,8 @@ public class SignupActivity extends AppCompatActivity {
 
     public void openHomeActivity(){
         Intent i = new Intent(this, HomeActivity.class);
+        i.putExtra("UserId",UserId);
+
         // this destroys all activities before this page
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
@@ -108,6 +115,9 @@ public class SignupActivity extends AppCompatActivity {
 
     public void openClassesActivity() {
         Intent i = new Intent(this, ChooseClasses.class);
+        i.putExtra("SourcePage","Signup");
+        i.putExtra("UserId",UserId);
+
         startActivity(i);
     }
 
