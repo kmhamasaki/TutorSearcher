@@ -56,13 +56,18 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.logout_button:
                 openMainActivity();
+
                 break;
 
         }
     }
     public void openViewRequestActivity() {
-        //redirects to view requests screens (pending, accepted, etc)
-    }
+        //redirects to search screens
+        Intent i = new Intent(this, ViewRequests.class);
+        i.putExtra("UserId", UserId);
+        i.putExtra("AccountType", AccountType);
+
+        startActivity(i);    }
 
     public void openSearchActivity() {
         //redirects to search screens
