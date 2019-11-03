@@ -9,24 +9,51 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.HashMap;
-import java.util.List;
 
-public class ViewRequests extends AppCompatActivity {
+import tutor.searcher.TutorSearcher.Request;
+import tutor.searcher.TutorSearcher.TutorRequest;
+
+public class ViewRequests extends AppCompatActivity implements View.OnClickListener {
+
+    private String UserId;
+    private String AccountType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_requests);
 
-        // Loop through return  viewrequests()
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            UserId = extras.getString("UserId");
+            AccountType = extras.getString("AccountType");
+        }
+
+//      Loop through return  viewrequests()
+
         HashMap<String,Object> attributes = new HashMap<String,Object>();
-        Client viewrequests = new Client("viewrequests", attributes);
+        attributes.put("UserId", UserId);
 
-//        List<TutorRequest> requests = viewrequests.incomingAttributes.requests
+        try {
+            Client client = new Client("viewrequests", attributes);
 
-        TableLayout requests_table_layout = (TableLayout) findViewById(R.id.requests_table_layout);
+            client.execute().get();
+            Request response = client.getResponse();
+            System.out.println(response.getRequestType());
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
 
-        for (int i = 0; i <2; i++) {
+
+
+
+
+
+//      List<TutorRequest> requests = viewrequests.;
+
+      TableLayout requests_table_layout = (TableLayout) findViewById(R.id.requests_table_layout);
+
+        for (int i = 0; i < 200; i++) {
 
             TableRow row = new TableRow(this);
             TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
