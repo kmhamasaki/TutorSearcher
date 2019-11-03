@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class Request implements Serializable {
 
-	private static final long serialVersionUID = 1;
+	private static final long serialVersionUID = 1L;
 
 	private String requestType;
 	private HashMap<String, Object> attributes;
