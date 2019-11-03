@@ -107,7 +107,14 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
         if(sourcePage.equals("SearchTutor")){
             // ***INSERT CODE TO SEND TO BACKEND HERE***
                 // we can probably create a function for this because it's used all the time?
-
+            Bundle test = getIntent().getExtras();
+            String className = test.getString("ClassName");
+            HashMap<String, Object> attr = new HashMap<>();
+            attr.put("availability", selectedTimes);
+            attr.put("className", className);
+            System.out.println(className);
+            Client client = new Client("search", attr);
+            client.execute();
             // proceed to search result page
         }
         else if(sourcePage.equals("EditProfile")){
