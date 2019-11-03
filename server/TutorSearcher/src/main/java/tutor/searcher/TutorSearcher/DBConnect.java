@@ -488,15 +488,30 @@ public class DBConnect {
 		
 	}
 	
-	Boolean addTutorToClass(int tutorID, String className) {
-		String query = "INSERT INTO classes (class_name, tutor_id) VALUES (?,?)";
+	Boolean addTutorToClass(int tutorID, ArrayList<String> className) {
+		String values = "";
+		for (int i = 0; i < className.size(); i++) {
+			if (i == className.size() - 1) {
+				values += "(?,?);";
+			}
+			else {
+				values += "(?,?),";
+			}
+			
+		}
+		String query = "INSERT INTO classes (class_name, tutor_id) VALUES " + values;
 		return jdbc.execute(query,new PreparedStatementCallback<Boolean>(){  
 		    @Override  
 		    public Boolean doInPreparedStatement(PreparedStatement ps)  
 		            throws SQLException, DataAccessException {  
 		              
-		        ps.setString(1, className);  
-		        ps.setInt(2, tutorID);  
+		    	for (int i = 0 ; i < className.size(); i++) {
+		    		System.out.println( i * 2 + 1 + " " + className.get(i));
+		    		ps.setString(i * 2 + 1, className.get(i));  
+		    		System.out.println(i * 2 + 2);
+			        ps.setInt(i * 2+ 2, tutorID);
+		    	}
+		          
 		              
 		        return ps.execute();  
 		              
