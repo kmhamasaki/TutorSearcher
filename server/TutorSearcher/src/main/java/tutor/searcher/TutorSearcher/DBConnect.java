@@ -569,6 +569,65 @@ public class DBConnect {
 			}
 		); 
 	}
+	
+	//get availability
+	ArrayList<Integer> getTutorAvailability(int tutorID) {
+		String query = "SELECT * FROM users WHERE user_id=?";
+		String availability = jdbc.query(query, 
+		new PreparedStatementSetter() {
+			public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				preparedStatement.setInt(1,  tutorID);
+			}
+		}, 
+		 new ResultSetExtractor<String>() {
+            public String extractData(ResultSet resultSet) throws SQLException,
+              DataAccessException {
+                if (resultSet.next()) {
+                	System.out.println("tutor search");
+//                	(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
+        			//String availability)
+                	String availability = resultSet.getString("availability");
+                	return availability;
+                	
+                	
+                }
+                return null;
+            }
+		});
+		String[] timesStr = availability.split(" ");
+		ArrayList<Integer> availabilities = new ArrayList<>();
+		for (int i = 0; i < timesStr.length; i++) {
+			availabilities.add(Integer.parseInt(timesStr[i]));
+		}
+		return availabilities;
+	}
+	
+	//get classes
+	ArrayList<String> getTutorClasses(int tutorID) {
+		String query = "SELECT * FROM classes WHERE tutor_id=?";
+		ArrayList<String> classes = jdbc.query(query, 
+		new PreparedStatementSetter() {
+			public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				preparedStatement.setInt(1,  tutorID);
+			}
+		}, 
+		 new ResultSetExtractor<ArrayList<String>>() {
+            public ArrayList<String> extractData(ResultSet resultSet) throws SQLException,
+              DataAccessException {
+            	ArrayList<String> result = new ArrayList<>();
+                if (resultSet.next()) {
+                	System.out.println("tutor search");
+//                	(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
+        			//String availability)
+                	result.add(resultSet.getString("class_name"));
+                	
+                }
+                return result;
+            }
+		});
+		
+		return classes;
+	}
 
 	public JdbcTemplate getJdbc() {
 		return jdbc;

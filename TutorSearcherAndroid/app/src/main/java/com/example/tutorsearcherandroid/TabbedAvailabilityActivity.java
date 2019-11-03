@@ -107,7 +107,21 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
         if(sourcePage.equals("SearchTutor")){
             // ***INSERT CODE TO SEND TO BACKEND HERE***
                 // we can probably create a function for this because it's used all the time?
+            Bundle test = getIntent().getExtras();
+            String className = test.getString("ClassName");
+            HashMap<String, Object> attr = new HashMap<>();
+            attr.put("availability", selectedTimes);
+            attr.put("className", className);
+            System.out.println(className);
+            Client client = new Client("search", attr);
+            client.execute();
+            Request response = null;
+            while(response == null) {
+                response = client.getResponse();
+            }
+            System.out.println("Test " + response.getRequestType());
 
+            openSearchResultsActivity(response);
             // proceed to search result page
         }
         else if(sourcePage.equals("EditProfile")){
@@ -119,9 +133,10 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
         else if(sourcePage.equals("Signup")){
             try {
                 HashMap<String, Object> attr = new HashMap<>();
-                attr.put("times", text);
+                attr.put("availability", selectedTimes);
+                attr.put("tutorID", Integer.parseInt(UserId));
 
-                Client client = new Client("addavailability", attr);
+                Client client = new Client("updateavailability", attr);
                 client.execute().get();
                 Request response = client.getResponse();
                 System.out.println(response.getRequestType());
@@ -133,10 +148,16 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
             // go to home page
             Intent i = new Intent(this, HomeActivity.class);
             i.putExtra("UserId",UserId);
-            i.putExtra("AccountType", AccountType);
+            i.putExtra("AccountType", UserId);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
         }
 
+    }
+
+    public void openSearchResultsActivity(Request response) {
+        Intent i = new Intent(this, SearchResultsActivity.class);
+        i.putExtra("TutorList",response);
+        startActivity(i);
     }
 }
