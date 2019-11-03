@@ -56,7 +56,7 @@ public class SignupActivity extends AppCompatActivity {
             RadioGroup rg = findViewById(R.id.tutorTuteeRadioSelector);
             int selectedId = rg.getCheckedRadioButtonId();
             RadioButton selectedButton = findViewById(selectedId);
-            attr.put("accountType", (selectedButton.getText().equals("Tutee")));
+            attr.put("accountType", (!selectedButton.getText().equals("Tutee")));
             System.out.println(selectedButton.getText());
             //HashPassword
             passwordHash = hashPassword(passwordHash);
