@@ -107,7 +107,21 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
         if(sourcePage.equals("SearchTutor")){
             // ***INSERT CODE TO SEND TO BACKEND HERE***
                 // we can probably create a function for this because it's used all the time?
+            Bundle test = getIntent().getExtras();
+            String className = test.getString("ClassName");
+            HashMap<String, Object> attr = new HashMap<>();
+            attr.put("availability", selectedTimes);
+            attr.put("className", className);
+            System.out.println(className);
+            Client client = new Client("search", attr);
+            client.execute();
+            Request response = null;
+            while(response == null) {
+                response = client.getResponse();
+            }
+            System.out.println("Test " + response.getRequestType());
 
+            openSearchResultsActivity(response);
             // proceed to search result page
         }
         else if(sourcePage.equals("EditProfile")){
@@ -139,5 +153,11 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
             startActivity(i);
         }
 
+    }
+
+    public void openSearchResultsActivity(Request response) {
+        Intent i = new Intent(this, SearchResultsActivity.class);
+        i.putExtra("TutorList",response);
+        startActivity(i);
     }
 }

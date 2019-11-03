@@ -1,6 +1,7 @@
 package tutor.searcher.TutorSearcher;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,6 +28,17 @@ class DBConnectTest {
 //			e.printStackTrace();
 //		}
 	}
+	@Test
+	void addTutorToClassTest() {
+		int tutorID = 15;
+		ArrayList<String> classes = new ArrayList<>();
+		classes.add("CSCI 201");
+		classes.add("CSCI 270");
+		classes.add("CSCI 356");
+		dbConnect.addTutorToClass(tutorID, classes);
+		
+	}
+	
 	@Test
 	void updateTutorAvailability() {
 		int userID = 6;

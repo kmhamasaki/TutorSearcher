@@ -165,12 +165,7 @@ public class Controller {
 		 * 	List<Tutor> tutors 
 		 */
 		else if (request.getRequestType().equals("search")) {
-			String availability = (String)request.getAttributes().get("availability");
-			String[] timesStr = availability.split(" ");
-			List<Integer> times = new ArrayList<>();
-			for (int i = 0; i < timesStr.length; i++) {
-				times.add(Integer.parseInt(timesStr[i]));
-			}
+			ArrayList<Integer> times = (ArrayList<Integer>)request.getAttributes().get("availability");
 			String className = (String)request.getAttributes().get("className");
 			List<Tutor> tutors = dbConnect.searchTutors(times, className);
 			respType = "Success";
@@ -264,6 +259,32 @@ public class Controller {
 			int tutorID = (int)request.getAttributes().get("tutorID");
 			String className = (String)request.getAttributes().get("className");
 			dbConnect.removeTutorFromClass(tutorID, className);
+		}
+		/**
+		 * requestType "getavailability"
+		 * incoming attributes
+		 * 	int tutorID
+		 * outgoing attributes
+		 * 	ArrayList<Integer> availability
+		 */
+		else if (request.getRequestType().equals("getavailability")) {
+			ArrayList<Integer> availability = dbConnect.getTutorAvailability((int)request.get("tutorID"));
+			respAttr.put("availability", availability);
+			respType = "Success";
+			
+		}
+		/**
+		 * requestType "getclasses"
+		 * gets tutor's classes
+		 * incoming attributes
+		 * 	int tutorID
+		 * outgoing attributes
+		 * 	ArrayList<String> classes
+		 */
+		else if (request.getRequestType().equals("getclasses")) {
+			ArrayList<String> classes = dbConnect.getTutorClasses((int)request.get("tutorID"));
+			respAttr.put("classes", classes);
+			respType = "Success";
 		}
 		System.out.print(respType);
 		requestThread.sendResponse(new Request(respType, respAttr));

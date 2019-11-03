@@ -334,7 +334,7 @@ public class DBConnect {
 		});
 	}
 	
-	List<Tutor> searchTutors(List<Integer> times, String className) {
+	List<Tutor> searchTutors(ArrayList<Integer> times, String className) {
 		String query = "SELECT * FROM users, classes WHERE classes.class_name=? AND classes.tutor_id=users.user_id";
 		List<Tutor> tutors = jdbc.query(query, 
 		new PreparedStatementSetter() {
@@ -375,8 +375,8 @@ public class DBConnect {
 	}
 	
 	class SortTutorsByTime implements Comparator<Tutor> {
-		private List<Integer> time;
-		public SortTutorsByTime(List<Integer> time) {
+		private ArrayList<Integer> time;
+		public SortTutorsByTime(ArrayList<Integer> time) {
 			this.time = time;
 		}
 		
@@ -402,8 +402,7 @@ public class DBConnect {
 		
 	}
 	
-	private List<Tutor> sortTutors(List<Tutor> tutors, List<Integer> time) {
-		PriorityQueue<Tutor> pq = new PriorityQueue<>(tutors.size(), new SortTutorsByTime(time));
+	private List<Tutor> sortTutors(List<Tutor> tutors, ArrayList<Integer> time) {
 		tutors.sort(new SortTutorsByTime(time));
 //		for (Tutor t : tutors) {
 //			pq.add(t);
@@ -569,6 +568,65 @@ public class DBConnect {
 				}
 			}
 		); 
+	}
+	
+	//get availability
+	ArrayList<Integer> getTutorAvailability(int tutorID) {
+		String query = "SELECT * FROM users WHERE user_id=?";
+		String availability = jdbc.query(query, 
+		new PreparedStatementSetter() {
+			public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				preparedStatement.setInt(1,  tutorID);
+			}
+		}, 
+		 new ResultSetExtractor<String>() {
+            public String extractData(ResultSet resultSet) throws SQLException,
+              DataAccessException {
+                if (resultSet.next()) {
+                	System.out.println("tutor search");
+//                	(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
+        			//String availability)
+                	String availability = resultSet.getString("availability");
+                	return availability;
+                	
+                	
+                }
+                return null;
+            }
+		});
+		String[] timesStr = availability.split(" ");
+		ArrayList<Integer> availabilities = new ArrayList<>();
+		for (int i = 0; i < timesStr.length; i++) {
+			availabilities.add(Integer.parseInt(timesStr[i]));
+		}
+		return availabilities;
+	}
+	
+	//get classes
+	ArrayList<String> getTutorClasses(int tutorID) {
+		String query = "SELECT * FROM classes WHERE tutor_id=?";
+		ArrayList<String> classes = jdbc.query(query, 
+		new PreparedStatementSetter() {
+			public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				preparedStatement.setInt(1,  tutorID);
+			}
+		}, 
+		 new ResultSetExtractor<ArrayList<String>>() {
+            public ArrayList<String> extractData(ResultSet resultSet) throws SQLException,
+              DataAccessException {
+            	ArrayList<String> result = new ArrayList<>();
+                if (resultSet.next()) {
+                	System.out.println("tutor search");
+//                	(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
+        			//String availability)
+                	result.add(resultSet.getString("class_name"));
+                	
+                }
+                return result;
+            }
+		});
+		
+		return classes;
 	}
 
 	public JdbcTemplate getJdbc() {

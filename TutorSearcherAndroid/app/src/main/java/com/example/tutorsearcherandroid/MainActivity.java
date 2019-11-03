@@ -119,13 +119,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if(attr.get("User").getClass() == Tutor.class){
                         System.out.println("Logging in Tutor");
                         Tutor tutor = (Tutor) attr.get("User");
-                        int userId = tutor.getUserId();
+                        String userId = Integer.toString(tutor.getUserId());
                         openHomeActivity("Tutor", userId);
                         break;
                     }else {
                         System.out.println("Logging in Tutee");
                         Tutee tutee = (Tutee) attr.get("User");
-                        int userId = tutee.getUserId();
+                        String userId = Integer.toString(tutee.getUserId());
                         openHomeActivity("Tutee", userId);
                         break;
                     }
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(i);
     }
 
-    public void openHomeActivity(String accountType, int userId) {
+    public void openHomeActivity(String accountType, String userId) {
         Intent i = new Intent(this, HomeActivity.class);
         i.putExtra("AccountType", accountType);
         i.putExtra("UserId", userId);

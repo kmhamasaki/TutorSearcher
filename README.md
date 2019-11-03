@@ -2,7 +2,11 @@
 An Andoid app to search for tutors at USC
 
 
-# Getting Started
+# Set up the environment
+
+## Database
+
+If you do not have MySQL installed, please install MySQL server from [this website](https://dev.mysql.com/downloads/mysql/).
 
 ## set up your IDE
 
