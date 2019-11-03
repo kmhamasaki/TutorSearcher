@@ -168,7 +168,8 @@ public class Controller {
 			respType = "Success";
 			respAttr.put("requests", requests);
 		} else if (request.getRequestType().equals("updaterequeststatus")) {
-			
+//			int requestID = (int)request.getAttributes().equals(o)
+//			dbConnect.updateRequestStatus(requestID, newStatus)
 		}
 		
 		else if (request.getRequestType().equals("updateavailability")) {
