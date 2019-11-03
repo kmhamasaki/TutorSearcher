@@ -126,9 +126,10 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
         else if(sourcePage.equals("Signup")){
             try {
                 HashMap<String, Object> attr = new HashMap<>();
-                attr.put("times", text);
+                attr.put("availability", selectedTimes);
+                attr.put("tutorID", Integer.parseInt(UserId));
 
-                Client client = new Client("addavailability", attr);
+                Client client = new Client("updateavailability", attr);
                 client.execute().get();
                 Request response = client.getResponse();
                 System.out.println(response.getRequestType());
@@ -140,7 +141,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
             // go to home page
             Intent i = new Intent(this, HomeActivity.class);
             i.putExtra("UserId",UserId);
-            i.putExtra("AccountType", AccountType);
+            i.putExtra("AccountType", UserId);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
         }

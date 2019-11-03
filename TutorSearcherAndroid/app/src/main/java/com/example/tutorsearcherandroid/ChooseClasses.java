@@ -48,8 +48,9 @@ public class ChooseClasses extends AppCompatActivity {
 
         try {
             HashMap<String, Object> attr = new HashMap<>();
-            attr.put("classes", selectedClasses);
-            Client client = new Client("addclasses", attr);
+            attr.put("className", selectedClasses);
+            attr.put("tutorID", Integer.parseInt(UserId));
+            Client client = new Client("addclass", attr);
             client.execute().get();
             Request response = client.getResponse();
             System.out.println(response.getRequestType());
