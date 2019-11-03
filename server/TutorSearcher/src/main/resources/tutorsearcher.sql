@@ -23,7 +23,7 @@ USE `tutorsearcher` ;
 CREATE TABLE IF NOT EXISTS `tutorsearcher`.`users` (
   `user_id` INT(10) NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(45) NOT NULL,
-  `password_hash` VARCHAR(45) NOT NULL,
+  `password_hash` VARCHAR(200) NOT NULL,
   `tutor` TINYINT(4) NOT NULL,
   `phone_number` VARCHAR(45) NOT NULL,
   `first_name` VARCHAR(45) NOT NULL,

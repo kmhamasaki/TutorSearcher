@@ -167,6 +167,11 @@ public class Controller {
 			List<TutorRequest> requests = dbConnect.getRequests(userID);
 			respType = "Success";
 			respAttr.put("requests", requests);
+		} else if (request.getRequestType().equals("updateavailability")) {
+			int tutorID = (int)request.getAttributes().get("tutorID");
+			ArrayList<Integer> availability = (ArrayList<Integer>)request.getAttributes().get("availability");
+			dbConnect.updateTutorAvailability(tutorID, availability);
+			
 		}
 		System.out.print(respType);
 		requestThread.sendResponse(new Request(respType, respAttr));
