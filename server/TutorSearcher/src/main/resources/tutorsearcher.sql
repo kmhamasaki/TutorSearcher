@@ -10,7 +10,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema tutorsearcher
 -- -----------------------------------------------------
-
+DROP SCHEMA IF EXISTS 'tutorsearcher';
 -- -----------------------------------------------------
 -- Schema tutorsearcher
 -- -----------------------------------------------------
@@ -28,12 +28,12 @@ CREATE TABLE IF NOT EXISTS `tutorsearcher`.`users` (
   `phone_number` VARCHAR(45) NOT NULL,
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
-  `availability` VARCHAR(100) NULL DEFAULT NULL,
+  `availability` VARCHAR(200) NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 8
+AUTO_INCREMENT = 17
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `tutorsearcher`.`classes` (
     FOREIGN KEY (`tutor_id`)
     REFERENCES `tutorsearcher`.`users` (`user_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 12
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `tutorsearcher`.`requests` (
   `class` VARCHAR(45) NOT NULL,
   `time` VARCHAR(45) NOT NULL,
   `status` INT(11) NOT NULL,
-  `time_created` DATETIME NOT NULL,
+  `time_created` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   INDEX `tutor_id_fk_idx` (`tutor_id` ASC) VISIBLE,
