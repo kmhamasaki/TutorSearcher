@@ -313,6 +313,19 @@ public class Controller {
 			respAttr.put("results", results);
 			respType = "Success";
 		}
+		/**
+		 * requestType "getuserinfo"
+		 * gets user's information
+		 * incoming attributes
+		 * 	int userID
+		 * outoing attributes
+		 * 	User user
+		 */
+		else if (request.getRequestType().equals("getuserinfo")) {
+			User user = dbConnect.getUserInformation((int)request.get("userID"));
+			respAttr.put("user", user);
+			respType = "Success";
+		}
 		System.out.print(respType);
 		requestThread.sendResponse(new Request(respType, respAttr));
  

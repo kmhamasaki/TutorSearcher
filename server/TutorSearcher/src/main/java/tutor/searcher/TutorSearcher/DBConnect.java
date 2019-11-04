@@ -864,6 +864,32 @@ public class DBConnect {
 		
 		return classes;
 	}
+	
+	User getUserInformation(int userID) {
+		String query = "SELECT * FROM users WHERE user_id=?";
+		return jdbc.query(query, 
+		new PreparedStatementSetter() {
+			public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				preparedStatement.setInt(1,  userID);
+			}
+		}, 
+		 new ResultSetExtractor<User>() {
+            public User extractData(ResultSet resultSet) throws SQLException,
+              DataAccessException {
+                if (resultSet.next()) {
+
+                	//	(int userID, String firstName, String lastName, String email, String phoneNumber, String passwordHash, Boolean accountType) {
+                	
+                	return new User(resultSet.getInt("user_id"), resultSet.getString("first_name"), resultSet.getString("last_name"),
+                			resultSet.getString("email"), resultSet.getString("phone_number"), resultSet.getString("password_hash"),
+                			resultSet.getBoolean("tutor"));
+                	
+                	
+                }
+                return null;
+            }
+		});
+	}
 
 	public JdbcTemplate getJdbc() {
 		return jdbc;
