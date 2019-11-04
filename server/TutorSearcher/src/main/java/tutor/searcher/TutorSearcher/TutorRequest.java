@@ -5,7 +5,6 @@ import java.util.Date;
 
 
 public class TutorRequest implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
 	private int requestID;

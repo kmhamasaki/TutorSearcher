@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Tutee extends User implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
 	public Tutee(int userId, String firstName, String lastName, String passwordHash, String email, String phoneNumber, Boolean accountType, List<TutorRequest> pendingRequests,
