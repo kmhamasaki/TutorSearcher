@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void openHomeActivity(String accountType, String userId) {
-        Intent i = new Intent(this, HomeActivity.class);
+        Intent i = new Intent(this, ScrollingHomeActivity.class);
         i.putExtra("AccountType", accountType);
         i.putExtra("UserId", userId);
         finish();
