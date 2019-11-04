@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import tutor.searcher.TutorSearcher.Request;
 import tutor.searcher.TutorSearcher.Tutee;
 import tutor.searcher.TutorSearcher.Tutor;
@@ -102,10 +104,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 while(response == null) {
                     response = client.getResponse();
                 }
+
                 if(response.getRequestType().equals("Error: wrong email or password")){
                     System.out.println("Error: wrong email or password");
-                    //TODO: Reveal error message
-                }else{
+                    Toast t = Toast.makeText(this, "Wrong email and password combination",
+                            Toast.LENGTH_LONG);
+                    t.show();
+                } else{
                     // if authentication is finished, go to home page
                     System.out.println("Success: Logging in user - ");
                     //Save User Information and Redirect to Appropriate Home Page
