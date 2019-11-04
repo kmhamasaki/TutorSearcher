@@ -359,8 +359,11 @@ public class DBConnect {
                 	String phoneNumber = resultSet.getString("phone_number");
                 	Boolean accountType = resultSet.getBoolean("tutor");
                 	String availability = resultSet.getString("availability");
-                	
-                	result.add(new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability));
+                	if (availability != null) {
+                    	System.out.println("adding " + email);
+                    	result.add(new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability));
+
+                	}
                 	
                 }
                 return result;
@@ -387,37 +390,44 @@ public class DBConnect {
 			System.out.println("comparing " + a.getEmail() + ", " + b.getEmail());
 			int numA = 0;
 			int numB = 0;
-			for (Integer i : time) {
-				if (timesA.contains(i)) {
-					numA++;
-				}
-				if (timesB.contains(i)) {
-					numB++;
-				}
+			ArrayList<Integer> aMatching = null;
+			if (a.getMatchingAvailabilities() == null) {
+				aMatching =  new ArrayList<>();
+
+			}	
+			ArrayList<Integer> bMatching = null;	
+			if (b.getMatchingAvailabilities() == null) {
+				bMatching = new ArrayList<>();
 			}
 			
-			System.out.println("numa: " + numA + " numb: " + numB);
-			System.out.println("numb - numa : " + (numA - numB));
-			return numB - numA;
+			if (aMatching != null || bMatching != null) {
+				for (Integer i : time) {
+					if (aMatching != null && timesA.contains(i)) {
+						aMatching.add(i);
+					}
+					if (bMatching != null && timesB.contains(i)) {
+						bMatching.add(i);
+					}
+				}
+
+			}
+			
+			if (aMatching != null) {
+				a.setMatchingAvailabilities(aMatching);
+			}
+			if (bMatching != null) {
+				b.setMatchingAvailabilities(bMatching);
+			}
+			
+			System.out.println("numa: " + a.getMatchingAvailabilities().size() + " numb: " + b.getMatchingAvailabilities().size());
+			return b.getMatchingAvailabilities().size() - a.getMatchingAvailabilities().size();
 		}
 		
 	}
 	
 	private List<Tutor> sortTutors(List<Tutor> tutors, ArrayList<Integer> time) {
 		tutors.sort(new SortTutorsByTime(time));
-//		for (Tutor t : tutors) {
-//			pq.add(t);
-//		}
-////		Object[] tutors = pq.toArray();
-////		for (Object t : tutors) {
-////			Tutor hello = (Tutor)t;
-////			System.out.println(hello.getEmail());
-////		}
-//		
-//		ArrayList<Tutor> result = new ArrayList<>();
-//		for (int i = 0; i < tutors.size(); i++) {
-//			result.add(pq.poll());
-//		}
+
 		return tutors;
 	}
 	
