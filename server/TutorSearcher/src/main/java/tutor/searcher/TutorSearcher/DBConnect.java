@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -404,12 +405,56 @@ public class DBConnect {
 				@Override
 				public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 					String query = "UPDATE requests SET requests.status=? WHERE (requests.class=? "
-							+ "OR requests.time=?) AND requests.tutee_id=?";
+							+ "OR requests.time=?) AND requests.tutee_id=? AND NOT requests.id=?";
 					PreparedStatement ps = connection.prepareStatement(query);
 					ps.setInt(1, 2);
 					ps.setString(2, request.getClassName());
 					ps.setString(3, request.getTime());
 					ps.setInt(4, request.getTuteeID());
+					ps.setInt(5, requestID);
+					return ps;
+				}
+			});
+			
+			
+			//NOW, need to update tutor's availability based on time that request was approved for
+			
+			String availabilityQuery = "SELECT users.availability FROM users WHERE user_id=?";
+			String availability = jdbc.query(availabilityQuery, 
+					new PreparedStatementSetter() {
+						public void setValues(PreparedStatement preparedStatement) throws SQLException {
+							preparedStatement.setInt(1,  request.getTutorID());
+						}
+					}, 
+					 new ResultSetExtractor<String>() {
+			            public String extractData(ResultSet resultSet) throws SQLException,
+			              DataAccessException {
+			                if (resultSet.next()) {
+//			                	(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
+			        			//String availability)
+			                	
+			                	return resultSet.getString("availability");
+			                	
+			                }
+			                return null;
+			            }
+					});
+			
+			
+			jdbc.update(new PreparedStatementCreator() {
+				@Override
+				public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+					String[] availabilityStr = availability.split(" ");
+					ArrayList<String> availabilities = new ArrayList<>(Arrays.asList(availabilityStr));
+					availabilities.remove(request.getTime());
+					String availabilitiesStr = "";
+					for (int i = 0; i < availabilities.size(); i++) {
+						availabilitiesStr += availabilities.get(i) + " ";
+					}
+					String query = "UPDATE users SET users.availability=? WHERE users.user_id = ?";
+					PreparedStatement ps = connection.prepareStatement(query);
+					ps.setString(1, availabilitiesStr);
+					ps.setInt(2, request.getTutorID());
 					return ps;
 				}
 			});
@@ -419,6 +464,13 @@ public class DBConnect {
 		return true;
 	}
 	
+	private String listToStringAvailability(ArrayList<Integer> availability) {
+		String result = "";
+		for (int i = 0 ; i < availability.size(); i++) {
+			result += availability.get(i).toString() + " ";
+		}
+		return result;
+	}
 	
 	void updateUserInformation(User user) {
 		jdbc.update(new PreparedStatementCreator() {
@@ -436,7 +488,7 @@ public class DBConnect {
 		});
 	}
 	
-	List<Tutor> searchTutors(ArrayList<Integer> times, String className) {
+	List<Tutor> searchTutors(int userID, ArrayList<Integer> times, String className) {
 		String query = "SELECT * FROM users, classes WHERE classes.class_name=? AND classes.tutor_id=users.user_id";
 		List<Tutor> tutors = jdbc.query(query, 
 		new PreparedStatementSetter() {
@@ -471,7 +523,24 @@ public class DBConnect {
             }
 		});
 		
-		
+		final String updateQuery = "UPDATE users SET tutee_search_class=?, tutee_search_times=? WHERE user_id=?";
+		jdbc.update(
+			new PreparedStatementCreator() {
+				@Override
+				public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+					
+					PreparedStatement ps = connection.prepareStatement(updateQuery);
+					ps.setString(1, className);
+					String timeAvailabilities = "";
+					for (int i = 0; i < times.size(); i++) {
+						timeAvailabilities += times.get(i).toString() + " " ;
+					}
+					ps.setString(2, timeAvailabilities);
+					ps.setInt(3, userID);
+					return ps;
+				}
+			}
+		); 
 		
 		List<Tutor> result = sortTutors(tutors, times);
 		
