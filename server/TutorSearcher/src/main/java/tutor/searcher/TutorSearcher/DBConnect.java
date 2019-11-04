@@ -1,15 +1,15 @@
 package tutor.searcher.TutorSearcher;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.PriorityQueue;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -81,12 +81,12 @@ public class DBConnect {
 		return result;
 	}
 	
-	List<TutorRequest> getRequests(int userID) {
+	List<TutorRequest> getRequestsTuteeApproved(int userID) {
 		String query = "SELECT requests.id, requests.tutee_id, requests.tutor_id, requests.class, requests.time, requests.status, requests.time_created, usersTutor.first_name, usersTutee.first_name " +
 				"FROM requests " +
 				"JOIN users usersTutor ON usersTutor.user_id = requests.tutor_id " +
 				"JOIN users usersTutee ON usersTutee.user_id = requests.tutee_id " +
-				"WHERE requests.tutee_id = ?";
+				"WHERE requests.tutee_id = ? AND requests.status = 1";
 		List<TutorRequest> result = jdbc.query(query, 
 		new PreparedStatementSetter() {
 			public void setValues(PreparedStatement preparedStatement) throws SQLException {
@@ -106,7 +106,93 @@ public class DBConnect {
                 	String className = resultSet.getString("class");
                 	String time = resultSet.getString("time");
                 	int status = resultSet.getInt("status");
-                	Date timeCreated = resultSet.getDate("time_created");
+                	String timeCreated = resultSet.getString("time_created");
+                	System.out.print(requestID);
+                	System.out.println(className + " " + time);
+
+					String tuteeName = resultSet.getString("usersTutor.first_name");
+					String tutorName = resultSet.getString("usersTutee.first_name");
+
+					TutorRequest tutorRequest = new TutorRequest(requestID, tuteeID, tutorID, time, status, timeCreated, className);
+					tutorRequest.setTuteeName(tuteeName);
+					tutorRequest.setTutorName(tutorName);
+
+					result.add(tutorRequest);
+                }
+                return result;
+            }
+		});
+		return result; 
+	}
+	
+	List<TutorRequest> getRequestsTutorUnapproved(int userID) {
+		String query = "SELECT requests.id, requests.tutee_id, requests.tutor_id, requests.class, requests.time, requests.status, requests.time_created, usersTutor.first_name, usersTutee.first_name " + 
+				"FROM requests JOIN users usersTutor ON usersTutor.user_id = requests.tutor_id " + 
+				"				JOIN users usersTutee ON usersTutee.user_id = requests.tutee_id " + 
+				"				WHERE requests.tutor_id = ? AND requests.status = 0";
+		List<TutorRequest> result = jdbc.query(query, 
+		new PreparedStatementSetter() {
+			public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				preparedStatement.setInt(1,  userID);
+			}
+		}, 
+		 new ResultSetExtractor<List<TutorRequest>>() {
+            public List<TutorRequest> extractData(ResultSet resultSet) throws SQLException,
+              DataAccessException {
+            	ArrayList<TutorRequest> result = new ArrayList<>();
+                while (resultSet.next()) {
+                	System.out.println("result");
+//                	(int requestID, int tuteeID, int tutorID, String time, int status, Date timecreated)
+                	int requestID = resultSet.getInt("id");
+                	int tuteeID = resultSet.getInt("tutee_id");
+                	int tutorID = resultSet.getInt("tutor_id");
+                	String className = resultSet.getString("class");
+                	String time = resultSet.getString("time");
+                	int status = resultSet.getInt("status");
+                	String timeCreated = resultSet.getString("time_created");
+                	System.out.print(requestID);
+                	System.out.println(className + " " + time);
+
+					String tuteeName = resultSet.getString("usersTutor.first_name");
+					String tutorName = resultSet.getString("usersTutee.first_name");
+
+					TutorRequest tutorRequest = new TutorRequest(requestID, tuteeID, tutorID, time, status, timeCreated, className);
+					tutorRequest.setTuteeName(tuteeName);
+					tutorRequest.setTutorName(tutorName);
+
+					result.add(tutorRequest);
+                }
+                return result;
+            }
+		});
+		return result; 
+	}
+	
+	List<TutorRequest> getRequestsTutorApproved(int userID) {
+		String query = "SELECT requests.id, requests.tutee_id, requests.tutor_id, requests.class, requests.time, requests.status, requests.time_created, usersTutor.first_name, usersTutee.first_name " + 
+				"FROM requests JOIN users usersTutor ON usersTutor.user_id = requests.tutor_id " + 
+				"				JOIN users usersTutee ON usersTutee.user_id = requests.tutee_id " + 
+				"				WHERE requests.tutor_id = ? AND requests.status =1;";
+		List<TutorRequest> result = jdbc.query(query, 
+		new PreparedStatementSetter() {
+			public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				preparedStatement.setInt(1,  userID);
+			}
+		}, 
+		 new ResultSetExtractor<List<TutorRequest>>() {
+            public List<TutorRequest> extractData(ResultSet resultSet) throws SQLException,
+              DataAccessException {
+            	ArrayList<TutorRequest> result = new ArrayList<>();
+                while (resultSet.next()) {
+                	System.out.println("result");
+//                	(int requestID, int tuteeID, int tutorID, String time, int status, Date timecreated)
+                	int requestID = resultSet.getInt("id");
+                	int tuteeID = resultSet.getInt("tutee_id");
+                	int tutorID = resultSet.getInt("tutor_id");
+                	String className = resultSet.getString("class");
+                	String time = resultSet.getString("time");
+                	int status = resultSet.getInt("status");
+                	String timeCreated = resultSet.getString("time_created");
                 	System.out.print(requestID);
                 	System.out.println(className + " " + time);
 
@@ -248,7 +334,10 @@ public class DBConnect {
 			        ps.setString(4,  time);
 			        ps.setInt(5, status);
 			        Date date = new Date();
-			        ps.setString(6, date.toString());
+					Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String dateAsStr = formatter.format(date);
+
+			        ps.setString(6, dateAsStr);
 		            return ps;
 		        }
 		    },
@@ -299,7 +388,7 @@ public class DBConnect {
 	                	String className = resultSet.getString("class");
 	                	String time = resultSet.getString("time");
 	                	int status = resultSet.getInt("status");
-	                	Date timeCreated = resultSet.getDate("time_created");
+	                	String timeCreated = resultSet.getString("time_created");
 	                	System.out.print(requestID);
 	                	System.out.println(className + " " + time);
 	                	
@@ -329,6 +418,7 @@ public class DBConnect {
 		//still don't know what this boolean is supposed to be for. might jsut take it out 
 		return true;
 	}
+	
 	
 	void updateUserInformation(User user) {
 		jdbc.update(new PreparedStatementCreator() {
