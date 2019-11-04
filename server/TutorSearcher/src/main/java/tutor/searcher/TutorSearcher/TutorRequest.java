@@ -5,6 +5,9 @@ import java.util.Date;
 
 
 public class TutorRequest implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	private int requestID;
 	private int tuteeID;
 	private String tuteeName;
@@ -14,8 +17,8 @@ public class TutorRequest implements Serializable {
 	private int status;
 	private String timeCreated;
 	private String className;
-	
-	
+
+
 	public TutorRequest(int requestID, int tuteeID, int tutorID, String time, int status,
 			String timecreated, String className) {
 		this.requestID = requestID;
