@@ -102,6 +102,7 @@ public class ChooseClasses extends AppCompatActivity {
         if(sourcePage.equals("Signup"))
             openAvailabilityActivity();
 
+        openHomeAvailability();
     }
 
     public void openAvailabilityActivity() {
