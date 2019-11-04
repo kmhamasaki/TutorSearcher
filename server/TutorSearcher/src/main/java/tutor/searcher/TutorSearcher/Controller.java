@@ -204,13 +204,24 @@ public class Controller {
 		 * requestType "viewrequests"
 		 * incoming attributes
 		 * 	int userID
+		 * String viewrequeststype - tuteeapproved, tutorpending, tutorapproved
 		 *  outgoing attributes
 		 *  String respType 
 		 *  List<TutorRequest> requests
 		 */
 		else if (request.getRequestType().equals("viewrequests")) {
 			int userID = (int)request.getAttributes().get("userID");
-			List<TutorRequest> requests = dbConnect.getRequests(userID);
+			String type = (String)request.get("viewrequeststype");
+			List<TutorRequest> requests = null;
+			if (type.equals("tuteeapproved")) {
+				requests = dbConnect.getRequestsTuteeApproved(userID);
+			}
+			else if (type.equals("tutorpending")) {
+				requests = dbConnect.getRequestsTutorUnapproved(userID);
+			}
+			else if (type.equals("tutorapproved")) {
+				requests = dbConnect.getRequestsTutorApproved(userID);
+			}
 			respType = "Success";
 			respAttr.put("requests", requests);
 		} 
