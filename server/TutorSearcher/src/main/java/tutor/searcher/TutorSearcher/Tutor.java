@@ -8,6 +8,7 @@ public class Tutor extends User implements Serializable {
 	List<Integer> timeAvailabilities;
 	String timeAvailability;
 	List<String> classesTutoring;
+	List<Integer> matchingAvailabilities;
 	
 	public Tutor(int userId, String firstName, String lastName, String email, String phoneNumber, String passwordHash, Boolean accountType, List<TutorRequest> pendingRequests,
 			List<TutorRequest> acceptedRequests, List<TutorRequest> rejectedRequests, String 
@@ -84,6 +85,14 @@ public class Tutor extends User implements Serializable {
 
 	public void setTimeAvailabilities(List<Integer> timeAvailabilities) {
 		this.timeAvailabilities = timeAvailabilities;
+	}
+
+	public List<Integer> getMatchingAvailabilities() {
+		return matchingAvailabilities;
+	}
+
+	public void setMatchingAvailabilities(List<Integer> matchingAvailabilities) {
+		this.matchingAvailabilities = matchingAvailabilities;
 	}
 	
 }
