@@ -158,16 +158,17 @@ public class Controller {
 		 * requestType: "search"
 		 * searches for tutors that match class & availability 
 		 * incoming attributes:
+		 * 	int userID - tutee makign the search
 		 * 	String availability - availability as a string, separated by spaces
 		 *  String className
 		 * outgoing attributes:
 		 * 	String responseType "Success" 
-		 * 	List<Tutor> tutors 
+		 * 	List<Tutor> results 
 		 */
 		else if (request.getRequestType().equals("search")) {
 			ArrayList<Integer> times = (ArrayList<Integer>)request.getAttributes().get("availability");
 			String className = (String)request.getAttributes().get("className");
-			List<Tutor> tutors = dbConnect.searchTutors(times, className);
+			List<Tutor> tutors = dbConnect.searchTutors((int)request.get("userID"), times, className);
 			respType = "Success";
 			respAttr.put("results", tutors);
 
@@ -204,13 +205,24 @@ public class Controller {
 		 * requestType "viewrequests"
 		 * incoming attributes
 		 * 	int userID
+		 * String viewrequeststype - tuteeapproved, tutorpending, tutorapproved
 		 *  outgoing attributes
 		 *  String respType 
 		 *  List<TutorRequest> requests
 		 */
 		else if (request.getRequestType().equals("viewrequests")) {
 			int userID = (int)request.getAttributes().get("userID");
-			List<TutorRequest> requests = dbConnect.getRequests(userID);
+			String type = (String)request.get("viewrequeststype");
+			List<TutorRequest> requests = null;
+			if (type.equals("tuteeapproved")) {
+				requests = dbConnect.getRequestsTuteeApproved(userID);
+			}
+			else if (type.equals("tutorpending")) {
+				requests = dbConnect.getRequestsTutorUnapproved(userID);
+			}
+			else if (type.equals("tutorapproved")) {
+				requests = dbConnect.getRequestsTutorApproved(userID);
+			}
 			respType = "Success";
 			respAttr.put("requests", requests);
 		} 

@@ -1,15 +1,16 @@
 package tutor.searcher.TutorSearcher;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.PriorityQueue;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -81,12 +82,12 @@ public class DBConnect {
 		return result;
 	}
 	
-	List<TutorRequest> getRequests(int userID) {
+	List<TutorRequest> getRequestsTuteeApproved(int userID) {
 		String query = "SELECT requests.id, requests.tutee_id, requests.tutor_id, requests.class, requests.time, requests.status, requests.time_created, usersTutor.first_name, usersTutee.first_name " +
 				"FROM requests " +
 				"JOIN users usersTutor ON usersTutor.user_id = requests.tutor_id " +
 				"JOIN users usersTutee ON usersTutee.user_id = requests.tutee_id " +
-				"WHERE requests.tutee_id = ?";
+				"WHERE requests.tutee_id = ? AND requests.status = 1";
 		List<TutorRequest> result = jdbc.query(query, 
 		new PreparedStatementSetter() {
 			public void setValues(PreparedStatement preparedStatement) throws SQLException {
@@ -106,7 +107,93 @@ public class DBConnect {
                 	String className = resultSet.getString("class");
                 	String time = resultSet.getString("time");
                 	int status = resultSet.getInt("status");
-                	Date timeCreated = resultSet.getDate("time_created");
+                	String timeCreated = resultSet.getString("time_created");
+                	System.out.print(requestID);
+                	System.out.println(className + " " + time);
+
+					String tuteeName = resultSet.getString("usersTutor.first_name");
+					String tutorName = resultSet.getString("usersTutee.first_name");
+
+					TutorRequest tutorRequest = new TutorRequest(requestID, tuteeID, tutorID, time, status, timeCreated, className);
+					tutorRequest.setTuteeName(tuteeName);
+					tutorRequest.setTutorName(tutorName);
+
+					result.add(tutorRequest);
+                }
+                return result;
+            }
+		});
+		return result; 
+	}
+	
+	List<TutorRequest> getRequestsTutorUnapproved(int userID) {
+		String query = "SELECT requests.id, requests.tutee_id, requests.tutor_id, requests.class, requests.time, requests.status, requests.time_created, usersTutor.first_name, usersTutee.first_name " + 
+				"FROM requests JOIN users usersTutor ON usersTutor.user_id = requests.tutor_id " + 
+				"				JOIN users usersTutee ON usersTutee.user_id = requests.tutee_id " + 
+				"				WHERE requests.tutor_id = ? AND requests.status = 0";
+		List<TutorRequest> result = jdbc.query(query, 
+		new PreparedStatementSetter() {
+			public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				preparedStatement.setInt(1,  userID);
+			}
+		}, 
+		 new ResultSetExtractor<List<TutorRequest>>() {
+            public List<TutorRequest> extractData(ResultSet resultSet) throws SQLException,
+              DataAccessException {
+            	ArrayList<TutorRequest> result = new ArrayList<>();
+                while (resultSet.next()) {
+                	System.out.println("result");
+//                	(int requestID, int tuteeID, int tutorID, String time, int status, Date timecreated)
+                	int requestID = resultSet.getInt("id");
+                	int tuteeID = resultSet.getInt("tutee_id");
+                	int tutorID = resultSet.getInt("tutor_id");
+                	String className = resultSet.getString("class");
+                	String time = resultSet.getString("time");
+                	int status = resultSet.getInt("status");
+                	String timeCreated = resultSet.getString("time_created");
+                	System.out.print(requestID);
+                	System.out.println(className + " " + time);
+
+					String tuteeName = resultSet.getString("usersTutor.first_name");
+					String tutorName = resultSet.getString("usersTutee.first_name");
+
+					TutorRequest tutorRequest = new TutorRequest(requestID, tuteeID, tutorID, time, status, timeCreated, className);
+					tutorRequest.setTuteeName(tuteeName);
+					tutorRequest.setTutorName(tutorName);
+
+					result.add(tutorRequest);
+                }
+                return result;
+            }
+		});
+		return result; 
+	}
+	
+	List<TutorRequest> getRequestsTutorApproved(int userID) {
+		String query = "SELECT requests.id, requests.tutee_id, requests.tutor_id, requests.class, requests.time, requests.status, requests.time_created, usersTutor.first_name, usersTutee.first_name " + 
+				"FROM requests JOIN users usersTutor ON usersTutor.user_id = requests.tutor_id " + 
+				"				JOIN users usersTutee ON usersTutee.user_id = requests.tutee_id " + 
+				"				WHERE requests.tutor_id = ? AND requests.status =1;";
+		List<TutorRequest> result = jdbc.query(query, 
+		new PreparedStatementSetter() {
+			public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				preparedStatement.setInt(1,  userID);
+			}
+		}, 
+		 new ResultSetExtractor<List<TutorRequest>>() {
+            public List<TutorRequest> extractData(ResultSet resultSet) throws SQLException,
+              DataAccessException {
+            	ArrayList<TutorRequest> result = new ArrayList<>();
+                while (resultSet.next()) {
+                	System.out.println("result");
+//                	(int requestID, int tuteeID, int tutorID, String time, int status, Date timecreated)
+                	int requestID = resultSet.getInt("id");
+                	int tuteeID = resultSet.getInt("tutee_id");
+                	int tutorID = resultSet.getInt("tutor_id");
+                	String className = resultSet.getString("class");
+                	String time = resultSet.getString("time");
+                	int status = resultSet.getInt("status");
+                	String timeCreated = resultSet.getString("time_created");
                 	System.out.print(requestID);
                 	System.out.println(className + " " + time);
 
@@ -247,7 +334,11 @@ public class DBConnect {
 			        ps.setString(3,className);  
 			        ps.setString(4,  time);
 			        ps.setInt(5, status);
-			        ps.setDate(6, new java.sql.Date(System.currentTimeMillis()));
+			        Date date = new Date();
+					Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String dateAsStr = formatter.format(date);
+
+			        ps.setString(6, dateAsStr);
 		            return ps;
 		        }
 		    },
@@ -298,7 +389,7 @@ public class DBConnect {
 	                	String className = resultSet.getString("class");
 	                	String time = resultSet.getString("time");
 	                	int status = resultSet.getInt("status");
-	                	Date timeCreated = resultSet.getDate("time_created");
+	                	String timeCreated = resultSet.getString("time_created");
 	                	System.out.print(requestID);
 	                	System.out.println(className + " " + time);
 	                	
@@ -314,12 +405,56 @@ public class DBConnect {
 				@Override
 				public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 					String query = "UPDATE requests SET requests.status=? WHERE (requests.class=? "
-							+ "OR requests.time=?) AND requests.tutee_id=?";
+							+ "OR requests.time=?) AND requests.tutee_id=? AND NOT requests.id=?";
 					PreparedStatement ps = connection.prepareStatement(query);
 					ps.setInt(1, 2);
 					ps.setString(2, request.getClassName());
 					ps.setString(3, request.getTime());
 					ps.setInt(4, request.getTuteeID());
+					ps.setInt(5, requestID);
+					return ps;
+				}
+			});
+			
+			
+			//NOW, need to update tutor's availability based on time that request was approved for
+			
+			String availabilityQuery = "SELECT users.availability FROM users WHERE user_id=?";
+			String availability = jdbc.query(availabilityQuery, 
+					new PreparedStatementSetter() {
+						public void setValues(PreparedStatement preparedStatement) throws SQLException {
+							preparedStatement.setInt(1,  request.getTutorID());
+						}
+					}, 
+					 new ResultSetExtractor<String>() {
+			            public String extractData(ResultSet resultSet) throws SQLException,
+			              DataAccessException {
+			                if (resultSet.next()) {
+//			                	(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
+			        			//String availability)
+			                	
+			                	return resultSet.getString("availability");
+			                	
+			                }
+			                return null;
+			            }
+					});
+			
+			
+			jdbc.update(new PreparedStatementCreator() {
+				@Override
+				public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+					String[] availabilityStr = availability.split(" ");
+					ArrayList<String> availabilities = new ArrayList<>(Arrays.asList(availabilityStr));
+					availabilities.remove(request.getTime());
+					String availabilitiesStr = "";
+					for (int i = 0; i < availabilities.size(); i++) {
+						availabilitiesStr += availabilities.get(i) + " ";
+					}
+					String query = "UPDATE users SET users.availability=? WHERE users.user_id = ?";
+					PreparedStatement ps = connection.prepareStatement(query);
+					ps.setString(1, availabilitiesStr);
+					ps.setInt(2, request.getTutorID());
 					return ps;
 				}
 			});
@@ -327,6 +462,14 @@ public class DBConnect {
 		}
 		//still don't know what this boolean is supposed to be for. might jsut take it out 
 		return true;
+	}
+	
+	private String listToStringAvailability(ArrayList<Integer> availability) {
+		String result = "";
+		for (int i = 0 ; i < availability.size(); i++) {
+			result += availability.get(i).toString() + " ";
+		}
+		return result;
 	}
 	
 	void updateUserInformation(User user) {
@@ -345,7 +488,7 @@ public class DBConnect {
 		});
 	}
 	
-	List<Tutor> searchTutors(ArrayList<Integer> times, String className) {
+	List<Tutor> searchTutors(int userID, ArrayList<Integer> times, String className) {
 		String query = "SELECT * FROM users, classes WHERE classes.class_name=? AND classes.tutor_id=users.user_id";
 		List<Tutor> tutors = jdbc.query(query, 
 		new PreparedStatementSetter() {
@@ -369,15 +512,35 @@ public class DBConnect {
                 	String phoneNumber = resultSet.getString("phone_number");
                 	Boolean accountType = resultSet.getBoolean("tutor");
                 	String availability = resultSet.getString("availability");
-                	
-                	result.add(new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability));
+                	if (availability != null) {
+                    	System.out.println("adding " + email);
+                    	result.add(new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability));
+
+                	}
                 	
                 }
                 return result;
             }
 		});
 		
-		
+		final String updateQuery = "UPDATE users SET tutee_search_class=?, tutee_search_times=? WHERE user_id=?";
+		jdbc.update(
+			new PreparedStatementCreator() {
+				@Override
+				public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+					
+					PreparedStatement ps = connection.prepareStatement(updateQuery);
+					ps.setString(1, className);
+					String timeAvailabilities = "";
+					for (int i = 0; i < times.size(); i++) {
+						timeAvailabilities += times.get(i).toString() + " " ;
+					}
+					ps.setString(2, timeAvailabilities);
+					ps.setInt(3, userID);
+					return ps;
+				}
+			}
+		); 
 		
 		List<Tutor> result = sortTutors(tutors, times);
 		
@@ -397,37 +560,44 @@ public class DBConnect {
 			System.out.println("comparing " + a.getEmail() + ", " + b.getEmail());
 			int numA = 0;
 			int numB = 0;
-			for (Integer i : time) {
-				if (timesA.contains(i)) {
-					numA++;
-				}
-				if (timesB.contains(i)) {
-					numB++;
-				}
+			ArrayList<Integer> aMatching = null;
+			if (a.getMatchingAvailabilities() == null) {
+				aMatching =  new ArrayList<>();
+
+			}	
+			ArrayList<Integer> bMatching = null;	
+			if (b.getMatchingAvailabilities() == null) {
+				bMatching = new ArrayList<>();
 			}
 			
-			System.out.println("numa: " + numA + " numb: " + numB);
-			System.out.println("numb - numa : " + (numA - numB));
-			return numB - numA;
+			if (aMatching != null || bMatching != null) {
+				for (Integer i : time) {
+					if (aMatching != null && timesA.contains(i)) {
+						aMatching.add(i);
+					}
+					if (bMatching != null && timesB.contains(i)) {
+						bMatching.add(i);
+					}
+				}
+
+			}
+			
+			if (aMatching != null) {
+				a.setMatchingAvailabilities(aMatching);
+			}
+			if (bMatching != null) {
+				b.setMatchingAvailabilities(bMatching);
+			}
+			
+			System.out.println("numa: " + a.getMatchingAvailabilities().size() + " numb: " + b.getMatchingAvailabilities().size());
+			return b.getMatchingAvailabilities().size() - a.getMatchingAvailabilities().size();
 		}
 		
 	}
 	
 	private List<Tutor> sortTutors(List<Tutor> tutors, ArrayList<Integer> time) {
 		tutors.sort(new SortTutorsByTime(time));
-//		for (Tutor t : tutors) {
-//			pq.add(t);
-//		}
-////		Object[] tutors = pq.toArray();
-////		for (Object t : tutors) {
-////			Tutor hello = (Tutor)t;
-////			System.out.println(hello.getEmail());
-////		}
-//		
-//		ArrayList<Tutor> result = new ArrayList<>();
-//		for (int i = 0; i < tutors.size(); i++) {
-//			result.add(pq.poll());
-//		}
+
 		return tutors;
 	}
 	
@@ -499,6 +669,17 @@ public class DBConnect {
 	}
 	
 	Boolean addTutorToClass(int tutorID, ArrayList<String> className) {
+		//delete all classes tutor is tutoring first (want overwrite)
+		String deleteQuery = "DELETE FROM classes WHERE tutor_id=?";
+		jdbc.execute(deleteQuery, new PreparedStatementCallback<Boolean> () {
+			@Override
+			public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
+				ps.setInt(1, tutorID);
+				
+				return ps.execute();
+			}
+		});
+		
 		String values = "";
 		for (int i = 0; i < className.size(); i++) {
 			if (i == className.size() - 1) {
@@ -626,7 +807,7 @@ public class DBConnect {
             public ArrayList<String> extractData(ResultSet resultSet) throws SQLException,
               DataAccessException {
             	ArrayList<String> result = new ArrayList<>();
-                if (resultSet.next()) {
+                while (resultSet.next()) {
                 	System.out.println("tutor search");
 //                	(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
         			//String availability)

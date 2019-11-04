@@ -31,12 +31,78 @@ class DBConnectTest {
 	@Test
 	void addTutorToClassTest() {
 		int tutorID = 15;
-		ArrayList<String> classes = new ArrayList<>();
-		classes.add("CSCI 201");
-		classes.add("CSCI 270");
-		classes.add("CSCI 356");
-		dbConnect.addTutorToClass(tutorID, classes);
+//		ArrayList<String> classes = new ArrayList<>();
+//		classes.add("CSCI 201");
+//		classes.add("CSCI 270");
+//		classes.add("CSCI 356");
+//		dbConnect.addTutorToClass(tutorID, classes);
 		
+	}
+	@Test
+	void addRequest() {
+		int tuteeID = 4;
+		int tutorID = 15;
+		String className = "CSCI 401";
+		String time = "15";
+		int status = 0;
+		//dbConnect.addRequest(tuteeID, tutorID, className, time, status);
+	}
+	
+	@Test
+	void getRequestsTuteeApprovedTest() {
+		System.out.println("tutee approved");
+		int tuteeID = 4;
+		List<TutorRequest> requests = dbConnect.getRequestsTuteeApproved(tuteeID);
+		for (int i = 0; i < requests.size(); i++) {
+			System.out.println("tutor: " + requests.get(i).getTutorName());
+			System.out.println("class: " + requests.get(i).getClassName());
+		}
+	}
+	
+	@Test
+	void getRequestsTutorApprovedTest() {
+		System.out.println("tutorapproved");
+		int tutorID = 2;
+		List<TutorRequest> requests = dbConnect.getRequestsTutorApproved(tutorID);
+		for (int i = 0; i < requests.size(); i++) {
+			System.out.println("tutor: " + requests.get(i).getTuteeName());
+			System.out.println("class: " + requests.get(i).getClassName());
+		}
+	}
+	
+	@Test
+	void getRequestsTutorUnapprovedTest() {
+		System.out.println("tutor pending");
+		int tutorID = 1;
+		List<TutorRequest> requests = dbConnect.getRequestsTutorUnapproved(tutorID);
+		for (int i = 0; i < requests.size(); i++) {
+			System.out.println("tutor: " + requests.get(i).getTuteeName());
+			System.out.println("class: " + requests.get(i).getClassName());
+		}
+	}
+	
+	@Test
+	void searchTutorTest() {
+		System.out.println("SEARCH TUTOR TEST!!!!");
+		ArrayList<Integer> times = new ArrayList<>();
+		times.add(1);
+		times.add(2);
+		times.add(3);
+		times.add(4);
+		String className = "CSCI 103";
+		int userID = 4;
+		List<Tutor> results = dbConnect.searchTutors(userID, times, className);
+		for (int i = 0; i < results.size(); i++) {
+			System.out.println(results.get(i).getEmail());
+		}
+		
+	}
+	
+	@Test
+	void updateRequestStatusTest() {
+		int requestID = 2;
+		int newStatus = 1;
+		dbConnect.updateRequestStatus(requestID, newStatus);
 	}
 	
 	@Test

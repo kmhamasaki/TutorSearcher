@@ -14,12 +14,12 @@ public class TutorRequest implements Serializable {
 	private int tutorID;
 	private String time;
 	private int status;
-	private Date timeCreated;
+	private String timeCreated;
 	private String className;
-	
-	
+
+
 	public TutorRequest(int requestID, int tuteeID, int tutorID, String time, int status,
-			Date timecreated, String className) {
+			String timecreated, String className) {
 		this.requestID = requestID;
 		this.tuteeID = tuteeID;
 		this.tutorID = tutorID;
@@ -74,7 +74,7 @@ public class TutorRequest implements Serializable {
 		this.status = status;
 	}
 	
-	public Date getTimeCreated() {
+	public String getTimeCreated() {
 		return timeCreated;
 	}
 

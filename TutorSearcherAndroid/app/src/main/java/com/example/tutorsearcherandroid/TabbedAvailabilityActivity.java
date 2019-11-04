@@ -62,9 +62,27 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
             pageTitle.setText(R.string.title_activity_search_tutor);
             submitButton.setText("Search");
         }
-        else if(sourcePage.equals("EditProfile")){
+        else if(sourcePage.equals("UpdateProfile")){
             pageTitle.setText("Edit Availability");
             submitButton.setText("Save");
+
+            try {
+                HashMap<String, Object> attr = new HashMap<>();
+                attr.put("tutorID", Integer.parseInt(UserId));
+                Client client = new Client("getavailability", attr);
+                client.execute().get();
+                Request response = client.getResponse();
+
+                selectedTimes = (ArrayList<Integer>)response.getAttributes().get("availability");
+//                for(int i = 0; i < classes.size(); i++) {
+//                    CheckBox cb = findViewById(CHECKBOX_ID[classToIndex.get(classes.get(i))]);
+//                    cb.setChecked(true);
+//                    System.out.println(classes.get(i));
+//                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         else if(sourcePage.equals("Signup")){
             pageTitle.setText("Set Your Availability");
@@ -124,11 +142,21 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
             openSearchResultsActivity(response);
             // proceed to search result page
         }
-        else if(sourcePage.equals("EditProfile")){
-            // ***INSERT CODE TO SEND TO BACKEND HERE***
+        else if(sourcePage.equals("UpdateProfile")){
+            try {
+                HashMap<String, Object> attr = new HashMap<>();
+                attr.put("availability", selectedTimes);
+                attr.put("tutorID", Integer.parseInt(UserId));
 
+                Client client = new Client("updateavailability", attr);
+                client.execute();
+                Request response = client.getResponse();
+                System.out.println(response.getRequestType());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-            // return back to edit profile page
+            openUpdateProfile();
         }
         else if(sourcePage.equals("Signup")){
             try {
@@ -137,27 +165,42 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
                 attr.put("tutorID", Integer.parseInt(UserId));
 
                 Client client = new Client("updateavailability", attr);
-                client.execute().get();
+                client.execute();
                 Request response = client.getResponse();
                 System.out.println(response.getRequestType());
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-
-            // go to home page
-            Intent i = new Intent(this, HomeActivity.class);
-            i.putExtra("UserId",UserId);
-            i.putExtra("AccountType", UserId);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(i);
+            openHomeActivity();
         }
 
     }
 
     public void openSearchResultsActivity(Request response) {
         Intent i = new Intent(this, SearchResultsActivity.class);
+        Bundle extras = getIntent().getExtras();
+        i.putExtra("ClassName", extras.getString("ClassName"));
+        i.putExtra("UserId", extras.getString("UserId"));
         i.putExtra("TutorList",response);
+        i.putExtra("UserId",UserId);
+        i.putExtra("AccountType", AccountType);
+        startActivity(i);
+    }
+
+    public void openHomeActivity() {
+        Intent i = new Intent(this, HomeActivity.class);
+        i.putExtra("UserId",UserId);
+        i.putExtra("AccountType", AccountType);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+    }
+
+    public void openUpdateProfile() {
+        Intent i = new Intent(this, UpdateProfile.class);
+        i.putExtra("UserId",UserId);
+        i.putExtra("AccountType", AccountType);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }
 }
