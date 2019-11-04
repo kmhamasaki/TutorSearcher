@@ -11,9 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChooseClasses"></activity>
-        <activity android:name=".ViewRequests"></activity>
-        <activity android:name=".SearchResultsActivity"></activity>
+        <activity android:name=".TutorTimeActivity"></activity>
+        <activity android:name=".ChooseClasses" />
+        <activity android:name=".ViewRequests" />
+        <activity android:name=".SearchResultsActivity" />
         <activity
             android:name=".TabbedAvailabilityActivity"
             android:label="@string/title_activity_tabbed_availability"

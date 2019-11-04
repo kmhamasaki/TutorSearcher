@@ -179,6 +179,9 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
 
     public void openSearchResultsActivity(Request response) {
         Intent i = new Intent(this, SearchResultsActivity.class);
+        Bundle extras = getIntent().getExtras();
+        i.putExtra("ClassName", extras.getString("ClassName"));
+        i.putExtra("UserId", extras.getString("UserId"));
         i.putExtra("TutorList",response);
         i.putExtra("UserId",UserId);
         i.putExtra("AccountType", AccountType);
