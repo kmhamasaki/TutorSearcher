@@ -65,6 +65,24 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
         else if(sourcePage.equals("EditProfile")){
             pageTitle.setText("Edit Availability");
             submitButton.setText("Save");
+
+            try {
+                HashMap<String, Object> attr = new HashMap<>();
+                attr.put("tutorID", Integer.parseInt(UserId));
+                Client client = new Client("getavailability", attr);
+                client.execute().get();
+                Request response = client.getResponse();
+
+                selectedTimes = (ArrayList<Integer>)response.getAttributes().get("availability");
+//                for(int i = 0; i < classes.size(); i++) {
+//                    CheckBox cb = findViewById(CHECKBOX_ID[classToIndex.get(classes.get(i))]);
+//                    cb.setChecked(true);
+//                    System.out.println(classes.get(i));
+//                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         else if(sourcePage.equals("Signup")){
             pageTitle.setText("Set Your Availability");
@@ -125,10 +143,25 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
             // proceed to search result page
         }
         else if(sourcePage.equals("EditProfile")){
-            // ***INSERT CODE TO SEND TO BACKEND HERE***
+            try {
+                HashMap<String, Object> attr = new HashMap<>();
+                attr.put("availability", selectedTimes);
+                attr.put("tutorID", Integer.parseInt(UserId));
 
+                Client client = new Client("updateavailability", attr);
+                client.execute();
+                Request response = client.getResponse();
+                System.out.println(response.getRequestType());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-            // return back to edit profile page
+            // go to home page
+            Intent i = new Intent(this, HomeActivity.class);
+            i.putExtra("UserId",UserId);
+            i.putExtra("AccountType", AccountType);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
         }
         else if(sourcePage.equals("Signup")){
             try {
@@ -137,7 +170,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
                 attr.put("tutorID", Integer.parseInt(UserId));
 
                 Client client = new Client("updateavailability", attr);
-                client.execute().get();
+                client.execute();
                 Request response = client.getResponse();
                 System.out.println(response.getRequestType());
             } catch (Exception e) {
