@@ -319,6 +319,7 @@ public class DBConnect {
 		return true;
 	}
 	
+	
 	void updateUserInformation(User user) {
 		jdbc.update(new PreparedStatementCreator() {
 			@Override
