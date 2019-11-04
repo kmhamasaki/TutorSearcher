@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,7 +56,9 @@ public class ChooseClasses extends AppCompatActivity {
         }
 
         // If coming from home, pre-click already chosen classes
-        if(sourcePage.equals("Home")) {
+        if(sourcePage.equals("UpdateProfile")) {
+            Button b = (Button) findViewById(R.id.continueButton);
+            b.setText("Update");
             try {
                 HashMap<String, Object> attr = new HashMap<>();
                 attr.put("tutorID", Integer.parseInt(UserId));
@@ -102,7 +105,8 @@ public class ChooseClasses extends AppCompatActivity {
         if(sourcePage.equals("Signup"))
             openAvailabilityActivity();
 
-        openHomeAvailability();
+        else
+            openUpdateProfile();
     }
 
     public void openAvailabilityActivity() {
@@ -118,8 +122,8 @@ public class ChooseClasses extends AppCompatActivity {
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }
-    public void openHomeAvailability() {
-        Intent i = new Intent(this, TabbedAvailabilityActivity.class);
+    public void openUpdateProfile() {
+        Intent i = new Intent(this, UpdateProfile.class);
         i.putExtra("SourcePage", "Home");
         i.putExtra("UserId", UserId);
         i.putExtra("AccountType", AccountType);

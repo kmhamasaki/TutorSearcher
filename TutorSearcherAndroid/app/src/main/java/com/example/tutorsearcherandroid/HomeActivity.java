@@ -3,9 +3,6 @@ package com.example.tutorsearcherandroid;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -28,15 +25,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button searchButton = findViewById(R.id.search_button);
         Button updateProfileButton = findViewById(R.id.update_profile_button);
         Button logoutButton = findViewById(R.id.logout_button);
-        Button updateClassButton = findViewById(R.id.update_classses_button);
-        Button updateAvailabilityButton = findViewById(R.id.update_availability_button);
+        Button acceptedRequestsButton = findViewById(R.id.accepted_requests_button);
 
         viewRequestButton.setOnClickListener(this);
         searchButton.setOnClickListener(this);
         updateProfileButton.setOnClickListener(this);
         logoutButton.setOnClickListener(this);
-        updateClassButton.setOnClickListener(this);
-        updateAvailabilityButton.setOnClickListener(this);
+        acceptedRequestsButton.setOnClickListener(this);
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -48,8 +44,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         if(AccountType.equals("Tutor")) {
             searchButton.setVisibility(View.GONE);
         } else {
-            updateClassButton.setVisibility(View.GONE);
-            updateAvailabilityButton.setVisibility(View.GONE);
+            viewRequestButton.setVisibility(View.GONE);
         }
     }
 
@@ -67,13 +62,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.update_profile_button:
                 openUpdateProfileActivity();
                 break;
+            case R.id.accepted_requests_button:
+                openUpdateProfileActivity();
+                break;
             case R.id.logout_button:
                 openMainActivity();
                 break;
-            case R.id.update_availability_button:
-                openAvailabilityActivity();
-            case R.id.update_classses_button:
-                openChooseClassesActivity();
 
         }
     }
@@ -96,7 +90,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void openUpdateProfileActivity() {
-        //redirects to requests screen
+        Intent i = new Intent(this, UpdateProfile.class);
+        i.putExtra("UserId", UserId);
+        i.putExtra("AccountType", AccountType);
+
+        startActivity(i);
     }
 
     public void openMainActivity() {
@@ -107,21 +105,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(i);
     }
 
-    public void openAvailabilityActivity() {
-        System.out.println("Home.openAvailabilityActivity");
-        Intent i = new Intent(this, TabbedAvailabilityActivity.class);
-        i.putExtra("UserId", UserId);
-        i.putExtra("AccountType", AccountType);
-        i.putExtra("SourcePage", "EditProfile");
-        startActivity(i);
+    public void openAcceptedRequestActivity() {
+        // need to link to acceptedrequest
     }
 
-    public void openChooseClassesActivity() {
-        System.out.println("Home.openChooseClassesActivity");
-        Intent i = new Intent(this, ChooseClasses.class);
-        i.putExtra("UserId", UserId);
-        i.putExtra("AccountType", AccountType);
-        i.putExtra("SourcePage", "Home");
-        startActivity(i);
-    }
 }
