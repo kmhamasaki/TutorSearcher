@@ -111,6 +111,16 @@ class DBConnectTest {
 		List<Integer> availability = Arrays.asList(5, 9, 10);
 		dbConnect.updateTutorAvailability(userID, availability);
 	}
+	
+	@Test
+	void searchTutorsPreviousTest() {
+		System.out.println("SEARCH TUTORS PREVIOUS TEST!!");
+		int userID = 4;
+		List<Tutor> results = dbConnect.searchTutorsPrevious(userID);
+		for (Tutor t : results) {
+			System.out.println(t.getEmail());
+		}
+	}
 //	@Test
 //	void addUser() {
 //		List<Integer> avail = Arrays.asList(1, 2, 3);

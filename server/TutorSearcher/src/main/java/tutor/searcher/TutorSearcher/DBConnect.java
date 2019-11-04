@@ -23,6 +23,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import javafx.util.Pair;
+
 @Component
 public class DBConnect {
 	
@@ -546,6 +548,48 @@ public class DBConnect {
 		
 		return result;
 		
+	}
+	//could probably be optimized into one sql query 
+	List<Tutor> searchTutorsPrevious(int userID) {
+		String query = "SELECT * FROM users WHERE user_id= ?";
+		String previousSearchTime = "";
+		String previousSearchClass = "";
+		
+		//key is times, value is class
+		Pair<String,String> result = jdbc.query(query, 
+		new PreparedStatementSetter() {
+			public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				preparedStatement.setInt(1,  userID);
+			}
+		}, 
+		 new ResultSetExtractor<Pair<String,String>>() {
+            public Pair<String,String> extractData(ResultSet resultSet) throws SQLException,
+              DataAccessException {
+            	String result ="";
+                if (resultSet.next()) {
+//                	(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
+        			//String availability)
+                	String previousSearchTime = resultSet.getString("tutee_search_times");
+                	String previousSearchClass = resultSet.getString("tutee_search_class");
+                    return new Pair<String,String>(previousSearchTime,previousSearchClass);
+
+                	
+                }
+                return new Pair<String,String>("","");
+
+            }
+		});
+		
+		if (result.getKey() == "" || result.getValue() == "") {
+			return null;
+		}
+		
+		ArrayList<Integer> times = new ArrayList<>();
+		String[] timesStr = result.getKey().split(" ");
+		for (int i = 0; i < timesStr.length; i++) {
+			times.add(Integer.parseInt(timesStr[i]));
+		}
+		return searchTutors(userID, times, result.getValue());
 	}
 	
 	class SortTutorsByTime implements Comparator<Tutor> {
