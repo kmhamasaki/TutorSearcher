@@ -62,7 +62,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
             pageTitle.setText(R.string.title_activity_search_tutor);
             submitButton.setText("Search");
         }
-        else if(sourcePage.equals("EditProfile")){
+        else if(sourcePage.equals("UpdateProfile")){
             pageTitle.setText("Edit Availability");
             submitButton.setText("Save");
 
@@ -142,7 +142,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
             openSearchResultsActivity(response);
             // proceed to search result page
         }
-        else if(sourcePage.equals("EditProfile")){
+        else if(sourcePage.equals("UpdateProfile")){
             try {
                 HashMap<String, Object> attr = new HashMap<>();
                 attr.put("availability", selectedTimes);
@@ -156,12 +156,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
                 e.printStackTrace();
             }
 
-            // go to home page
-            Intent i = new Intent(this, HomeActivity.class);
-            i.putExtra("UserId",UserId);
-            i.putExtra("AccountType", AccountType);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(i);
+            openUpdateProfile();
         }
         else if(sourcePage.equals("Signup")){
             try {
@@ -177,13 +172,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
                 e.printStackTrace();
             }
 
-
-            // go to home page
-            Intent i = new Intent(this, HomeActivity.class);
-            i.putExtra("UserId",UserId);
-            i.putExtra("AccountType", AccountType);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(i);
+            openHomeActivity();
         }
 
     }
@@ -191,6 +180,24 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
     public void openSearchResultsActivity(Request response) {
         Intent i = new Intent(this, SearchResultsActivity.class);
         i.putExtra("TutorList",response);
+        i.putExtra("UserId",UserId);
+        i.putExtra("AccountType", AccountType);
+        startActivity(i);
+    }
+
+    public void openHomeActivity() {
+        Intent i = new Intent(this, HomeActivity.class);
+        i.putExtra("UserId",UserId);
+        i.putExtra("AccountType", AccountType);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+    }
+
+    public void openUpdateProfile() {
+        Intent i = new Intent(this, UpdateProfile.class);
+        i.putExtra("UserId",UserId);
+        i.putExtra("AccountType", AccountType);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }
 }
