@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TutorTimeActivity"></activity>
+        <activity
+            android:name=".ScrollingHomeActivity"
+            android:label="@string/title_activity_scrolling_home"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".TutorTimeActivity" />
         <activity android:name=".ChooseClasses" />
         <activity android:name=".ViewRequests" />
         <activity android:name=".SearchResultsActivity" />
