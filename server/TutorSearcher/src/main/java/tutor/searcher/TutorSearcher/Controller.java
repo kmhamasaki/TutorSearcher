@@ -158,6 +158,7 @@ public class Controller {
 		 * requestType: "search"
 		 * searches for tutors that match class & availability 
 		 * incoming attributes:
+		 * 	int userID - tutee makign the search
 		 * 	String availability - availability as a string, separated by spaces
 		 *  String className
 		 * outgoing attributes:
@@ -167,7 +168,7 @@ public class Controller {
 		else if (request.getRequestType().equals("search")) {
 			ArrayList<Integer> times = (ArrayList<Integer>)request.getAttributes().get("availability");
 			String className = (String)request.getAttributes().get("className");
-			List<Tutor> tutors = dbConnect.searchTutors(times, className);
+			List<Tutor> tutors = dbConnect.searchTutors((int)request.get("userID"), times, className);
 			respType = "Success";
 			respAttr.put("results", tutors);
 

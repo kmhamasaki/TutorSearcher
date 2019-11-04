@@ -83,18 +83,28 @@ class DBConnectTest {
 	
 	@Test
 	void searchTutorTest() {
+		System.out.println("SEARCH TUTOR TEST!!!!");
 		ArrayList<Integer> times = new ArrayList<>();
 		times.add(1);
 		times.add(2);
 		times.add(3);
 		times.add(4);
 		String className = "CSCI 103";
-		List<Tutor> results = dbConnect.searchTutors(times, className);
+		int userID = 4;
+		List<Tutor> results = dbConnect.searchTutors(userID, times, className);
 		for (int i = 0; i < results.size(); i++) {
 			System.out.println(results.get(i).getEmail());
 		}
 		
 	}
+	
+	@Test
+	void updateRequestStatusTest() {
+		int requestID = 2;
+		int newStatus = 1;
+		dbConnect.updateRequestStatus(requestID, newStatus);
+	}
+	
 	@Test
 	void updateTutorAvailability() {
 		int userID = 6;
