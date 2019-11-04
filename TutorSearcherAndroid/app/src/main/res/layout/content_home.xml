@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:drawableLeft="@android:drawable/ic_search_category_default"
@@ -41,22 +41,23 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
-        android:id="@+id/update_profile_button"
+        android:id="@+id/accepted_requests_button"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="139dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="139dp"
         android:layout_marginRight="24dp"
-        android:drawableLeft="@drawable/profileiconsmall"
-        android:drawablePadding="4dp"
-        android:text="@string/update_profile"
+        android:drawableLeft="@drawable/check_icon"
+        android:drawablePadding="12dp"
+        android:text="View Accepted Requests"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_button" />
+        app:layout_constraintTop_toBottomOf="@id/view_requests_button" />
 
     <Button
         android:id="@+id/view_requests_button"
@@ -78,6 +79,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/update_profile_button"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/update_profile_button"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:drawableLeft="@drawable/profileiconsmall"
+        android:drawablePadding="4dp"
+        android:text="@string/update_profile"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_button" />
 
     <Button
         android:id="@+id/logout_button"

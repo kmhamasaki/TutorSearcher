@@ -6,78 +6,89 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import tutor.searcher.TutorSearcher.Request;
 import tutor.searcher.TutorSearcher.Tutor;
 import tutor.searcher.TutorSearcher.TutorRequest;
 
-public class SearchResultsActivity extends AppCompatActivity {
+public class SearchResultsActivity extends AppCompatActivity implements MyAdapter.OnTutorClickListener {
+    //Recyler View Variables
+    private List<Tutor> TutorList;
+
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter rAdapter;
+    private MyAdapter rAdapter; //Bridge between list and recyclerview
     private RecyclerView.LayoutManager rLayoutManager;
 
+    //User Variables
     private String UserId;
     private String AccountType;
-    private List<Tutor> TutorList;
+    private String Class;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.hasFixedSize();
-
-        rLayoutManager = new LinearLayoutManager(this);
-
-        ArrayList<Tutor> myDataset = new ArrayList<>();
-        List<TutorRequest> requests = new ArrayList<>();
-        List<String> classes = new ArrayList<>();
-        classes.add("CSCI 104");
-        classes.add("CSCI 103");
-        Tutor temp = new Tutor(1,"Cameron","Haseyama","haseyama",
-                "8082287860","password",true,
-                requests,requests,requests,"1 3 10 15 22 25 28 30 49 50",classes);
-        Tutor temp2 = new Tutor(1,"John","Smith","haseyama",
-                "8082287860","password",true,
-                requests,requests,requests,"2 4 9 23 22 49 50",classes);
-        Tutor temp3 = new Tutor(1,"Jane","Doe","haseyama",
-                "8082287860","password",true,
-                requests,requests,requests,"49 40 41 52",classes);
-        for(int i = 0; i < 8; i++) {
-            myDataset.add(temp);
-            myDataset.add(temp2);
-            myDataset.add(temp3);
-        }
-        rAdapter = new MyAdapter(myDataset);
-        recyclerView.setAdapter(rAdapter);
-
-        recyclerView.setLayoutManager(rLayoutManager);
-
+        //Save information from intent
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             UserId = extras.getString("UserId");
             AccountType = extras.getString("AccountType");
             Request response = (Request) extras.get("TutorList");
             TutorList = (List<Tutor>) response.get("results");
+            Class = extras.getString("ClassName");
+
         }
-        if(TutorList != null){
-            
-        }
+
+        //Generate Recycler Information
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.hasFixedSize();
+        rLayoutManager = new LinearLayoutManager(this);
+        rAdapter = new MyAdapter(TutorList);
+
+        recyclerView.setLayoutManager(rLayoutManager);
+        recyclerView.setAdapter(rAdapter);
+
+        rAdapter.setOnTutorClickListener(this);
+
+//        //Set Onclick Listener for Buttons
+//        Button searchButton = findViewById(R.id.sendRequest);
+//        searchButton.setOnClickListener(this);
     }
 
-    public void openHomeActivity(String accountType) {
-        Intent i = new Intent(this, HomeActivity.class);
-//        i.putExtra("AccountType", accountType);
+    public void openTutorTimeActivity(int position) {
+        Intent i = new Intent(this, TutorTimeActivity.class);
         i.putExtra("UserId", UserId);
         i.putExtra("AccountType", AccountType);
+        Tutor tutor = TutorList.get(position);
+        i.putExtra("Tutor", tutor);
 
         startActivity(i);
         finish();
     }
 
+//    public void onClick(View v){
+//        openTutorTimeActivity(position);
+////        sendRequest();
+//    }
+
+    @Override
+    public void onTutorClick(int position) {
+        Intent i = new Intent(this, TutorTimeActivity.class);
+        i.putExtra("UserId", UserId);
+        i.putExtra("AccountType", AccountType);
+        Tutor tutor = TutorList.get(position);
+        i.putExtra("Tutor", tutor);
+        i.putExtra("ClassName",Class);
+        startActivity(i);
+        finish();
+    }
 
 }
 
