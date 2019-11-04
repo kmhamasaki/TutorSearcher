@@ -167,6 +167,18 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
 
+                try {
+                    HashMap<String,Object> attributes = new HashMap<String,Object>();
+                    attributes.put("requestID", str);
+                    attributes.put("newStatus", 2);
+
+                    Client client = new Client("updaterequeststatus", attributes);
+                    client.execute().get();
+                    Request response = client.getResponse();
+
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
