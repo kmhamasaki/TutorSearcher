@@ -31,14 +31,28 @@ class DBConnectTest {
 	@Test
 	void addTutorToClassTest() {
 		int tutorID = 15;
-		ArrayList<String> classes = new ArrayList<>();
-		classes.add("CSCI 201");
-		classes.add("CSCI 270");
-		classes.add("CSCI 356");
-		dbConnect.addTutorToClass(tutorID, classes);
+//		ArrayList<String> classes = new ArrayList<>();
+//		classes.add("CSCI 201");
+//		classes.add("CSCI 270");
+//		classes.add("CSCI 356");
+//		dbConnect.addTutorToClass(tutorID, classes);
 		
 	}
 	
+	@Test
+	void searchTutorTest() {
+		ArrayList<Integer> times = new ArrayList<>();
+		times.add(1);
+		times.add(2);
+		times.add(3);
+		times.add(4);
+		String className = "CSCI 103";
+		List<Tutor> results = dbConnect.searchTutors(times, className);
+		for (int i = 0; i < results.size(); i++) {
+			System.out.println(results.get(i).getEmail());
+		}
+		
+	}
 	@Test
 	void updateTutorAvailability() {
 		int userID = 6;
