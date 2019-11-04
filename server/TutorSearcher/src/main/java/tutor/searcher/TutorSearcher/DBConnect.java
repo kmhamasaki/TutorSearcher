@@ -31,8 +31,8 @@ public class DBConnect {
 	private int numUsers = 0;
 	
 	public DBConnect() {
-		
 	}
+
 	public DBConnect(JdbcTemplate jdbc) {
 		
 		this.jdbc = jdbc;
@@ -470,7 +470,7 @@ public class DBConnect {
 					public void setValues(PreparedStatement preparedStatement) throws SQLException {
 						preparedStatement.setString(1,  email);
 					}
-				}, 
+				},
 				 new ResultSetExtractor<User>() {
 		            public User extractData(ResultSet resultSet) throws SQLException,
 		              DataAccessException {

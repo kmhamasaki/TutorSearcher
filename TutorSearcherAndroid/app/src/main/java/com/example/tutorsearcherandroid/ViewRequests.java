@@ -49,16 +49,11 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
         } catch(Exception e) {
             e.printStackTrace();
         }
-
-        System.out.println("asdasdasdasdasdadasdadasdaHELLO");
-
+        
         TableLayout requests_table_layout = (TableLayout) findViewById(R.id.requests_table_layout);
 
         int i = 0;
         for(TutorRequest request : requests) {
-
-            System.out.println("asdsadasdsadasdasdasda");
-
             String className = request.getClassName();
             String tuteeName = request.getTuteeName();
             String tutorName = request.getTutorName();
@@ -75,8 +70,6 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
             requests_table_layout.addView(row, i++);
         }
 
-//
-//
 //
 //        for(TutorRequest tutorRequest : requests) {
 //            TableRow request_row = (TableRow) findViewById(R.id.request_row);
