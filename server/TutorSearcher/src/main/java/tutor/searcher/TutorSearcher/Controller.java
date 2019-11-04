@@ -171,7 +171,8 @@ public class Controller {
 			respType = "Success";
 			respAttr.put("results", tutors);
 
-		} 
+		}
+
 		/**
 		 * requestType "newrequest"
 		 * incoming attributes
