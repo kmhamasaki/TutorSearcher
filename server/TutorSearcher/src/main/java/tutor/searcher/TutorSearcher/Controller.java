@@ -299,6 +299,20 @@ public class Controller {
 			respAttr.put("classes", classes);
 			respType = "Success";
 		}
+		
+		/**
+		 * requestType "searchprevious"
+		 * gets user's last search preferences and performs search
+		 * incoming attributes
+		 * 	int userID
+		 * outgoing attributes
+		 * 	List<Tutor> results
+		 */
+		else if (request.getRequestType().equals("searchprevious")) {
+			List<Tutor> results = dbConnect.searchTutorsPrevious((int)request.get("userID"));
+			respAttr.put("results", results);
+			respType = "Success";
+		}
 		System.out.print(respType);
 		requestThread.sendResponse(new Request(respType, respAttr));
  
