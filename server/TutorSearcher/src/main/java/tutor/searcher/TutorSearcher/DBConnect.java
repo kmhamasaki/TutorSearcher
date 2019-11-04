@@ -627,7 +627,7 @@ public class DBConnect {
             public ArrayList<String> extractData(ResultSet resultSet) throws SQLException,
               DataAccessException {
             	ArrayList<String> result = new ArrayList<>();
-                if (resultSet.next()) {
+                while (resultSet.next()) {
                 	System.out.println("tutor search");
 //                	(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
         			//String availability)
