@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tutor extends User implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	List<Integer> timeAvailabilities;
 	String timeAvailability;
 	List<String> classesTutoring;
