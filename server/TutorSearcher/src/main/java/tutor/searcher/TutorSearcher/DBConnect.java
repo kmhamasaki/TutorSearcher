@@ -82,7 +82,11 @@ public class DBConnect {
 	}
 	
 	List<TutorRequest> getRequests(int userID) {
-		String query = "SELECT * FROM requests, users WHERE requests.tutee_id=? AND requests.tutor_id=users.user_id";
+		String query = "SELECT requests.id, requests.tutee_id, requests.tutor_id, requests.class, requests.time, requests.status, requests.time_created, usersTutor.first_name, usersTutee.first_name " +
+				"FROM requests " +
+				"JOIN users usersTutor ON usersTutor.user_id = requests.tutor_id " +
+				"JOIN users usersTutee ON usersTutee.user_id = requests.tutee_id " +
+				"WHERE requests.tutee_id = ?";
 		List<TutorRequest> result = jdbc.query(query, 
 		new PreparedStatementSetter() {
 			public void setValues(PreparedStatement preparedStatement) throws SQLException {
@@ -105,8 +109,15 @@ public class DBConnect {
                 	Date timeCreated = resultSet.getDate("time_created");
                 	System.out.print(requestID);
                 	System.out.println(className + " " + time);
-                	
-                    result.add(new TutorRequest(requestID, tuteeID, tutorID, time, status, timeCreated, className));
+
+					String tuteeName = resultSet.getString("usersTutor.first_name");
+					String tutorName = resultSet.getString("usersTutee.first_name");
+
+					TutorRequest tutorRequest = new TutorRequest(requestID, tuteeID, tutorID, time, status, timeCreated, className);
+					tutorRequest.setTuteeName(tuteeName);
+					tutorRequest.setTutorName(tutorName);
+
+					result.add(tutorRequest);
                 }
                 return result;
             }

@@ -8,9 +8,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import tutor.searcher.TutorSearcher.Request;
+import tutor.searcher.TutorSearcher.Tutor;
 import tutor.searcher.TutorSearcher.TutorRequest;
 
 public class ViewRequests extends AppCompatActivity implements View.OnClickListener {
@@ -32,38 +35,45 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
 //      Loop through return  viewrequests()
 
         HashMap<String,Object> attributes = new HashMap<String,Object>();
-        attributes.put("UserId", UserId);
+        attributes.put("userID", Integer.parseInt(UserId));
+
+        List<TutorRequest> requests = null;
 
         try {
             Client client = new Client("viewrequests", attributes);
-
             client.execute().get();
             Request response = client.getResponse();
-            System.out.println(response.getRequestType());
+
+            requests = (List<TutorRequest>) response.get("requests");
+
         } catch(Exception e) {
             e.printStackTrace();
         }
 
+        System.out.println("asdasdasdasdasdadasdadasdaHELLO");
 
+        TableLayout requests_table_layout = (TableLayout) findViewById(R.id.requests_table_layout);
 
+        int i = 0;
+        for(TutorRequest request : requests) {
 
+            System.out.println("asdsadasdsadasdasdasda");
 
-
-//      List<TutorRequest> requests = viewrequests.;
-
-      TableLayout requests_table_layout = (TableLayout) findViewById(R.id.requests_table_layout);
-
-        for (int i = 0; i < 200; i++) {
+            String className = request.getClassName();
+            String tuteeName = request.getTuteeName();
+            String tutorName = request.getTutorName();
+            String time = request.getTime();
+            int status = request.getStatus();
+            Date timeCreated = request.getTimeCreated();
 
             TableRow row = new TableRow(this);
             TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
             row.setLayoutParams(lp);
             TextView tv = new TextView(this);
-            tv.setText("Testing");
+            tv.setText(className + " tuteeName" + tuteeName + " tutorName" + tutorName + " time" + time + " status" + status);
             row.addView(tv);
-            requests_table_layout.addView(row, i);
+            requests_table_layout.addView(row, i++);
         }
-
 
 //
 //
