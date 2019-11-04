@@ -121,6 +121,16 @@ class DBConnectTest {
 			System.out.println(t.getEmail());
 		}
 	}
+	
+	@Test
+	void getUserInformationTest() {
+		System.out.println("GETU SER INFO TEST ?????????????????????????????????????");
+		int userID = 1;
+		User user = dbConnect.getUserInformation(userID);
+		System.out.println(user.getEmail());
+		System.out.println(user.getFirstName() + " " + user.getLastName());
+	}
+	
 //	@Test
 //	void addUser() {
 //		List<Integer> avail = Arrays.asList(1, 2, 3);
