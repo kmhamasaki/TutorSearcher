@@ -104,6 +104,18 @@ public class ViewRequestsAccepted extends AppCompatActivity
         i.putExtra("UserId", UserId);
         i.putExtra("AccountType", AccountType);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        if(AccountType.equals("Tutee")){
+            //Get most recent search
+            HashMap<String,Object> attr = new HashMap<>();
+            attr.put("userID",Integer.parseInt(UserId));
+            Client client = new Client("searchprevious",attr);
+            client.execute();
+            Request response = null;
+            while(response == null){
+                response = client.getResponse();
+            }
+            i.putExtra("TutorList",response);
+        }
         startActivity(i);
     }
 
