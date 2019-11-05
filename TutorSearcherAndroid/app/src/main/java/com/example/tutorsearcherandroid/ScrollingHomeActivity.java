@@ -15,6 +15,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Display;
 import android.view.View;
@@ -23,10 +25,22 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class ScrollingHomeActivity extends AppCompatActivity {
+import java.util.List;
+
+import tutor.searcher.TutorSearcher.Request;
+import tutor.searcher.TutorSearcher.Tutor;
+
+public class ScrollingHomeActivity extends AppCompatActivity implements MyAdapter.OnTutorClickListener {
 
     private String UserId;
     private String AccountType;
+    private String Class;
+
+    //Recyler View Variables
+    private List<Tutor> TutorList;
+    private RecyclerView recyclerView;
+    private MyAdapter rAdapter; //Bridge between list and recyclerview
+    private RecyclerView.LayoutManager rLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +88,28 @@ public class ScrollingHomeActivity extends AppCompatActivity {
         Button logoutButton = findViewById(R.id.logout_button);
         Button acceptedRequestsButton = findViewById(R.id.accepted_requests_button);
 
+        //Recycler Initiation
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             UserId = extras.getString("UserId");
             AccountType = extras.getString("AccountType");
+            if(AccountType.equals("Tutee")){
+                Request response = (Request) extras.get("TutorList");
+                TutorList = (List<Tutor>) response.get("results");
+                Class = extras.getString("ClassName");
+            }
         }
+
+        //Generate Recycler Information
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.hasFixedSize();
+        rLayoutManager = new LinearLayoutManager(this);
+        rAdapter = new MyAdapter(TutorList);
+
+        recyclerView.setLayoutManager(rLayoutManager);
+        recyclerView.setAdapter(rAdapter);
+
+        rAdapter.setOnTutorClickListener(this);
 
         System.out.println(AccountType);
         if(AccountType.equals("Tutor")) {
@@ -128,6 +159,17 @@ public class ScrollingHomeActivity extends AppCompatActivity {
         i.putExtra("UserId", UserId);
         i.putExtra("AccountType", AccountType);
 
+        startActivity(i);
+    }
+    @Override
+    public void onTutorClick(int position) {
+        Intent i = new Intent(this, TutorTimeActivity.class);
+        i.putExtra("UserId", UserId);
+        i.putExtra("AccountType", AccountType);
+        Tutor tutor = TutorList.get(position);
+        i.putExtra("Tutor", tutor);
+        System.out.println(tutor.getMatchingAvailabilities().get(0));
+        i.putExtra("ClassName",Class);
         startActivity(i);
     }
 
