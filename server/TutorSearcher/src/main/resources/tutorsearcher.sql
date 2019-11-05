@@ -29,6 +29,8 @@ CREATE TABLE IF NOT EXISTS `tutorsearcher`.`users` (
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   `availability` VARCHAR(200) NULL DEFAULT NULL,
+  `tutee_search_class` VARCHAR(45) NULL DEFAULT NULL,
+  `tutee_search_times` VARCHAR(200) NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
@@ -52,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `tutorsearcher`.`classes` (
     FOREIGN KEY (`tutor_id`)
     REFERENCES `tutorsearcher`.`users` (`user_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 12
+AUTO_INCREMENT = 16
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -79,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `tutorsearcher`.`requests` (
     FOREIGN KEY (`tutor_id`)
     REFERENCES `tutorsearcher`.`users` (`user_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 11
+AUTO_INCREMENT = 16
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
