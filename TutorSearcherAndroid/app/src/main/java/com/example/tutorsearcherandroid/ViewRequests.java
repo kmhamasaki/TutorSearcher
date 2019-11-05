@@ -66,6 +66,7 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
             int status = request.getStatus();
             String timeCreated = request.getTimeCreated();
 
+
             TableRow row = new TableRow(this);
             TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
             row.setLayoutParams(lp);
