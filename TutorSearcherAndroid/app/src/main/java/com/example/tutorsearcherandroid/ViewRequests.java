@@ -36,6 +36,30 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
             AccountType = extras.getString("AccountType");
         }
 
+        loadRequests();
+
+//
+//
+//
+//        for(TutorRequest tutorRequest : requests) {
+//            TableRow request_row = (TableRow) findViewById(R.id.request_row);
+//
+//            // If User == Tutor
+//                // Add button to approve / reject
+//            // If User == Tutee
+//                // Don't add button
+//
+//            request_row.generateLayoutParams();
+//
+//            requests_table_layout.addView(request_row);
+//
+//
+//        }
+
+    }
+
+    private void loadRequests() {
+
         List<TutorRequest> requests = null;
 
         try {
@@ -104,24 +128,6 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
             requests_table_layout.addView(approve_row, i++);
             requests_table_layout.addView(reject_button_row, i++);
         }
-
-//
-//
-//
-//        for(TutorRequest tutorRequest : requests) {
-//            TableRow request_row = (TableRow) findViewById(R.id.request_row);
-//
-//            // If User == Tutor
-//                // Add button to approve / reject
-//            // If User == Tutee
-//                // Don't add button
-//
-//            request_row.generateLayoutParams();
-//
-//            requests_table_layout.addView(request_row);
-//
-//
-//        }
 
     }
 
