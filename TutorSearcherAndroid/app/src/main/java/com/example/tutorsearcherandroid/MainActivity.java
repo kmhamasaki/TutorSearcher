@@ -96,14 +96,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 System.out.println(attr.get("email"));
                 System.out.println(attr.get("passwordHash"));
                 Client client = new Client("login",attr);
-                client.execute();
-
-                // process errors
-
-                Request response = null;
-                while(response == null) {
-                    response = client.getResponse();
+                try {
+                    client.execute().get();
+                } catch(Exception e) {
+                    e.printStackTrace();
                 }
+
+                Request response = client.getResponse();
 
                 if(response.getRequestType().equals("Error: wrong email or password")){
                     System.out.println("Error: wrong email or password");

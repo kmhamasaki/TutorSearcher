@@ -130,13 +130,15 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
             HashMap<String, Object> attr = new HashMap<>();
             attr.put("availability", selectedTimes);
             attr.put("className", className);
+            attr.put("userID", Integer.parseInt(UserId));
             System.out.println(className);
             Client client = new Client("search", attr);
-            client.execute();
-            Request response = null;
-            while(response == null) {
-                response = client.getResponse();
+            try {
+                client.execute().get();
+            } catch(Exception e) {
+                e.printStackTrace();
             }
+            Request response = client.getResponse();
             System.out.println("Test " + response.getRequestType());
 
             // proceed to search result page
