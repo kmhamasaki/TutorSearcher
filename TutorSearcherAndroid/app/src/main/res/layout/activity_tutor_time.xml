@@ -6,15 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".TutorTimeActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView2"
-        android:layout_width="324dp"
-        android:layout_height="512dp"
-        android:layout_marginTop="96dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/buttonLayout"
+        android:orientation="vertical">
+
+
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/sendRequest"
@@ -24,5 +24,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
