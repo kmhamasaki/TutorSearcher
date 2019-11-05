@@ -117,10 +117,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
         Context context = getBaseContext();
         Collections.sort(selectedTimes);
         CharSequence text = selectedTimes.toString();
-        int duration = Toast.LENGTH_SHORT;
 
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
         if(selectedTimes.isEmpty()){
             Toast t = Toast.makeText(this, "Please select at least one time slot.",
                     Toast.LENGTH_LONG);
