@@ -65,6 +65,10 @@ public class User implements Serializable {
 
 	} 
 	
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+
+	} 
 	public String getLastName() {
 		return lastName;
 	}

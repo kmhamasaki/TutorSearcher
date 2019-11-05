@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="4dp"
+    android:layout_marginBottom="4dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="197dp"
+        android:layout_margin="4dp"
+        android:background="#F8BBD0">
+
+        <TextView
+            android:id="@+id/tutee_name"
+            android:layout_width="175dp"
+            android:layout_height="53dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:text="Tutee Name"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/class_name"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="19dp"
+            android:layout_marginEnd="26dp"
+            android:layout_marginRight="26dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:text="Class Name"
+            android:textSize="26sp" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="338dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tutee_name"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="11dp"
+            android:layout_marginRight="11dp"
+            android:layout_weight="1"
+            android:text="ClassTime"
+            android:textSize="24dp" />
+
+        <Button
+            android:id="@+id/accept_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="76dp"
+            android:layout_marginLeft="76dp"
+            android:layout_marginBottom="19dp"
+            android:text="Accept" />
+
+        <Button
+            android:id="@+id/reject_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="61dp"
+            android:layout_marginRight="61dp"
+            android:layout_marginBottom="18dp"
+            android:text="Reject" />
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
+

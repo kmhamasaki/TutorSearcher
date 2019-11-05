@@ -137,7 +137,7 @@ public class ScrollingHomeActivity extends AppCompatActivity {
     }
 
     public void openAcceptedRequestActivity(View view) {
-        Intent i = new Intent(this, ViewAcceptedRequests.class);
+        Intent i = new Intent(this, ViewRequestsAccepted.class);
         i.putExtra("UserId", UserId);
         i.putExtra("AccountType", AccountType);
 

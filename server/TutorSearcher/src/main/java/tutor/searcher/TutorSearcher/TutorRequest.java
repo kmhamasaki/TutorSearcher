@@ -92,12 +92,13 @@ public class TutorRequest implements Serializable {
 		return tuteeRating;
 	}
 
-	public double getTutorRating() {
-		return tutorRating;
-	}
-
 	public void setTuteeRating(double tuteeRating) {
 		this.tuteeRating = tuteeRating;
+	}
+
+
+	public double getTutorRating() {
+		return tutorRating;
 	}
 
 	public void setTutorRating(double tutorRating) {
