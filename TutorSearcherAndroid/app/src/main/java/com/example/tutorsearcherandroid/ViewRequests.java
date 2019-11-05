@@ -36,6 +36,30 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
             AccountType = extras.getString("AccountType");
         }
 
+        loadRequests();
+
+//
+//
+//
+//        for(TutorRequest tutorRequest : requests) {
+//            TableRow request_row = (TableRow) findViewById(R.id.request_row);
+//
+//            // If User == Tutor
+//                // Add button to approve / reject
+//            // If User == Tutee
+//                // Don't add button
+//
+//            request_row.generateLayoutParams();
+//
+//            requests_table_layout.addView(request_row);
+//
+//
+//        }
+
+    }
+
+    private void loadRequests() {
+
         List<TutorRequest> requests = null;
 
         try {
@@ -67,62 +91,43 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
             String timeCreated = request.getTimeCreated();
 
 
-            TableRow row = new TableRow(this);
             TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-            row.setLayoutParams(lp);
 
-            TextView tv = new TextView(this);
-            tv.setText(className + "\nTutee: " + tuteeName + "\nTutor: " + tutorName + "\nTime: " + time + "\nStatus:" + status);
-            row.addView(tv);
+            TableRow request_info_row = new TableRow(this);
+            request_info_row.setLayoutParams(lp);
 
-            TableRow row2 = new TableRow(this);
-            TableRow.LayoutParams lp2 = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-            row.setLayoutParams(lp2);
+            TextView request_info = new TextView(this);
+            request_info.setText(className + "\nTutee: " + tuteeName + "\nTutor: " + tutorName + "\nTime: " + time + "\nStatus:" + status);
+            request_info_row.addView(request_info);
 
-            Button approveButton = new Button(this);
-            approveButton.setText("Approve");
-            approveButton.setLayoutParams(new TableRow.LayoutParams(
+            TableRow approve_row = new TableRow(this);
+            request_info_row.setLayoutParams(lp);
+
+            Button approve_button = new Button(this);
+            approve_button.setText("Approve");
+            approve_button.setLayoutParams(new TableRow.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
 
-            assignApproveButton(approveButton, requestId);
-            row2.addView(approveButton);
+            assignApproveButton(approve_button, requestId);
+            approve_row.addView(approve_button);
 
-            Button rejectButton = new Button(this);
-            rejectButton.setText("Reject");
-            rejectButton.setLayoutParams(new TableRow.LayoutParams(
+            Button reject_button = new Button(this);
+            reject_button.setText("Reject");
+            reject_button.setLayoutParams(new TableRow.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
 
-            TableRow row3 = new TableRow(this);
-            TableRow.LayoutParams lp3 = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-            row.setLayoutParams(lp3);
+            TableRow reject_button_row = new TableRow(this);
+            request_info_row.setLayoutParams(lp);
 
-            assignRejectButton(rejectButton, requestId);
-            row3.addView(rejectButton);
+            assignRejectButton(reject_button, requestId);
+            reject_button_row.addView(reject_button);
 
-            requests_table_layout.addView(row, i++);
-            requests_table_layout.addView(row2, i++);
-            requests_table_layout.addView(row3, i++);
+            requests_table_layout.addView(request_info_row, i++);
+            requests_table_layout.addView(approve_row, i++);
+            requests_table_layout.addView(reject_button_row, i++);
         }
-
-//
-//
-//
-//        for(TutorRequest tutorRequest : requests) {
-//            TableRow request_row = (TableRow) findViewById(R.id.request_row);
-//
-//            // If User == Tutor
-//                // Add button to approve / reject
-//            // If User == Tutee
-//                // Don't add button
-//
-//            request_row.generateLayoutParams();
-//
-//            requests_table_layout.addView(request_row);
-//
-//
-//        }
 
     }
 
