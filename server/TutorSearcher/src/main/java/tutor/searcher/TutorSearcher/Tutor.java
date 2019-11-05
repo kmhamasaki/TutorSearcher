@@ -16,7 +16,7 @@ public class Tutor extends User implements Serializable {
 			String availability) {
 		super(userId, firstName, lastName, email, phoneNumber, passwordHash, accountType);
 		this.timeAvailability = availability;
-		if (availability != null) {
+		if (availability != null && !availability.equals("")) {
 			String[] timesStr = availability.split(" ");
 			this.timeAvailabilities = new ArrayList<>();
 			for (int i = 0; i < timesStr.length; i++) {
@@ -31,7 +31,7 @@ public class Tutor extends User implements Serializable {
 			String availability) {
 		super(userId, firstName, lastName, email, phoneNumber, accountType);
 		this.timeAvailability = availability;
-		if (availability != null) {
+		if (availability != null && !availability.equals("")) {
 			String[] timesStr = availability.split(" ");
 			this.timeAvailabilities = new ArrayList<>();
 			for (int i = 0; i < timesStr.length; i++) {
