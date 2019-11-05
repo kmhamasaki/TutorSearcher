@@ -6,26 +6,30 @@ An Andoid app to search for tutors at USC
 
 ## Database
 
-If you do not have MySQL installed, please install MySQL server from [this website](https://dev.mysql.com/downloads/mysql/).
+1. If you do not have MySQL installed, please install MySQL server from [this website](https://dev.mysql.com/downloads/mysql/). Take note of your username and password. 
+2. Install [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) also if it is not installed already.
+3. Click on the server under My Connections
+4. Click the button under File and paste in the SQL script found under `TutorSearcher/server/TutorSearcher/src/main/resources/tutorsearcher.sql`
+5. In the SQL script tab click the lightning bolt button 
 
-## set up your IDE
+## Server
 
-1. clone the repo
-2. open eclipse
-3. file > import > maven > existing maven project and select `server/TutorSearcher` and import it
+You can either run the back-end server in an IDE or on command line. 
 
-## install maven 
+### in an IDE
 
-https://maven.apache.org/download.cgi
+The server is tested to be able to run in Eclipse Jee. 
+1. Extract the project from zip file to desired directory.
+2. In Eclipse, File > Import > Maven > Existing Maven Projects and select the `TutorSearcher/server/TutorSearcher` directory.
+3. Under the Project Explorer or Package Explorer, navigate to `src/main/java/tutor.searcher.TutorSearcher` package. 
+4. Right click `TutorSearcherApplication.java` > Run As > Java Application. Later runs should only require pressing the green run button at the top.
 
-# to run
+### on the command line
 
-in the `server/TutorSearcher` directory run
+1. Install [Maven](https://maven.apache.org/download.cgi) and make sure it is in the PATH if it isn't already. 
+2. In the project directory, navigate to `TutorSearcher/server/TutorSearcher` in the terminal.
+3. Run `mvn spring-boot:run`
 
-``mvn clean``
+## Android Application
 
-``mvn spring-boot:run`` 
 
-right now you should see "application running" and then it'll keep running until you kill it
-
-you can also run it by right clicking `TutorSearcherApplication.java` > run as > java application inside of eclipse 
