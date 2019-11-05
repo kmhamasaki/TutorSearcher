@@ -19,7 +19,6 @@ public class RatingActivity extends AppCompatActivity{
         setContentView(R.layout.activity_rating);
 
         final RatingBar ratingBar = findViewById(R.id.ratingBar);
-        ratingBar.setRating((float)3.2);
 
         ratingBar.setOnTouchListener(new OnTouchListener() {
             @Override
@@ -41,12 +40,8 @@ public class RatingActivity extends AppCompatActivity{
                     v.setPressed(false);
                 }
 
-
-
-
                 return true;
             }});
-
 
     }
 
