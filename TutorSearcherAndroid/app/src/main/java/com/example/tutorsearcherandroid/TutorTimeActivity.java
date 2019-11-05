@@ -132,7 +132,7 @@ public class TutorTimeActivity extends AppCompatActivity implements View.OnClick
         amPm.put(9,"am");
         amPm.put(10,"am");
         amPm.put(11,"am");
-        amPm.put(12,"am");
+        amPm.put(12,"pm");
         amPm.put(1,"pm");
         amPm.put(2,"pm");
         amPm.put(3,"pm");
@@ -156,7 +156,7 @@ public class TutorTimeActivity extends AppCompatActivity implements View.OnClick
             }else{
                 temp += "Sunday: ";
             }
-            int startTime = i%9 + 9;
+            int startTime = i%8 + 9;
             int endTime = startTime + 1;
             if(startTime > 12){
                 startTime -= 12;
