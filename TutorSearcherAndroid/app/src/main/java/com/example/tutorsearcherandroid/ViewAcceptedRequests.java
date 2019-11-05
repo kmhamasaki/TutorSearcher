@@ -47,7 +47,12 @@ public class ViewAcceptedRequests extends AppCompatActivity implements View.OnCl
         try {
             HashMap<String,Object> attributes = new HashMap<String,Object>();
             attributes.put("userID", Integer.parseInt(UserId));
-            attributes.put("viewrequeststype", "tutorpending");
+
+            if(AccountType.equals("Tutor")) {
+                attributes.put("viewrequeststype", "tutorapproved");
+            } else if(AccountType.equals("Tutee")) {
+                attributes.put("viewrequeststype", "tuteeapproved");
+            }
 
             Client client = new Client("viewrequests", attributes);
             client.execute().get();
@@ -73,7 +78,6 @@ public class ViewAcceptedRequests extends AppCompatActivity implements View.OnCl
             int status = request.getStatus();
             String timeCreated = request.getTimeCreated();
 
-
             TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
 
             TableRow request_info_classname_row = new TableRow(this);
@@ -89,28 +93,28 @@ public class ViewAcceptedRequests extends AppCompatActivity implements View.OnCl
             request_info_tuteeName_row.setLayoutParams(lp);
             TextView request_info_tuteeName = new TextView(this);
             request_info_tuteeName.setTextSize(24);
-            request_info_tuteeName.setTypeface(request_info_classname.getTypeface(), Typeface.BOLD);
+            request_info_tuteeName.setTypeface(request_info_tuteeName.getTypeface(), Typeface.BOLD);
             request_info_tuteeName.setText("Tutee: " + tuteeName);
             request_info_tuteeName_row.addView(request_info_tuteeName);
 
             TableRow request_info_tutorName_row = new TableRow(this);
             request_info_tutorName_row.setLayoutParams(lp);
             TextView request_info_tutorName = new TextView(this);
-            request_info_tutorName.setTypeface(request_info_classname.getTypeface(), Typeface.BOLD);
+            request_info_tutorName.setTypeface(request_info_tutorName.getTypeface(), Typeface.BOLD);
             request_info_tuteeName.setText("Tutor: " + tutorName);
             request_info_tutorName_row.addView(request_info_tutorName);
 
             TableRow request_info_time_row = new TableRow(this);
             request_info_time_row.setLayoutParams(lp);
             TextView request_info_time = new TextView(this);
-            request_info_time.setTypeface(request_info_classname.getTypeface(), Typeface.BOLD);
+            request_info_time.setTypeface(request_info_time.getTypeface(), Typeface.BOLD);
             request_info_time.setText(time);
             request_info_time_row.addView(request_info_time);
 
             TableRow request_info_status_row = new TableRow(this);
             request_info_status_row.setLayoutParams(lp);
             TextView request_info_status = new TextView(this);
-            request_info_status.setTypeface(request_info_classname.getTypeface(), Typeface.BOLD);
+            request_info_status.setTypeface(request_info_status.getTypeface(), Typeface.BOLD);
             request_info_status.setText("Status: " + status);
             request_info_status_row.addView(request_info_status);
 
@@ -120,96 +124,8 @@ public class ViewAcceptedRequests extends AppCompatActivity implements View.OnCl
             requests_table_layout.addView(request_info_time_row, i++);
             requests_table_layout.addView(request_info_status_row, i++);
 
-            if(AccountType.equals("tutor")) {
-                Button approve_button = new Button(this);
-                approve_button.setText("Approve");
-                approve_button.setLayoutParams(new TableRow.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-
-                TableRow approve_row = new TableRow(this);
-                approve_row.setLayoutParams(lp);
-
-                assignApproveButton(approve_button, requestId);
-                approve_row.addView(approve_button);
-
-                Button reject_button = new Button(this);
-                reject_button.setText("Reject");
-                reject_button.setLayoutParams(new TableRow.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-
-                TableRow reject_button_row = new TableRow(this);
-
-                assignRejectButton(reject_button, requestId);
-                reject_button_row.addView(reject_button);
-
-                requests_table_layout.addView(approve_row, i++);
-                requests_table_layout.addView(reject_button_row, i++);
-            }
         }
 
-    }
-
-    private void assignApproveButton(final Button btn, final int str){
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Context context = getApplicationContext();
-                CharSequence text = "Approving Request " + str;
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-
-                try {
-                    HashMap<String,Object> attributes = new HashMap<String,Object>();
-                    attributes.put("requestID", str);
-                    attributes.put("newStatus", 1);
-
-                    Client client = new Client("updaterequeststatus", attributes);
-                    client.execute().get();
-                    Request response = client.getResponse();
-
-                } catch(Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    loadRequests();
-                }
-
-
-            }
-        });
-    }
-
-    private void assignRejectButton(final Button btn, final int str){
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context context = getApplicationContext();
-                CharSequence text = "Rejecting Request " + str;
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-
-                try {
-                    HashMap<String,Object> attributes = new HashMap<String,Object>();
-                    attributes.put("requestID", str);
-                    attributes.put("newStatus", 2);
-
-                    Client client = new Client("updaterequeststatus", attributes);
-                    client.execute().get();
-                    Request response = client.getResponse();
-
-                } catch(Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    loadRequests();
-                }
-            }
-        });
     }
 
     public void onClick(View view) {
