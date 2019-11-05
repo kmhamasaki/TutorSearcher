@@ -598,6 +598,9 @@ public class DBConnect {
         			//String availability)
                 	String previousSearchTime = resultSet.getString("tutee_search_times");
                 	String previousSearchClass = resultSet.getString("tutee_search_class");
+                	if (previousSearchTime == null || previousSearchClass == null) {
+                		return new ArrayList<>();
+                	}
                 	ArrayList<String> result = new ArrayList<>();
                 	result.add(previousSearchTime);
                 	result.add(previousSearchClass);
@@ -610,13 +613,15 @@ public class DBConnect {
             }
 		});
 		
+		if (result.isEmpty()) {
+			return null;
+		}
+		
 		if (result.get(0).equals("") || result.get(1).equals("") || result.get(0) == null || result.get(1) == null) {
 			return null;
 		}
 		
-		if (result.isEmpty()) {
-			return null;
-		}
+		
 		ArrayList<Integer> times = new ArrayList<>();
 		String[] timesStr = result.get(0).split(" ");
 		for (int i = 0; i < timesStr.length; i++) {
