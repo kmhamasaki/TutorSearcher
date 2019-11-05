@@ -95,8 +95,10 @@ public class ScrollingHomeActivity extends AppCompatActivity implements MyAdapte
             AccountType = extras.getString("AccountType");
             if(AccountType.equals("Tutee")){
                 Request response = (Request) extras.get("TutorList");
-                TutorList = (List<Tutor>) response.get("results");
-                Class = extras.getString("ClassName");
+                if(response != null){
+                    TutorList = (List<Tutor>) response.get("results");
+                    Class = extras.getString("ClassName");
+                }
             }
         }
 
