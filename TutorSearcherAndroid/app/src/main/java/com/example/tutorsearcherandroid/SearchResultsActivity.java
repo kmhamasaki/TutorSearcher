@@ -88,7 +88,6 @@ public class SearchResultsActivity extends AppCompatActivity implements MyAdapte
         System.out.println(tutor.getMatchingAvailabilities().get(0));
         i.putExtra("ClassName",Class);
         startActivity(i);
-        finish();
     }
 
 }
