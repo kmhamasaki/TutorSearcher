@@ -8,22 +8,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import tutor.searcher.TutorSearcher.AcceptedTutorRequest;
 import tutor.searcher.TutorSearcher.Request;
 import tutor.searcher.TutorSearcher.TutorRequest;
+import tutor.searcher.TutorSearcher.User;
+
 
 public class ViewRequestsAccepted extends AppCompatActivity
-        implements PendingRequestAdapter.OnButtonClickListener {
+        implements AcceptedRequestAdapter.OnButtonClickListener {
 
     private String UserId;
     private String AccountType;
 
     private RecyclerView recyclerView;
-    private PendingRequestAdapter rAdapter; //Bridge between list and recyclerview
+    private AcceptedRequestAdapter rAdapter; //Bridge between list and recyclerview
     private RecyclerView.LayoutManager rLayoutManager;
-    private List<TutorRequest> requestList;
+    private List<AcceptedTutorRequest> requestList = new ArrayList<AcceptedTutorRequest>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +60,26 @@ public class ViewRequestsAccepted extends AppCompatActivity
             client.execute().get();
             Request response = client.getResponse();
 
-            requestList = (List<TutorRequest>) response.get("requests");
+            List<TutorRequest> tutorRequests = (List<TutorRequest>) response.get("requests");
+
+            int userID;
+            User user;
+            HashMap<String,Object> attr = new HashMap<String,Object>();
+            for(TutorRequest req : tutorRequests) {
+                if(AccountType.equals("Tutor")) {
+                    userID = req.getTuteeID();
+                } else {
+                    userID = req.getTutorID();
+                }
+                attr.put("userID", userID);
+                client = new Client("getuserinfo", attributes);
+                client.execute().get();
+                response = client.getResponse();
+                user = (User)response.get("user");
+                requestList.add(new AcceptedTutorRequest(user.getEmail(), user.getPhoneNumber(),
+                        user.getFirstName(), req.getClassName() + " " +
+                        TutorTimeActivity.generateTimesForward().get(Integer.parseInt(req.getTime())), 0));
+            }
 
         } catch(Exception e) {
             e.printStackTrace();
@@ -65,7 +88,7 @@ public class ViewRequestsAccepted extends AppCompatActivity
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.hasFixedSize();
         rLayoutManager = new LinearLayoutManager(this);
-        rAdapter = new PendingRequestAdapter(requestList);
+        rAdapter = new AcceptedRequestAdapter(requestList, AccountType);
 
         recyclerView.setLayoutManager(rLayoutManager);
         recyclerView.setAdapter(rAdapter);

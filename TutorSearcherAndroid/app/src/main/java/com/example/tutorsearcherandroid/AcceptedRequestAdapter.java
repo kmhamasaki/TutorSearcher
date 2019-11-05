@@ -12,11 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import tutor.searcher.TutorSearcher.AcceptedTutorRequest;
 import tutor.searcher.TutorSearcher.TutorRequest;
+import tutor.searcher.TutorSearcher.User;
+
 
 public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequestAdapter.ViewHolder> {
 
-    private List<TutorRequest> requests;
+    private List<AcceptedTutorRequest> requests;
+    private String accountType;
     private OnButtonClickListener mListener;
 
     public interface OnButtonClickListener{
@@ -34,6 +38,8 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
         // each data item is just a string in this case
         public TextView tutee_name;
         public TextView class_name;
+        public TextView email;
+        public TextView phone_number;
         public Button accept_button;
         public Button reject_button;
 
@@ -42,32 +48,15 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
             super(itemView);
             tutee_name = itemView.findViewById(R.id.tutee_name);
             class_name = itemView.findViewById(R.id.class_name);
-            accept_button = itemView.findViewById(R.id.accept_button);
-            reject_button = itemView.findViewById(R.id.rate_button);
-
-            accept_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    System.out.println("AcceptedRequestAdapter.onClick");
-                    int position = getAdapterPosition();
-                    listener.onButtonClick(position, true);
-                }
-            });
-
-            reject_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    System.out.println("AcceptedRequestAdapter.onClick");
-                    int position = getAdapterPosition();
-                    listener.onButtonClick(position, false);
-                }
-            });
+            email = itemView.findViewById(R.id.email);
+            phone_number = itemView.findViewById(R.id.phone_number);
         }
     }
 
     // Constructor
-    public AcceptedRequestAdapter(List<TutorRequest> requests) {
+    public AcceptedRequestAdapter(List<AcceptedTutorRequest> requests, String accountType) {
         this.requests = requests;
+        this.accountType = accountType;
     }
 
     // Create new views (invoked by the layout manager)
@@ -77,7 +66,7 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // create a new view
-        View requestView = inflater.inflate(R.layout.pending_request, parent, false);
+        View requestView = inflater.inflate(R.layout.accepted_request, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(requestView, mListener);
         return viewHolder;
@@ -87,14 +76,18 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
     @Override
     public void onBindViewHolder(AcceptedRequestAdapter.ViewHolder viewholder, int position) {
 
-        TutorRequest tr = requests.get(position);
+        AcceptedTutorRequest tr = requests.get(position);
 
         //Set Item Views
         TextView tutee_name = viewholder.tutee_name;
         TextView class_name = viewholder.class_name;
-        tutee_name.setText(tr.getTuteeName());
-        class_name.setText(tr.getClassName() + " " + intToTime(Integer.parseInt(tr.getTime())));
+        TextView email = viewholder.email;
+        TextView phone_number = viewholder.phone_number;
 
+        tutee_name.setText(tr.getName());
+        class_name.setText(tr.getClassName());
+        email.setText(tr.getEmail());
+        phone_number.setText(tr.getPhoneNumber());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -103,7 +96,7 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
         return requests.size();
     }
 
-    public String intToTime(int i) {
+    public static String intToTime(int i) {
         String temp = "";
         if (i < 9) {
             temp += "Monday: ";

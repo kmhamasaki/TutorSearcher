@@ -126,7 +126,7 @@ public class TutorTimeActivity extends AppCompatActivity implements View.OnClick
         startActivity(i);
     }
 
-    public ArrayList<String> generateTimesForward(){
+    public static ArrayList<String> generateTimesForward(){
         ArrayList<String> times = new ArrayList<>();
         HashMap<Integer,String> amPm = new HashMap<>();
         amPm.put(9,"am");
