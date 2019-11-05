@@ -7,16 +7,27 @@
     android:layout_height="match_parent"
     tools:context=".ViewRequests">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <Button
+        android:id="@+id/Home"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="36dp"
+        android:text="Home"
+        android:onClick="onHomeClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <TableLayout
-            android:id="@+id/requests_table_layout"
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
-
-    </ScrollView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="421dp"
+        android:layout_height="621dp"
+        android:layout_marginTop="116dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

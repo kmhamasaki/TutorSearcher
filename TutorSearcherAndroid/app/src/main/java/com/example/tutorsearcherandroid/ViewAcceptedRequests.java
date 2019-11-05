@@ -64,7 +64,7 @@ public class ViewAcceptedRequests extends AppCompatActivity implements View.OnCl
             e.printStackTrace();
         }
 
-        TableLayout requests_table_layout = (TableLayout) findViewById(R.id.requests_table_layout);
+/*        TableLayout requests_table_layout = (TableLayout) findViewById(R.id.requests_table_layout);
         //requests_table_layout.removeAllViews();
 
         int i = 0;
@@ -124,7 +124,7 @@ public class ViewAcceptedRequests extends AppCompatActivity implements View.OnCl
             requests_table_layout.addView(request_info_time_row, i++);
             requests_table_layout.addView(request_info_status_row, i++);
 
-        }
+        }*/
 
     }
 

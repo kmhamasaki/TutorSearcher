@@ -1,6 +1,7 @@
 package com.example.tutorsearcherandroid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -21,10 +24,16 @@ import tutor.searcher.TutorSearcher.Request;
 import tutor.searcher.TutorSearcher.Tutor;
 import tutor.searcher.TutorSearcher.TutorRequest;
 
-public class ViewRequests extends AppCompatActivity implements View.OnClickListener {
+public class ViewRequests extends AppCompatActivity
+        implements PendingRequestAdapter.OnButtonClickListener {
 
     private String UserId;
     private String AccountType;
+
+    private RecyclerView recyclerView;
+    private PendingRequestAdapter rAdapter; //Bridge between list and recyclerview
+    private RecyclerView.LayoutManager rLayoutManager;
+    private List<TutorRequest> requestList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +53,6 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
 
     private void loadRequests() {
 
-        List<TutorRequest> requests = null;
-
         try {
             HashMap<String,Object> attributes = new HashMap<String,Object>();
             attributes.put("userID", Integer.parseInt(UserId));
@@ -55,13 +62,23 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
             client.execute().get();
             Request response = client.getResponse();
 
-            requests = (List<TutorRequest>) response.get("requests");
+            requestList = (List<TutorRequest>) response.get("requests");
 
         } catch(Exception e) {
             e.printStackTrace();
         }
 
-        TableLayout requests_table_layout = (TableLayout) findViewById(R.id.requests_table_layout);
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.hasFixedSize();
+        rLayoutManager = new LinearLayoutManager(this);
+        rAdapter = new PendingRequestAdapter(requestList);
+
+        recyclerView.setLayoutManager(rLayoutManager);
+        recyclerView.setAdapter(rAdapter);
+
+        rAdapter.setOnButtonClickListener(this);
+
+        /*TableLayout requests_table_layout = (TableLayout) findViewById(R.id.requests_table_layout);
         requests_table_layout.removeAllViews();
 
         int i = 0;
@@ -148,7 +165,7 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
             requests_table_layout.addView(approve_row, i++);
             requests_table_layout.addView(reject_button_row, i++);
         }
-
+*/
     }
 
     private void assignApproveButton(final Button btn, final int str){
@@ -212,6 +229,49 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    public void onHomeClick(View view) {
+        Intent i = new Intent(this, ScrollingHomeActivity.class);
+        i.putExtra("UserId", UserId);
+        i.putExtra("AccountType", AccountType);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+    }
+
+    @Override
+    public void onButtonClick(int position, Boolean accept) {
+        System.out.println("onButtonClick");
+        if(accept) {
+            try {
+                System.out.println("Accept");
+                int requestID = requestList.get(position).getRequestID();
+                HashMap<String,Object> attributes = new HashMap<String,Object>();
+                attributes.put("requestID", requestID);
+                attributes.put("newStatus", 1);
+
+                Client client = new Client("updaterequeststatus", attributes);
+                client.execute().get();
+                Request response = client.getResponse();
+
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                System.out.println("Reject");
+                int requestID = requestList.get(position).getRequestID();
+                HashMap<String,Object> attributes = new HashMap<String,Object>();
+                attributes.put("requestID", requestID);
+                attributes.put("newStatus", 2);
+
+                Client client = new Client("updaterequeststatus", attributes);
+                client.execute().get();
+                Request response = client.getResponse();
+
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public void onClick(View view) {
 
     }
