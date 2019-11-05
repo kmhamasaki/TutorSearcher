@@ -1,6 +1,7 @@
 package com.example.tutorsearcherandroid;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 
 import com.google.android.material.appbar.AppBarLayout;
@@ -15,7 +16,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.widget.NestedScrollView;
 
+import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
@@ -37,6 +40,18 @@ public class ScrollingHomeActivity extends AppCompatActivity {
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
         final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         final ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.home_navigator);
+
+        ConstraintLayout constraintLayout2 = findViewById(R.id.container);
+        ViewGroup.LayoutParams params = constraintLayout2.getLayoutParams();
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int height = size.y;
+        params.height = height;
+
+        // initialize new parameters for my element
+        constraintLayout2.setLayoutParams(new NestedScrollView.LayoutParams(params));
+
 
         // function to hide/display title upon scrolling page
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {

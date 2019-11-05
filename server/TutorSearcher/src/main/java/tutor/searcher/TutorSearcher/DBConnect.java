@@ -103,6 +103,54 @@ public class DBConnect {
 		return result; 
 	}
 	
+	List<TutorRequest> getRequestsTuteeRejected(int userID) {
+		String query = "SELECT requests.id, requests.tutee_id, requests.tutor_id, requests.class, requests.time, "
+				+ "requests.status, requests.time_created, usersTutor.first_name, usersTutee.first_name, usersTutor.rating, usersTutee.rating " + 
+				"FROM requests JOIN users usersTutor ON usersTutor.user_id = requests.tutor_id " + 
+				"				JOIN users usersTutee ON usersTutee.user_id = requests.tutee_id " + 
+				"				WHERE requests.tutee_id = ? AND requests.status = 2";
+		List<TutorRequest> result = jdbc.query(query, 
+		new PreparedStatementSetter() {
+			public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				preparedStatement.setInt(1,  userID);
+			}
+		}, 
+		 new ResultSetExtractor<List<TutorRequest>>() {
+            public List<TutorRequest> extractData(ResultSet resultSet) throws SQLException,
+              DataAccessException {
+            	ArrayList<TutorRequest> result = new ArrayList<>();
+                while (resultSet.next()) {
+                	System.out.println("result");
+//                	(int requestID, int tuteeID, int tutorID, String time, int status, Date timecreated)
+                	int requestID = resultSet.getInt("id");
+                	int tuteeID = resultSet.getInt("tutee_id");
+                	int tutorID = resultSet.getInt("tutor_id");
+                	String className = resultSet.getString("class");
+                	String time = resultSet.getString("time");
+                	int status = resultSet.getInt("status");
+                	String timeCreated = resultSet.getString("time_created");
+                	System.out.print(requestID);
+                	System.out.println(className + " " + time);
+
+					String tuteeName = resultSet.getString("usersTutor.first_name");
+					String tutorName = resultSet.getString("usersTutee.first_name");
+					double tutorRating = resultSet.getDouble("usersTutor.rating");
+					double tuteeRating = resultSet.getDouble("usersTutee.rating");
+
+					TutorRequest tutorRequest = new TutorRequest(requestID, tuteeID, tutorID, time, status, timeCreated, className);
+					tutorRequest.setTuteeName(tuteeName);
+					tutorRequest.setTutorName(tutorName);
+					tutorRequest.setTutorRating(tutorRating);
+					tutorRequest.setTuteeRating(tuteeRating);
+
+					result.add(tutorRequest);
+                }
+                return result;
+            }
+		});
+		return result; 
+	}
+	
 	List<TutorRequest> getRequestsTutorUnapproved(int userID) {
 		String query = "SELECT requests.id, requests.tutee_id, requests.tutor_id, requests.class, requests.time, "
 				+ "requests.status, requests.time_created, usersTutor.first_name, usersTutee.first_name, usersTutor.rating, usersTutee.rating " + 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,23 +91,29 @@ public class ChooseClasses extends AppCompatActivity {
             }
         }
 
-        try {
-            HashMap<String, Object> attr = new HashMap<>();
-            attr.put("className", selectedClasses);
-            attr.put("tutorID", Integer.parseInt(UserId));
-            Client client = new Client("addclass", attr);
-            client.execute().get();
-            Request response = client.getResponse();
-            System.out.println(response.getRequestType());
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(selectedClasses.isEmpty()){
+            Toast t = Toast.makeText(this, "Please select at least one class to tutor.",
+                    Toast.LENGTH_LONG);
+            t.show();
+        }else {
+            try {
+                HashMap<String, Object> attr = new HashMap<>();
+                attr.put("className", selectedClasses);
+                attr.put("tutorID", Integer.parseInt(UserId));
+                Client client = new Client("addclass", attr);
+                client.execute().get();
+                Request response = client.getResponse();
+                System.out.println(response.getRequestType());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (sourcePage.equals("Signup"))
+                openAvailabilityActivity();
+
+            else
+                openUpdateProfile();
         }
-
-        if(sourcePage.equals("Signup"))
-            openAvailabilityActivity();
-
-        else
-            openUpdateProfile();
     }
 
     public void openAvailabilityActivity() {
