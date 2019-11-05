@@ -130,9 +130,20 @@ public class UpdateProfile extends AppCompatActivity {
         Intent i = new Intent(this, ScrollingHomeActivity.class);
         i.putExtra("UserId", UserId);
         i.putExtra("AccountType", AccountType);
+        if(AccountType.equals("Tutee")){
+            //Get most recent search
+            HashMap<String,Object> attr = new HashMap<>();
+            attr.put("userID",Integer.parseInt(UserId));
+            Client client = new Client("searchprevious",attr);
+            client.execute();
+            Request response = null;
+            while(response == null){
+                response = client.getResponse();
+            }
+            i.putExtra("TutorList",response);
+        }
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
-
 
 }

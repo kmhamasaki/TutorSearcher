@@ -147,17 +147,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Always need Account Type and User Id
         i.putExtra("AccountType", accountType);
         i.putExtra("UserId", userId);
-        //Get most recent search
-        HashMap<String,Object> attr = new HashMap<>();
-        attr.put("userID",Integer.parseInt(userId));
-        Client client = new Client("searchprevious",attr);
-        client.execute();
-        Request response = null;
-        while(response == null){
-            response = client.getResponse();
+        if(accountType.equals("Tutee")){
+            //Get most recent search
+            HashMap<String,Object> attr = new HashMap<>();
+            attr.put("userID",Integer.parseInt(userId));
+            Client client = new Client("searchprevious",attr);
+            client.execute();
+            Request response = null;
+            while(response == null){
+                response = client.getResponse();
+            }
+            i.putExtra("TutorList",response);
         }
-        i.putExtra("TutorList",response);
-
         finish();
         startActivity(i);
     }
