@@ -108,9 +108,10 @@ public class UpdateProfile extends AppCompatActivity {
     }
 
     public void backToHomeClick(View view) {
-        Intent i = new Intent(this, HomeActivity.class);
+        Intent i = new Intent(this, ScrollingHomeActivity.class);
         i.putExtra("UserId", UserId);
         i.putExtra("AccountType", AccountType);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
 
