@@ -18,6 +18,7 @@
         <activity android:name=".TutorTimeActivity" />
         <activity android:name=".ChooseClasses" />
         <activity android:name=".ViewRequests" />
+        <activity android:name=".ViewAcceptedRequests" />
         <activity android:name=".SearchResultsActivity" />
         <activity
             android:name=".TabbedAvailabilityActivity"

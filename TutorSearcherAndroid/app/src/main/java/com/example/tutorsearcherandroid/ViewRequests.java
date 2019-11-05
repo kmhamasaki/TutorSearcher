@@ -62,7 +62,7 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
         }
 
         TableLayout requests_table_layout = (TableLayout) findViewById(R.id.requests_table_layout);
-        //requests_table_layout.removeAllViews();
+        requests_table_layout.removeAllViews();
 
         int i = 0;
         for(TutorRequest request : requests) {

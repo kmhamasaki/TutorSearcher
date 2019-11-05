@@ -115,17 +115,11 @@ public class ScrollingHomeActivity extends AppCompatActivity {
     }
 
     public void openAcceptedRequestActivity(View view) {
-        Intent i = new Intent(this, ViewRequests.class);
+        Intent i = new Intent(this, ViewAcceptedRequests.class);
         i.putExtra("UserId", UserId);
         i.putExtra("AccountType", AccountType);
 
         startActivity(i);
-
-
-
-//        Toast toast = Toast.makeText(getBaseContext(), "hi", Toast.LENGTH_SHORT);
-//        toast.show();
-        // need to link to acceptedrequest
     }
 
 }
