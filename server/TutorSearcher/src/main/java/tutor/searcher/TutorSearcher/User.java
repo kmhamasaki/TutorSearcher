@@ -12,9 +12,12 @@ public class User implements Serializable {
 	private String phoneNumber;
 	private Boolean accountType;
 	private String passwordHash;
+	private double rating;
 
-	
-	public User(int userID, String firstName, String lastName, String email, String phoneNumber, String passwordHash, Boolean accountType) {
+
+
+	public User(int userID, String firstName, String lastName, String email, String phoneNumber, 
+			String passwordHash, Boolean accountType, double rating) {
 		super();
 		UserID = userID;
 		this.firstName = firstName;
@@ -23,9 +26,11 @@ public class User implements Serializable {
 		this.phoneNumber = phoneNumber;
 		this.accountType = accountType;
 		this.passwordHash = passwordHash;
+		this.rating = rating;
 	}
 
-	public User(int userID, String firstName, String lastName, String email, String phoneNumber, Boolean accountType) {
+	public User(int userID, String firstName, String lastName, String email, 
+			String phoneNumber, Boolean accountType, double rating) {
 		super();
 		UserID = userID;
 		this.firstName = firstName;
@@ -33,6 +38,12 @@ public class User implements Serializable {
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.accountType = accountType;
+		this.rating = rating;
+	}
+	
+	
+	public double getRating() {
+		return rating;
 	}
 
 	public int getUserId() {

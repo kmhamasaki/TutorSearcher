@@ -209,7 +209,7 @@ public class DBConnect {
 		}
 		
 		String insertQuery = "INSERT INTO users (email, password_hash, tutor, phone_number,"
-			+ "first_name, last_name) VALUES (?,?,?,?,?,?)";
+			+ "first_name, last_name, rating) VALUES (?,?,?,?,?,?, ?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbc.update(
 		    new PreparedStatementCreator() {
@@ -223,6 +223,7 @@ public class DBConnect {
 			        ps.setString(4, phoneNumber);
 			        ps.setString(5, firstName);
 			        ps.setString(6, lastName);
+			        ps.setDouble(7, -1);
 		            return ps;
 		        }
 		    },
@@ -263,6 +264,43 @@ public class DBConnect {
 		    keyHolder);
 		System.out.println(keyHolder.getKey().intValue());
 		return keyHolder.getKey().intValue();
+	}
+	//user ID is for the person getting rated 
+	void addRating(int userID, double rating) {
+		//need to get their current rating and average it
+		final String firstQuery = "SELECT users.rating FROM users WHERE users.user_id=?";
+		Double currRating = jdbc.query(firstQuery, 
+				new PreparedStatementSetter() {
+			public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				preparedStatement.setInt(1,  userID);
+			}
+		}, 
+		 new ResultSetExtractor<Double>() {
+            public Double extractData(ResultSet resultSet) throws SQLException,
+              DataAccessException {
+            	
+            	if (resultSet.next()) {
+//                	(int requestID, int tuteeID, int tutorID, String time, int status, Date timecreated)
+                	return resultSet.getDouble("rating");
+                }
+                return -1.0;
+            }
+		});
+		
+		//if (currRating == -)
+		
+		final String query = "UPDATE users SET users.rating=? WHERE users.user_id=?";
+		jdbc.update(
+			new PreparedStatementCreator() {
+				@Override
+				public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+					PreparedStatement ps = connection.prepareStatement(query);
+					ps.setDouble(1, rating);
+					ps.setInt(2, userID);
+					return ps;
+				}
+			}
+		);
 	}
 	// status
 	// 0 = waiting approval
@@ -425,9 +463,10 @@ public class DBConnect {
                 	String phoneNumber = resultSet.getString("phone_number");
                 	Boolean accountType = resultSet.getBoolean("tutor");
                 	String availability = resultSet.getString("availability");
+                	double rating = resultSet.getDouble("rating");
                 	if (availability != null) {
                     	System.out.println("adding " + email);
-                    	result.add(new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability));
+                    	result.add(new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability, rating));
 
                 	}
                 	
@@ -556,7 +595,20 @@ public class DBConnect {
 	}
 	
 	private List<Tutor> sortTutors(List<Tutor> tutors, ArrayList<Integer> time) {
+		if (tutors.size() == 1) {
+			if (tutors.get(0).getMatchingAvailabilities() == null) {
+				tutors.get(0).setMatchingAvailabilities(new ArrayList<>());
+			}
+			for (Integer i : time) {
+				if (tutors.get(0).getTimeAvailabilities().contains(i)) {
+					tutors.get(0).getMatchingAvailabilities().add(i);
+				}
+			}
+			
+			return tutors;
+		}
 		tutors.sort(new SortTutorsByTime(time));
+		
 
 		return tutors;
 	}
@@ -585,13 +637,14 @@ public class DBConnect {
 			                	String phoneNumber = resultSet.getString("phone_number");
 			                	Boolean accountType = resultSet.getBoolean("tutor");
 			                	String availability = resultSet.getString("availability");
+			                	double rating = resultSet.getDouble("rating");
 			                	System.out.println("authenticated");
 			                	System.out.println(firstName + " " + lastName);
 			                	if (accountType) {
-			                		return new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability);
+			                		return new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability, rating);
 			                	}
 			                	else {
-			                		return new Tutee(userID, firstName, lastName, email, phoneNumber, accountType);
+			                		return new Tutee(userID, firstName, lastName, email, phoneNumber, accountType, rating);
 			                	}
 		                	}
 		                	else {
@@ -783,7 +836,7 @@ public class DBConnect {
                 	
                 	return new User(resultSet.getInt("user_id"), resultSet.getString("first_name"), resultSet.getString("last_name"),
                 			resultSet.getString("email"), resultSet.getString("phone_number"), resultSet.getString("password_hash"),
-                			resultSet.getBoolean("tutor"));
+                			resultSet.getBoolean("tutor"), resultSet.getDouble("rating"));
                 	
                 	
                 }
