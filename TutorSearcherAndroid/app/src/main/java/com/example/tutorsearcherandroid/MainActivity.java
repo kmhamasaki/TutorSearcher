@@ -1,6 +1,9 @@
 package com.example.tutorsearcherandroid;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +21,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         register.setOnClickListener(this);
         bigLogin.setOnClickListener(this);
         textView5.setOnClickListener(this);
+
     }
 
     @Override
@@ -139,8 +144,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void openHomeActivity(String accountType, String userId) {
         Intent i = new Intent(this, ScrollingHomeActivity.class);
+        //Always need Account Type and User Id
         i.putExtra("AccountType", accountType);
         i.putExtra("UserId", userId);
+        //Get most recent search
+        HashMap<String,Object> attr = new HashMap<>();
+        attr.put("userID",Integer.parseInt(userId));
+        Client client = new Client("searchprevious",attr);
+        client.execute();
+        Request response = null;
+        while(response == null){
+            response = client.getResponse();
+        }
+        i.putExtra("TutorList",response);
+
         finish();
         startActivity(i);
     }
@@ -161,5 +178,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return "";
         }
     }
+
 
 }
