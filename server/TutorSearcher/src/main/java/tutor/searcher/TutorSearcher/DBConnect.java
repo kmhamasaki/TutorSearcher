@@ -610,7 +610,7 @@ public class DBConnect {
             }
 		});
 		
-		if (result.get(0) == "" || result.get(1) == "") {
+		if (result.get(0).equals("") || result.get(1).equals("") || result.get(0) == null || result.get(1) == null) {
 			return null;
 		}
 		
