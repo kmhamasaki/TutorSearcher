@@ -85,6 +85,7 @@ public class SearchResultsActivity extends AppCompatActivity implements MyAdapte
         i.putExtra("AccountType", AccountType);
         Tutor tutor = TutorList.get(position);
         i.putExtra("Tutor", tutor);
+        System.out.println(tutor.getMatchingAvailabilities().get(0));
         i.putExtra("ClassName",Class);
         startActivity(i);
         finish();
