@@ -117,10 +117,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
         Context context = getBaseContext();
         Collections.sort(selectedTimes);
         CharSequence text = selectedTimes.toString();
-        int duration = Toast.LENGTH_SHORT;
 
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
         if(selectedTimes.isEmpty()){
             Toast t = Toast.makeText(this, "Please select at least one time slot.",
                     Toast.LENGTH_LONG);
@@ -196,7 +193,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
     }
 
     public void openHomeActivity() {
-        Intent i = new Intent(this, HomeActivity.class);
+        Intent i = new Intent(this, ScrollingHomeActivity.class);
         i.putExtra("UserId",UserId);
         i.putExtra("AccountType", AccountType);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
