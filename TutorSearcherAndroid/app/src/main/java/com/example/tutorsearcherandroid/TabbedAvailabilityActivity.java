@@ -196,7 +196,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
     }
 
     public void openHomeActivity() {
-        Intent i = new Intent(this, HomeActivity.class);
+        Intent i = new Intent(this, ScrollingHomeActivity.class);
         i.putExtra("UserId",UserId);
         i.putExtra("AccountType", AccountType);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

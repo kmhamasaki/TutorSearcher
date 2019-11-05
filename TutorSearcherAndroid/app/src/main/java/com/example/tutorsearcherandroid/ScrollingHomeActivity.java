@@ -41,18 +41,6 @@ public class ScrollingHomeActivity extends AppCompatActivity {
         final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         final ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.home_navigator);
 
-        ConstraintLayout constraintLayout2 = findViewById(R.id.container);
-        ViewGroup.LayoutParams params = constraintLayout2.getLayoutParams();
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int height = size.y;
-        params.height = height;
-
-        // initialize new parameters for my element
-        constraintLayout2.setLayoutParams(new NestedScrollView.LayoutParams(params));
-
-
         // function to hide/display title upon scrolling page
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = true;
@@ -63,19 +51,18 @@ public class ScrollingHomeActivity extends AppCompatActivity {
                 if (scrollRange == -1) {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
-                Button checkAvailability = findViewById(R.id.sendRequest3);
                 // home icons aren't shown
                 if (scrollRange + verticalOffset == 0) {
+                    collapsingToolbarLayout.setTitle("Select a Tutor");
                     constraintLayout.setVisibility(View.INVISIBLE);
                     toolbar.setVisibility(View.VISIBLE);
-                    checkAvailability.setVisibility(View.VISIBLE);
                     isShow = true;
                 }
                 // home icons are shown
                 else if (isShow) {
+                    collapsingToolbarLayout.setTitle(" ");
                     constraintLayout.setVisibility(View.VISIBLE);
                     toolbar.setVisibility(View.INVISIBLE);
-                    checkAvailability.setVisibility(View.INVISIBLE);
                     isShow = false;
                 }
             }
