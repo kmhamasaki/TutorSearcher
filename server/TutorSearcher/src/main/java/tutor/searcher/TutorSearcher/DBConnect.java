@@ -40,42 +40,14 @@ public class DBConnect {
 		
 		this.jdbc = jdbc;
 	}
-//	
-//	public DBConnect() {
-//		try {
-//			conn = DriverManager.getConnection("jdbc:mysql://localhost/" + "TutorSearcher" + "?user="
-//					+ "root" + "&password=" + "password" + "&useSSL=false&serverTimezone=UTC");
-//			PreparedStatement ps = null;
-//
-//			ps = conn.prepareStatement("DELETE from users");
-//			ps.executeUpdate();
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+
 	int getUserID(String email) {
 		return 0;
 	}
 	String getPassword(String email) {
 		String query = "SELECT password_hash FROM users WHERE users.email = '" + email + "'";
 		String result = jdbc.queryForObject(query, String.class);
-//		jdbc.query(query, 
-//				new PreparedStatementSetter() {
-//					public void setValues(PreparedStatement preparedStatement) throws SQLException {
-//						preparedStatement.setString(1,  email);
-//					}
-//				}, 
-//				 new ResultSetExtractor<String>() {
-//		            public String extractData(ResultSet resultSet) throws SQLException,
-//		              DataAccessException {
-//		                if (resultSet.next()) {
-//		                	System.out.println("result");
-//		                	System.out.println(resultSet.toString());
-//		                    return resultSet.getObject(1).toString();
-//		                }
-//		                return null;
-//		            }
-//          });
+
 		return result;
 	}
 	boolean getAccountType(String email) {
@@ -259,45 +231,7 @@ public class DBConnect {
 		    keyHolder);
 		System.out.println(keyHolder.getKey().intValue());
 		return keyHolder.getKey().intValue();
-		
-//		PreparedStatement ps = null;
-//		ResultSet rs = null;
-//		System.out.println(email);
-//		System.out.println(passwordHash);
-//		System.out.println(firstName);
-//		System.out.println(lastName);
-//		System.out.println(phoneNumber);
-//		System.out.println(accountType);
-//		try
-//		{
-//			// Check if email already exists
-//			ps = conn.prepareStatement("SELECT * FROM users where email=?");
-//			ps.setString(1, email);
-//			rs = ps.executeQuery();
-//			if(rs.next()) {
-//				return -1;
-//			}
-//			
-//			String availString = (accountType ? availability.toString() : "");
-//			
-//			ps = conn.prepareStatement("INSERT INTO users (user_id, email, password_hash, tutor, phone_num,"
-//					+ "first_name, last_name, availability) VALUES (?,?,?,?,?,?,?,?)");
-//			ps.setInt(1, ++numUsers);
-//			ps.setString(2, email);
-//			ps.setString(3, passwordHash);
-//			ps.setBoolean(4, accountType);
-//			ps.setString(5, phoneNumber);
-//			ps.setString(6, firstName);
-//			ps.setString(7, lastName);
-//			ps.setString(8, availString);
-//			
-//
-//			ps.executeUpdate();
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}	
-//		return numUsers;
-				
+					
 	}
 	
 	// what kind of error checking do we need for this? do i need to check for some stuff
@@ -307,22 +241,6 @@ public class DBConnect {
 	int addRequest(int tuteeID, int tutorID, String className, String time, int status) {
 		String query = "INSERT INTO requests (tutee_id, tutor_id, class, time, status, time_created) "
 				+ "VALUES (?, ?, ?, ?, ?, ?)";
-//		jdbc.execute(query, new PreparedStatementCallback<Boolean>() {
-//			@Override  
-//		    public Boolean doInPreparedStatement(PreparedStatement ps)  
-//		            throws SQLException, DataAccessException {  
-//		              
-//		        ps.setInt(1,tuteeID);  
-//		        ps.setInt(2,tutorID);  
-//		        ps.setString(3,className);  
-//		        ps.setString(4,  time);
-//		        ps.setInt(5, status);
-//		        ps.setDate(6, new java.sql.Date(System.currentTimeMillis()));
-//		              
-//		        return ps.execute();  
-//		              
-//		    }  
-//		});
 		
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbc.update(
@@ -353,7 +271,6 @@ public class DBConnect {
 	// 1 = approved
 	// 2 = rejected
 	//what is the return boolean for? 
-	//untested
 	Boolean updateRequestStatus(int requestID, int newStatus) {
 		final String query = "UPDATE requests SET requests.status=? WHERE requests.id=?";
 		jdbc.update(
@@ -466,13 +383,6 @@ public class DBConnect {
 		return true;
 	}
 	
-	private String listToStringAvailability(ArrayList<Integer> availability) {
-		String result = "";
-		for (int i = 0 ; i < availability.size(); i++) {
-			result += availability.get(i).toString() + " ";
-		}
-		return result;
-	}
 	
 	void updateUserInformation(User user) {
 		System.out.println("updateUserInformation " + user.getFirstName());
@@ -648,26 +558,7 @@ public class DBConnect {
 	
 	User authenticate(String email, String passwordHash) {
 		// check Database to see email and password Hash
-//		PreparedStatement ps = null;
-//		ResultSet rs = null;
-//		
-//		try {
-//			ps = conn.prepareStatement("SELECT * FROM users where email=?");
-//			ps.setString(1, email);
-//			rs = ps.executeQuery();
-//			if(rs.next()) {
-//				if(rs.getString("password_hash").equals(passwordHash)) {
-//					//int userID, String firstName, String lastName, String email, String phoneNumber, Boolean accountType
-//					return new User(rs.getInt("user_id"), rs.getString("first_name"), rs.getString("last_name"),
-//							rs.getString("email"), rs.getString("phone_num"), rs.getBoolean("tutor"));
-//				}
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		// return null if wrong login info
-//		return null;
+
 		String query = "SELECT * FROM users WHERE email=?";
 		User u = jdbc.query(query, 
 				new PreparedStatementSetter() {

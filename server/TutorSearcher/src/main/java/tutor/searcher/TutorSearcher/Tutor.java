@@ -11,24 +11,7 @@ public class Tutor extends User implements Serializable {
 	String timeAvailability;
 	List<String> classesTutoring;
 	ArrayList<Integer> matchingAvailabilities;
-	
-	public Tutor(int userId, String firstName, String lastName, String email, String phoneNumber, String passwordHash, Boolean accountType, List<TutorRequest> pendingRequests,
-			List<TutorRequest> acceptedRequests, List<TutorRequest> rejectedRequests, String 
-			timeAvailabilities, List<String> classesTutoring) {
-		//int userID, String firstName, String lastName, String email, String phoneNumber, String passwordHash, Boolean accountType
-		super(userId, firstName, lastName, email, phoneNumber, passwordHash, accountType, pendingRequests, acceptedRequests, rejectedRequests);
-		this.timeAvailability = timeAvailabilities;
-		this.classesTutoring = classesTutoring;
-		if (timeAvailabilities != null) {
-			String[] timesStr = timeAvailabilities.split(" ");
-			this.timeAvailabilities = new ArrayList<>();
-			for (int i = 0; i < timesStr.length; i++) {
-				this.timeAvailabilities.add(Integer.parseInt(timesStr[i]));
-			}
-		}
-		
-	}
-	
+
 	public Tutor(int userId, String firstName, String lastName, String email, String phoneNumber, String passwordHash, Boolean accountType,
 			String availability) {
 		super(userId, firstName, lastName, email, phoneNumber, passwordHash, accountType);
@@ -68,18 +51,6 @@ public class Tutor extends User implements Serializable {
 	// Fri 33 = 40
 	// Sat 41 - 48
 	// Sun 49 - 56
-	void updateAvailability(String times, int userID) {
-		return;
-	}
-	void updateClasses(List<String> classes) {
-		return;
-	}
-	void acceptRequest(TutorRequest request) {
-		return;
-	}
-	void rejectRequest(TutorRequest request) {
-		return;
-	}
 
 	public List<Integer> getTimeAvailabilities() {
 		return timeAvailabilities;
