@@ -1,6 +1,7 @@
 package com.example.tutorsearcherandroid;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +79,7 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
         }
 
         TableLayout requests_table_layout = (TableLayout) findViewById(R.id.requests_table_layout);
+        requests_table_layout.removeAllViews();
 
         int i = 0;
         for(TutorRequest request : requests) {
@@ -96,37 +98,62 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
             TableRow request_info_row = new TableRow(this);
             request_info_row.setLayoutParams(lp);
 
-            TextView request_info = new TextView(this);
-            request_info.setText(className + "\nTutee: " + tuteeName + "\nTutor: " + tutorName + "\nTime: " + time + "\nStatus:" + status);
-            request_info_row.addView(request_info);
+            TextView request_info_classname = new TextView(this);
+            request_info_classname.setTypeface(request_info_classname.getTypeface(), Typeface.BOLD);
+            request_info_classname.setText(className);
 
-            TableRow approve_row = new TableRow(this);
-            request_info_row.setLayoutParams(lp);
+            TextView request_info_tuteeName = new TextView(this);
+            request_info_tuteeName.setTypeface(request_info_classname.getTypeface(), Typeface.BOLD);
+            request_info_tuteeName.setText(tuteeName);
 
-            Button approve_button = new Button(this);
-            approve_button.setText("Approve");
-            approve_button.setLayoutParams(new TableRow.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
+            TextView request_info_tutorName = new TextView(this);
+            request_info_tutorName.setTypeface(request_info_classname.getTypeface(), Typeface.BOLD);
+            request_info_tutorName.setText(tutorName);
 
-            assignApproveButton(approve_button, requestId);
-            approve_row.addView(approve_button);
+            TextView request_info_time = new TextView(this);
+            request_info_time.setTypeface(request_info_classname.getTypeface(), Typeface.BOLD);
+            request_info_time.setText(time);
 
-            Button reject_button = new Button(this);
-            reject_button.setText("Reject");
-            reject_button.setLayoutParams(new TableRow.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
+            TextView request_info_status = new TextView(this);
+            request_info_status.setTypeface(request_info_classname.getTypeface(), Typeface.BOLD);
+            request_info_status.setText(status);
 
-            TableRow reject_button_row = new TableRow(this);
-            request_info_row.setLayoutParams(lp);
-
-            assignRejectButton(reject_button, requestId);
-            reject_button_row.addView(reject_button);
+            request_info_row.addView(request_info_classname);
+            request_info_row.addView(request_info_tuteeName);
+            request_info_row.addView(request_info_tutorName);
+            request_info_row.addView(request_info_time);
+            request_info_row.addView(request_info_status);
 
             requests_table_layout.addView(request_info_row, i++);
-            requests_table_layout.addView(approve_row, i++);
-            requests_table_layout.addView(reject_button_row, i++);
+
+            if(AccountType.equals("tutor")) {
+                Button approve_button = new Button(this);
+                approve_button.setText("Approve");
+                approve_button.setLayoutParams(new TableRow.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                TableRow approve_row = new TableRow(this);
+                approve_row.setLayoutParams(lp);
+
+                assignApproveButton(approve_button, requestId);
+                approve_row.addView(approve_button);
+
+                Button reject_button = new Button(this);
+                reject_button.setText("Reject");
+                reject_button.setLayoutParams(new TableRow.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                TableRow reject_button_row = new TableRow(this);
+                request_info_row.setLayoutParams(lp);
+
+                assignRejectButton(reject_button, requestId);
+                reject_button_row.addView(reject_button);
+
+                requests_table_layout.addView(approve_row, i++);
+                requests_table_layout.addView(reject_button_row, i++);
+            }
         }
 
     }
@@ -154,10 +181,12 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
 
                 } catch(Exception e) {
                     e.printStackTrace();
+                } finally {
+                    loadRequests();
                 }
 
 
-        }
+            }
         });
     }
 
@@ -165,7 +194,6 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Context context = getApplicationContext();
                 CharSequence text = "Rejecting Request " + str;
                 int duration = Toast.LENGTH_SHORT;
@@ -184,6 +212,8 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
 
                 } catch(Exception e) {
                     e.printStackTrace();
+                } finally {
+                    loadRequests();
                 }
             }
         });
