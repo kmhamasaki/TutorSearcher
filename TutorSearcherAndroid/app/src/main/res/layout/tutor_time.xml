@@ -20,7 +20,29 @@
             android:textSize="24dp"
             android:layout_margin="4dp"
             />
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radio_group">
+            <RadioButton
 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rbutton"
+                />
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_marginStart="343dp"-->
+
+<!--                android:layout_marginLeft="343dp"-->
+<!--                android:layout_marginEnd="24dp"-->
+<!--                android:layout_marginRight="24dp"-->
+<!--                android:layout_toEndOf="@+id/time_availability"-->
+<!--                android:layout_toRightOf="@+id/time_availability"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/time_availability"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+        </RadioGroup>
     </RelativeLayout>
 
 
