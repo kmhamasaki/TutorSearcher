@@ -21,7 +21,7 @@ import tutor.searcher.TutorSearcher.Request;
 import tutor.searcher.TutorSearcher.Tutor;
 import tutor.searcher.TutorSearcher.TutorRequest;
 
-public class ViewRequests extends AppCompatActivity implements View.OnClickListener {
+public class ViewAcceptedRequests extends AppCompatActivity implements View.OnClickListener {
 
     private String UserId;
     private String AccountType;
@@ -36,8 +36,6 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
             UserId = extras.getString("UserId");
             AccountType = extras.getString("AccountType");
         }
-
-        System.out.println("ACCOUNT TYPE = " + AccountType);
 
         loadRequests();
     }
@@ -91,28 +89,28 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
             request_info_tuteeName_row.setLayoutParams(lp);
             TextView request_info_tuteeName = new TextView(this);
             request_info_tuteeName.setTextSize(24);
-            request_info_tuteeName.setTypeface(request_info_tuteeName.getTypeface(), Typeface.BOLD);
+            request_info_tuteeName.setTypeface(request_info_classname.getTypeface(), Typeface.BOLD);
             request_info_tuteeName.setText("Tutee: " + tuteeName);
             request_info_tuteeName_row.addView(request_info_tuteeName);
 
             TableRow request_info_tutorName_row = new TableRow(this);
             request_info_tutorName_row.setLayoutParams(lp);
             TextView request_info_tutorName = new TextView(this);
-            request_info_tutorName.setTypeface(request_info_tutorName.getTypeface(), Typeface.BOLD);
+            request_info_tutorName.setTypeface(request_info_classname.getTypeface(), Typeface.BOLD);
             request_info_tuteeName.setText("Tutor: " + tutorName);
             request_info_tutorName_row.addView(request_info_tutorName);
 
             TableRow request_info_time_row = new TableRow(this);
             request_info_time_row.setLayoutParams(lp);
             TextView request_info_time = new TextView(this);
-            request_info_time.setTypeface(request_info_time.getTypeface(), Typeface.BOLD);
+            request_info_time.setTypeface(request_info_classname.getTypeface(), Typeface.BOLD);
             request_info_time.setText(time);
             request_info_time_row.addView(request_info_time);
 
             TableRow request_info_status_row = new TableRow(this);
             request_info_status_row.setLayoutParams(lp);
             TextView request_info_status = new TextView(this);
-            request_info_status.setTypeface(request_info_status.getTypeface(), Typeface.BOLD);
+            request_info_status.setTypeface(request_info_classname.getTypeface(), Typeface.BOLD);
             request_info_status.setText("Status: " + status);
             request_info_status_row.addView(request_info_status);
 
@@ -122,7 +120,7 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
             requests_table_layout.addView(request_info_time_row, i++);
             requests_table_layout.addView(request_info_status_row, i++);
 
-            if(AccountType.equals("Tutor")) {
+            if(AccountType.equals("tutor")) {
                 Button approve_button = new Button(this);
                 approve_button.setText("Approve");
                 approve_button.setLayoutParams(new TableRow.LayoutParams(

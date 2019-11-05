@@ -83,7 +83,6 @@ public class ScrollingHomeActivity extends AppCompatActivity {
 
 
     public void openViewRequestActivity(View view) {
-        //redirects to search screens
         Intent i = new Intent(this, ViewRequests.class);
         i.putExtra("UserId", UserId);
         i.putExtra("AccountType", AccountType);
@@ -116,8 +115,16 @@ public class ScrollingHomeActivity extends AppCompatActivity {
     }
 
     public void openAcceptedRequestActivity(View view) {
-        Toast toast = Toast.makeText(getBaseContext(), "hi", Toast.LENGTH_SHORT);
-        toast.show();
+        Intent i = new Intent(this, ViewRequests.class);
+        i.putExtra("UserId", UserId);
+        i.putExtra("AccountType", AccountType);
+
+        startActivity(i);
+
+
+
+//        Toast toast = Toast.makeText(getBaseContext(), "hi", Toast.LENGTH_SHORT);
+//        toast.show();
         // need to link to acceptedrequest
     }
 

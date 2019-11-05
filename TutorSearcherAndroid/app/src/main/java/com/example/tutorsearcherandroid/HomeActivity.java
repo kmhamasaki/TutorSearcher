@@ -106,7 +106,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void openAcceptedRequestActivity() {
-        // need to link to acceptedrequest
+
     }
 
 }
