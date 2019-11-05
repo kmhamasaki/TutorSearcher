@@ -209,7 +209,7 @@ public class DBConnect {
 		}
 		
 		String insertQuery = "INSERT INTO users (email, password_hash, tutor, phone_number,"
-			+ "first_name, last_name, rating) VALUES (?,?,?,?,?,?, ?)";
+			+ "first_name, last_name, num_ratings) VALUES (?,?,?,?,?,?,?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbc.update(
 		    new PreparedStatementCreator() {
@@ -223,7 +223,7 @@ public class DBConnect {
 			        ps.setString(4, phoneNumber);
 			        ps.setString(5, firstName);
 			        ps.setString(6, lastName);
-			        ps.setDouble(7, -1);
+			        ps.setInt(7, 0);
 		            return ps;
 		        }
 		    },
@@ -265,38 +265,52 @@ public class DBConnect {
 		System.out.println(keyHolder.getKey().intValue());
 		return keyHolder.getKey().intValue();
 	}
+	
 	//user ID is for the person getting rated 
 	void addRating(int userID, double rating) {
 		//need to get their current rating and average it
-		final String firstQuery = "SELECT users.rating FROM users WHERE users.user_id=?";
-		Double currRating = jdbc.query(firstQuery, 
+		final String firstQuery = "SELECT users.rating, users.num_ratings FROM users WHERE users.user_id=?";
+		ArrayList<Object> currRatings = jdbc.query(firstQuery, 
 				new PreparedStatementSetter() {
 			public void setValues(PreparedStatement preparedStatement) throws SQLException {
 				preparedStatement.setInt(1,  userID);
 			}
 		}, 
-		 new ResultSetExtractor<Double>() {
-            public Double extractData(ResultSet resultSet) throws SQLException,
+		 new ResultSetExtractor<ArrayList<Object>>() {
+            public ArrayList<Object> extractData(ResultSet resultSet) throws SQLException,
               DataAccessException {
-            	
+            	ArrayList<Object> result = new ArrayList<>();
             	if (resultSet.next()) {
 //                	(int requestID, int tuteeID, int tutorID, String time, int status, Date timecreated)
-                	return resultSet.getDouble("rating");
+            		result.add(resultSet.getDouble("rating"));
+            		result.add(resultSet.getInt("num_ratings"));
                 }
-                return -1.0;
+                return result;
             }
 		});
 		
-		//if (currRating == -)
+		Double currRating = (Double)currRatings.get(0);
+		int numRatings = (int)currRatings.get(1);
 		
-		final String query = "UPDATE users SET users.rating=? WHERE users.user_id=?";
+		
+		final String query = "UPDATE users SET users.rating=?, users.num_ratings=? WHERE users.user_id=?";
 		jdbc.update(
 			new PreparedStatementCreator() {
 				@Override
 				public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+					double newRating = 0;
+					//if (currRating == -)
+					if (numRatings == 0) {
+						newRating = rating;
+					}
+					else {
+						newRating = (currRating * numRatings + rating) / (numRatings + 1);
+					}
+					
 					PreparedStatement ps = connection.prepareStatement(query);
-					ps.setDouble(1, rating);
-					ps.setInt(2, userID);
+					ps.setDouble(1, newRating);
+					ps.setInt(2, numRatings + 1);
+					ps.setInt(3, userID);
 					return ps;
 				}
 			}

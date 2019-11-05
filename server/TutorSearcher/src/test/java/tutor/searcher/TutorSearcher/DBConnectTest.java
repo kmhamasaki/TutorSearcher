@@ -91,6 +91,12 @@ class DBConnectTest {
 	}
 	
 	@Test
+	void addRatingTest() {
+		int userID = 1;
+		double rating = 4; 
+		dbConnect.addRating(userID, rating);
+	}
+	@Test
 	void updateRequestStatusTest() {
 		int requestID = 2;
 		int newStatus = 1;
