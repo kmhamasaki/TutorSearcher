@@ -224,7 +224,7 @@ public class DBConnect {
 		}
 		
 		String insertQuery = "INSERT INTO users (email, password_hash, tutor, phone_number,"
-			+ "first_name, last_name, rating, num_ratings) VALUES (?,?,?,?,?,?,?)";
+			+ "first_name, last_name, rating, num_ratings) VALUES (?,?,?,?,?,?,?, ?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbc.update(
 		    new PreparedStatementCreator() {
