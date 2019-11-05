@@ -73,7 +73,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
                 client.execute().get();
                 Request response = client.getResponse();
 
-                selectedTimes = (ArrayList<Integer>)response.getAttributes().get("availability");
+                //selectedTimes = (ArrayList<Integer>)response.getAttributes().get("availability");
 //                for(int i = 0; i < classes.size(); i++) {
 //                    CheckBox cb = findViewById(CHECKBOX_ID[classToIndex.get(classes.get(i))]);
 //                    cb.setChecked(true);
@@ -139,8 +139,8 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
             }
             System.out.println("Test " + response.getRequestType());
 
-            openSearchResultsActivity(response);
             // proceed to search result page
+            openSearchResultsActivity(response);
         }
         else if(sourcePage.equals("UpdateProfile")){
             try {
@@ -200,7 +200,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
         Intent i = new Intent(this, UpdateProfile.class);
         i.putExtra("UserId",UserId);
         i.putExtra("AccountType", AccountType);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
 }

@@ -127,6 +127,7 @@ public class ChooseClasses extends AppCompatActivity {
         i.putExtra("SourcePage", "Home");
         i.putExtra("UserId", UserId);
         i.putExtra("AccountType", AccountType);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
 

@@ -104,7 +104,6 @@ public class ScrollingHomeActivity extends AppCompatActivity {
         Intent i = new Intent(this, UpdateProfile.class);
         i.putExtra("UserId", UserId);
         i.putExtra("AccountType", AccountType);
-
         startActivity(i);
     }
 
