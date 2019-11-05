@@ -14,7 +14,7 @@ import java.util.List;
 
 import tutor.searcher.TutorSearcher.TutorRequest;
 
-public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAdapter.ViewHolder> {
+public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequestAdapter.ViewHolder> {
 
     private List<TutorRequest> requests;
     private OnButtonClickListener mListener;
@@ -48,7 +48,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
             accept_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println("PendingRequestAdapter.onClick");
+                    System.out.println("AcceptedRequestAdapter.onClick");
                     int position = getAdapterPosition();
                     listener.onButtonClick(position, true);
                 }
@@ -57,7 +57,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
             reject_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println("PendingRequestAdapter.onClick");
+                    System.out.println("AcceptedRequestAdapter.onClick");
                     int position = getAdapterPosition();
                     listener.onButtonClick(position, false);
                 }
@@ -66,13 +66,13 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
     }
 
     // Constructor
-    public PendingRequestAdapter(List<TutorRequest> requests) {
+    public AcceptedRequestAdapter(List<TutorRequest> requests) {
         this.requests = requests;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public PendingRequestAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AcceptedRequestAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -85,7 +85,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(PendingRequestAdapter.ViewHolder viewholder, int position) {
+    public void onBindViewHolder(AcceptedRequestAdapter.ViewHolder viewholder, int position) {
 
         TutorRequest tr = requests.get(position);
 

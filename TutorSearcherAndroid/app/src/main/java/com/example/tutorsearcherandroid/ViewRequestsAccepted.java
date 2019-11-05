@@ -14,7 +14,7 @@ import java.util.List;
 import tutor.searcher.TutorSearcher.Request;
 import tutor.searcher.TutorSearcher.TutorRequest;
 
-public class ViewRequests extends AppCompatActivity
+public class ViewRequestsAccepted extends AppCompatActivity
         implements PendingRequestAdapter.OnButtonClickListener {
 
     private String UserId;
@@ -28,7 +28,7 @@ public class ViewRequests extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_requests);
+        setContentView(R.layout.view_accepted_requests);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -46,7 +46,11 @@ public class ViewRequests extends AppCompatActivity
         try {
             HashMap<String,Object> attributes = new HashMap<String,Object>();
             attributes.put("userID", Integer.parseInt(UserId));
-            attributes.put("viewrequeststype", "tutorpending");
+            if(AccountType.equals("Tutor")) {
+                attributes.put("viewrequeststype", "tutorapproved");
+            } else if(AccountType.equals("Tutee")) {
+                attributes.put("viewrequeststype", "tuteeapproved");
+            }
 
             Client client = new Client("viewrequests", attributes);
             client.execute().get();
@@ -79,44 +83,8 @@ public class ViewRequests extends AppCompatActivity
 
     @Override
     public void onButtonClick(int position, Boolean accept) {
-        System.out.println("onButtonClick");
-        if(accept) {
-            try {
-                System.out.println("Accept");
-                int requestID = requestList.get(position).getRequestID();
-                HashMap<String,Object> attributes = new HashMap<String,Object>();
-                attributes.put("requestID", requestID);
-                attributes.put("newStatus", 1);
-
-                Client client = new Client("updaterequeststatus", attributes);
-                client.execute().get();
-                Request response = client.getResponse();
-
-            } catch(Exception e) {
-                e.printStackTrace();
-            }
-            Intent i = new Intent(this, ViewAcceptedRequests.class);
-            i.putExtra("UserId", UserId);
-            i.putExtra("AccountType", AccountType);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
-        } else {
-            try {
-                System.out.println("Reject");
-                int requestID = requestList.get(position).getRequestID();
-                HashMap<String,Object> attributes = new HashMap<String,Object>();
-                attributes.put("requestID", requestID);
-                attributes.put("newStatus", 2);
-
-                Client client = new Client("updaterequeststatus", attributes);
-                client.execute().get();
-                Request response = client.getResponse();
-
-            } catch(Exception e) {
-                e.printStackTrace();
-            }
-            loadRequests();
-        }
+        System.out.println("ViewRequestsAccepted.onButtonClick");
+        // James intent here
     }
     public void onClick(View view) {
 

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="4dp"
+    android:layout_marginBottom="4dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="221dp"
+        android:layout_margin="4dp"
+        android:background="#F8BBD0">
+
+        <TextView
+            android:id="@+id/tutee_name"
+            android:layout_width="175dp"
+            android:layout_height="53dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:text="Tutee Name"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/class_name"
+            android:layout_width="338dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tutee_name"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_weight="1"
+            android:text="Class Name + Time"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="338dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/class_name"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_weight="1"
+            android:text="@string/prompt_email"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/phone_number"
+            android:layout_width="338dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/email"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_weight="1"
+            android:text="@string/prompt_phone_number"
+            android:textSize="24dp" />
+
+        <Button
+            android:id="@+id/rate_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="67dp"
+            android:layout_marginRight="67dp"
+            android:text="Rate" />
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
+
