@@ -358,7 +358,9 @@ public class DBConnect {
 			                return null;
 			            }
 					});
-			
+			if (availability == null || availability.equals(""))  {
+				return false;
+			}
 			
 			jdbc.update(new PreparedStatementCreator() {
 				@Override
@@ -722,12 +724,16 @@ public class DBConnect {
                 return null;
             }
 		});
-		String[] timesStr = availability.split(" ");
-		ArrayList<Integer> availabilities = new ArrayList<>();
-		for (int i = 0; i < timesStr.length; i++) {
-			availabilities.add(Integer.parseInt(timesStr[i]));
+		if (availability != null && !availability.equals("")) {
+			String[] timesStr = availability.split(" ");
+			ArrayList<Integer> availabilities = new ArrayList<>();
+			for (int i = 0; i < timesStr.length; i++) {
+				availabilities.add(Integer.parseInt(timesStr[i]));
+			}
+			return availabilities;
 		}
-		return availabilities;
+		
+		return new ArrayList<>();
 	}
 	
 	//get classes
