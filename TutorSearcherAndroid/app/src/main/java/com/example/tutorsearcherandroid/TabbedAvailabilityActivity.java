@@ -121,60 +121,65 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
-
-        if(sourcePage.equals("SearchTutor")){
-            // ***INSERT CODE TO SEND TO BACKEND HERE***
-                // we can probably create a function for this because it's used all the time?
-            Bundle test = getIntent().getExtras();
-            String className = test.getString("ClassName");
-            HashMap<String, Object> attr = new HashMap<>();
-            attr.put("availability", selectedTimes);
-            attr.put("className", className);
-            attr.put("userID", Integer.parseInt(UserId));
-            System.out.println(className);
-            Client client = new Client("search", attr);
-            try {
-                client.execute().get();
-            } catch(Exception e) {
-                e.printStackTrace();
-            }
-            Request response = client.getResponse();
-            System.out.println("Test " + response.getRequestType());
-
-            // proceed to search result page
-            openSearchResultsActivity(response);
-        }
-        else if(sourcePage.equals("UpdateProfile")){
-            try {
+        if(selectedTimes.isEmpty()){
+            Toast t = Toast.makeText(this, "Please select at least one time slot.",
+                    Toast.LENGTH_LONG);
+            t.show();
+        }else{
+            if(sourcePage.equals("SearchTutor")){
+                // ***INSERT CODE TO SEND TO BACKEND HERE***
+                    // we can probably create a function for this because it's used all the time?
+                Bundle test = getIntent().getExtras();
+                String className = test.getString("ClassName");
                 HashMap<String, Object> attr = new HashMap<>();
                 attr.put("availability", selectedTimes);
-                attr.put("tutorID", Integer.parseInt(UserId));
-
-                Client client = new Client("updateavailability", attr);
-                client.execute();
+                attr.put("className", className);
+                attr.put("userID", Integer.parseInt(UserId));
+                System.out.println(className);
+                Client client = new Client("search", attr);
+                try {
+                    client.execute().get();
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
                 Request response = client.getResponse();
-                System.out.println(response.getRequestType());
-            } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("Test " + response.getRequestType());
+
+                // proceed to search result page
+                openSearchResultsActivity(response);
             }
+            else if(sourcePage.equals("UpdateProfile")){
+                try {
+                    HashMap<String, Object> attr = new HashMap<>();
+                    attr.put("availability", selectedTimes);
+                    attr.put("tutorID", Integer.parseInt(UserId));
 
-            openUpdateProfile();
-        }
-        else if(sourcePage.equals("Signup")){
-            try {
-                HashMap<String, Object> attr = new HashMap<>();
-                attr.put("availability", selectedTimes);
-                attr.put("tutorID", Integer.parseInt(UserId));
+                    Client client = new Client("updateavailability", attr);
+                    client.execute();
+                    Request response = client.getResponse();
+                    System.out.println(response.getRequestType());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-                Client client = new Client("updateavailability", attr);
-                client.execute();
-                Request response = client.getResponse();
-                System.out.println(response.getRequestType());
-            } catch (Exception e) {
-                e.printStackTrace();
+                openUpdateProfile();
             }
+            else if(sourcePage.equals("Signup")){
+                try {
+                    HashMap<String, Object> attr = new HashMap<>();
+                    attr.put("availability", selectedTimes);
+                    attr.put("tutorID", Integer.parseInt(UserId));
 
-            openHomeActivity();
+                    Client client = new Client("updateavailability", attr);
+                    client.execute();
+                    Request response = client.getResponse();
+                    System.out.println(response.getRequestType());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                openHomeActivity();
+            }
         }
 
     }
