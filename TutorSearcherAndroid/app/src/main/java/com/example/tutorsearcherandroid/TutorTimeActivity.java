@@ -116,12 +116,27 @@ public class TutorTimeActivity extends AppCompatActivity implements View.OnClick
         Client client = new Client("newrequest",attr);
         client.execute();
 
-        openHomeActivity(AccountType,UserId);
+        Request response = null;
+        while(response == null){
+            response = client.getResponse();
+        }
+        attr = new HashMap<>();
+        attr.put("userID", tutteeId);
+        client = new Client("searchprevious",attr);
+        client.execute();
+        response = null;
+        while(response == null){
+            response = client.getResponse();
+        }
+
+
+        openHomeActivity(AccountType,UserId,response);
     }
-    public void openHomeActivity(String accountType, String userId) {
+    public void openHomeActivity(String accountType, String userId, Request response) {
         Intent i = new Intent(this, ScrollingHomeActivity.class);
         i.putExtra("AccountType", accountType);
         i.putExtra("UserId", userId);
+        i.putExtra("TutorList",response);
         finish();
         startActivity(i);
     }
