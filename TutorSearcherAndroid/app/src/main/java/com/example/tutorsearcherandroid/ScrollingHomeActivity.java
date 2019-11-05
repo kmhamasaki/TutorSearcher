@@ -103,15 +103,17 @@ public class ScrollingHomeActivity extends AppCompatActivity implements MyAdapte
         }
 
         //Generate Recycler Information
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.hasFixedSize();
-        rLayoutManager = new LinearLayoutManager(this);
-        rAdapter = new MyAdapter(TutorList);
+        if(AccountType.equals("Tutee") && TutorList != null){
+            recyclerView = findViewById(R.id.recyclerView);
+            recyclerView.hasFixedSize();
+            rLayoutManager = new LinearLayoutManager(this);
+            rAdapter = new MyAdapter(TutorList);
 
-        recyclerView.setLayoutManager(rLayoutManager);
-        recyclerView.setAdapter(rAdapter);
+            recyclerView.setLayoutManager(rLayoutManager);
+            recyclerView.setAdapter(rAdapter);
 
-        rAdapter.setOnTutorClickListener(this);
+            rAdapter.setOnTutorClickListener(this);
+        }
 
         System.out.println(AccountType);
         if(AccountType.equals("Tutor")) {
