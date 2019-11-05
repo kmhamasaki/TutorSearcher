@@ -62,11 +62,30 @@ public class UpdateProfile extends AppCompatActivity {
     }
 
     public void onUpdateClick(View view) {
-        user.setFirstName(((EditText)findViewById(R.id.firstName)).getText().toString());
-        user.setLastName(((EditText)findViewById(R.id.lastName)).getText().toString());
-        user.setPhoneNumber(((EditText)findViewById(R.id.phoneNumber)).getText().toString());
+        String fname = ((EditText)findViewById(R.id.firstName)).getText().toString();
+        String lname = ((EditText)findViewById(R.id.lastName)).getText().toString();
+        String phonenumber = ((EditText)findViewById(R.id.phoneNumber)).getText().toString();
         String password = ((EditText)findViewById(R.id.password)).getText().toString();
 
+        //FirstName Empty
+        if(fname.equals("")){
+            fname = user.getFirstName();
+        }
+        user.setFirstName(fname);
+
+        //LastName Empty
+        if(lname.equals("")){
+            lname = user.getLastName();
+        }
+        user.setLastName(lname);
+
+        //PhoneNumber Empty
+        if(phonenumber.equals("")){
+            phonenumber = user.getPhoneNumber();
+        }
+        user.setPhoneNumber(phonenumber);
+
+        //Password Empty
         if(password.equals("")) {
             password = user.getPasswordHash();
         } else {
