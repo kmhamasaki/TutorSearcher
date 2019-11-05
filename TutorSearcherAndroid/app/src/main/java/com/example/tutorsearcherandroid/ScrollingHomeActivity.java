@@ -51,19 +51,18 @@ public class ScrollingHomeActivity extends AppCompatActivity {
                 if (scrollRange == -1) {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
-                Button checkAvailability = findViewById(R.id.sendRequest3);
                 // home icons aren't shown
                 if (scrollRange + verticalOffset == 0) {
+                    collapsingToolbarLayout.setTitle("Select a Tutor");
                     constraintLayout.setVisibility(View.INVISIBLE);
                     toolbar.setVisibility(View.VISIBLE);
-                    checkAvailability.setVisibility(View.VISIBLE);
                     isShow = true;
                 }
                 // home icons are shown
                 else if (isShow) {
+                    collapsingToolbarLayout.setTitle(" ");
                     constraintLayout.setVisibility(View.VISIBLE);
                     toolbar.setVisibility(View.INVISIBLE);
-                    checkAvailability.setVisibility(View.INVISIBLE);
                     isShow = false;
                 }
             }
