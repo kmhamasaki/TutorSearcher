@@ -96,6 +96,7 @@ public class TutorRequest implements Serializable {
 		this.tuteeRating = tuteeRating;
 	}
 
+
 	public double getTutorRating() {
 		return tutorRating;
 	}

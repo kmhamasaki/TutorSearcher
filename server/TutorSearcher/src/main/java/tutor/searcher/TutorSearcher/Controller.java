@@ -326,6 +326,19 @@ public class Controller {
 			respAttr.put("user", user);
 			respType = "Success";
 		}
+		
+		/**
+		 * requestType "addrating"
+		 * adds rating
+		 * incoming attributes
+		 * 	int userID - userID of the person to be rated
+		 * 	double rating - new rating
+		 * 
+		 */
+		else if (request.getRequestType().equals("addrating")) {
+			dbConnect.addRating((int)request.get("userID"), (double)request.get("rating"));
+			respType = "Success";
+		}
 		System.out.print(respType);
 		requestThread.sendResponse(new Request(respType, respAttr));
  

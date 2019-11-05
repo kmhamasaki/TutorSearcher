@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.widget.NestedScrollView;
 
 import android.view.View;
 import android.view.Window;
@@ -47,15 +48,19 @@ public class ScrollingHomeActivity extends AppCompatActivity {
                 if (scrollRange == -1) {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
+                Button checkAvailability = findViewById(R.id.sendRequest3);
+                // home icons aren't shown
                 if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbarLayout.setTitle("Title");
                     constraintLayout.setVisibility(View.INVISIBLE);
                     toolbar.setVisibility(View.VISIBLE);
+                    checkAvailability.setVisibility(View.VISIBLE);
                     isShow = true;
-                } else if (isShow) {
-                    collapsingToolbarLayout.setTitle(" ");//careful there should a space between double quote otherwise it wont work
+                }
+                // home icons are shown
+                else if (isShow) {
                     constraintLayout.setVisibility(View.VISIBLE);
                     toolbar.setVisibility(View.INVISIBLE);
+                    checkAvailability.setVisibility(View.INVISIBLE);
                     isShow = false;
                 }
             }
@@ -76,6 +81,8 @@ public class ScrollingHomeActivity extends AppCompatActivity {
         System.out.println(AccountType);
         if(AccountType.equals("Tutor")) {
             searchButton.setVisibility(View.GONE);
+            NestedScrollView bottomContent = findViewById(R.id.nestedScrollView);
+            bottomContent.setVisibility(View.GONE);
         } else {
             viewRequestButton.setVisibility(View.GONE);
         }
