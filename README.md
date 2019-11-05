@@ -32,4 +32,9 @@ The server is tested to be able to run in Eclipse Jee.
 
 ## Android Application
 
+1. Install Android Studio
+2. Open Android Studio and choose "Open an Existing Android Studio Project"
+3. Open TutorSearcher/TutorSearcherAndroid as your Android Studio directory
+4. Add configuration for the app and choose a device for the emulator
+5. Run app
 
