@@ -8,7 +8,7 @@
     android:layout_marginBottom="4dp">
 
     <RelativeLayout
-        android:layout_width="390dp"
+        android:layout_width="wrap_content"
         android:layout_height="197dp"
         android:layout_margin="4dp"
         android:background="#F8BBD0">

@@ -255,6 +255,11 @@ public class ViewRequests extends AppCompatActivity
             } catch(Exception e) {
                 e.printStackTrace();
             }
+            Intent i = new Intent(this, ViewAcceptedRequests.class);
+            i.putExtra("UserId", UserId);
+            i.putExtra("AccountType", AccountType);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
         } else {
             try {
                 System.out.println("Reject");
@@ -270,6 +275,7 @@ public class ViewRequests extends AppCompatActivity
             } catch(Exception e) {
                 e.printStackTrace();
             }
+            loadRequests();
         }
     }
     public void onClick(View view) {
