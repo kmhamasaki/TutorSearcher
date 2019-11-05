@@ -29,7 +29,7 @@ public class ViewAcceptedRequests extends AppCompatActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_requests);
+        setContentView(R.layout.view_accepted_requests);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
