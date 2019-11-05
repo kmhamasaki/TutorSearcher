@@ -106,7 +106,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void openHomeActivity(){
-        Intent i = new Intent(this, HomeActivity.class);
+        Intent i = new Intent(this, ScrollingHomeActivity.class);
         i.putExtra("UserId", UserId);
         i.putExtra("AccountType", AccountType);
 
