@@ -1,7 +1,6 @@
 package com.example.tutorsearcherandroid;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         public ViewHolder(View itemView, final OnTutorClickListener listener) {
             super(itemView);
-            nameTextView = itemView.findViewById(R.id.contact_name);
+            nameTextView = itemView.findViewById(R.id.time);
             ratingBar = itemView.findViewById(R.id.tutor_rating);
 
             itemView.setOnClickListener(new View.OnClickListener() {
