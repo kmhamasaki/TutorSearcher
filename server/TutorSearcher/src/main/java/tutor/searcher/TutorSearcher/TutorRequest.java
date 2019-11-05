@@ -16,6 +16,8 @@ public class TutorRequest implements Serializable {
 	private int status;
 	private String timeCreated;
 	private String className;
+	private double tuteeRating;
+	private double tutorRating;
 
 
 	public TutorRequest(int requestID, int tuteeID, int tutorID, String time, int status,
@@ -84,5 +86,21 @@ public class TutorRequest implements Serializable {
 
 	public void setClassName(String className) {
 		this.className = className;
+	}
+
+	public double getTuteeRating() {
+		return tuteeRating;
+	}
+
+	public double getTutorRating() {
+		return tutorRating;
+	}
+
+	public void setTuteeRating(double tuteeRating) {
+		this.tuteeRating = tuteeRating;
+	}
+
+	public void setTutorRating(double tutorRating) {
+		this.tutorRating = tutorRating;
 	}
 }
