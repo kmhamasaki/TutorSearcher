@@ -74,13 +74,14 @@ public class UpdateProfile extends AppCompatActivity {
         }
         user.setPasswordHash(password);
 
+        System.out.println(user.getFirstName());
         try {
             HashMap<String, Object> attr = new HashMap<>();
             attr.put("user", user);
             Client client = new Client("updateinfo", attr);
 
             // Pass all inputs to backend
-            client.execute();
+            client.execute().get();
         } catch(Exception e) {
             e.printStackTrace();
         }
