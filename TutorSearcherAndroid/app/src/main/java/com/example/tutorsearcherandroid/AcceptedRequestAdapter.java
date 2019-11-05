@@ -99,38 +99,4 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
     public int getItemCount() {
         return requests.size();
     }
-
-    public static String intToTime(int i) {
-        String temp = "";
-        if (i < 9) {
-            temp += "Monday: ";
-            temp += Integer.toString(i % 9 + 8);
-            temp += ":00";
-        } else if (i < 18) {
-            temp += "Tuesday: ";
-            temp += Integer.toString(i % 9 + 8);
-            temp += ":00";
-        } else if (i < 27) {
-            temp += "Wednesday: ";
-            temp += Integer.toString(i % 9 + 8);
-            temp += ":00";
-        } else if (i < 36) {
-            temp += "Thursday: ";
-            temp += Integer.toString(i % 9 + 8);
-            temp += ":00";
-        } else if (i < 45) {
-            temp += "Friday: ";
-            temp += Integer.toString(i % 9 + 8);
-            temp += ":00";
-        } else if (i < 54) {
-            temp += "Saturday: ";
-            temp += Integer.toString(i % 9 + 8);
-            temp += ":00";
-        } else {
-            temp += "Sunday: ";
-            temp += Integer.toString(i % 9 + 8);
-            temp += ":00";
-        }
-        return temp;
-    }
 }
