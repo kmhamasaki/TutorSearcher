@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".ViewRequests">
 
+    <TextView
+        android:id="@+id/noRequestsFound"
+        android:layout_width="250dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="168dp"
+        android:text="No Accepted Requests"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/Home"
         android:layout_width="88dp"

@@ -37,7 +37,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         public ViewHolder(View itemView, final OnTutorClickListener listener) {
             super(itemView);
-            nameTextView = itemView.findViewById(R.id.class_name);
+            nameTextView = itemView.findViewById(R.id.time);
             ratingBar = itemView.findViewById(R.id.tutor_rating);
 
             itemView.setOnClickListener(new View.OnClickListener() {

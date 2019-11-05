@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import tutor.searcher.TutorSearcher.AcceptedTutorRequest;
-import tutor.searcher.TutorSearcher.TutorRequest;
-import tutor.searcher.TutorSearcher.User;
 
 
 public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequestAdapter.ViewHolder> {
@@ -40,6 +38,8 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
         public TextView class_name;
         public TextView email;
         public TextView phone_number;
+        public TextView time;
+
         public Button accept_button;
         public Button reject_button;
 
@@ -47,9 +47,11 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
         public ViewHolder(View itemView, final OnButtonClickListener listener) {
             super(itemView);
             tutee_name = itemView.findViewById(R.id.tutee_name);
-            class_name = itemView.findViewById(R.id.class_name);
+            class_name = itemView.findViewById(R.id.time);
             email = itemView.findViewById(R.id.email);
             phone_number = itemView.findViewById(R.id.phone_number);
+            time = itemView.findViewById(R.id.time);
+
         }
     }
 
@@ -81,6 +83,7 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
         //Set Item Views
         TextView tutee_name = viewholder.tutee_name;
         TextView class_name = viewholder.class_name;
+        TextView time = viewholder.time;
         TextView email = viewholder.email;
         TextView phone_number = viewholder.phone_number;
 
@@ -88,6 +91,7 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
         class_name.setText(tr.getClassName());
         email.setText(tr.getEmail());
         phone_number.setText(tr.getPhoneNumber());
+        time.setText(tr.getTime());
     }
 
     // Return the size of your dataset (invoked by the layout manager)

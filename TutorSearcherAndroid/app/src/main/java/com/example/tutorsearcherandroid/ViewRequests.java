@@ -67,6 +67,10 @@ public class ViewRequests extends AppCompatActivity
         recyclerView.setAdapter(rAdapter);
 
         rAdapter.setOnButtonClickListener(this);
+        
+        if(!requestList.isEmpty()) {
+            findViewById(R.id.noRequestsFound).setVisibility(View.GONE);
+        }
     }
 
     public void onHomeClick(View view) {

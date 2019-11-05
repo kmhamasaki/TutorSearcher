@@ -5,16 +5,17 @@ public class AcceptedTutorRequest {
 	private String phoneNumber;
 	private String name;
 	private String className;
-	private double rating;
+	private String time;
+
 	
-	
-	public AcceptedTutorRequest(String email, String phoneNumber, String name, String className, double rating) {
+	public AcceptedTutorRequest(String email, String phoneNumber, String name, String className, String time, double rating) {
 		super();
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.name = name;
 		this.className = className;
 		this.rating = rating;
+		this.time = time;
 	}
 	public String getEmail() {
 		return email;
@@ -46,4 +47,12 @@ public class AcceptedTutorRequest {
 	public void setRating(double rating) {
 		this.rating = rating;
 	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
+	private double rating;
+	
 }

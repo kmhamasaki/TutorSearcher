@@ -43,6 +43,9 @@ public class ViewRequestsAccepted extends AppCompatActivity
         System.out.println("ACCOUNT TYPE = " + AccountType);
 
         loadRequests();
+        if(!requestList.isEmpty()) {
+            findViewById(R.id.noRequestsFound).setVisibility(View.GONE);
+        }
     }
 
     private void loadRequests() {
@@ -77,8 +80,8 @@ public class ViewRequestsAccepted extends AppCompatActivity
                 response = client.getResponse();
                 user = (User)response.get("user");
                 requestList.add(new AcceptedTutorRequest(user.getEmail(), user.getPhoneNumber(),
-                        user.getFirstName(), req.getClassName() + " " +
-                        TutorTimeActivity.generateTimesForward().get(Integer.parseInt(req.getTime())), 0));
+                        user.getFirstName(), req.getClassName(),
+                        TutorTimeActivity.generateTimesForward().get(Integer.parseInt(req.getTime())),0));
             }
 
         } catch(Exception e) {
