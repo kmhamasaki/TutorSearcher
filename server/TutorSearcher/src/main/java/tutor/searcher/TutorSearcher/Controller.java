@@ -140,7 +140,7 @@ public class Controller {
 				String error message "Error updating information"
 				or String "success"
 		 */
-		} else if (request.getRequestType() == "updateinfo") {
+		} else if (request.getRequestType().equals("updateinfo")) {
 			User user = (User)request.getAttributes().get("user");
 			try {
 				dbConnect.updateUserInformation(user);

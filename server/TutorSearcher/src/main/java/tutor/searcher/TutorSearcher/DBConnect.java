@@ -385,6 +385,7 @@ public class DBConnect {
 	
 	
 	void updateUserInformation(User user) {
+		System.out.println("updateUserInformation " + user.getFirstName());
 		jdbc.update(new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {

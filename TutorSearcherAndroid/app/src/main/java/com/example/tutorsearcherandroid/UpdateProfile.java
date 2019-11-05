@@ -6,12 +6,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.HashMap;
+
+import tutor.searcher.TutorSearcher.Request;
+import tutor.searcher.TutorSearcher.User;
 
 public class UpdateProfile extends AppCompatActivity {
 
     private String UserId;
     private String AccountType;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +38,53 @@ public class UpdateProfile extends AppCompatActivity {
             updateClassButton.setVisibility(View.GONE);
             updateAvailabilityButton.setVisibility(View.GONE);
         }
+
+        try {
+            HashMap<String, Object> attr = new HashMap<>();
+            attr.put("userID", Integer.parseInt(UserId));
+            Client client = new Client("getuserinfo", attr);
+
+            // Pass all inputs to backend
+            client.execute().get();
+            Request response = client.getResponse();
+            user = (User) response.get("user");
+
+            EditText firstName = findViewById(R.id.firstName);
+            EditText lastName = findViewById(R.id.lastName);
+            EditText phoneNumber = findViewById(R.id.phoneNumber);
+
+            firstName.setText(user.getFirstName());
+            lastName.setText(user.getLastName());
+            phoneNumber.setText(user.getPhoneNumber());
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void onUpdateClick(View view) {
+        user.setFirstName(((EditText)findViewById(R.id.firstName)).getText().toString());
+        user.setLastName(((EditText)findViewById(R.id.lastName)).getText().toString());
+        user.setPhoneNumber(((EditText)findViewById(R.id.phoneNumber)).getText().toString());
+        String password = ((EditText)findViewById(R.id.password)).getText().toString();
+
+        if(password.equals("")) {
+            password = user.getPasswordHash();
+        } else {
+            password = SignupActivity.hashPassword(password);
+        }
+        user.setPasswordHash(password);
+
+        System.out.println(user.getFirstName());
+        try {
+            HashMap<String, Object> attr = new HashMap<>();
+            attr.put("user", user);
+            Client client = new Client("updateinfo", attr);
+
+            // Pass all inputs to backend
+            client.execute().get();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
         // CLient stuff here to connect to db
         Toast t = Toast.makeText(this, "Successfully updated profile information!",
                 Toast.LENGTH_LONG);

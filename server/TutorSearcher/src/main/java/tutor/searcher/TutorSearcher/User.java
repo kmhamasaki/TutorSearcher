@@ -49,6 +49,20 @@ public class User implements Serializable {
 
 	}
 	
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+
+	} 
+	
+	public String getLastName() {
+		return lastName;
+	}
+	
+	
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+
+	} 
 	public String getPasswordHash() {
 		return passwordHash;
 	}
@@ -59,10 +73,6 @@ public class User implements Serializable {
 	}
 
 
-	public String getLastName() {
-		return lastName;
-	}
-	
 	public String getEmail() {
 		return email;
 	}
