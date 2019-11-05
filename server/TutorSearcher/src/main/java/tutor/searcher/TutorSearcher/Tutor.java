@@ -13,8 +13,8 @@ public class Tutor extends User implements Serializable {
 	ArrayList<Integer> matchingAvailabilities;
 
 	public Tutor(int userId, String firstName, String lastName, String email, String phoneNumber, String passwordHash, Boolean accountType,
-			String availability) {
-		super(userId, firstName, lastName, email, phoneNumber, passwordHash, accountType);
+			String availability, double rating) {
+		super(userId, firstName, lastName, email, phoneNumber, passwordHash, accountType, rating);
 		this.timeAvailability = availability;
 		if (availability != null && !availability.equals("")) {
 			String[] timesStr = availability.split(" ");
@@ -28,8 +28,8 @@ public class Tutor extends User implements Serializable {
 	}
 	
 	public Tutor(int userId, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
-			String availability) {
-		super(userId, firstName, lastName, email, phoneNumber, accountType);
+			String availability, double rating) {
+		super(userId, firstName, lastName, email, phoneNumber, accountType, rating);
 		this.timeAvailability = availability;
 		if (availability != null && !availability.equals("")) {
 			String[] timesStr = availability.split(" ");
