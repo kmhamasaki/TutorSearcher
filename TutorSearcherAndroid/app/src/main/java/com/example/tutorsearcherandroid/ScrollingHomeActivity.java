@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.widget.NestedScrollView;
 
 import android.view.View;
 import android.view.Window;
@@ -80,6 +81,8 @@ public class ScrollingHomeActivity extends AppCompatActivity {
         System.out.println(AccountType);
         if(AccountType.equals("Tutor")) {
             searchButton.setVisibility(View.GONE);
+            NestedScrollView bottomContent = findViewById(R.id.nestedScrollView);
+            bottomContent.setVisibility(View.GONE);
         } else {
             viewRequestButton.setVisibility(View.GONE);
         }
