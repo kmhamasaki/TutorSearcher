@@ -55,7 +55,8 @@ public class DBConnect {
 	}
 	
 	List<TutorRequest> getRequestsTuteeApproved(int userID) {
-		String query = "SELECT requests.id, requests.tutee_id, requests.tutor_id, requests.class, requests.time, requests.status, requests.time_created, usersTutor.first_name, usersTutee.first_name " +
+		String query = "SELECT requests.id, requests.tutee_id, requests.tutor_id, requests.class, "
+				+ "requests.time, requests.status, requests.time_created, usersTutor.first_name, usersTutee.first_name, usersTutor.rating, usersTutee.rating " +
 				"FROM requests " +
 				"JOIN users usersTutor ON usersTutor.user_id = requests.tutor_id " +
 				"JOIN users usersTutee ON usersTutee.user_id = requests.tutee_id " +
@@ -85,10 +86,14 @@ public class DBConnect {
 
 					String tuteeName = resultSet.getString("usersTutor.first_name");
 					String tutorName = resultSet.getString("usersTutee.first_name");
+					double tutorRating = resultSet.getDouble("usersTutor.rating");
+					double tuteeRating = resultSet.getDouble("usersTutee.rating");
 
 					TutorRequest tutorRequest = new TutorRequest(requestID, tuteeID, tutorID, time, status, timeCreated, className);
 					tutorRequest.setTuteeName(tuteeName);
 					tutorRequest.setTutorName(tutorName);
+					tutorRequest.setTutorRating(tutorRating);
+					tutorRequest.setTuteeRating(tuteeRating);
 
 					result.add(tutorRequest);
                 }
@@ -99,7 +104,8 @@ public class DBConnect {
 	}
 	
 	List<TutorRequest> getRequestsTutorUnapproved(int userID) {
-		String query = "SELECT requests.id, requests.tutee_id, requests.tutor_id, requests.class, requests.time, requests.status, requests.time_created, usersTutor.first_name, usersTutee.first_name " + 
+		String query = "SELECT requests.id, requests.tutee_id, requests.tutor_id, requests.class, requests.time, "
+				+ "requests.status, requests.time_created, usersTutor.first_name, usersTutee.first_name, usersTutor.rating, usersTutee.rating " + 
 				"FROM requests JOIN users usersTutor ON usersTutor.user_id = requests.tutor_id " + 
 				"				JOIN users usersTutee ON usersTutee.user_id = requests.tutee_id " + 
 				"				WHERE requests.tutor_id = ? AND requests.status = 0";
@@ -128,10 +134,14 @@ public class DBConnect {
 
 					String tuteeName = resultSet.getString("usersTutor.first_name");
 					String tutorName = resultSet.getString("usersTutee.first_name");
+					double tutorRating = resultSet.getDouble("usersTutor.rating");
+					double tuteeRating = resultSet.getDouble("usersTutee.rating");
 
 					TutorRequest tutorRequest = new TutorRequest(requestID, tuteeID, tutorID, time, status, timeCreated, className);
 					tutorRequest.setTuteeName(tuteeName);
 					tutorRequest.setTutorName(tutorName);
+					tutorRequest.setTutorRating(tutorRating);
+					tutorRequest.setTuteeRating(tuteeRating);
 
 					result.add(tutorRequest);
                 }
@@ -142,7 +152,8 @@ public class DBConnect {
 	}
 	
 	List<TutorRequest> getRequestsTutorApproved(int userID) {
-		String query = "SELECT requests.id, requests.tutee_id, requests.tutor_id, requests.class, requests.time, requests.status, requests.time_created, usersTutor.first_name, usersTutee.first_name " + 
+		String query = "SELECT requests.id, requests.tutee_id, requests.tutor_id, requests.class, requests.time, requests.status, requests.time_created, usersTutor.first_name, usersTutee.first_name,"
+				+ "usersTutor.rating, usersTutee.rating " + 
 				"FROM requests JOIN users usersTutor ON usersTutor.user_id = requests.tutor_id " + 
 				"				JOIN users usersTutee ON usersTutee.user_id = requests.tutee_id " + 
 				"				WHERE requests.tutor_id = ? AND requests.status =1;";
@@ -171,10 +182,14 @@ public class DBConnect {
 
 					String tuteeName = resultSet.getString("usersTutor.first_name");
 					String tutorName = resultSet.getString("usersTutee.first_name");
+					double tutorRating = resultSet.getDouble("usersTutor.rating");
+					double tuteeRating = resultSet.getDouble("usersTutee.rating");
 
 					TutorRequest tutorRequest = new TutorRequest(requestID, tuteeID, tutorID, time, status, timeCreated, className);
 					tutorRequest.setTuteeName(tuteeName);
 					tutorRequest.setTutorName(tutorName);
+					tutorRequest.setTutorRating(tutorRating);
+					tutorRequest.setTuteeRating(tuteeRating);
 
 					result.add(tutorRequest);
                 }
@@ -209,7 +224,7 @@ public class DBConnect {
 		}
 		
 		String insertQuery = "INSERT INTO users (email, password_hash, tutor, phone_number,"
-			+ "first_name, last_name, num_ratings) VALUES (?,?,?,?,?,?,?)";
+			+ "first_name, last_name, rating, num_ratings) VALUES (?,?,?,?,?,?,?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbc.update(
 		    new PreparedStatementCreator() {
@@ -223,7 +238,8 @@ public class DBConnect {
 			        ps.setString(4, phoneNumber);
 			        ps.setString(5, firstName);
 			        ps.setString(6, lastName);
-			        ps.setInt(7, 0);
+			        ps.setDouble(7, -1);
+			        ps.setInt(8, 0);
 		            return ps;
 		        }
 		    },
