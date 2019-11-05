@@ -101,7 +101,7 @@ public class ViewAcceptedRequests extends AppCompatActivity implements View.OnCl
             request_info_tutorName_row.setLayoutParams(lp);
             TextView request_info_tutorName = new TextView(this);
             request_info_tutorName.setTypeface(request_info_tutorName.getTypeface(), Typeface.BOLD);
-            request_info_tuteeName.setText("Tutor: " + tutorName);
+            request_info_tutorName.setText("Tutor: " + tutorName);
             request_info_tutorName_row.addView(request_info_tutorName);
 
             TableRow request_info_time_row = new TableRow(this);

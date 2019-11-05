@@ -99,7 +99,7 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
             request_info_tutorName_row.setLayoutParams(lp);
             TextView request_info_tutorName = new TextView(this);
             request_info_tutorName.setTypeface(request_info_tutorName.getTypeface(), Typeface.BOLD);
-            request_info_tuteeName.setText("Tutor: " + tutorName);
+            request_info_tutorName.setText("Tutor: " + tutorName);
             request_info_tutorName_row.addView(request_info_tutorName);
 
             TableRow request_info_time_row = new TableRow(this);
@@ -122,33 +122,31 @@ public class ViewRequests extends AppCompatActivity implements View.OnClickListe
             requests_table_layout.addView(request_info_time_row, i++);
             requests_table_layout.addView(request_info_status_row, i++);
 
-            if(AccountType.equals("Tutor")) {
-                Button approve_button = new Button(this);
-                approve_button.setText("Approve");
-                approve_button.setLayoutParams(new TableRow.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
+            Button approve_button = new Button(this);
+            approve_button.setText("Approve");
+            approve_button.setLayoutParams(new TableRow.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
 
-                TableRow approve_row = new TableRow(this);
-                approve_row.setLayoutParams(lp);
+            TableRow approve_row = new TableRow(this);
+            approve_row.setLayoutParams(lp);
 
-                assignApproveButton(approve_button, requestId);
-                approve_row.addView(approve_button);
+            assignApproveButton(approve_button, requestId);
+            approve_row.addView(approve_button);
 
-                Button reject_button = new Button(this);
-                reject_button.setText("Reject");
-                reject_button.setLayoutParams(new TableRow.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
+            Button reject_button = new Button(this);
+            reject_button.setText("Reject");
+            reject_button.setLayoutParams(new TableRow.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
 
-                TableRow reject_button_row = new TableRow(this);
+            TableRow reject_button_row = new TableRow(this);
 
-                assignRejectButton(reject_button, requestId);
-                reject_button_row.addView(reject_button);
+            assignRejectButton(reject_button, requestId);
+            reject_button_row.addView(reject_button);
 
-                requests_table_layout.addView(approve_row, i++);
-                requests_table_layout.addView(reject_button_row, i++);
-            }
+            requests_table_layout.addView(approve_row, i++);
+            requests_table_layout.addView(reject_button_row, i++);
         }
 
     }
