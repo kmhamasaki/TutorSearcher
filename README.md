@@ -21,20 +21,22 @@ You can either run the back-end server in an IDE or on command line.
 The server is tested to be able to run in Eclipse Jee. 
 1. Extract the project from zip file to desired directory.
 2. In Eclipse, File > Import > Maven > Existing Maven Projects and select the `TutorSearcher/server/TutorSearcher` directory.
-3. Under the Project Explorer or Package Explorer, navigate to `src/main/java/tutor.searcher.TutorSearcher` package. 
-4. Right click `TutorSearcherApplication.java` > Run As > Java Application. Later runs should only require pressing the green run button at the top.
+3. Navigate to `src/main/resources/application.properties` and replace the database credentials with your own.
+4. Under the Project Explorer or Package Explorer, navigate to `src/main/java/tutor.searcher.TutorSearcher` package. 
+5. Right click `TutorSearcherApplication.java` > Run As > Java Application. Later runs should only require pressing the green run button at the top.
 
 ### on the command line
 
 1. Install [Maven](https://maven.apache.org/download.cgi) and make sure it is in the PATH if it isn't already. 
-2. In the project directory, navigate to `TutorSearcher/server/TutorSearcher` in the terminal.
-3. Run `mvn spring-boot:run`
+2. In an editor of choice, open `TutorSearcher/server/TutorSearcher/src/main/resources/application.properties` and modify the database credentials.
+3. In the project directory, navigate to `TutorSearcher/server/TutorSearcher` in the terminal.
+4. Run `mvn spring-boot:run`. 
 
 ## Android Application
 
 1. Install Android Studio
 2. Open Android Studio and choose "Open an Existing Android Studio Project"
-3. Open TutorSearcher/TutorSearcherAndroid as your Android Studio directory
+3. Open `TutorSearcher/TutorSearcherAndroid` as your Android Studio directory
 4. Add configuration for the app and choose a device for the emulator
 5. Run app
 
