@@ -144,24 +144,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         System.out.println("Logging in Tutor");
                         Tutor tutor = (Tutor) attr.get("User");
                         final String userId = Integer.toString(tutor.getUserId());
-                        FirebaseMessaging.getInstance().subscribeToTopic(userId).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(getApplicationContext(),"Subscribed to "+userId,Toast.LENGTH_LONG).show();
-                            }
-                        });
+                        FirebaseMessaging.getInstance().subscribeToTopic(userId);
                         openHomeActivity("Tutor", userId);
                         break;
                     }else {
                         System.out.println("Logging in Tutee");
                         Tutee tutee = (Tutee) attr.get("User");
                         final String userId = Integer.toString(tutee.getUserId());
-                        FirebaseMessaging.getInstance().subscribeToTopic(userId).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(getApplicationContext(),"Subscribed to "+userId,Toast.LENGTH_LONG).show();
-                            }
-                        });
+                        FirebaseMessaging.getInstance().subscribeToTopic(userId);
                         openHomeActivity("Tutee", userId);
                         break;
                     }

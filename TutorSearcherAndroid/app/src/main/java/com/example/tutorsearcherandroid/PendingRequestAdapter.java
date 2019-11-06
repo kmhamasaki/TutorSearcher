@@ -45,7 +45,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
             class_name = itemView.findViewById(R.id.class_name);
             time = itemView.findViewById(R.id.time);
             accept_button = itemView.findViewById(R.id.accept_button);
-            reject_button = itemView.findViewById(R.id.class_name);
+            reject_button = itemView.findViewById(R.id.reject_button);
 
             accept_button.setOnClickListener(new View.OnClickListener() {
                 @Override
