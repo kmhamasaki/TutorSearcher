@@ -32,13 +32,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView nameTextView;
-        public RatingBar ratingBar;
         //TODO: Add more profile information
 
         public ViewHolder(View itemView, final OnTutorClickListener listener) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.time);
-            ratingBar = itemView.findViewById(R.id.tutor_rating);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -80,12 +78,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         //Set Item Views
         TextView textView = viewholder.nameTextView;
-        RatingBar ratingBar = viewholder.ratingBar;
         String tutorName = tutor.getFirstName();
         textView.setText(tutorName);
-        float rating = (float)0.0; // add code to get rating here
-        ratingBar.setRating(rating);
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)
