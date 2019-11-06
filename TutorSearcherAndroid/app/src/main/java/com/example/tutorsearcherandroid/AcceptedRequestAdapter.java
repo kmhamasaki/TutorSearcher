@@ -47,7 +47,7 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
         public ViewHolder(View itemView, final OnButtonClickListener listener) {
             super(itemView);
             tutee_name = itemView.findViewById(R.id.tutee_name);
-            class_name = itemView.findViewById(R.id.time);
+            class_name = itemView.findViewById(R.id.class_name);
             email = itemView.findViewById(R.id.email);
             phone_number = itemView.findViewById(R.id.phone_number);
             time = itemView.findViewById(R.id.time);
