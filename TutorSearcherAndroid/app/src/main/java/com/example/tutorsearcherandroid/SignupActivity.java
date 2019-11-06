@@ -10,6 +10,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -90,6 +92,7 @@ public class SignupActivity extends AppCompatActivity {
             }
 
             UserId = (String) response.getAttributes().get("userID");
+            FirebaseMessaging.getInstance().subscribeToTopic(UserId);
 
             // Success, tutee, go to home page
             if (selectedButton.getText().equals("Tutee")) {

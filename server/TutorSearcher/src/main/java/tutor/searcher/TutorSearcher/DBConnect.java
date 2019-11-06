@@ -85,9 +85,7 @@ public class DBConnect {
                 	System.out.println(className + " " + time);
 
 					String tuteeName = resultSet.getString("usersTutee.first_name");
-					System.out.println("tuteename: " + tuteeName);
 					String tutorName = resultSet.getString("usersTutor.first_name");
-					System.out.println("tutorname: " + tutorName);
 					double tutorRating = resultSet.getDouble("usersTutor.rating");
 					double tuteeRating = resultSet.getDouble("usersTutee.rating");
 
