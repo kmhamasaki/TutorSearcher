@@ -72,6 +72,24 @@ public class SearchResultsActivity extends AppCompatActivity implements MyAdapte
 
     public void onClick(View v){
         //Home Activity
+        HashMap<String,Object> attr = new HashMap<>();
+        attr.put("userID", Integer.parseInt(UserId));
+        Client client = new Client("searchprevious", attr);
+        client.execute();
+        Request response = null;
+        while(response == null){
+            response = client.getResponse();
+        }
+        openHomeActivity(AccountType, UserId,response);
+    }
+
+    public void openHomeActivity(String accountType, String userId, Request response) {
+        Intent i = new Intent(this, ScrollingHomeActivity.class);
+        i.putExtra("AccountType", accountType);
+        i.putExtra("UserId", userId);
+        i.putExtra("TutorList",response);
+        finish();
+        startActivity(i);
     }
 
     @Override
