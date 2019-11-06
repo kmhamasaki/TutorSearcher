@@ -164,9 +164,6 @@ public class TutorTimeActivity extends AppCompatActivity implements View.OnClick
 
             notification.put("to", TOPIC);
             notification.put("data", notifcationBody);
-            Toast t = Toast.makeText(this, "sent to "+TOPIC,
-                    Toast.LENGTH_LONG);
-            t.show();
         } catch (JSONException e) {
             Log.e(TAG, "onCreate: " + e.getMessage() );
         }

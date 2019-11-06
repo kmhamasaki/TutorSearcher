@@ -84,6 +84,17 @@ public class ScrollingHomeActivity extends AppCompatActivity implements MyAdapte
             }
         });
 
+        // restrict scrolling behaviour to only the bottom part of the screen
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+        params.setBehavior(new AppBarLayout.Behavior());
+        AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+        behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+            @Override
+            public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
+                return false;
+            }
+        });
+
         Button viewRequestButton = findViewById(R.id.view_requests_button);
         Button searchButton = findViewById(R.id.search_button);
         Button updateProfileButton = findViewById(R.id.update_profile_button);
