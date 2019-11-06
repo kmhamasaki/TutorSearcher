@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.util.List;
 
 import tutor.searcher.TutorSearcher.Request;
@@ -69,6 +71,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setAdapter(rAdapter);
 
         rAdapter.setOnTutorClickListener(this);
+
 
         System.out.println(AccountType);
         if(AccountType.equals("Tutor")) {

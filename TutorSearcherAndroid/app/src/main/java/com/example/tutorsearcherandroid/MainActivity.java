@@ -6,11 +6,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import tutor.searcher.TutorSearcher.Request;
 import tutor.searcher.TutorSearcher.Tutee;
@@ -22,12 +33,22 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     TextView response;
     EditText editTextAddress, editTextPort;
     Button buttonConnect, buttonClear;
+
+    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
+    final private String serverKey = "key=" + "AAAAv9Gs5hI:APA91bHkTOdmyZoxFOhqvw8pobPuswXOBF9ef2W-e-wWUsirl5RGKh5zi1aPAnUYsWZiaS8J4NL0qtM-Pmjiq8ke1l5og2ww_d3FdNgZ_qA5UGJR6nyo-diWGcj_zmbHYqo4JYIpHtqY";
+    final private String contentType = "application/json";
+    final String TAG = "NOTIFICATION TAG";
+
+    String NOTIFICATION_TITLE;
+    String NOTIFICATION_MESSAGE;
+    String TOPIC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +59,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button register = findViewById(R.id.register);
         Button bigLogin = findViewById(R.id.bigLogin);
         TextView textView5 = findViewById(R.id.textView5);
+        Button btnSend = findViewById(R.id.btnSend);
 
         login.setOnClickListener(this);
         register.setOnClickListener(this);
         bigLogin.setOnClickListener(this);
         textView5.setOnClickListener(this);
+        btnSend.setOnClickListener(this);
 
     }
 
@@ -123,13 +146,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if(attr.get("User").getClass() == Tutor.class){
                         System.out.println("Logging in Tutor");
                         Tutor tutor = (Tutor) attr.get("User");
-                        String userId = Integer.toString(tutor.getUserId());
+                        final String userId = Integer.toString(tutor.getUserId());
+                        FirebaseMessaging.getInstance().subscribeToTopic(userId).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getApplicationContext(),"Subscribed to "+userId,Toast.LENGTH_LONG).show();
+                            }
+                        });
                         openHomeActivity("Tutor", userId);
                         break;
                     }else {
                         System.out.println("Logging in Tutee");
                         Tutee tutee = (Tutee) attr.get("User");
-                        String userId = Integer.toString(tutee.getUserId());
+                        final String userId = Integer.toString(tutee.getUserId());
+                        FirebaseMessaging.getInstance().subscribeToTopic(userId).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getApplicationContext(),"Subscribed to "+userId,Toast.LENGTH_LONG).show();
+                            }
+                        });
                         openHomeActivity("Tutee", userId);
                         break;
                     }
@@ -179,6 +214,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return "";
         }
     }
-
 
 }

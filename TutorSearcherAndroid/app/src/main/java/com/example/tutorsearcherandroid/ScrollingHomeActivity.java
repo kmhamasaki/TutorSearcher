@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -152,6 +154,7 @@ public class ScrollingHomeActivity extends AppCompatActivity implements MyAdapte
 
     public void openMainActivity(View view) {
         //logs user out and redirects to login page
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(UserId);
         Intent i = new Intent(this, MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         finish();
