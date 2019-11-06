@@ -124,7 +124,7 @@ public class ViewRequests extends AppCompatActivity
             Intent i = new Intent(this, ViewRequestsAccepted.class);
             i.putExtra("UserId", UserId);
             i.putExtra("AccountType", AccountType);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            finish();
             startActivity(i);
         } else {
             try {
