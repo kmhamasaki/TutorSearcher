@@ -326,6 +326,9 @@ public class Controller {
 		 */
 		else if (request.getRequestType().equals("getuserinfo")) {
 			User user = dbConnect.getUserInformation((int)request.get("userID"));
+			System.out.println("userid" + (int)request.get("userID"));
+			System.out.println("got user info for " + user.getFirstName());
+
 			respAttr.put("user", user);
 			respType = "Success";
 		}

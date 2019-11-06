@@ -132,8 +132,8 @@ public class DBConnect {
                 	System.out.print(requestID);
                 	System.out.println(className + " " + time);
 
-					String tuteeName = resultSet.getString("usersTutor.first_name");
-					String tutorName = resultSet.getString("usersTutee.first_name");
+					String tutorName = resultSet.getString("usersTutor.first_name");
+					String tuteeName = resultSet.getString("usersTutee.first_name");
 					double tutorRating = resultSet.getDouble("usersTutor.rating");
 					double tuteeRating = resultSet.getDouble("usersTutee.rating");
 
@@ -180,8 +180,8 @@ public class DBConnect {
                 	System.out.print(requestID);
                 	System.out.println(className + " " + time);
 
-					String tuteeName = resultSet.getString("usersTutor.first_name");
-					String tutorName = resultSet.getString("usersTutee.first_name");
+					String tutorName = resultSet.getString("usersTutor.first_name");
+					String tuteeName = resultSet.getString("usersTutee.first_name");
 					double tutorRating = resultSet.getDouble("usersTutor.rating");
 					double tuteeRating = resultSet.getDouble("usersTutee.rating");
 
@@ -228,14 +228,20 @@ public class DBConnect {
                 	System.out.print(requestID);
                 	System.out.println(className + " " + time);
 
-					String tuteeName = resultSet.getString("usersTutor.first_name");
-					String tutorName = resultSet.getString("usersTutee.first_name");
+					String tutorName = resultSet.getString("usersTutor.first_name");
+					String tuteeName = resultSet.getString("usersTutee.first_name");
 					double tutorRating = resultSet.getDouble("usersTutor.rating");
 					double tuteeRating = resultSet.getDouble("usersTutee.rating");
 
 					TutorRequest tutorRequest = new TutorRequest(requestID, tuteeID, tutorID, time, status, timeCreated, className);
 					tutorRequest.setTuteeName(tuteeName);
 					tutorRequest.setTutorName(tutorName);
+					System.out.println("tutee: " + tuteeName);
+					System.out.println("tutor: " + tutorName);
+					System.out.println("tuteeID db" + tuteeID);
+					System.out.println("tuteeid tr" + tutorRequest.getTuteeID());
+					System.out.println("tutorID db" + tutorID);
+					System.out.println("tutoRID tr" + tutorRequest.getTutorID());
 					tutorRequest.setTutorRating(tutorRating);
 					tutorRequest.setTuteeRating(tuteeRating);
 
@@ -916,7 +922,6 @@ public class DBConnect {
                 if (resultSet.next()) {
 
                 	//	(int userID, String firstName, String lastName, String email, String phoneNumber, String passwordHash, Boolean accountType) {
-                	
                 	return new User(resultSet.getInt("user_id"), resultSet.getString("first_name"), resultSet.getString("last_name"),
                 			resultSet.getString("email"), resultSet.getString("phone_number"), resultSet.getString("password_hash"),
                 			resultSet.getBoolean("tutor"), resultSet.getDouble("rating"));
