@@ -10,7 +10,8 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema tutorsearcher
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `tutorsearcher`;
+DROP SCHEMA IF EXISTS `tutorsearcher` ;
+
 -- -----------------------------------------------------
 -- Schema tutorsearcher
 -- -----------------------------------------------------
@@ -37,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `tutorsearcher`.`users` (
   UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 19
+AUTO_INCREMENT = 22
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -56,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `tutorsearcher`.`classes` (
     FOREIGN KEY (`tutor_id`)
     REFERENCES `tutorsearcher`.`users` (`user_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 20
+AUTO_INCREMENT = 53
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -83,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `tutorsearcher`.`requests` (
     FOREIGN KEY (`tutor_id`)
     REFERENCES `tutorsearcher`.`users` (`user_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 16
+AUTO_INCREMENT = 29
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
