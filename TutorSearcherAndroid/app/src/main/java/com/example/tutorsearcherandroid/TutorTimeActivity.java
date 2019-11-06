@@ -9,16 +9,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import tutor.searcher.TutorSearcher.Request;
 import tutor.searcher.TutorSearcher.Tutor;
@@ -36,6 +47,16 @@ public class TutorTimeActivity extends AppCompatActivity implements View.OnClick
     private RadioButton rb;
     private HashMap<String,Integer> timeCode;
     private RadioButton previouslySelected;
+
+    // for push notifs
+    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
+    final private String serverKey = "key=" + "AAAAv9Gs5hI:APA91bHkTOdmyZoxFOhqvw8pobPuswXOBF9ef2W-e-wWUsirl5RGKh5zi1aPAnUYsWZiaS8J4NL0qtM-Pmjiq8ke1l5og2ww_d3FdNgZ_qA5UGJR6nyo-diWGcj_zmbHYqo4JYIpHtqY";
+    final private String contentType = "application/json";
+    final String TAG = "NOTIFICATION TAG";
+
+    String NOTIFICATION_TITLE;
+    String NOTIFICATION_MESSAGE;
+    String TOPIC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +150,27 @@ public class TutorTimeActivity extends AppCompatActivity implements View.OnClick
             response = client.getResponse();
         }
 
+        // send push notif to tutor
+        String tID = Integer.toString(tutorId);
+        TOPIC = "/topics/"+tID; //topic must match with what the receiver subscribed to
+        NOTIFICATION_TITLE = "Tutor Searcher";
+        NOTIFICATION_MESSAGE = "You've got a new request!";
+
+        JSONObject notification = new JSONObject();
+        JSONObject notifcationBody = new JSONObject();
+        try {
+            notifcationBody.put("title", NOTIFICATION_TITLE);
+            notifcationBody.put("message", NOTIFICATION_MESSAGE);
+
+            notification.put("to", TOPIC);
+            notification.put("data", notifcationBody);
+            Toast t = Toast.makeText(this, "sent to "+TOPIC,
+                    Toast.LENGTH_LONG);
+            t.show();
+        } catch (JSONException e) {
+            Log.e(TAG, "onCreate: " + e.getMessage() );
+        }
+        sendNotification(notification);
 
         openHomeActivity(AccountType,UserId,response);
     }
@@ -193,5 +235,31 @@ public class TutorTimeActivity extends AppCompatActivity implements View.OnClick
             reverseTimes.put(times.get(i),i);
         }
         return reverseTimes;
+    }
+
+    private void sendNotification(JSONObject notification) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i(TAG, "onResponse: " + response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(TutorTimeActivity.this, "Request error", Toast.LENGTH_LONG).show();
+                        Log.i(TAG, "onErrorResponse: Didn't work");
+                    }
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", serverKey);
+                params.put("Content-Type", contentType);
+                return params;
+            }
+        };
+        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
 }
