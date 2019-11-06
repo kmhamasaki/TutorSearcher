@@ -59,14 +59,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button register = findViewById(R.id.register);
         Button bigLogin = findViewById(R.id.bigLogin);
         TextView textView5 = findViewById(R.id.textView5);
-        Button btnSend = findViewById(R.id.btnSend);
 
         login.setOnClickListener(this);
         register.setOnClickListener(this);
         bigLogin.setOnClickListener(this);
         textView5.setOnClickListener(this);
-        btnSend.setOnClickListener(this);
-
     }
 
     @Override
