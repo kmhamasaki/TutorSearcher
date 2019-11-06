@@ -176,7 +176,7 @@ public class TutorTimeActivity extends AppCompatActivity implements View.OnClick
         i.putExtra("AccountType", accountType);
         i.putExtra("UserId", userId);
         i.putExtra("TutorList",response);
-        finish();
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
 
