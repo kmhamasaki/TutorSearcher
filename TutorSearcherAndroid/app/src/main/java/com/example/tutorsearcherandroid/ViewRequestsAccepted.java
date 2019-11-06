@@ -75,7 +75,7 @@ public class ViewRequestsAccepted extends AppCompatActivity
                     userID = req.getTutorID();
                 }
                 attr.put("userID", userID);
-                client = new Client("getuserinfo", attributes);
+                client = new Client("getuserinfo", attr);
                 client.execute().get();
                 response = client.getResponse();
                 user = (User)response.get("user");
