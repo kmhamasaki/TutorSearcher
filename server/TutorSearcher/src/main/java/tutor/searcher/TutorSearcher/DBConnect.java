@@ -28,8 +28,6 @@ public class DBConnect {
 	
 	@Autowired
 	private JdbcTemplate jdbc;
-	private Connection conn;
-	private int numUsers = 0;
 	
 	public DBConnect() {
 	}
@@ -38,10 +36,7 @@ public class DBConnect {
 		
 		this.jdbc = jdbc;
 	}
-
-	int getUserID(String email) {
-		return 0;
-	}
+	
 	String getPassword(String email) {
 		String query = "SELECT password_hash FROM users WHERE users.email = '" + email + "'";
 		String result = jdbc.queryForObject(query, String.class);
