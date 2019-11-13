@@ -65,8 +65,10 @@ class DBConnectTest {
 	
 	@Test
 	public void simpleTest() {
+		System.out.println("SIMPLE TEST");
 		int userID = dbConnect.addUser("alicesle@usc.edu", "password", "Alice", "Lee", "1231231234", true);
-		assertEquals(userID, 0);
+		assertEquals(userID, 1);
+		System.out.println("userID: " + userID);
 	}
 
 }

@@ -293,7 +293,7 @@ public class DBConnect {
 		        }
 		    },
 		    keyHolder);
-		System.out.println(keyHolder.getKey().intValue());
+		System.out.println("adduser: " + keyHolder.getKey().intValue());
 		return keyHolder.getKey().intValue();
 					
 	}
