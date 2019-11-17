@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -698,8 +699,23 @@ public class DBConnect {
 		}
 		tutors.sort(new SortTutorsByTime(time));
 		
-
+		tutors.removeIf(new NoMatchTimesPredicate<Tutor>());
+		
 		return tutors;
+	}
+	
+	class NoMatchTimesPredicate<T> implements Predicate<T> {
+
+		@Override
+		public boolean test(T t) {
+			// TODO Auto-generated method stub
+			Tutor tutor = (Tutor)t;
+			if (tutor.getMatchingAvailabilities().isEmpty()) {
+				return true;
+			}
+			return false;
+		}
+		
 	}
 	
 	User authenticate(String email, String passwordHash) {
