@@ -83,6 +83,7 @@ class DBConnectTest {
 		String lastName = "Kim";
 		String phoneNumber = "1112223333";
 		Boolean accountType = true;
+		System.out.println("hi");
 		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
 		User user = dbConnect.getUserInformation(userID);
 		assertEquals(user.getEmail(), email);
@@ -270,9 +271,23 @@ class DBConnectTest {
 		System.out.println(phoneNumber+" is now "+newPhoneNumber);
 	}
 	
+	
 	@Test
-	public void updateClassAvailability() {
+	public void updateNoClassAvailability() {
+		System.out.println("Update first name");
+		String email = "tutor@usc.edu";
+		String password = "password";
+		String firstName = "Chao";
+		String lastName = "Wang";
+		String phoneNumber = "1231231234";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
 		
+		ArrayList<String> classes = new ArrayList<String>();
+		dbConnect.addTutorToClass(userID, classes);
+		
+		ArrayList<String> dbClasses = dbConnect.getTutorClasses(userID);
+		assertEquals(dbClasses, classes);
 	}
 	
 	@Test
