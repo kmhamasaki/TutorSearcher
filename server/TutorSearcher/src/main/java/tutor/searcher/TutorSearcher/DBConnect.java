@@ -28,8 +28,6 @@ public class DBConnect {
 	
 	@Autowired
 	private JdbcTemplate jdbc;
-	private Connection conn;
-	private int numUsers = 0;
 	
 	public DBConnect() {
 	}
@@ -38,10 +36,7 @@ public class DBConnect {
 		
 		this.jdbc = jdbc;
 	}
-
-	int getUserID(String email) {
-		return 0;
-	}
+	
 	String getPassword(String email) {
 		String query = "SELECT password_hash FROM users WHERE users.email = '" + email + "'";
 		String result = jdbc.queryForObject(query, String.class);
@@ -253,6 +248,11 @@ public class DBConnect {
 		return result; 
 	}
 	
+	
+	//add user, checks if email already exists, otherwise add user
+	// accountType 
+	// true = tutor
+	// false = tutee
 	int addUser(String email, String passwordHash, String firstName, String lastName, String phoneNumber,
 			Boolean accountType) {
 		
@@ -298,7 +298,7 @@ public class DBConnect {
 		        }
 		    },
 		    keyHolder);
-		System.out.println(keyHolder.getKey().intValue());
+		System.out.println("adduser: " + keyHolder.getKey().intValue());
 		return keyHolder.getKey().intValue();
 					
 	}
