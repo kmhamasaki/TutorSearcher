@@ -27,6 +27,10 @@ public class Controller {
 
 	private static ServerSocket ss = null;
 
+	public void setDbConnect(DBConnect dbConnect) {
+		this.dbConnect = dbConnect;
+	}
+
 	@PostConstruct
 	void startController() {
 		System.out.println("Launching --Controller--");
@@ -59,12 +63,12 @@ public class Controller {
 	}
 
 	@SuppressWarnings("unchecked")
-	void processRequest(Request request, RequestThread requestThread) {
+	Request processRequest(Request request, RequestThread requestThread) {
 		System.out.println(request.getRequestType());
 		HashMap<String, Object> respAttr = new HashMap<String, Object>();
 		String respType = "";
 		requestThreadsSockets.remove(requestThread);
-		
+
 		/** 
 		 * Signup
 		 * Incoming requestType: "email" 
@@ -345,10 +349,12 @@ public class Controller {
 			dbConnect.addRating((int)request.get("userID"), (double)request.get("rating"));
 			respType = "Success";
 		}
-		System.out.print(respType);
-		requestThread.sendResponse(new Request(respType, respAttr));
- 
-		return;
+		System.out.println(respType);
+
+		Request response = new Request(respType, respAttr);
+		requestThread.sendResponse(response);
+
+		return response;
 	}
 
 }
