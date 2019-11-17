@@ -59,7 +59,7 @@ public class Controller {
 	}
 
 	Request processRequest(Request request, RequestThread requestThread) {
-		System.out.println("Process Request Type: " + request.getRequestType());
+//		System.out.println("Process Request Type: " + request.getRequestType());
 		HashMap<String, Object> respAttr = new HashMap<String, Object>();
 		String respType = "";
 		requestThreadsSockets.remove(requestThread);
@@ -344,7 +344,7 @@ public class Controller {
 			dbConnect.addRating((int)request.get("userID"), (double)request.get("rating"));
 			respType = "Success";
 		}
-		System.out.println(respType);
+//		System.out.println(respType);
 
 		Request response = new Request(respType, respAttr);
 		requestThread.sendResponse(response);

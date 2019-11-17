@@ -14,7 +14,7 @@ public class RequestThread extends Thread {
 
     public RequestThread(Socket s, Controller controller) {
 
-        System.out.println("RequestThread created.");
+//        System.out.println("RequestThread created.");
 
         this.controller = controller;
 
