@@ -40,3 +40,11 @@ The server is tested to be able to run in Eclipse Jee.
 4. Add configuration for the app and choose a device for the emulator
 5. Run app
 
+# Testing
+
+## Server & Database
+1. In MySQL workbench, create a new schema named `tutorsearchertest`
+2. You can either run on command line `mvn clean install` in the `TutorSearcher/server/TutorSearcher` directory or in an IDE, run as Junit test
+
+## Android Application
+
