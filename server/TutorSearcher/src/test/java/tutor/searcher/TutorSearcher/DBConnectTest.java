@@ -74,7 +74,7 @@ class DBConnectTest {
 	}
 	
 	@Test
-	public void addTutor() {
+	public void addTutorTest() {
 		System.out.println("Add New Tutor");
 		String email = "jenniekim@usc.edu";
 		String password = "blink";
@@ -97,23 +97,48 @@ class DBConnectTest {
 	}
 	
 	@Test
-	public void addTutee() {
+	public void addTuteeTest() {
+		System.out.println("Add New Tutee");
+		String email = "tutee@usc.edu";
+		String password = "tuteepass";
+		String firstName = "Tutee";
+		String lastName = "The";
+		String phoneNumber = "2221113333";
+		Boolean accountType = false;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		User user = dbConnect.getUserInformation(userID);
+		assertEquals(user.getEmail(), email);
+		assertEquals(user.getPasswordHash(), password);
+		assertEquals(user.getFirstName(), firstName);
+		assertEquals(user.getLastName(), lastName);
+		assertEquals(user.getAccountType(), accountType);
 		
-	}
-	
-	@Test
-	public void addTutorAlreadyExist() {
-		
-	}
-	
-	@Test
-	public void addTuteeAlreadyExist() {
-		
+		Boolean DBaccountType = dbConnect.getAccountType(email);
+		assertEquals(DBaccountType, accountType);
+		System.out.println("userID: " + userID);
+		System.out.println(firstName+" " +lastName+" in your area");
 	}
 	
 	@Test
 	public void addUserAlreadyExist() {
-		
+		System.out.println("Add Tutor that already exists");
+		String email = "jessica@usc.edu";
+		String password = "illinois";
+		String firstName = "Jessica";
+		String lastName = "Only Child";
+		String phoneNumber = "3332221111";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		String email2 = "jessica@usc.edu";
+		String password2 = "p";
+		String firstName2 = "a";
+		String lastName2 = "b";
+		String phoneNumber2 = "911";
+		Boolean accountType2 = false;
+		int userID2 = dbConnect.addUser(email2, password2, firstName2, lastName2, phoneNumber2, accountType2);
+		assertEquals(userID2, -1);
+		System.out.println(firstName+" " +lastName+" in your area");
+		System.out.println(firstName2+" " +lastName2+" failed to be added");
 	}
 	
 	@Test
