@@ -1,7 +1,6 @@
 package tutor.searcher.TutorSearcher;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -25,7 +24,6 @@ class ControllerTest {
 
         // Creating new ConnectionThread
         ControllerThread ct = new ControllerThread();
-
         // Setting test parameters
         String email = "chunghas@usc.edu";
         String passwordHash = "0CC175B9C0F1B6A831C399E269772661";
@@ -149,6 +147,11 @@ class ControllerTest {
 
         // Mocking RequestThread object
         RequestThread requestThread = mock(RequestThread.class);
+        c.processRequest(request, requestThread);
+
+        System.out.println("asdad");
+        System.out.println(request.getRequestType());
+        System.out.println("asdad");
 
         // Process Request
         Request response = c.processRequest(request, requestThread);
@@ -157,6 +160,7 @@ class ControllerTest {
         assertEquals("Error: email exists", response.getRequestType());
         assertEquals(null, response.getAttributes().get("userID"));
     }
+
 }
 
 class ControllerThread extends Controller implements Runnable {

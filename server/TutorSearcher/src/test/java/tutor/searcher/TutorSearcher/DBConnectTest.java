@@ -1,15 +1,17 @@
 package tutor.searcher.TutorSearcher;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -60,8 +62,9 @@ class DBConnectTest {
 	@AfterEach
 	private void cleanUp() {
 		//delete all data from tables 
-		JdbcTestUtils.deleteFromTables(jdbcTemplate, "users", "classes", "requests");
+		JdbcTestUtils.deleteFromTables(jdbcTemplate, "requests", "classes", "users");
 	}
+
 	
 	@Test
 	public void simpleTest() {
@@ -138,5 +141,132 @@ class DBConnectTest {
 		System.out.println(firstName+" " +lastName+" in your area");
 		System.out.println(firstName2+" " +lastName2+" failed to be added");
 	}
+	
+	@Test
+	public void updateFirstName() {
+		System.out.println("Update first name");
+		String email = "jisoo@usc.edu";
+		String password = "password";
+		String firstName = "Ji Soo";
+		String lastName = "Kim";
+		String phoneNumber = "3101001000";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		
+		User userUpdate = new User(userID, firstName, lastName, email, phoneNumber, password, accountType, 0);
+		String newFirstName = "Kimmy";
+		userUpdate.setFirstName(newFirstName);
+		dbConnect.updateUserInformation(userUpdate);
 
+		User user = dbConnect.getUserInformation(userID);
+		assertNotEquals(user.getFirstName(), firstName);
+		assertEquals(user.getFirstName(), newFirstName);
+		System.out.println(firstName+" " +lastName+" is now "+newFirstName+" "+lastName);
+	}
+	
+	@Test
+	public void updateLastName() {
+		System.out.println("Update last name");
+		String email = "jisoo@usc.edu";
+		String password = "password";
+		String firstName = "Ji Soo";
+		String lastName = "Kim";
+		String phoneNumber = "3101001000";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		
+		User userUpdate = new User(userID, firstName, lastName, email, phoneNumber, password, accountType, 0);
+		String newLastName = "Park";
+		userUpdate.setLastName(newLastName);
+		dbConnect.updateUserInformation(userUpdate);
+    
+		User user = dbConnect.getUserInformation(userID);
+		assertNotEquals(user.getLastName(), lastName);
+		assertEquals(user.getLastName(), newLastName);
+		System.out.println(firstName+" " +lastName+" is now "+firstName+" "+newLastName);
+	}
+  
+  @Test
+	public void searchTutorsSingleTutorTest() {
+		int userID = dbConnect.addUser("tutor@usc.edu", "password", "tutorfirst", "tutorlast", "1231231234", true);
+		ArrayList<Integer> availability = new ArrayList<>();
+		availability.add(0);
+		availability.add(1);
+		availability.add(2);
+		dbConnect.updateTutorAvailability(userID, availability);
+		ArrayList<String> classes = new ArrayList<>();
+		classes.add("CSCI 103");
+		classes.add("CSCI 104");
+		dbConnect.addTutorToClass(userID, classes);
+		
+		int userID2 = dbConnect.addUser("tutor1@usc.edu", "password", "tutor1first", "tutor1last", "1231231234", true);
+		ArrayList<Integer> availability2 = new ArrayList<>();
+		availability2.add(4);
+		availability2.add(5);
+		dbConnect.updateTutorAvailability(userID2, availability2);
+		dbConnect.addTutorToClass(userID2, classes);
+		
+		int tuteeID = dbConnect.addUser("tutee@usc.edu", "password", "tuteefirst", "tuteelast", "1231231234", false);
+		
+		ArrayList<Integer> times = new ArrayList<>();
+		times.add(0);
+		times.add(1);
+		times.add(2);
+		List<Tutor> tutors = dbConnect.searchTutors(tuteeID, times, "CSCI 103");
+		
+		assertEquals(tutors.size(), 1);
+		Tutor tutor = tutors.get(0);
+		assertEquals(tutor.getUserId(), userID);
+		assertEquals(tutor.getFirstName(), "tutorfirst");
+		assertEquals(tutor.getLastName(), "tutorlast");
+		assertEquals(tutor.getPhoneNumber(), "1231231234");
+		assertEquals(tutor.getAccountType(), true);
+		assertEquals(tutor.getMatchingAvailabilities().get(0), 0);
+		assertEquals(tutor.getMatchingAvailabilities().get(1), 1);
+		assertEquals(tutor.getMatchingAvailabilities().get(2), 2);
+	}
+	
+	@Test
+	public void updateEmail() {
+		System.out.println("Update first name");
+		String email = "jisoo@usc.edu";
+		String password = "password";
+		String firstName = "Ji Soo";
+		String lastName = "Kim";
+		String phoneNumber = "3101001000";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		
+		User userUpdate = new User(userID, firstName, lastName, email, phoneNumber, password, accountType, 0);
+		String newPassword = "iamveryscary";
+		userUpdate.setPasswordHash(newPassword);
+		dbConnect.updateUserInformation(userUpdate);
+
+		User user = dbConnect.getUserInformation(userID);
+		assertNotEquals(user.getPasswordHash(), password);
+		assertEquals(user.getPasswordHash(), newPassword);
+		System.out.println(password+" is now "+newPassword);
+	}
+	
+	@Test
+	public void updatePhoneNumber() {
+		System.out.println("Update first name");
+		String email = "jisoo@usc.edu";
+		String password = "password";
+		String firstName = "Ji Soo";
+		String lastName = "Kim";
+		String phoneNumber = "3101001000";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		
+		User userUpdate = new User(userID, firstName, lastName, email, phoneNumber, password, accountType, 0);
+		String newPhoneNumber = "6262002000";
+		userUpdate.setPhoneNumber(newPhoneNumber);
+		dbConnect.updateUserInformation(userUpdate);
+
+		User user = dbConnect.getUserInformation(userID);
+		assertNotEquals(user.getPhoneNumber(), phoneNumber);
+		assertEquals(user.getPhoneNumber(), newPhoneNumber);
+		System.out.println(phoneNumber+" is now "+newPhoneNumber);
+	}
 }
