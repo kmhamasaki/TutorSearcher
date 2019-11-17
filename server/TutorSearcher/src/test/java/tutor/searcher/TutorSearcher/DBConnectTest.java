@@ -70,5 +70,48 @@ class DBConnectTest {
 		assertEquals(userID, 1);
 		System.out.println("userID: " + userID);
 	}
+	
+	@Test
+	public void addTutor() {
+		System.out.println("Add New Tutor");
+		String email = "jenniekim@usc.edu";
+		String password = "blink";
+		String firstName = "Jennie";
+		String lastName = "Kim";
+		String phoneNumber = "1112223333";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		User user = dbConnect.getUserInformation(userID);
+		assertEquals(user.getEmail(), email);
+		assertEquals(user.getPasswordHash(), password);
+		assertEquals(user.getFirstName(), firstName);
+		assertEquals(user.getLastName(), lastName);
+		assertEquals(user.getAccountType(), accountType);
+		
+		Boolean DBaccountType = dbConnect.getAccountType(email);
+		assertEquals(DBaccountType, accountType);
+		System.out.println("userID: " + userID);
+		System.out.println(firstName+" " +lastName+" in your area");
+	}
+	
+	@Test
+	public void addTutee() {
+		
+	}
+	
+	@Test
+	public void addTutorAlreadyExist() {
+		
+	}
+	
+	@Test
+	public void addTuteeAlreadyExist() {
+		
+	}
+	
+	@Test
+	public void addUserAlreadyExist() {
+		
+	}
 
 }

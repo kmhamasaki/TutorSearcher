@@ -248,6 +248,11 @@ public class DBConnect {
 		return result; 
 	}
 	
+	
+	//add user, checks if email already exists, otherwise add user
+	// accountType 
+	// true = tutor
+	// false = tutee
 	int addUser(String email, String passwordHash, String firstName, String lastName, String phoneNumber,
 			Boolean accountType) {
 		
