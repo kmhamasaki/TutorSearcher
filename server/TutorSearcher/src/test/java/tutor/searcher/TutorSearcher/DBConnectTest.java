@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.io.File;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,9 @@ class DBConnectTest {
 		File file = new File("src/main/resources/tutorsearchertest.sql");
 		FileSystemResource fileSystemResource = new FileSystemResource(file);
 		try {
-			ScriptUtils.executeSqlScript(dataSource.getConnection(), fileSystemResource);
+			Connection con = dataSource.getConnection();
+			ScriptUtils.executeSqlScript(con, fileSystemResource);
+			con.close();
 		} catch (ScriptException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -186,7 +189,7 @@ class DBConnectTest {
 		System.out.println(firstName+" " +lastName+" is now "+firstName+" "+newLastName);
 	}
   
-  @Test
+	@Test
 	public void searchTutorsSingleTutorTest() {
 		int userID = dbConnect.addUser("tutor@usc.edu", "password", "tutorfirst", "tutorlast", "1231231234", true);
 		ArrayList<Integer> availability = new ArrayList<>();
@@ -225,6 +228,63 @@ class DBConnectTest {
 		assertEquals(tutor.getMatchingAvailabilities().get(1), 1);
 		assertEquals(tutor.getMatchingAvailabilities().get(2), 2);
 	}
+	
+	/*
+	 * tests multiple results and the order based on matching availability
+	 */
+	@Test
+	public void searchTutorsMultipleTutorsTest() {
+		int userID = dbConnect.addUser("tutor@usc.edu", "password", "tutorfirst", "tutorlast", "1231231234", true);
+		ArrayList<Integer> availability = new ArrayList<>();
+		availability.add(0);
+		availability.add(1);
+		availability.add(2);
+		dbConnect.updateTutorAvailability(userID, availability);
+		ArrayList<String> classes = new ArrayList<>();
+		classes.add("CSCI 103");
+		classes.add("CSCI 104");
+		dbConnect.addTutorToClass(userID, classes);
+		
+		int userID2 = dbConnect.addUser("tutor1@usc.edu", "password", "tutor1first", "tutor1last", "1231231234", true);
+		ArrayList<Integer> availability2 = new ArrayList<>();
+		availability2.add(0);
+		availability2.add(1);
+		dbConnect.updateTutorAvailability(userID2, availability2);
+		dbConnect.addTutorToClass(userID2, classes);
+		
+		int tuteeID = dbConnect.addUser("tutee@usc.edu", "password", "tuteefirst", "tuteelast", "1231231234", false);
+		
+		ArrayList<Integer> times = new ArrayList<>();
+		times.add(0);
+		times.add(1);
+		times.add(2);
+		List<Tutor> tutors = dbConnect.searchTutors(tuteeID, times, "CSCI 103");
+		
+		assertEquals(tutors.size(), 2);
+		Tutor tutor = tutors.get(0);
+		assertNotEquals(null, tutor);
+		assertEquals(tutor.getUserId(), userID);
+		assertEquals(tutor.getFirstName(), "tutorfirst");
+		assertEquals(tutor.getLastName(), "tutorlast");
+		assertEquals(tutor.getPhoneNumber(), "1231231234");
+		assertEquals(tutor.getAccountType(), true);
+		assertEquals(tutor.getMatchingAvailabilities().size(), 3);
+		assertEquals(tutor.getMatchingAvailabilities().get(0), 0);
+		assertEquals(tutor.getMatchingAvailabilities().get(1), 1);
+		assertEquals(tutor.getMatchingAvailabilities().get(2), 2);
+		
+		tutor = tutors.get(1);
+		assertNotEquals(null, tutor);
+		assertEquals(tutor.getUserId(), userID2);
+		assertEquals(tutor.getFirstName(), "tutor1first");
+		assertEquals(tutor.getLastName(), "tutor1last");
+		assertEquals(tutor.getPhoneNumber(), "1231231234");
+		assertEquals(tutor.getAccountType(), true);
+		assertEquals(tutor.getMatchingAvailabilities().size(), 2);
+		assertEquals(tutor.getMatchingAvailabilities().get(0), 0);
+		assertEquals(tutor.getMatchingAvailabilities().get(1), 1);
+	}
+	
 	
 	@Test
 	public void updateEmail() {
@@ -269,4 +329,6 @@ class DBConnectTest {
 		assertEquals(user.getPhoneNumber(), newPhoneNumber);
 		System.out.println(phoneNumber+" is now "+newPhoneNumber);
 	}
+	
+
 }
