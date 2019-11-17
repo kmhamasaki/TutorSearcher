@@ -55,9 +55,4 @@ class ControllerTest {
 
     }
 
-
-
-        Request response = c.processRequest(request, requestThread);
-        assertEquals("Success", response.getRequestType());
-    }
 }
