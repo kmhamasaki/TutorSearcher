@@ -838,6 +838,58 @@ public class DBConnect {
 				}
 			}
 		); 
+		
+		//now need to go through *pending* requests that don't match tutor's current availabilit yand set to rejected
+		String queryRequests = "SELECT * FROM requests WHERE tutor_id=?";
+		ArrayList<TutorRequest> requests = jdbc.query(queryRequests, 
+		new PreparedStatementSetter() {
+			public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				preparedStatement.setInt(1,  userID);
+			}
+		}, 
+		 new ResultSetExtractor<ArrayList<TutorRequest>>() {
+            public ArrayList<TutorRequest> extractData(ResultSet resultSet) throws SQLException,
+              DataAccessException {
+            	ArrayList<TutorRequest> result = new ArrayList<>();
+                while (resultSet.next()) {
+
+                	//(int requestID, int tuteeID, int tutorID, String time, int status,
+        			//String timecreated, String className)
+                	TutorRequest tutorRequest = new TutorRequest(resultSet.getInt("id"), resultSet.getInt("tutee_id"), 
+                			resultSet.getInt("tutor_id"), resultSet.getString("time"), resultSet.getInt("status"),
+                			resultSet.getString("time_created"), resultSet.getString("class"));
+                	if (tutorRequest.getStatus() == 0) {
+                		if (!availability.contains(tutorRequest.getTime().toString())) {
+                			//this means that new availability doesn't contain the time
+                			// that was previously requested anymore
+                			//so we need to delete it
+                			result.add(tutorRequest);
+            			}
+                	}
+                	
+                	
+                }
+                return result;
+            }
+		});
+		
+		if (!requests.isEmpty()) {
+			String requestIDs = "";
+			for (int i = 0 ; i < requests.size(); i++) {
+				if (i == requests.size() - 1) {
+					requestIDs += requests.get(i).getRequestID();
+				}
+				else {
+					requestIDs += requests.get(i).getRequestID() + ",";
+				}
+			}
+			//the reuqests are requests that need to be deleted, so let's delete it all at once
+			String updateQuery = "UPDATE requests SET status=2 WHERE id IN (" + requestIDs + ")";
+			System.out.println("executing " + updateQuery);
+			jdbc.update(updateQuery);
+		}
+		
+		
 	}
 	
 	//get availability

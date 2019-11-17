@@ -62,6 +62,7 @@ class DBConnectTest {
 		//delete all data from tables 
 		JdbcTestUtils.deleteFromTables(jdbcTemplate, "users", "classes", "requests");
 	}
+
 	
 	@Test
 	public void simpleTest() {
