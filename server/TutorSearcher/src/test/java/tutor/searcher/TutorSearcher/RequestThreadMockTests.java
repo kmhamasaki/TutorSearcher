@@ -13,6 +13,7 @@ class RequestThreadMockTests {
     @Test
     public void RequestThreadMockTests_Constructor() {
         Socket s = new Socket();
+
         Controller controllerMock = mock(Controller.class);
         RequestThread rt = new RequestThread(s, controllerMock);
     }
