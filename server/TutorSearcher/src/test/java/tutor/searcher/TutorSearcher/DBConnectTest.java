@@ -20,6 +20,15 @@ class DBConnectTest {
 
 	}
 	
+	@Test
+	void updateTutorAvailabilityTest() {
+		ArrayList<Integer> times = new ArrayList<>();
+		times.add(0);
+		times.add(1);
+		dbConnect.updateTutorAvailability(24, times);
+	}
+	
+	
 //	@Test
 //	void addTutorToClassTest() {
 //		int tutorID = 15;
@@ -96,12 +105,12 @@ class DBConnectTest {
 //		
 //	}
 	
-	@Test
-	void addRatingTest() {
-		int userID = 17;
-		double rating = 5; 
-		dbConnect.addRating(userID, rating);
-	}
+//	@Test
+//	void addRatingTest() {
+//		int userID = 17;
+//		double rating = 5; 
+//		dbConnect.addRating(userID, rating);
+//	}
 //	@Test
 //	void updateRequestStatusTest() {
 //		int requestID = 2;
