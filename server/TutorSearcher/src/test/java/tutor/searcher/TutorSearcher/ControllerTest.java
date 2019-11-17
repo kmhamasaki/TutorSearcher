@@ -21,6 +21,7 @@ class ControllerTest {
     void SignUpSuccessThread() throws InterruptedException, IOException, ClassNotFoundException {
         // Testing duplicate sign ups
         System.out.println("Testing successful sign ups");
+        System.out.println();
 
         // Creating new ConnectionThread
         ControllerThread ct = new ControllerThread();
@@ -43,9 +44,7 @@ class ControllerTest {
         Thread.sleep(2000);
 
         // Client connect
-        Socket s = new Socket("localhost", 6789);
-        ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-        ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+        DummyTestClient dc = new DummyTestClient();
 
         // Preparing Request object parameters
         String requestType = "signup";
@@ -59,11 +58,10 @@ class ControllerTest {
 
         // Creating Request object
         Request request = new Request(requestType, respAttr);
-        oos.writeObject(request);
-        oos.flush();
-
-        Request res = (Request) ois.readObject();
-        System.out.println(res.getRequestType());
+        dc.sendRequest(request);
+        Request response = dc.getResponse();
+        System.out.println("ASDSADAS");
+        System.out.println(response.getRequestType());
     }
 
     @Test
@@ -149,9 +147,7 @@ class ControllerTest {
         RequestThread requestThread = mock(RequestThread.class);
         c.processRequest(request, requestThread);
 
-        System.out.println("asdad");
         System.out.println(request.getRequestType());
-        System.out.println("asdad");
 
         // Process Request
         Request response = c.processRequest(request, requestThread);
@@ -170,8 +166,30 @@ class ControllerThread extends Controller implements Runnable {
 
     @Override
     public void run() {
-        System.out.println(" - Starting Multi-Threaded Controller -");
-
+        System.out.println("# Starting Multi-Threaded Controller");
         startController();
+    }
+}
+
+class DummyTestClient {
+    ObjectInputStream ois;
+    ObjectOutputStream oos;
+
+    public DummyTestClient() throws IOException {
+        System.out.println("# Generating Dummy Client Socket");
+
+        Socket s = new Socket("localhost", 6789);
+        ois = new ObjectInputStream(s.getInputStream());
+        oos = new ObjectOutputStream(s.getOutputStream());
+    }
+
+    public void sendRequest(Request request) throws IOException {
+        oos.writeObject(request);
+        oos.flush();
+    }
+
+    public Request getResponse() throws IOException, ClassNotFoundException {
+        Request res = (Request) ois.readObject();
+        return res;
     }
 }
