@@ -1,6 +1,7 @@
 package tutor.searcher.TutorSearcher;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -138,5 +139,92 @@ class DBConnectTest {
 		System.out.println(firstName+" " +lastName+" in your area");
 		System.out.println(firstName2+" " +lastName2+" failed to be added");
 	}
+	
+	@Test
+	public void updateFirstName() {
+		System.out.println("Update first name");
+		String email = "jisoo@usc.edu";
+		String password = "password";
+		String firstName = "Ji Soo";
+		String lastName = "Kim";
+		String phoneNumber = "3101001000";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		
+		User userUpdate = new User(userID, firstName, lastName, email, phoneNumber, password, accountType, 0);
+		String newFirstName = "Kimmy";
+		userUpdate.setFirstName(newFirstName);
+		dbConnect.updateUserInformation(userUpdate);
 
+		User user = dbConnect.getUserInformation(userID);
+		assertNotEquals(user.getFirstName(), firstName);
+		assertEquals(user.getFirstName(), newFirstName);
+		System.out.println(firstName+" " +lastName+" is now "+newFirstName+" "+lastName);
+	}
+	
+	@Test
+	public void updateLastName() {
+		System.out.println("Update last name");
+		String email = "jisoo@usc.edu";
+		String password = "password";
+		String firstName = "Ji Soo";
+		String lastName = "Kim";
+		String phoneNumber = "3101001000";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		
+		User userUpdate = new User(userID, firstName, lastName, email, phoneNumber, password, accountType, 0);
+		String newLastName = "Park";
+		userUpdate.setLastName(newLastName);
+		dbConnect.updateUserInformation(userUpdate);
+
+		User user = dbConnect.getUserInformation(userID);
+		assertNotEquals(user.getLastName(), lastName);
+		assertEquals(user.getLastName(), newLastName);
+		System.out.println(firstName+" " +lastName+" is now "+firstName+" "+newLastName);
+	}
+	
+	@Test
+	public void updateEmail() {
+		System.out.println("Update first name");
+		String email = "jisoo@usc.edu";
+		String password = "password";
+		String firstName = "Ji Soo";
+		String lastName = "Kim";
+		String phoneNumber = "3101001000";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		
+		User userUpdate = new User(userID, firstName, lastName, email, phoneNumber, password, accountType, 0);
+		String newPassword = "iamveryscary";
+		userUpdate.setPasswordHash(newPassword);
+		dbConnect.updateUserInformation(userUpdate);
+
+		User user = dbConnect.getUserInformation(userID);
+		assertNotEquals(user.getPasswordHash(), password);
+		assertEquals(user.getPasswordHash(), newPassword);
+		System.out.println(password+" is now "+newPassword);
+	}
+	
+	@Test
+	public void updatePhoneNumber() {
+		System.out.println("Update first name");
+		String email = "jisoo@usc.edu";
+		String password = "password";
+		String firstName = "Ji Soo";
+		String lastName = "Kim";
+		String phoneNumber = "3101001000";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		
+		User userUpdate = new User(userID, firstName, lastName, email, phoneNumber, password, accountType, 0);
+		String newPhoneNumber = "6262002000";
+		userUpdate.setPhoneNumber(newPhoneNumber);
+		dbConnect.updateUserInformation(userUpdate);
+
+		User user = dbConnect.getUserInformation(userID);
+		assertNotEquals(user.getPhoneNumber(), phoneNumber);
+		assertEquals(user.getPhoneNumber(), newPhoneNumber);
+		System.out.println(phoneNumber+" is now "+newPhoneNumber);
+	}
 }
