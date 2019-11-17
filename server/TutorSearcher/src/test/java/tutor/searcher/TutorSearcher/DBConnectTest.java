@@ -185,8 +185,8 @@ class DBConnectTest {
 		assertEquals(user.getLastName(), newLastName);
 		System.out.println(firstName+" " +lastName+" is now "+firstName+" "+newLastName);
 	}
-  
-  @Test
+	
+	@Test
 	public void searchTutorsSingleTutorTest() {
 		int userID = dbConnect.addUser("tutor@usc.edu", "password", "tutorfirst", "tutorlast", "1231231234", true);
 		ArrayList<Integer> availability = new ArrayList<>();
@@ -269,5 +269,15 @@ class DBConnectTest {
 		assertNotEquals(user.getPhoneNumber(), phoneNumber);
 		assertEquals(user.getPhoneNumber(), newPhoneNumber);
 		System.out.println(phoneNumber+" is now "+newPhoneNumber);
+	}
+	
+	@Test
+	public void updateClassAvailability() {
+		
+	}
+	
+	@Test
+	public void updateAvailability() {
+		
 	}
 }
