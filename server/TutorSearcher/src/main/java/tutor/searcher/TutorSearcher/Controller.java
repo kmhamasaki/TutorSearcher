@@ -63,7 +63,7 @@ public class Controller {
 	}
 
 	@SuppressWarnings("unchecked")
-	void processRequest(Request request, RequestThread requestThread) {
+	Request processRequest(Request request, RequestThread requestThread) {
 		System.out.println(request.getRequestType());
 		HashMap<String, Object> respAttr = new HashMap<String, Object>();
 		String respType = "";
@@ -350,9 +350,11 @@ public class Controller {
 			respType = "Success";
 		}
 		System.out.println(respType);
-		requestThread.sendResponse(new Request(respType, respAttr));
- 
-		return;
+
+		Request response = new Request(respType, respAttr);
+		requestThread.sendResponse(response);
+
+		return response;
 	}
 
 }

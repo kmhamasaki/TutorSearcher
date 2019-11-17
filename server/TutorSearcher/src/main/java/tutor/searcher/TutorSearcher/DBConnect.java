@@ -33,7 +33,6 @@ public class DBConnect {
 	}
 
 	public DBConnect(JdbcTemplate jdbc) {
-		
 		this.jdbc = jdbc;
 	}
 	
