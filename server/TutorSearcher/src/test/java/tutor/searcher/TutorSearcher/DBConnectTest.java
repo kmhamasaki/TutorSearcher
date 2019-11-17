@@ -62,7 +62,7 @@ class DBConnectTest {
 	@AfterEach
 	private void cleanUp() {
 		//delete all data from tables 
-		JdbcTestUtils.deleteFromTables(jdbcTemplate, "users", "classes", "requests");
+		JdbcTestUtils.deleteFromTables(jdbcTemplate, "requests", "classes", "users");
 	}
 
 	
@@ -216,7 +216,6 @@ class DBConnectTest {
 		
 		assertEquals(tutors.size(), 1);
 		Tutor tutor = tutors.get(0);
-		assertEquals(tutor.getClass(), "CSCI 103");
 		assertEquals(tutor.getUserId(), userID);
 		assertEquals(tutor.getFirstName(), "tutorfirst");
 		assertEquals(tutor.getLastName(), "tutorlast");

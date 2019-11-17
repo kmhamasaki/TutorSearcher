@@ -1,7 +1,6 @@
 package tutor.searcher.TutorSearcher;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -18,6 +17,7 @@ class ControllerTest {
 
     @Test
     void processRequestTest_Signup() {
+        System.out.println("Testing successful ");
         System.out.println("Testing successful signup");
 
         String email = "chunghas@usc.edu";
@@ -47,6 +47,15 @@ class ControllerTest {
 
         Request request = new Request(requestType, respAttr);
         RequestThread requestThread = mock(RequestThread.class);
+        c.processRequest(request, requestThread);
+
+        System.out.println("asdad");
+        System.out.println(request.getRequestType());
+        System.out.println("asdad");
+
+    }
+
+
 
         Request response = c.processRequest(request, requestThread);
         assertEquals("Success", response.getRequestType());
