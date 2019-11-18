@@ -253,16 +253,51 @@ class DBConnectTest {
 		dbConnect.updateTutorAvailability(userID2, availability2);
 		dbConnect.addTutorToClass(userID2, classes);
 		
+		int userID3 = dbConnect.addUser("tutor2@usc.edu", "password", "tutor2first", "tutor2last", "1231231234", true);
+		availability2.add(3);
+		availability2.add(4);
+		availability2.add(5);
+		dbConnect.updateTutorAvailability(userID3, availability2);
+		classes.add("CSCI 310");
+		dbConnect.addTutorToClass(userID3, classes);
+		
+		int userID4 = dbConnect.addUser("tutor3@usc.edU", "password", "tutor3first", "tutor3last", "1231231234", true);
+		ArrayList<Integer> availability3 = new ArrayList<>();
+		availability3.add(25);
+		ArrayList<String> classes2 = new ArrayList<>();
+		classes2.add("CSCI 103");
+		dbConnect.addTutorToClass(userID4, classes2);
+		
 		int tuteeID = dbConnect.addUser("tutee@usc.edu", "password", "tuteefirst", "tuteelast", "1231231234", false);
 		
 		ArrayList<Integer> times = new ArrayList<>();
 		times.add(0);
 		times.add(1);
 		times.add(2);
+		times.add(3);
+		times.add(4);
+		times.add(5);
 		List<Tutor> tutors = dbConnect.searchTutors(tuteeID, times, "CSCI 103");
 		
-		assertEquals(tutors.size(), 2);
+		assertEquals(tutors.size(), 3);
+		
 		Tutor tutor = tutors.get(0);
+		assertNotEquals(null, tutor);
+		assertEquals(tutor.getUserId(), userID3);
+		assertEquals(tutor.getFirstName(), "tutor2first");
+		assertEquals(tutor.getLastName(), "tutor2last");
+		assertEquals(tutor.getPhoneNumber(), "1231231234");
+		assertEquals(tutor.getAccountType(), true);
+		assertEquals(tutor.getMatchingAvailabilities().size(), 5);
+		assertEquals(tutor.getMatchingAvailabilities().get(0), 0);
+		assertEquals(tutor.getMatchingAvailabilities().get(1), 1);
+		assertEquals(tutor.getMatchingAvailabilities().get(2), 3);
+		assertEquals(tutor.getMatchingAvailabilities().get(3), 4);
+		assertEquals(tutor.getMatchingAvailabilities().get(4), 5);
+
+	
+		 
+		tutor = tutors.get(1);
 		assertNotEquals(null, tutor);
 		assertEquals(tutor.getUserId(), userID);
 		assertEquals(tutor.getFirstName(), "tutorfirst");
@@ -274,7 +309,7 @@ class DBConnectTest {
 		assertEquals(tutor.getMatchingAvailabilities().get(1), 1);
 		assertEquals(tutor.getMatchingAvailabilities().get(2), 2);
 		
-		tutor = tutors.get(1);
+		tutor = tutors.get(2);
 		assertNotEquals(null, tutor);
 		assertEquals(tutor.getUserId(), userID2);
 		assertEquals(tutor.getFirstName(), "tutor1first");
