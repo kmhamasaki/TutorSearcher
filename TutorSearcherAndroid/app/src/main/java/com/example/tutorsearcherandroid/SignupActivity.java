@@ -21,6 +21,7 @@ import java.util.regex.*;
 import tutor.searcher.TutorSearcher.Request;
 
 public class SignupActivity extends AppCompatActivity {
+    public Client client;
 
     private String UserId;
     private String AccountType;
@@ -35,6 +36,7 @@ public class SignupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        client = new Client();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
@@ -90,7 +92,7 @@ public class SignupActivity extends AppCompatActivity {
         attr.put("phoneNumber", phoneNumber);
 
         System.out.println("Sending from SignupButtonClick");
-        Client client = new Client("signup", attr);
+        client.setTypeAndAttr("signup", attr);
 
         // Pass all inputs to backend
         try {

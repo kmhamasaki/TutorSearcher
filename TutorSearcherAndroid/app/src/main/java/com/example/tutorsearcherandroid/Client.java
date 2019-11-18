@@ -19,10 +19,10 @@ public class Client extends AsyncTask<Void, Void, Void> {
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
     private TextView textResponse;
-    private String response = "";
-    private Request returnRequest;
-    private String incomingRequestType;
-    private HashMap<String,Object> incomingAttributes;
+    protected String response = "";
+    protected Request returnRequest;
+    protected String incomingRequestType;
+    protected HashMap<String,Object> incomingAttributes;
 
     /*
      * Constructor
@@ -40,6 +40,19 @@ public class Client extends AsyncTask<Void, Void, Void> {
 
     public Request getResponse() {
         return returnRequest;
+    }
+
+    public void setTypeAndAttr(String incomingRequestType, HashMap<String,Object> incomingAttributes) {
+        this.incomingAttributes = incomingAttributes;
+        this.incomingRequestType = incomingRequestType;
+    }
+
+    public void setAttributes(HashMap<String,Object> incomingAttributes) {
+        this.incomingAttributes = incomingAttributes;
+    }
+
+    public void setRequestType(String incomingRequestType) {
+        this.incomingRequestType = incomingRequestType;
     }
 
     @Override
