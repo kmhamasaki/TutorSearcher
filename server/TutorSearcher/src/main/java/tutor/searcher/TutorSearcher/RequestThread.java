@@ -14,7 +14,7 @@ public class RequestThread extends Thread {
 
     public RequestThread(Socket s, Controller controller) {
 
-        System.out.println("RequestThread created.");
+//        System.out.println("RequestThread created.");
 
         this.controller = controller;
 
@@ -30,7 +30,7 @@ public class RequestThread extends Thread {
         while(!end) {
             try {
                 Request req = (Request) ois.readObject();
-                System.out.print("Run at 33");
+//                System.out.print("Run at 33");
                 controller.processRequest(req, this);
             } catch (IOException e) {
                 // This exception get's thrown a lot.

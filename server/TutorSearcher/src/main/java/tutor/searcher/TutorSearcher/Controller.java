@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class Controller {
 	
 	@Autowired
-	private DBConnect dbConnect;
+	protected DBConnect dbConnect;
 	
 	private static Hashtable<RequestThread, Socket> requestThreadsSockets = new Hashtable<RequestThread, Socket>();
 
@@ -58,13 +58,12 @@ public class Controller {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	void processRequest(Request request, RequestThread requestThread) {
-		System.out.println(request.getRequestType());
+	Request processRequest(Request request, RequestThread requestThread) {
+//		System.out.println("Process Request Type: " + request.getRequestType());
 		HashMap<String, Object> respAttr = new HashMap<String, Object>();
 		String respType = "";
 		requestThreadsSockets.remove(requestThread);
-		
+
 		/** 
 		 * Signup
 		 * Incoming requestType: "email" 
@@ -91,6 +90,7 @@ public class Controller {
 			String phoneNumber = (String)request.get("phoneNumber");
 
 			Boolean accountType = (Boolean)request.get("accountType");
+
 			int userID = dbConnect.addUser(email, passwordHash, firstName, lastName, phoneNumber, accountType);
 
 			// if not successful in adding it
@@ -99,7 +99,6 @@ public class Controller {
 			} else {
 				respType = "Success";
 				respAttr.put("userID", Integer.toString(userID));
-				
 			}
 
 		} 
@@ -345,10 +344,12 @@ public class Controller {
 			dbConnect.addRating((int)request.get("userID"), (double)request.get("rating"));
 			respType = "Success";
 		}
-		System.out.print(respType);
-		requestThread.sendResponse(new Request(respType, respAttr));
- 
-		return;
+//		System.out.println(respType);
+
+		Request response = new Request(respType, respAttr);
+		requestThread.sendResponse(response);
+
+		return response;
 	}
 
 }

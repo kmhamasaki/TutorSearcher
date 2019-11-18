@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -28,20 +29,14 @@ public class DBConnect {
 	
 	@Autowired
 	private JdbcTemplate jdbc;
-	private Connection conn;
-	private int numUsers = 0;
 	
 	public DBConnect() {
 	}
 
 	public DBConnect(JdbcTemplate jdbc) {
-		
 		this.jdbc = jdbc;
 	}
-
-	int getUserID(String email) {
-		return 0;
-	}
+	
 	String getPassword(String email) {
 		String query = "SELECT password_hash FROM users WHERE users.email = '" + email + "'";
 		String result = jdbc.queryForObject(query, String.class);
@@ -253,6 +248,11 @@ public class DBConnect {
 		return result; 
 	}
 	
+	
+	//add user, checks if email already exists, otherwise add user
+	// accountType 
+	// true = tutor
+	// false = tutee
 	int addUser(String email, String passwordHash, String firstName, String lastName, String phoneNumber,
 			Boolean accountType) {
 		
@@ -298,7 +298,7 @@ public class DBConnect {
 		        }
 		    },
 		    keyHolder);
-		System.out.println(keyHolder.getKey().intValue());
+		System.out.println("adduser: " + keyHolder.getKey().intValue());
 		return keyHolder.getKey().intValue();
 					
 	}
@@ -698,8 +698,23 @@ public class DBConnect {
 		}
 		tutors.sort(new SortTutorsByTime(time));
 		
-
+		tutors.removeIf(new NoMatchTimesPredicate<Tutor>());
+		
 		return tutors;
+	}
+	
+	class NoMatchTimesPredicate<T> implements Predicate<T> {
+
+		@Override
+		public boolean test(T t) {
+			// TODO Auto-generated method stub
+			Tutor tutor = (Tutor)t;
+			if (tutor.getMatchingAvailabilities().isEmpty()) {
+				return true;
+			}
+			return false;
+		}
+		
 	}
 	
 	User authenticate(String email, String passwordHash) {
@@ -754,7 +769,7 @@ public class DBConnect {
 	Boolean addTutorToClass(int tutorID, ArrayList<String> className) {
 		//delete all classes tutor is tutoring first (want overwrite)
 		String deleteQuery = "DELETE FROM classes WHERE tutor_id=?";
-		jdbc.execute(deleteQuery, new PreparedStatementCallback<Boolean> () {
+		Boolean deleteSucc = jdbc.execute(deleteQuery, new PreparedStatementCallback<Boolean> () {
 			@Override
 			public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
 				ps.setInt(1, tutorID);
@@ -762,6 +777,10 @@ public class DBConnect {
 				return ps.execute();
 			}
 		});
+		
+		if(className.size()==0) {
+			return deleteSucc;
+		}
 		
 		String values = "";
 		for (int i = 0; i < className.size(); i++) {
@@ -843,6 +862,58 @@ public class DBConnect {
 				}
 			}
 		); 
+		
+		//now need to go through *pending* requests that don't match tutor's current availabilit yand set to rejected
+		String queryRequests = "SELECT * FROM requests WHERE tutor_id=?";
+		ArrayList<TutorRequest> requests = jdbc.query(queryRequests, 
+		new PreparedStatementSetter() {
+			public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				preparedStatement.setInt(1,  userID);
+			}
+		}, 
+		 new ResultSetExtractor<ArrayList<TutorRequest>>() {
+            public ArrayList<TutorRequest> extractData(ResultSet resultSet) throws SQLException,
+              DataAccessException {
+            	ArrayList<TutorRequest> result = new ArrayList<>();
+                while (resultSet.next()) {
+
+                	//(int requestID, int tuteeID, int tutorID, String time, int status,
+        			//String timecreated, String className)
+                	TutorRequest tutorRequest = new TutorRequest(resultSet.getInt("id"), resultSet.getInt("tutee_id"), 
+                			resultSet.getInt("tutor_id"), resultSet.getString("time"), resultSet.getInt("status"),
+                			resultSet.getString("time_created"), resultSet.getString("class"));
+                	if (tutorRequest.getStatus() == 0) {
+                		if (!availability.contains(tutorRequest.getTime().toString())) {
+                			//this means that new availability doesn't contain the time
+                			// that was previously requested anymore
+                			//so we need to delete it
+                			result.add(tutorRequest);
+            			}
+                	}
+                	
+                	
+                }
+                return result;
+            }
+		});
+		
+		if (!requests.isEmpty()) {
+			String requestIDs = "";
+			for (int i = 0 ; i < requests.size(); i++) {
+				if (i == requests.size() - 1) {
+					requestIDs += requests.get(i).getRequestID();
+				}
+				else {
+					requestIDs += requests.get(i).getRequestID() + ",";
+				}
+			}
+			//the reuqests are requests that need to be deleted, so let's delete it all at once
+			String updateQuery = "UPDATE requests SET status=2 WHERE id IN (" + requestIDs + ")";
+			System.out.println("executing " + updateQuery);
+			jdbc.update(updateQuery);
+		}
+		
+		
 	}
 	
 	//get availability
