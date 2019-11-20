@@ -30,10 +30,17 @@ public class UpdateProfile extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AndroidInjection.inject(this);
+        //AndroidInjection.inject(this);
         System.out.println("here oncreate");
         Application app = (Application)getApplicationContext();
-        //((TutorSearcherApp)app).myAppComponent.inject(this);
+        if(app.getClass().getName().equals("com.example.tutorsearcherandroid.TutorSearcherApp") ) {
+            System.out.println(app.getClass().getName());
+            ((TutorSearcherApp)app).myAppComponent.inject(this);
+        } else {
+            System.out.println(app.getClass().getName());
+            ((com.example.tutorsearcherandroid.TestApplication)app).myAppComponent.inject(this);
+        }
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_profile);

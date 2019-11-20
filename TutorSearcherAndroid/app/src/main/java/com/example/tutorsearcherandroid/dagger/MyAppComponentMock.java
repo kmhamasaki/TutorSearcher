@@ -27,7 +27,5 @@ public interface MyAppComponentMock extends MyAppComponent {
         @BindsInstance
         Builder myAppModuleMock(MyAppModuleMock app);
     }
-    void inject(TestApplication app);
-
 
 }

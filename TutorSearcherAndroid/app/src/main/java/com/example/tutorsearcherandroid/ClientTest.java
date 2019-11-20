@@ -2,6 +2,7 @@ package com.example.tutorsearcherandroid;
 
 import java.util.HashMap;
 import tutor.searcher.TutorSearcher.Request;
+import tutor.searcher.TutorSearcher.User;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,6 +25,10 @@ public class ClientTest extends Client {
                 returnRequest = new Request( "Error: email exists", attr);
             }
 
+        } else if(incomingRequestType.equals("getuserinfo")) {
+            if(incomingAttributes.get("UserId").equals("1") {
+                User user()
+            }
         }
         return null;
     }

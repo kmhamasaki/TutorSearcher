@@ -5,8 +5,6 @@ import androidx.test.runner.AndroidJUnitRunner;
 import android.app.Application;
 import android.content.Context;
 
-import com.example.tutorsearcherandroid.dagger.TestApplication;
-
 public class TestRunner extends AndroidJUnitRunner {
 
     @Override

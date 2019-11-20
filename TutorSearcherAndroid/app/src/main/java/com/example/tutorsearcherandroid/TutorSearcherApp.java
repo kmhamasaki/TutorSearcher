@@ -5,10 +5,10 @@ import dagger.Component;
 
 import com.example.tutorsearcherandroid.dagger.*;
 import com.example.tutorsearcherandroid.dagger.DaggerMyAppComponent;
-import dagger.android.DaggerApplication;
+import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
-import dagger.android.AndroidInjector;
+import dagger.android.AndroidInjectionModule;
 
 import android.app.Activity;
 import javax.inject.Inject;
@@ -21,10 +21,10 @@ public class TutorSearcherApp extends Application implements HasActivityInjector
     @Override
     public void onCreate() {
         super.onCreate();
-/*
+
         myAppComponent = DaggerMyAppComponent.builder()
                 .myAppModule(new MyAppModule())
-                .build();*/
+                .build();
     }
 
     public void setMyAppComponent(MyAppComponent myAppComponent) {
@@ -35,11 +35,4 @@ public class TutorSearcherApp extends Application implements HasActivityInjector
     public DispatchingAndroidInjector<Activity> activityInjector() {
         return dispatchingAndroidInjector;
     }
-
-/*    @Override
-    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-        MyAppComponent appComponent = DaggerMyAppComponent.builder().myAppModule(new MyAppModuleMock()).build();
-        appComponent.inject(this);
-        return appComponent;
-    }*/
 }
