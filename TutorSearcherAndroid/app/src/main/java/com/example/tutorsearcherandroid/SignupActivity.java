@@ -18,10 +18,13 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.regex.*;
 
+import javax.inject.Inject;
+
 import tutor.searcher.TutorSearcher.Request;
 
 public class SignupActivity extends AppCompatActivity {
-    public Client client;
+    @Inject
+    Client client;
 
     private String UserId;
     private String AccountType;
@@ -36,7 +39,7 @@ public class SignupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        client = new Client();
+        //client = new Client();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 

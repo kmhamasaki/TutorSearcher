@@ -3,8 +3,15 @@ package com.example.tutorsearcherandroid;
 import java.util.HashMap;
 import tutor.searcher.TutorSearcher.Request;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 
 public class ClientTest extends Client {
+    @Inject
+   // @Named("Client")
+    public void ClientTest() {}
+
     @Override
     protected Void doInBackground(Void... arg0) {
         HashMap<String, Object> attr = new HashMap<>();

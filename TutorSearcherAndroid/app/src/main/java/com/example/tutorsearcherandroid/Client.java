@@ -9,7 +9,10 @@ import java.util.HashMap;
 import android.os.AsyncTask;
 import tutor.searcher.TutorSearcher.Request;
 
+import javax.inject.Inject;
+
 public class Client extends AsyncTask<Void, Void, Void> {
+
 
     /*
      * Class Variables
@@ -28,7 +31,8 @@ public class Client extends AsyncTask<Void, Void, Void> {
      * Constructor
      */
 
-    Client() {}
+    @Inject
+    public Client() {}
     /*
      * Connect to server
      */
