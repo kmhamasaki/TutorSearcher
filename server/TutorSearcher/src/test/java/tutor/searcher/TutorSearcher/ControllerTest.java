@@ -22,8 +22,7 @@ class ControllerTest {
         Thread thread = new Thread(ct);
         thread.start();
         System.out.println("## Starting 2s Delay");
-        Thread.sleep(2000);
-
+        //        Thread.sleep(2000);
     }
 
     @Test
@@ -153,37 +152,373 @@ class ControllerTest {
 
     }
 
-    class ControllerThread extends Controller implements Runnable {
-        public void setDbConnect(DBConnect dbConnect) {
-            this.dbConnect = dbConnect;
-        }
+    @Test
+    void Search() throws InterruptedException, IOException, ClassNotFoundException {
+        // Tests
+        System.out.println("Testing search");
+        System.out.println();
 
-        @Override
-        public void run() {
-            startController();
-        }
+        // Setting test parameters
+
+        // Preparing Request object parameters
+        String requestType = "search";
+        HashMap<String, Object> respAttr = new HashMap<String, Object>();
+
+        // DBConnect mocks
+        DBConnect dbConnect = mock(DBConnect.class);
+        ct.setDbConnect(dbConnect);
+
+        // Start Controller and DummyTestClient
+        DummyTestClient dc = new DummyTestClient();
+
+        // Creating Request object
+        Request request = new Request(requestType, respAttr);
+        dc.sendRequest(request);
+        Request response = dc.getResponse();
+
+        // Tests
+        assertEquals("Success", response.getRequestType());
     }
 
-    class DummyTestClient {
-        ObjectInputStream ois;
-        ObjectOutputStream oos;
+    @Test
+    void NewRequest() throws InterruptedException, IOException, ClassNotFoundException {
+        // Tests
+        System.out.println("Testing new request");
+        System.out.println();
 
-        public DummyTestClient() throws IOException {
-            System.out.println("# Starting Dummy Test Client");
+        // Setting test parameters
 
-            Socket s = new Socket("localhost", 6789);
-            ois = new ObjectInputStream(s.getInputStream());
-            oos = new ObjectOutputStream(s.getOutputStream());
-        }
+        // Preparing Request object parameters
+        String requestType = "newrequest";
+        HashMap<String, Object> respAttr = new HashMap<String, Object>();
 
-        public void sendRequest(Request request) throws IOException {
-            oos.writeObject(request);
-            oos.flush();
-        }
+        // DBConnect mocks
+        DBConnect dbConnect = mock(DBConnect.class);
+        ct.setDbConnect(dbConnect);
 
-        public Request getResponse() throws IOException, ClassNotFoundException {
-            Request res = (Request) ois.readObject();
-            return res;
-        }
+        // Start Controller and DummyTestClient
+        DummyTestClient dc = new DummyTestClient();
+
+        // Creating Request object
+        Request request = new Request(requestType, respAttr);
+        dc.sendRequest(request);
+        Request response = dc.getResponse();
+
+        // Tests
+        assertEquals("Success", response.getRequestType());
+    }
+
+    @Test
+    void ViewRequests() throws InterruptedException, IOException, ClassNotFoundException {
+        // Tests
+        System.out.println("Testing view requests");
+        System.out.println();
+
+        // Setting test parameters
+
+        // Preparing Request object parameters
+        String requestType = "viewrequests";
+        HashMap<String, Object> respAttr = new HashMap<String, Object>();
+
+        // DBConnect mocks
+        DBConnect dbConnect = mock(DBConnect.class);
+        ct.setDbConnect(dbConnect);
+
+        // Start Controller and DummyTestClient
+        DummyTestClient dc = new DummyTestClient();
+
+        // Creating Request object
+        Request request = new Request(requestType, respAttr);
+        dc.sendRequest(request);
+        Request response = dc.getResponse();
+
+        // Tests
+        assertEquals("Success", response.getRequestType());
+    }
+
+    @Test
+    void UpdateRequestStatus() throws InterruptedException, IOException, ClassNotFoundException {
+        // Tests
+        System.out.println("Testing update request status");
+        System.out.println();
+
+        // Setting test parameters
+
+        // Preparing Request object parameters
+        String requestType = "updaterequeststatus";
+        HashMap<String, Object> respAttr = new HashMap<String, Object>();
+
+        // DBConnect mocks
+        DBConnect dbConnect = mock(DBConnect.class);
+        ct.setDbConnect(dbConnect);
+
+        // Start Controller and DummyTestClient
+        DummyTestClient dc = new DummyTestClient();
+
+        // Creating Request object
+        Request request = new Request(requestType, respAttr);
+        dc.sendRequest(request);
+        Request response = dc.getResponse();
+
+        // Tests
+        assertEquals("Success", response.getRequestType());
+    }
+
+    @Test
+    void UpdateAvailability() throws InterruptedException, IOException, ClassNotFoundException {
+        // Tests
+        System.out.println("Testing update availability");
+        System.out.println();
+
+        // Setting test parameters
+
+        // Preparing Request object parameters
+        String requestType = "updateavailability";
+        HashMap<String, Object> respAttr = new HashMap<String, Object>();
+
+        // DBConnect mocks
+        DBConnect dbConnect = mock(DBConnect.class);
+        ct.setDbConnect(dbConnect);
+
+        // Start Controller and DummyTestClient
+        DummyTestClient dc = new DummyTestClient();
+
+        // Creating Request object
+        Request request = new Request(requestType, respAttr);
+        dc.sendRequest(request);
+        Request response = dc.getResponse();
+
+        // Tests
+        assertEquals("Success", response.getRequestType());
+    }
+
+    @Test
+    void AddClass() throws InterruptedException, IOException, ClassNotFoundException {
+        // Tests
+        System.out.println("Testing add class");
+        System.out.println();
+
+        // Setting test parameters
+
+        // Preparing Request object parameters
+        String requestType = "addclass";
+        HashMap<String, Object> respAttr = new HashMap<String, Object>();
+
+        // DBConnect mocks
+        DBConnect dbConnect = mock(DBConnect.class);
+        ct.setDbConnect(dbConnect);
+
+        // Start Controller and DummyTestClient
+        DummyTestClient dc = new DummyTestClient();
+
+        // Creating Request object
+        Request request = new Request(requestType, respAttr);
+        dc.sendRequest(request);
+        Request response = dc.getResponse();
+
+        // Tests
+        assertEquals("Success", response.getRequestType());
+    }
+
+    @Test
+    void RemoveClass() throws InterruptedException, IOException, ClassNotFoundException {
+        // Tests
+        System.out.println("Testing remove class");
+        System.out.println();
+
+        // Setting test parameters
+
+        // Preparing Request object parameters
+        String requestType = "removeclass";
+        HashMap<String, Object> respAttr = new HashMap<String, Object>();
+
+        // DBConnect mocks
+        DBConnect dbConnect = mock(DBConnect.class);
+        ct.setDbConnect(dbConnect);
+
+        // Start Controller and DummyTestClient
+        DummyTestClient dc = new DummyTestClient();
+
+        // Creating Request object
+        Request request = new Request(requestType, respAttr);
+        dc.sendRequest(request);
+        Request response = dc.getResponse();
+
+        // Tests
+        assertEquals("Success", response.getRequestType());
+    }
+
+    @Test
+    void GetAvailability() throws InterruptedException, IOException, ClassNotFoundException {
+        // Tests
+        System.out.println("Testing get availability");
+        System.out.println();
+
+        // Setting test parameters
+
+        // Preparing Request object parameters
+        String requestType = "getavailability";
+        HashMap<String, Object> respAttr = new HashMap<String, Object>();
+
+        // DBConnect mocks
+        DBConnect dbConnect = mock(DBConnect.class);
+        ct.setDbConnect(dbConnect);
+
+        // Start Controller and DummyTestClient
+        DummyTestClient dc = new DummyTestClient();
+
+        // Creating Request object
+        Request request = new Request(requestType, respAttr);
+        dc.sendRequest(request);
+        Request response = dc.getResponse();
+
+        // Tests
+        assertEquals("Success", response.getRequestType());
+    }
+
+    @Test
+    void GetClasses() throws InterruptedException, IOException, ClassNotFoundException {
+        // Tests
+        System.out.println("Testing get classes");
+        System.out.println();
+
+        // Setting test parameters
+
+        // Preparing Request object parameters
+        String requestType = "getclasses";
+        HashMap<String, Object> respAttr = new HashMap<String, Object>();
+
+        // DBConnect mocks
+        DBConnect dbConnect = mock(DBConnect.class);
+        ct.setDbConnect(dbConnect);
+
+        // Start Controller and DummyTestClient
+        DummyTestClient dc = new DummyTestClient();
+
+        // Creating Request object
+        Request request = new Request(requestType, respAttr);
+        dc.sendRequest(request);
+        Request response = dc.getResponse();
+
+        // Tests
+        assertEquals("Success", response.getRequestType());
+    }
+
+    @Test
+    void SearchPrevious() throws InterruptedException, IOException, ClassNotFoundException {
+        // Tests
+        System.out.println("Testing search previous");
+        System.out.println();
+
+        // Setting test parameters
+
+        // Preparing Request object parameters
+        String requestType = "searchprevious";
+        HashMap<String, Object> respAttr = new HashMap<String, Object>();
+
+        // DBConnect mocks
+        DBConnect dbConnect = mock(DBConnect.class);
+        ct.setDbConnect(dbConnect);
+
+        // Start Controller and DummyTestClient
+        DummyTestClient dc = new DummyTestClient();
+
+        // Creating Request object
+        Request request = new Request(requestType, respAttr);
+        dc.sendRequest(request);
+        Request response = dc.getResponse();
+
+        // Tests
+        assertEquals("Success", response.getRequestType());
+    }
+
+    @Test
+    void GetUserInfo() throws InterruptedException, IOException, ClassNotFoundException {
+        // Tests
+        System.out.println("Testing get user info");
+        System.out.println();
+
+        // Setting test parameters
+
+        // Preparing Request object parameters
+        String requestType = "getuserinfo";
+        HashMap<String, Object> respAttr = new HashMap<String, Object>();
+
+        // DBConnect mocks
+        DBConnect dbConnect = mock(DBConnect.class);
+        ct.setDbConnect(dbConnect);
+
+        // Start Controller and DummyTestClient
+        DummyTestClient dc = new DummyTestClient();
+
+        // Creating Request object
+        Request request = new Request(requestType, respAttr);
+        dc.sendRequest(request);
+        Request response = dc.getResponse();
+
+        // Tests
+        assertEquals("Success", response.getRequestType());
+    }
+
+    @Test
+    void AddRating() throws InterruptedException, IOException, ClassNotFoundException {
+        // Tests
+        System.out.println("Testing add rating");
+        System.out.println();
+
+        // Setting test parameters
+
+        // Preparing Request object parameters
+        String requestType = "addrating";
+        HashMap<String, Object> respAttr = new HashMap<String, Object>();
+
+        // DBConnect mocks
+        DBConnect dbConnect = mock(DBConnect.class);
+        ct.setDbConnect(dbConnect);
+
+        // Start Controller and DummyTestClient
+        DummyTestClient dc = new DummyTestClient();
+
+        // Creating Request object
+        Request request = new Request(requestType, respAttr);
+        dc.sendRequest(request);
+        Request response = dc.getResponse();
+
+        // Tests
+        assertEquals("Success", response.getRequestType());
+    }
+}
+
+
+class ControllerThread extends Controller implements Runnable {
+    public void setDbConnect(DBConnect dbConnect) {
+        this.dbConnect = dbConnect;
+    }
+    @Override
+    public void run() {
+        startController();
+    }
+}
+
+class DummyTestClient {
+    ObjectInputStream ois;
+    ObjectOutputStream oos;
+
+    public DummyTestClient() throws IOException {
+        System.out.println("# Starting Dummy Test Client");
+
+        Socket s = new Socket("localhost", 6789);
+        ois = new ObjectInputStream(s.getInputStream());
+        oos = new ObjectOutputStream(s.getOutputStream());
+    }
+
+    public void sendRequest(Request request) throws IOException {
+        oos.writeObject(request);
+        oos.flush();
+    }
+
+    public Request getResponse() throws IOException, ClassNotFoundException {
+        Request res = (Request) ois.readObject();
+        return res;
     }
 }
