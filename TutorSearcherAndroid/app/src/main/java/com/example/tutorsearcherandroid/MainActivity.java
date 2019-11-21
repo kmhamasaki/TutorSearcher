@@ -1,39 +1,26 @@
 package com.example.tutorsearcherandroid;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.android.gms.tasks.OnSuccessListener;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.messaging.FirebaseMessaging;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import tutor.searcher.TutorSearcher.Request;
-import tutor.searcher.TutorSearcher.Tutee;
-import tutor.searcher.TutorSearcher.Tutor;
-import tutor.searcher.TutorSearcher.User;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import tutor.searcher.TutorSearcher.Request;
+import tutor.searcher.TutorSearcher.Tutee;
+import tutor.searcher.TutorSearcher.Tutor;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -50,10 +37,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String NOTIFICATION_MESSAGE;
     String TOPIC;
 
+    Application app;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        app = (Application)getApplicationContext();
 
         Button login = findViewById(R.id.login);
         Button register = findViewById(R.id.register);
@@ -120,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //Pass all inputs to backend
                 System.out.println(attr.get("email"));
                 System.out.println(attr.get("passwordHash"));
-                Client client = new Client("login",attr);
+                Client client = Client.initClient("login",attr, app);
                 try {
                     client.execute().get();
                 } catch(Exception e) {
@@ -173,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //Get most recent search
             HashMap<String,Object> attr = new HashMap<>();
             attr.put("userID",Integer.parseInt(userId));
-            Client client = new Client("searchprevious",attr);
+            Client client = Client.initClient("searchprevious",attr,app);
             client.execute();
             Request response = null;
             while(response == null){

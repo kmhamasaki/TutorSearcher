@@ -1,12 +1,6 @@
 package com.example.tutorsearcherandroid;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,8 +9,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
@@ -57,9 +52,12 @@ public class TutorTimeActivity extends AppCompatActivity implements View.OnClick
     String NOTIFICATION_TITLE;
     String NOTIFICATION_MESSAGE;
     String TOPIC;
+    Application app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        app = (Application)getApplicationContext();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor_time);
 
@@ -134,7 +132,7 @@ public class TutorTimeActivity extends AppCompatActivity implements View.OnClick
         attr.put("className", className);
         attr.put("time", time);
 
-        Client client = new Client("newrequest",attr);
+        Client client = Client.initClient("newrequest",attr, app);
         client.execute();
 
         Request response = null;
@@ -143,7 +141,7 @@ public class TutorTimeActivity extends AppCompatActivity implements View.OnClick
         }
         attr = new HashMap<>();
         attr.put("userID", tutteeId);
-        client = new Client("searchprevious",attr);
+        client = Client.initClient("searchprevious",attr, app);
         client.execute();
         response = null;
         while(response == null){

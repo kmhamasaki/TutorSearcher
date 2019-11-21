@@ -1,5 +1,6 @@
 package com.example.tutorsearcherandroid;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,7 +31,7 @@ public class ViewRequests extends AppCompatActivity
 
     private String UserId;
     private String AccountType;
-
+    Application app;
     private RecyclerView recyclerView;
     private PendingRequestAdapter rAdapter; //Bridge between list and recyclerview
     private RecyclerView.LayoutManager rLayoutManager;
@@ -50,6 +51,8 @@ public class ViewRequests extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        app = (Application)getApplicationContext();
+
         setContentView(R.layout.view_requests);
 
         Bundle extras = getIntent().getExtras();
@@ -70,7 +73,7 @@ public class ViewRequests extends AppCompatActivity
             attributes.put("userID", Integer.parseInt(UserId));
             attributes.put("viewrequeststype", "tutorpending");
 
-            Client client = new Client("viewrequests", attributes);
+            Client client = Client.initClient("viewrequests", attributes, app);
             client.execute().get();
             Request response = client.getResponse();
 
@@ -114,7 +117,7 @@ public class ViewRequests extends AppCompatActivity
                 attributes.put("requestID", requestID);
                 attributes.put("newStatus", 1);
 
-                Client client = new Client("updaterequeststatus", attributes);
+                Client client = Client.initClient("updaterequeststatus", attributes, app);
                 client.execute().get();
                 Request response = client.getResponse();
 
@@ -134,7 +137,7 @@ public class ViewRequests extends AppCompatActivity
                 attributes.put("requestID", requestID);
                 attributes.put("newStatus", 2);
 
-                Client client = new Client("updaterequeststatus", attributes);
+                Client client = Client.initClient("updaterequeststatus", attributes, app);
                 client.execute().get();
                 Request response = client.getResponse();
 

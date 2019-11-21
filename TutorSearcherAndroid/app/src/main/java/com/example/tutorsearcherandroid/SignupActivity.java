@@ -1,7 +1,6 @@
 package com.example.tutorsearcherandroid;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,18 +9,20 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-import java.util.regex.*;
+import java.util.regex.Pattern;
 
 import tutor.searcher.TutorSearcher.Request;
 
 public class SignupActivity extends AppCompatActivity {
-    public Client client;
+    Client client;
 
     private String UserId;
     private String AccountType;
@@ -36,7 +37,8 @@ public class SignupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        client = new Client();
+        Application app = (Application)getApplicationContext();
+        client = Client.initClient(app);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 

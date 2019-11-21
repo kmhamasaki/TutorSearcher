@@ -28,7 +28,7 @@ import static org.hamcrest.Matchers.not;
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest extends TestCase {
 
-    @Test
+/*    @Test
     public void SuccessLoginTest() {
         ActivityTestRule<MainActivity> activity =
                 new IntentsTestRule<>(MainActivity.class, true, true);
@@ -82,5 +82,5 @@ public class MainActivityTest extends TestCase {
                 .check(matches(isDisplayed()));
 
         Intents.release();
-    }
+    }*/
 }
