@@ -19,12 +19,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
-import javax.inject.Inject;
-
 import tutor.searcher.TutorSearcher.Request;
 
 public class SignupActivity extends AppCompatActivity {
-    @Inject
     Client client;
 
     private String UserId;

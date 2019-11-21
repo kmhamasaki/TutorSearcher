@@ -12,14 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.HashMap;
 
-import javax.inject.Inject;
-
 import tutor.searcher.TutorSearcher.Request;
 import tutor.searcher.TutorSearcher.User;
 
 public class UpdateProfile extends AppCompatActivity {
 
-    @Inject
     Client client;
 
     private String UserId;

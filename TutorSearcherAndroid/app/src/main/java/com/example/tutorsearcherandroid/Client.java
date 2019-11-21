@@ -10,8 +10,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.HashMap;
 
-import javax.inject.Inject;
-
 import tutor.searcher.TutorSearcher.Request;
 
 public class Client extends AsyncTask<Void, Void, Void> {
@@ -34,7 +32,6 @@ public class Client extends AsyncTask<Void, Void, Void> {
      * Constructor
      */
 
-    @Inject
     public Client() {}
     /*
      * Connect to server
