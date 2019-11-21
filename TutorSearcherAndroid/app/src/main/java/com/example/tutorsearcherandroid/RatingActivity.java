@@ -1,13 +1,13 @@
 package com.example.tutorsearcherandroid;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.RatingBar;
 import android.widget.Toast;
-import android.view.View.OnTouchListener;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class RatingActivity extends AppCompatActivity{
 

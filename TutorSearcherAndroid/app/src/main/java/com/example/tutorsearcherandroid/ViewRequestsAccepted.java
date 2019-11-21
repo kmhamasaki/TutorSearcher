@@ -1,5 +1,6 @@
 package com.example.tutorsearcherandroid;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,7 @@ public class ViewRequestsAccepted extends AppCompatActivity
 
     private String UserId;
     private String AccountType;
+    Application app;
 
     private RecyclerView recyclerView;
     private AcceptedRequestAdapter rAdapter; //Bridge between list and recyclerview
@@ -32,6 +34,7 @@ public class ViewRequestsAccepted extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        app = (Application)getApplicationContext();
         setContentView(R.layout.view_accepted_requests);
 
         Bundle extras = getIntent().getExtras();
@@ -59,7 +62,7 @@ public class ViewRequestsAccepted extends AppCompatActivity
                 attributes.put("viewrequeststype", "tuteeapproved");
             }
 
-            Client client = new Client("viewrequests", attributes);
+            Client client = Client.initClient("viewrequests", attributes, app);
             client.execute().get();
             Request response = client.getResponse();
 
@@ -75,7 +78,7 @@ public class ViewRequestsAccepted extends AppCompatActivity
                     userID = req.getTutorID();
                 }
                 attr.put("userID", userID);
-                client = new Client("getuserinfo", attr);
+                client = Client.initClient("getuserinfo", attr, app);
                 client.execute().get();
                 response = client.getResponse();
                 user = (User)response.get("user");
@@ -108,7 +111,7 @@ public class ViewRequestsAccepted extends AppCompatActivity
             //Get most recent search
             HashMap<String,Object> attr = new HashMap<>();
             attr.put("userID",Integer.parseInt(UserId));
-            Client client = new Client("searchprevious",attr);
+            Client client = Client.initClient("searchprevious",attr, app);
             client.execute();
             Request response = null;
             while(response == null){

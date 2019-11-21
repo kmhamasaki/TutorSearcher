@@ -28,8 +28,27 @@ import static org.hamcrest.Matchers.not;
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest extends TestCase {
 
+/*    @Test
+    public void SuccessLoginTest() {
+        ActivityTestRule<MainActivity> activity =
+                new IntentsTestRule<>(MainActivity.class, true, true);
+        Intent intent = new Intent();
+        activity.launchActivity(intent);
+
+        activity.getActivity().client = new ClientTest();
+
+        onView(withId(R.id.login)).perform(click());
+        onView(withId(R.id.username)).perform(typeText("tutor1@usc.edu"));
+        onView(withId(R.id.password)).perform(typeText("password"));
+        onView(withId(R.id.bigLogin)).perform(click());
+        intended(hasComponent(ScrollingHomeActivity.class.getName()));
+
+        //TODO: Check Assigned Intents on Following Page
+        Intents.release();
+    }
+
     @Test
-    public void InvalidEmailOrPasswordTest() {
+    public void InvalidEmailTest() {
         ActivityTestRule<MainActivity> activity =
                 new IntentsTestRule<>(MainActivity.class, true, true);
         Intent intent = new Intent();
@@ -64,5 +83,5 @@ public class MainActivityTest extends TestCase {
 
         //TODO: Check Assigned Intents on Following Page
         Intents.release();
-    }
+    }*/
 }

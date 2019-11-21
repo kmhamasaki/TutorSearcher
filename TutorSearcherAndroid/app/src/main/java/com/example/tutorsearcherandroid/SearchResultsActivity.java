@@ -1,22 +1,21 @@
 package com.example.tutorsearcherandroid;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.HashMap;
 import java.util.List;
 
 import tutor.searcher.TutorSearcher.Request;
 import tutor.searcher.TutorSearcher.Tutor;
-import tutor.searcher.TutorSearcher.TutorRequest;
 
 public class SearchResultsActivity extends AppCompatActivity implements MyAdapter.OnTutorClickListener,View.OnClickListener {
     //Recyler View Variables
@@ -30,10 +29,13 @@ public class SearchResultsActivity extends AppCompatActivity implements MyAdapte
     private String UserId;
     private String AccountType;
     private String Class;
+    Application app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        app = (Application)getApplicationContext();
+
         setContentView(R.layout.activity_search_results);
 
         //Save information from intent
@@ -74,7 +76,7 @@ public class SearchResultsActivity extends AppCompatActivity implements MyAdapte
         //Home Activity
         HashMap<String,Object> attr = new HashMap<>();
         attr.put("userID", Integer.parseInt(UserId));
-        Client client = new Client("searchprevious", attr);
+        Client client = Client.initClient("searchprevious", attr, app);
         client.execute();
         Request response = null;
         while(response == null){
