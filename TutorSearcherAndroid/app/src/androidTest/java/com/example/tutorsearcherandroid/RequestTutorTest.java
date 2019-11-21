@@ -2,7 +2,7 @@ package com.example.tutorsearcherandroid;
 
 import android.content.Intent;
 
-import androidx.test.espresso.contrib.RecyclerViewActions;
+//import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -48,12 +48,12 @@ public class RequestTutorTest extends TestCase {
                 true,"5",5.0);
         ArrayList<Tutor> t = new ArrayList<>();
         t.add(tutor);
-        activity.getActivity().TutorList = t;
-        activity.getActivity().Class = "CSCI 102";
+//        activity.getActivity().TutorList = t;
+//        activity.getActivity().Class = "CSCI 102";
 
         //Select Tutor
-        onView(withId(R.id.recyclerView))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+//        onView(withId(R.id.recyclerView))
+//                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         intended(hasComponent(TabbedAvailabilityActivity.class.getName()));
         intended(hasComponent(TutorTimeActivity.class.getName()));
         //Select Time

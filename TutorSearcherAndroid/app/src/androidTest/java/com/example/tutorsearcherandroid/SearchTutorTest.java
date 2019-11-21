@@ -2,7 +2,7 @@ package com.example.tutorsearcherandroid;
 
 import android.content.Intent;
 
-import androidx.test.espresso.contrib.RecyclerViewActions;
+//import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
