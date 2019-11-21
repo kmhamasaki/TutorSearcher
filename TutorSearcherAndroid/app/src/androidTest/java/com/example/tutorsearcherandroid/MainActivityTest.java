@@ -29,26 +29,7 @@ import static org.hamcrest.Matchers.not;
 public class MainActivityTest extends TestCase {
 
     @Test
-    public void SuccessLoginTest() {
-        ActivityTestRule<MainActivity> activity =
-                new IntentsTestRule<>(MainActivity.class, true, true);
-        Intent intent = new Intent();
-        activity.launchActivity(intent);
-
-        activity.getActivity().client = new ClientTest();
-
-        onView(withId(R.id.login)).perform(click());
-        onView(withId(R.id.username)).perform(typeText("tutor1@usc.edu"));
-        onView(withId(R.id.password)).perform(typeText("password"));
-        onView(withId(R.id.bigLogin)).perform(click());
-        intended(hasComponent(ScrollingHomeActivity.class.getName()));
-
-        //TODO: Check Assigned Intents on Following Page
-        Intents.release();
-    }
-
-    @Test
-    public void InvalidEmailTest() {
+    public void InvalidEmailOrPasswordTest() {
         ActivityTestRule<MainActivity> activity =
                 new IntentsTestRule<>(MainActivity.class, true, true);
         Intent intent = new Intent();
@@ -65,22 +46,23 @@ public class MainActivityTest extends TestCase {
 
         Intents.release();
     }
+
     @Test
-    public void InvalidPasswordTest() {
+    public void SuccessLoginTest() {
         ActivityTestRule<MainActivity> activity =
                 new IntentsTestRule<>(MainActivity.class, true, true);
         Intent intent = new Intent();
         activity.launchActivity(intent);
 
+        activity.getActivity().client = new ClientTest();
+
         onView(withId(R.id.login)).perform(click());
         onView(withId(R.id.username)).perform(typeText("validEmail@usc.edu"));
-        onView(withId(R.id.password)).perform(typeText("badPassword"));
+        onView(withId(R.id.password)).perform(typeText("password"));
         onView(withId(R.id.bigLogin)).perform(click());
+        intended(hasComponent(ScrollingHomeActivity.class.getName()));
 
-        onView(withText("Wrong email and password combination"))
-                .inRoot(withDecorView(not(activity.getActivity().getWindow().getDecorView())))
-                .check(matches(isDisplayed()));
-
+        //TODO: Check Assigned Intents on Following Page
         Intents.release();
     }
 }
