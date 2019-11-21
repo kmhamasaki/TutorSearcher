@@ -1,9 +1,9 @@
 package com.example.tutorsearcherandroid;
 
-import androidx.test.runner.AndroidJUnitRunner;
-
 import android.app.Application;
 import android.content.Context;
+
+import androidx.test.runner.AndroidJUnitRunner;
 
 public class TestRunner extends AndroidJUnitRunner {
 

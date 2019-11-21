@@ -1,27 +1,22 @@
 package com.example.tutorsearcherandroid;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import com.example.tutorsearcherandroid.ui.main.DateFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.example.tutorsearcherandroid.ui.main.DateFragment;
 import com.example.tutorsearcherandroid.ui.main.SectionsPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,9 +33,12 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
     private String UserId;
     private String AccountType;
 
+    Application app;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        app = (Application)getApplicationContext();
+
         setContentView(R.layout.activity_tabbed_availability);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
@@ -69,7 +67,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
             try {
                 HashMap<String, Object> attr = new HashMap<>();
                 attr.put("tutorID", Integer.parseInt(UserId));
-                Client client = new Client("getavailability", attr);
+                Client client = Client.initClient("getavailability", attr, app);
                 client.execute().get();
                 Request response = client.getResponse();
 
@@ -133,7 +131,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
                 attr.put("className", className);
                 attr.put("userID", Integer.parseInt(UserId));
                 System.out.println(className);
-                Client client = new Client("search", attr);
+                Client client = Client.initClient("search", attr, app);
                 try {
                     client.execute().get();
                 } catch(Exception e) {
@@ -151,7 +149,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
                     attr.put("availability", selectedTimes);
                     attr.put("tutorID", Integer.parseInt(UserId));
 
-                    Client client = new Client("updateavailability", attr);
+                    Client client = Client.initClient("updateavailability", attr,app);
                     client.execute();
                     Request response = client.getResponse();
                     System.out.println(response.getRequestType());
@@ -167,7 +165,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
                     attr.put("availability", selectedTimes);
                     attr.put("tutorID", Integer.parseInt(UserId));
 
-                    Client client = new Client("updateavailability", attr);
+                    Client client = Client.initClient("updateavailability", attr, app);
                     client.execute();
                     Request response = client.getResponse();
                     System.out.println(response.getRequestType());

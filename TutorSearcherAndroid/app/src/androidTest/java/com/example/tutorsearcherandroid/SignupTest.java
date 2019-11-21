@@ -41,8 +41,6 @@ public class SignupTest extends TestCase {
         onView(withId(R.id.phone)).perform(typeText("123456789"));
         onView(withId(R.id.phone)).perform(ViewActions.closeSoftKeyboard());
 
-        activity.getActivity().client = new ClientTest();
-
         onView(withId(R.id.signup_button)).perform(click());
         intended(hasComponent(ChooseClasses.class.getName()));
 //        intended(hasExtra("UserId", "1"));
@@ -62,7 +60,6 @@ public class SignupTest extends TestCase {
         onView(withId(R.id.phone)).perform(typeText("123456789"));
         onView(withId(R.id.phone)).perform(ViewActions.closeSoftKeyboard());
         onView(withId(R.id.button_tutee)).perform(click());
-        activity.getActivity().client = new ClientTest();
 
         onView(withId(R.id.signup_button)).perform(click());
         intended(hasComponent(ScrollingHomeActivity.class.getName()));
@@ -82,8 +79,6 @@ public class SignupTest extends TestCase {
         onView(withId(R.id.password)).perform(typeText("asdfas"));
         onView(withId(R.id.phone)).perform(typeText("123456789"));
         onView(withId(R.id.phone)).perform(ViewActions.closeSoftKeyboard());
-
-        activity.getActivity().client = new ClientTest();
 
         onView(withId(R.id.signup_button)).perform(click());
         onView(withText("Email already in use."))
@@ -106,8 +101,6 @@ public class SignupTest extends TestCase {
         onView(withId(R.id.phone)).perform(typeText("123456789"));
         onView(withId(R.id.phone)).perform(ViewActions.closeSoftKeyboard());
 
-        activity.getActivity().client = new ClientTest();
-
         onView(withId(R.id.signup_button)).perform(click());
         onView(withText("Please enter a USC email."))
                 .inRoot(withDecorView(not(activity.getActivity().getWindow().getDecorView())))
@@ -126,8 +119,6 @@ public class SignupTest extends TestCase {
         onView(withId(R.id.last_name)).perform(typeText("Trojan"));
         onView(withId(R.id.password)).perform(typeText("asdfas"));
         onView(withId(R.id.phone)).perform(ViewActions.closeSoftKeyboard());
-
-        activity.getActivity().client = new ClientTest();
 
         onView(withId(R.id.signup_button)).perform(click());
         onView(withText("You must complete all fields to sign up!"))

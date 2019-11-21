@@ -1,15 +1,18 @@
 package com.example.tutorsearcherandroid;
 
+import android.app.Application;
+import android.os.AsyncTask;
 import android.widget.TextView;
+
 import java.io.IOException;
-import java.net.Socket;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.util.HashMap;
-import android.os.AsyncTask;
-import tutor.searcher.TutorSearcher.Request;
 
 import javax.inject.Inject;
+
+import tutor.searcher.TutorSearcher.Request;
 
 public class Client extends AsyncTask<Void, Void, Void> {
 
@@ -109,5 +112,21 @@ public class Client extends AsyncTask<Void, Void, Void> {
         //super.onPostExecute(result);
     }
 
+    static Client initClient(Application app) {
+        if(app.getClass().getName().equals("com.example.tutorsearcherandroid.TutorSearcherApp")) {
+            return new Client();
+        } else {
+            return new ClientTest();
+        }
+    }
+
+    static Client initClient(String incomingRequestType, HashMap<String,Object> incomingAttributes,
+                             Application app) {
+        if(app.getClass().getName().equals("com.example.tutorsearcherandroid.TutorSearcherApp")) {
+            return new Client(incomingRequestType, incomingAttributes);
+        } else {
+            return new ClientTest(incomingRequestType, incomingAttributes);
+        }
+    }
 
 }

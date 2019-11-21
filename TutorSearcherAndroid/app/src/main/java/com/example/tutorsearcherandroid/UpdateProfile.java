@@ -1,7 +1,5 @@
 package com.example.tutorsearcherandroid;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,13 +8,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.HashMap;
 
 import javax.inject.Inject;
 
 import tutor.searcher.TutorSearcher.Request;
 import tutor.searcher.TutorSearcher.User;
-import dagger.android.AndroidInjection;
 
 public class UpdateProfile extends AppCompatActivity {
 
@@ -30,17 +29,8 @@ public class UpdateProfile extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //AndroidInjection.inject(this);
-        System.out.println("here oncreate");
         Application app = (Application)getApplicationContext();
-        if(app.getClass().getName().equals("com.example.tutorsearcherandroid.TutorSearcherApp") ) {
-            System.out.println(app.getClass().getName());
-            ((TutorSearcherApp)app).myAppComponent.inject(this);
-        } else {
-            System.out.println(app.getClass().getName());
-            ((com.example.tutorsearcherandroid.TestApplication)app).myAppComponent.inject(this);
-        }
-
+        client = Client.initClient(app);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_profile);
