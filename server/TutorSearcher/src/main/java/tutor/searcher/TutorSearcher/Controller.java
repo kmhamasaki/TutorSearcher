@@ -182,6 +182,7 @@ public class Controller {
 		 * 	String time
 		 *  outgoing attributes
 		 *  String respType
+		 *  int requestID (-1 if cannot make request for that time) 
 		 */
 		else if (request.getRequestType().equals("newrequest")) {
 			int tuteeID = (int)request.getAttributes().get("tuteeID");
@@ -189,8 +190,9 @@ public class Controller {
 			String className = (String)request.getAttributes().get("className");
 			String time = (String)request.getAttributes().get("time");
 			//int status = (int)request.getAttributes().get("status");
+			int requestID = -1;
 			try {
-				dbConnect.addRequest(tuteeID, tutorID, className, time, 0);
+				requestID = dbConnect.addRequest(tuteeID, tutorID, className, time, 0);
 
 			}
 			catch (Exception e) {
@@ -198,6 +200,7 @@ public class Controller {
 				respType = "Error " + e.getMessage();
 			}
 			respType = "Success";
+			respAttr.put("requestID", requestID);
 			
 		} 
 		/**

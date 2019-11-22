@@ -308,6 +308,29 @@ public class DBConnect {
 	// to keep in mind: when a tutor accepts a tutee's request, that availability msut go off of the tutor's
 	// time availability, and simultaneously tutee's requests for same class and time must die 
 	int addRequest(int tuteeID, int tutorID, String className, String time, int status) {
+		String checkQuery = "SELECT * FROM requests WHERE tutee_id=? AND (time=? OR class=?) AND status=1";
+		Boolean exists = jdbc.query(checkQuery, 
+				new PreparedStatementSetter() {
+					public void setValues(PreparedStatement preparedStatement) throws SQLException {
+						preparedStatement.setInt(1,  tuteeID);
+						preparedStatement.setString(2, time);
+						preparedStatement.setString(3, className);
+					}
+				}, 
+				 new ResultSetExtractor<Boolean>() {
+		            public Boolean extractData(ResultSet resultSet) throws SQLException,
+		              DataAccessException {
+		            	if (resultSet.next()) {
+		            		return true;
+		            	}
+		            	return false;
+		            }
+				});
+		
+		if (exists) {
+			return -1;
+		}
+		
 		String query = "INSERT INTO requests (tutee_id, tutor_id, class, time, status, time_created) "
 				+ "VALUES (?, ?, ?, ?, ?, ?)";
 		

@@ -68,7 +68,7 @@ class DBConnectTest {
 		JdbcTestUtils.deleteFromTables(jdbcTemplate, "requests", "classes", "users");
 	}
 
-	
+	//to delete
 	@Test
 	public void simpleTest() {
 		System.out.println("SIMPLE TEST");
@@ -189,6 +189,53 @@ class DBConnectTest {
 		assertEquals(user.getLastName(), newLastName);
 		System.out.println(firstName+" " +lastName+" is now "+firstName+" "+newLastName);
 	}
+  
+	
+	
+	@Test
+	public void updateEmail() {
+		System.out.println("Update first name");
+		String email = "jisoo@usc.edu";
+		String password = "password";
+		String firstName = "Ji Soo";
+		String lastName = "Kim";
+		String phoneNumber = "3101001000";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		
+		User userUpdate = new User(userID, firstName, lastName, email, phoneNumber, password, accountType, 0);
+		String newPassword = "iamveryscary";
+		userUpdate.setPasswordHash(newPassword);
+		dbConnect.updateUserInformation(userUpdate);
+
+		User user = dbConnect.getUserInformation(userID);
+		assertNotEquals(user.getPasswordHash(), password);
+		assertEquals(user.getPasswordHash(), newPassword);
+		System.out.println(password+" is now "+newPassword);
+	}
+	
+	@Test
+	public void updatePhoneNumber() {
+		System.out.println("Update first name");
+		String email = "jisoo@usc.edu";
+		String password = "password";
+		String firstName = "Ji Soo";
+		String lastName = "Kim";
+		String phoneNumber = "3101001000";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		
+		User userUpdate = new User(userID, firstName, lastName, email, phoneNumber, password, accountType, 0);
+		String newPhoneNumber = "6262002000";
+		userUpdate.setPhoneNumber(newPhoneNumber);
+		dbConnect.updateUserInformation(userUpdate);
+
+		User user = dbConnect.getUserInformation(userID);
+		assertNotEquals(user.getPhoneNumber(), phoneNumber);
+		assertEquals(user.getPhoneNumber(), newPhoneNumber);
+		System.out.println(phoneNumber+" is now "+newPhoneNumber);
+	}
+	
 
 	@Test
 	public void searchTutorsSingleTutorTest() {
@@ -321,49 +368,48 @@ class DBConnectTest {
 		assertEquals(tutor.getMatchingAvailabilities().get(1), 1);
 	}
 	
-	
 	@Test
-	public void updateEmail() {
-		System.out.println("Update first name");
-		String email = "jisoo@usc.edu";
-		String password = "password";
-		String firstName = "Ji Soo";
-		String lastName = "Kim";
-		String phoneNumber = "3101001000";
-		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
-		
-		User userUpdate = new User(userID, firstName, lastName, email, phoneNumber, password, accountType, 0);
-		String newPassword = "iamveryscary";
-		userUpdate.setPasswordHash(newPassword);
-		dbConnect.updateUserInformation(userUpdate);
-
-		User user = dbConnect.getUserInformation(userID);
-		assertNotEquals(user.getPasswordHash(), password);
-		assertEquals(user.getPasswordHash(), newPassword);
-		System.out.println(password+" is now "+newPassword);
+	void searchTutorsNoResultsTests() {
+		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
+		ArrayList<Integer> times = new ArrayList<>();
+		times.add(0);
+		times.add(5);
+		String className = "CSCI 103";
+		List<Tutor> tutors = dbConnect.searchTutors(userID, times, className);
+		assertEquals(true, tutors.isEmpty());
 	}
 	
+	/*
+	 * adds multiple requests for one user 
+	 */
 	@Test
-	public void updatePhoneNumber() {
-		System.out.println("Update first name");
-		String email = "jisoo@usc.edu";
-		String password = "password";
-		String firstName = "Ji Soo";
-		String lastName = "Kim";
-		String phoneNumber = "3101001000";
-		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+	void addRequestBasicTest() {
 		
-		User userUpdate = new User(userID, firstName, lastName, email, phoneNumber, password, accountType, 0);
-		String newPhoneNumber = "6262002000";
-		userUpdate.setPhoneNumber(newPhoneNumber);
-		dbConnect.updateUserInformation(userUpdate);
-
-		User user = dbConnect.getUserInformation(userID);
-		assertNotEquals(user.getPhoneNumber(), phoneNumber);
-		assertEquals(user.getPhoneNumber(), newPhoneNumber);
-		System.out.println(phoneNumber+" is now "+newPhoneNumber);
+	}
+	
+	/*
+	 * makes a request for the same timeslot or class as an already matched request
+	 */
+	@Test
+	void addRequestRejectedTest() {
+		//same timeslot
+		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
+		int requestID = dbConnect.addRequest(userID, tutorID, "CSCI 103", "0", 1);
+		assertNotEquals(-1, requestID);
+		
+		int tutorID2 = dbConnect.addUser("tutor2@usc.edu", "password", "tutor2", "tutor2", "1231231234", true);
+		int requestID2 = dbConnect.addRequest(userID, tutorID2, "CSCI 104", "0", 0);
+		assertEquals(-1, requestID2);
+		
+		//same classname
+		int requestID3 = dbConnect.addRequest(userID, tutorID2, "CSCI 103", "4", 0);
+		assertEquals(-1, requestID3);
+		
+		//different tutee should work
+		int tuteeID2 = dbConnect.addUser("tutee@usc.edu", "password", "tutee", "tutee", "1231231234", false);
+		int requestID4 = dbConnect.addRequest(tuteeID2, tutorID, "CSCI 103", "1", 0);
+		assertNotEquals(-1, requestID4);
 	}
 		
 	@Test
