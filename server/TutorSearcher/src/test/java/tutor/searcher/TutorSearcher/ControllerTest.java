@@ -2,13 +2,16 @@ package tutor.searcher.TutorSearcher;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 
@@ -22,11 +25,37 @@ class ControllerTest {
         Thread thread = new Thread(ct);
         thread.start();
         System.out.println("## Starting 2s Delay");
-        //        Thread.sleep(2000);
+        Thread.sleep(2000);
     }
 
     @Test
-    void SignUpSuccessThread() throws InterruptedException, IOException, ClassNotFoundException {
+    void SignUpSuccess() throws InterruptedException, IOException, ClassNotFoundException {
+        // Testing duplicate sign ups
+        System.out.println("Testing invalid request");
+        System.out.println();
+
+        // DBConnect mocks
+        DBConnect dbConnect = mock(DBConnect.class);
+        ct.setDbConnect(dbConnect);
+
+        // Start Controller and DummyTestClient
+        DummyTestClient dc = new DummyTestClient();
+
+        // Preparing Request object parameters
+        String requestType = "invalid";
+        HashMap<String, Object> respAttr = new HashMap<String, Object>();
+
+        // Creating Request object
+        Request request = new Request(requestType, respAttr);
+        dc.sendRequest(request);
+        Request response = dc.getResponse();
+
+        // Tests
+        assertEquals("", response.getRequestType());
+    }
+
+    @Test
+    void InvalidRequest() throws InterruptedException, IOException, ClassNotFoundException {
         // Testing duplicate sign ups
         System.out.println("Testing successful sign ups");
         System.out.println();
@@ -154,18 +183,31 @@ class ControllerTest {
 
     @Test
     void Search() throws InterruptedException, IOException, ClassNotFoundException {
+
         // Tests
         System.out.println("Testing search");
         System.out.println();
 
         // Setting test parameters
+        int userId = 1;
+        String className = "CSCI 104";
+        ArrayList<Integer> times = new ArrayList<Integer>();
+        times.add(0);
+        times.add(1);
+        times.add(2);
+        List<Tutor> tutors = new ArrayList<Tutor>();
 
         // Preparing Request object parameters
         String requestType = "search";
         HashMap<String, Object> respAttr = new HashMap<String, Object>();
+        respAttr.put("userID", userId);
+        respAttr.put("availability", times);
+        respAttr.put("className", className);
 
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
+        when(dbConnect.searchTutors(userId, times, className)).thenReturn(tutors);
+
         ct.setDbConnect(dbConnect);
 
         // Start Controller and DummyTestClient
@@ -187,13 +229,22 @@ class ControllerTest {
         System.out.println();
 
         // Setting test parameters
+        int tuteeID = 1;
+        int tutorID = 2;
+        String className = "CSCI 104";
+        String time = "1300";
 
         // Preparing Request object parameters
         String requestType = "newrequest";
         HashMap<String, Object> respAttr = new HashMap<String, Object>();
+        respAttr.put("tuteeID", tuteeID);
+        respAttr.put("tutorID", tutorID);
+        respAttr.put("className", className);
+        respAttr.put("time", time);
 
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
+        when(dbConnect.addRequest(tuteeID, tutorID, className, time, 0)).thenReturn(0);
         ct.setDbConnect(dbConnect);
 
         // Start Controller and DummyTestClient
@@ -206,6 +257,7 @@ class ControllerTest {
 
         // Tests
         assertEquals("Success", response.getRequestType());
+        assertEquals(0, response.get("requestID"));
     }
 
     @Test
@@ -215,13 +267,18 @@ class ControllerTest {
         System.out.println();
 
         // Setting test parameters
+        int userID = 1;
+        String viewrequeststype = "tuteeapproved";
 
         // Preparing Request object parameters
         String requestType = "viewrequests";
         HashMap<String, Object> respAttr = new HashMap<String, Object>();
+        respAttr.put("userID", userID);
+        respAttr.put("viewrequeststype", viewrequeststype);
 
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
+        when(dbConnect.getRequestsTuteeApproved(userID)).thenReturn(null);
         ct.setDbConnect(dbConnect);
 
         // Start Controller and DummyTestClient
@@ -243,13 +300,18 @@ class ControllerTest {
         System.out.println();
 
         // Setting test parameters
+        int requestID = 1;
+        int newStatus = 2;
 
         // Preparing Request object parameters
         String requestType = "updaterequeststatus";
         HashMap<String, Object> respAttr = new HashMap<String, Object>();
+        respAttr.put("requestID", requestID);
+        respAttr.put("newStatus", newStatus);
 
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
+        when(dbConnect.updateRequestStatus(requestID, newStatus)).thenReturn(true);
         ct.setDbConnect(dbConnect);
 
         // Start Controller and DummyTestClient
@@ -271,13 +333,18 @@ class ControllerTest {
         System.out.println();
 
         // Setting test parameters
+        int tutorID = 1;
+        List<Integer> availability = new ArrayList<Integer>();
 
         // Preparing Request object parameters
         String requestType = "updateavailability";
         HashMap<String, Object> respAttr = new HashMap<String, Object>();
+        respAttr.put("tutorID", tutorID);
+        respAttr.put("availability", availability);
 
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
+//        when(dbConnect.updateTutorAvailability(tutorID, availability)).thenReturn(true);
         ct.setDbConnect(dbConnect);
 
         // Start Controller and DummyTestClient
@@ -299,10 +366,14 @@ class ControllerTest {
         System.out.println();
 
         // Setting test parameters
+        int tutorID = 1;
+        ArrayList<String> className = new ArrayList<>();
 
         // Preparing Request object parameters
         String requestType = "addclass";
         HashMap<String, Object> respAttr = new HashMap<String, Object>();
+        respAttr.put("tutorID", tutorID);
+        respAttr.put("className", className);
 
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
@@ -327,13 +398,18 @@ class ControllerTest {
         System.out.println();
 
         // Setting test parameters
+        int tutorID = 1;
+        String className = "CSCI 104";
 
         // Preparing Request object parameters
         String requestType = "removeclass";
         HashMap<String, Object> respAttr = new HashMap<String, Object>();
+        respAttr.put("tutorID", tutorID);
+        respAttr.put("className", className);
 
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
+//        when(dbConnect.removeTutorFromClass(tutorID, className)).return(null);
         ct.setDbConnect(dbConnect);
 
         // Start Controller and DummyTestClient
@@ -355,10 +431,17 @@ class ControllerTest {
         System.out.println();
 
         // Setting test parameters
+        int tutorID = 1;
+        ArrayList<Integer> availability = new ArrayList<Integer>();
+        availability.add(1);
+        availability.add(2);
+        availability.add(3);
 
         // Preparing Request object parameters
         String requestType = "getavailability";
         HashMap<String, Object> respAttr = new HashMap<String, Object>();
+        respAttr.put("tutorID", tutorID);
+        respAttr.put("availability", availability);
 
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
@@ -383,13 +466,16 @@ class ControllerTest {
         System.out.println();
 
         // Setting test parameters
+        int tutorID = 1;
 
         // Preparing Request object parameters
         String requestType = "getclasses";
         HashMap<String, Object> respAttr = new HashMap<String, Object>();
+        respAttr.put("tutorID", tutorID);
 
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
+        when(dbConnect.getTutorClasses(tutorID)).thenReturn(null);
         ct.setDbConnect(dbConnect);
 
         // Start Controller and DummyTestClient
@@ -411,13 +497,16 @@ class ControllerTest {
         System.out.println();
 
         // Setting test parameters
+        int userID = 1;
 
         // Preparing Request object parameters
         String requestType = "searchprevious";
         HashMap<String, Object> respAttr = new HashMap<String, Object>();
+        respAttr.put("userID", userID);
 
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
+        when(dbConnect.searchTutorsPrevious(userID)).thenReturn(null);
         ct.setDbConnect(dbConnect);
 
         // Start Controller and DummyTestClient
@@ -439,13 +528,16 @@ class ControllerTest {
         System.out.println();
 
         // Setting test parameters
+        int userId = 1;
 
         // Preparing Request object parameters
         String requestType = "getuserinfo";
         HashMap<String, Object> respAttr = new HashMap<String, Object>();
+        respAttr.put("userID", userId);
 
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
+        when(dbConnect.getUserInformation(userId)).thenReturn(null);
         ct.setDbConnect(dbConnect);
 
         // Start Controller and DummyTestClient
@@ -467,10 +559,14 @@ class ControllerTest {
         System.out.println();
 
         // Setting test parameters
+        int userID = 1;
+        double rating = 1;
 
         // Preparing Request object parameters
         String requestType = "addrating";
         HashMap<String, Object> respAttr = new HashMap<String, Object>();
+        respAttr.put("userID", userID);
+        respAttr.put("rating", rating);
 
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);

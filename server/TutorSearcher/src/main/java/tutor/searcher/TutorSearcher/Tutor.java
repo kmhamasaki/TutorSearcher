@@ -41,7 +41,7 @@ public class Tutor extends User implements Serializable {
 		
 		
 	}
-	
+
 	// Availability represented as String of numbers deliminated by spaces
 	// ex: "1 2 3 5 6 7"
 	// Monday 9am-10am is 1, 10am 2, 11am 3, 12pm 4, 1pm 5, 2pm 6, 3pm 7, 4pm 8

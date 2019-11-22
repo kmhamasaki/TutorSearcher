@@ -254,7 +254,7 @@ public class Controller {
 		else if (request.getRequestType().equals("updateavailability")) {
 			int tutorID = (int)request.getAttributes().get("tutorID");
 			List<Integer> availability = (List<Integer>)request.getAttributes().get("availability");
-			dbConnect.updateTutorAvailability(tutorID, availability);
+//			dbConnect.updateTutorAvailability(tutorID, availability);
 			respType = "Success";
 		}
 		/**
@@ -330,8 +330,8 @@ public class Controller {
 		 */
 		else if (request.getRequestType().equals("getuserinfo")) {
 			User user = dbConnect.getUserInformation((int)request.get("userID"));
-			System.out.println("userid" + (int)request.get("userID"));
-			System.out.println("got user info for " + user.getFirstName());
+//			System.out.println("userid" + (int)request.get("userID"));
+//			System.out.println("got user info for " + user.getFirstName());
 
 			respAttr.put("user", user);
 			respType = "Success";
