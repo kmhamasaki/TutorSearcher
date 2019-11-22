@@ -86,6 +86,7 @@ class DBConnectTest {
 		String lastName = "Kim";
 		String phoneNumber = "1112223333";
 		Boolean accountType = true;
+		System.out.println("hi");
 		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
 		User user = dbConnect.getUserInformation(userID);
 		assertEquals(user.getEmail(), email);
@@ -235,6 +236,7 @@ class DBConnectTest {
 		System.out.println(phoneNumber+" is now "+newPhoneNumber);
 	}
 	
+
 	@Test
 	public void searchTutorsSingleTutorTest() {
 		int userID = dbConnect.addUser("tutor@usc.edu", "password", "tutorfirst", "tutorlast", "1231231234", true);
@@ -409,6 +411,119 @@ class DBConnectTest {
 		int requestID4 = dbConnect.addRequest(tuteeID2, tutorID, "CSCI 103", "1", 0);
 		assertNotEquals(-1, requestID4);
 	}
+		
+	@Test
+	public void updateNoClassAvailability() {
+		System.out.println("Update tutor's classes with no classes");
+		String email = "tutor@usc.edu";
+		String password = "password";
+		String firstName = "Chao";
+		String lastName = "Wang";
+		String phoneNumber = "1231231234";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		
+		ArrayList<String> classes = new ArrayList<String>();
+		dbConnect.addTutorToClass(userID, classes);
+		
+		ArrayList<String> dbClasses = dbConnect.getTutorClasses(userID);
+		assertEquals(dbClasses, classes);
+	}
 	
-
+	@Test
+	public void updateOneClassAvailability() {
+		System.out.println("Update tutor's classes with one class");
+		String email = "tutor@usc.edu";
+		String password = "password";
+		String firstName = "Chao";
+		String lastName = "Wang";
+		String phoneNumber = "1231231234";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		
+		ArrayList<String> classes = new ArrayList<String>();
+		classes.add("CSCI 201");
+		dbConnect.addTutorToClass(userID, classes);
+		
+		ArrayList<String> dbClasses = dbConnect.getTutorClasses(userID);
+		assertEquals(dbClasses, classes);
+	}
+	
+	@Test
+	public void updateMultipleClassAvailability() {
+		System.out.println("Update tutor's classes with multiple class");
+		String email = "tutor@usc.edu";
+		String password = "password";
+		String firstName = "Chao";
+		String lastName = "Wang";
+		String phoneNumber = "1231231234";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		
+		ArrayList<String> classes = new ArrayList<String>();
+		classes.add("CSCI 201");
+		classes.add("CSCI 103");
+		classes.add("CSCI 104");
+		classes.add("CSCI 109");
+		classes.add("EE 109");
+		dbConnect.addTutorToClass(userID, classes);
+		
+		ArrayList<String> dbClasses = dbConnect.getTutorClasses(userID);
+		assertEquals(dbClasses, classes);
+	}
+	
+	@Test
+	public void updateClassAvailabilityMultipleTimes() {
+		System.out.println("Update tutor's classes with multiple class");
+		String email = "tutor@usc.edu";
+		String password = "password";
+		String firstName = "Chao";
+		String lastName = "Wang";
+		String phoneNumber = "1231231234";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		
+		ArrayList<String> classes1 = new ArrayList<String>();
+		classes1.add("CSCI 360");
+		ArrayList<String> classes2 = new ArrayList<String>();
+		ArrayList<String> classes3 = new ArrayList<String>();
+		classes3.add("CSCI 102");
+		classes3.add("EE 109");
+		classes3.add("MATH 226");
+		classes3.add("CSCI 170");
+		classes3.add("CSCI 201");
+		classes3.add("CSCI 270");
+		
+		// iteration 1
+		dbConnect.addTutorToClass(userID, classes1);
+		
+		ArrayList<String> dbClasses1 = dbConnect.getTutorClasses(userID);
+		assertEquals(dbClasses1, classes1);
+		assertNotEquals(dbClasses1, classes2);
+		assertNotEquals(dbClasses1, classes3);
+		System.out.println(dbClasses1);
+		
+		// iteration 2
+		dbConnect.addTutorToClass(userID, classes2);
+		ArrayList<String> dbClasses2 = dbConnect.getTutorClasses(userID);
+		assertEquals(dbClasses2, classes2);
+		assertNotEquals(dbClasses2, classes1);
+		assertNotEquals(dbClasses2, classes3);
+		System.out.println(dbClasses2);
+		
+		// iteration 3
+		dbConnect.addTutorToClass(userID, classes3);
+		
+		ArrayList<String> dbClasses3 = dbConnect.getTutorClasses(userID);
+		assertEquals(dbClasses3, classes3);
+		assertNotEquals(dbClasses3, classes1);
+		assertNotEquals(dbClasses3, classes2);
+		System.out.println(dbClasses3);
+		
+	}
+	
+	@Test
+	public void updateAvailability() {
+		
+	}
 }

@@ -1,13 +1,14 @@
 package com.example.tutorsearcherandroid;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.HashMap;
 
@@ -16,12 +17,18 @@ import tutor.searcher.TutorSearcher.User;
 
 public class UpdateProfile extends AppCompatActivity {
 
+    Client client;
+
     private String UserId;
     private String AccountType;
     private User user;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Application app = (Application)getApplicationContext();
+        client = Client.initClient(app);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_profile);
 
@@ -42,7 +49,7 @@ public class UpdateProfile extends AppCompatActivity {
         try {
             HashMap<String, Object> attr = new HashMap<>();
             attr.put("userID", Integer.parseInt(UserId));
-            Client client = new Client("getuserinfo", attr);
+            client.setTypeAndAttr("getuserinfo", attr);
 
             // Pass all inputs to backend
             client.execute().get();
@@ -97,7 +104,7 @@ public class UpdateProfile extends AppCompatActivity {
         try {
             HashMap<String, Object> attr = new HashMap<>();
             attr.put("user", user);
-            Client client = new Client("updateinfo", attr);
+            client.setTypeAndAttr("updateinfo", attr);
 
             // Pass all inputs to backend
             client.execute().get();
@@ -134,7 +141,7 @@ public class UpdateProfile extends AppCompatActivity {
             //Get most recent search
             HashMap<String,Object> attr = new HashMap<>();
             attr.put("userID",Integer.parseInt(UserId));
-            Client client = new Client("searchprevious",attr);
+            client.setTypeAndAttr("searchprevious",attr);
             client.execute();
             Request response = null;
             while(response == null){

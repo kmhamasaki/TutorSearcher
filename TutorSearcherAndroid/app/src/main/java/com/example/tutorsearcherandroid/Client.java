@@ -1,15 +1,19 @@
 package com.example.tutorsearcherandroid;
 
+import android.app.Application;
+import android.os.AsyncTask;
 import android.widget.TextView;
+
 import java.io.IOException;
-import java.net.Socket;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.util.HashMap;
-import android.os.AsyncTask;
+
 import tutor.searcher.TutorSearcher.Request;
 
 public class Client extends AsyncTask<Void, Void, Void> {
+
 
     /*
      * Class Variables
@@ -19,16 +23,16 @@ public class Client extends AsyncTask<Void, Void, Void> {
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
     private TextView textResponse;
-    private String response = "";
-    private Request returnRequest;
-    private String incomingRequestType;
-    private HashMap<String,Object> incomingAttributes;
+    protected String response = "";
+    protected Request returnRequest;
+    protected String incomingRequestType;
+    protected HashMap<String,Object> incomingAttributes;
 
     /*
      * Constructor
      */
 
-    Client() {}
+    public Client() {}
     /*
      * Connect to server
      */
@@ -40,6 +44,19 @@ public class Client extends AsyncTask<Void, Void, Void> {
 
     public Request getResponse() {
         return returnRequest;
+    }
+
+    public void setTypeAndAttr(String incomingRequestType, HashMap<String,Object> incomingAttributes) {
+        this.incomingAttributes = incomingAttributes;
+        this.incomingRequestType = incomingRequestType;
+    }
+
+    public void setAttributes(HashMap<String,Object> incomingAttributes) {
+        this.incomingAttributes = incomingAttributes;
+    }
+
+    public void setRequestType(String incomingRequestType) {
+        this.incomingRequestType = incomingRequestType;
     }
 
     @Override
@@ -92,5 +109,21 @@ public class Client extends AsyncTask<Void, Void, Void> {
         //super.onPostExecute(result);
     }
 
+    static Client initClient(Application app) {
+        if(app.getClass().getName().equals("com.example.tutorsearcherandroid.TutorSearcherApp")) {
+            return new Client();
+        } else {
+            return new ClientTest();
+        }
+    }
+
+    static Client initClient(String incomingRequestType, HashMap<String,Object> incomingAttributes,
+                             Application app) {
+        if(app.getClass().getName().equals("com.example.tutorsearcherandroid.TutorSearcherApp")) {
+            return new Client(incomingRequestType, incomingAttributes);
+        } else {
+            return new ClientTest(incomingRequestType, incomingAttributes);
+        }
+    }
 
 }

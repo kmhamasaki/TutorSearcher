@@ -1,18 +1,18 @@
 package com.example.tutorsearcherandroid;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 
 import tutor.searcher.TutorSearcher.Request;
 
@@ -43,11 +43,13 @@ public class ChooseClasses extends AppCompatActivity {
     private String UserId;
     private String AccountType;
 
+    Application app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_classes);
+        app = (Application)getApplicationContext();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -63,7 +65,7 @@ public class ChooseClasses extends AppCompatActivity {
             try {
                 HashMap<String, Object> attr = new HashMap<>();
                 attr.put("tutorID", Integer.parseInt(UserId));
-                Client client = new Client("getclasses", attr);
+                Client client = Client.initClient("getclasses", attr, app);
                 client.execute().get();
                 Request response = client.getResponse();
 
@@ -100,7 +102,7 @@ public class ChooseClasses extends AppCompatActivity {
                 HashMap<String, Object> attr = new HashMap<>();
                 attr.put("className", selectedClasses);
                 attr.put("tutorID", Integer.parseInt(UserId));
-                Client client = new Client("addclass", attr);
+                Client client = Client.initClient("addclass", attr, app);
                 client.execute().get();
                 Request response = client.getResponse();
                 System.out.println(response.getRequestType());

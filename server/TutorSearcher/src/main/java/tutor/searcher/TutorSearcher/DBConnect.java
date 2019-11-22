@@ -792,7 +792,7 @@ public class DBConnect {
 	Boolean addTutorToClass(int tutorID, ArrayList<String> className) {
 		//delete all classes tutor is tutoring first (want overwrite)
 		String deleteQuery = "DELETE FROM classes WHERE tutor_id=?";
-		jdbc.execute(deleteQuery, new PreparedStatementCallback<Boolean> () {
+		Boolean deleteSucc = jdbc.execute(deleteQuery, new PreparedStatementCallback<Boolean> () {
 			@Override
 			public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
 				ps.setInt(1, tutorID);
@@ -800,6 +800,10 @@ public class DBConnect {
 				return ps.execute();
 			}
 		});
+		
+		if(className.size()==0) {
+			return deleteSucc;
+		}
 		
 		String values = "";
 		for (int i = 0; i < className.size(); i++) {
