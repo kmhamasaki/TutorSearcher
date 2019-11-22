@@ -384,7 +384,31 @@ class DBConnectTest {
 	 */
 	@Test
 	void addRequestBasicTest() {
+		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
+		int requestID = dbConnect.addRequest(userID, tutorID, "CSCI 103", "0", 0);
+		assertNotEquals(-1, requestID);
 		
+		int requestID2 = dbConnect.addRequest(userID, tutorID, "CSCI 104", "1", 0);
+		assertNotEquals(-1, requestID2);
+		
+		List<TutorRequest> requests = dbConnect.getRequestsTutorUnapproved(tutorID);
+		assertEquals(false, requests.isEmpty());
+		assertEquals(2, requests.size());
+		
+		TutorRequest tutorRequest = requests.get(0);
+		assertEquals(requestID, tutorRequest.getRequestID());
+		assertEquals("CSCI 103", tutorRequest.getClassName());
+		assertEquals("0", tutorRequest.getTime());
+		assertEquals(userID, tutorRequest.getTuteeID());
+		assertEquals(tutorID, tutorRequest.getTutorID());
+		
+		tutorRequest = requests.get(1);
+		assertEquals(requestID2, tutorRequest.getRequestID());
+		assertEquals("CSCI 104", tutorRequest.getClassName());
+		assertEquals("1", tutorRequest.getTime());
+		assertEquals(userID, tutorRequest.getTuteeID());
+		assertEquals(tutorID, tutorRequest.getTutorID());
 	}
 	
 	/*
@@ -410,6 +434,162 @@ class DBConnectTest {
 		int tuteeID2 = dbConnect.addUser("tutee@usc.edu", "password", "tutee", "tutee", "1231231234", false);
 		int requestID4 = dbConnect.addRequest(tuteeID2, tutorID, "CSCI 103", "1", 0);
 		assertNotEquals(-1, requestID4);
+	}
+	
+	@Test
+	void updateRequestStatusBasicAcceptedTest() {
+		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
+		ArrayList<Integer> availability = new ArrayList<>();
+		availability.add(0);
+		availability.add(1);
+		dbConnect.updateTutorAvailability(tutorID, availability);
+		int requestID = dbConnect.addRequest(userID, tutorID, "CSCI 103", "0", 0);
+		
+		dbConnect.updateRequestStatus(requestID, 1);
+		List<TutorRequest> tuteeRequests = dbConnect.getRequestsTuteeApproved(userID);
+		assertEquals(1, tuteeRequests.size());
+		
+		TutorRequest tr = tuteeRequests.get(0);
+		assertEquals(userID, tr.getTuteeID());
+		assertEquals("CSCI 103", tr.getClassName());
+		assertEquals(1, tr.getStatus());
+		
+		//now, check that tutor's availability was properly updated
+		ArrayList<Integer> updatedAvailability = dbConnect.getTutorAvailability(tutorID);
+		assertEquals(1, updatedAvailability.size());
+		assertEquals(1, updatedAvailability.get(0));
+	}
+	
+	@Test
+	void updateRequestStatusBasicRejectedTest() {
+		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
+		ArrayList<Integer> availability = new ArrayList<>();
+		availability.add(0);
+		availability.add(1);
+		dbConnect.updateTutorAvailability(tutorID, availability);
+		int requestID = dbConnect.addRequest(userID, tutorID, "CSCI 103", "0", 0);
+		
+		dbConnect.updateRequestStatus(requestID, 2);
+		List<TutorRequest> tuteeRequests = dbConnect.getRequestsTuteeApproved(userID);
+		assertEquals(0, tuteeRequests.size());
+		
+		tuteeRequests = dbConnect.getRequestsTuteeRejected(userID);
+		assertEquals(1, tuteeRequests.size());
+		
+		TutorRequest tr = tuteeRequests.get(0);
+		assertEquals(userID, tr.getTuteeID());
+		assertEquals("CSCI 103", tr.getClassName());
+		assertEquals(2, tr.getStatus());
+		
+		//now, check that tutor's availability was not updated
+		ArrayList<Integer> updatedAvailability = dbConnect.getTutorAvailability(tutorID);
+		assertEquals(2, updatedAvailability.size());
+		assertEquals(0, updatedAvailability.get(0));
+		assertEquals(1, updatedAvailability.get(1));
+	}
+	
+	/*
+	 * this tests where when you approve one request all requests from same tutee
+	 * with overlapping time will be rejected
+	 */
+	@Test
+	void updateRequestStatusTimeOverlapTest() {
+		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
+		ArrayList<Integer> availability = new ArrayList<>();
+		availability.add(0);
+		availability.add(1);
+		dbConnect.updateTutorAvailability(tutorID, availability);
+		int requestID = dbConnect.addRequest(userID, tutorID, "CSCI 103", "0", 0);
+		int requestID2 = dbConnect.addRequest(userID, tutorID, "CSCI 104", "0", 0);
+		int requestID3 = dbConnect.addRequest(userID, tutorID, "CSCI 109", "0", 0);
+		int requestID4 = dbConnect.addRequest(userID, tutorID, "CSCI 310", "1", 0);
+		dbConnect.updateRequestStatus(requestID, 1);
+		
+		List<TutorRequest> requests = dbConnect.getRequestsTuteeApproved(userID);
+		assertEquals(1, requests.size());
+		TutorRequest tr = requests.get(0);
+		assertEquals(requestID, tr.getRequestID());
+		assertEquals("CSCI 103", tr.getClassName());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals(userID, tr.getTuteeID());
+		
+		requests = dbConnect.getRequestsTuteeRejected(userID);
+		assertEquals(2, requests.size());
+		tr = requests.get(0);
+		assertEquals(requestID2, tr.getRequestID());
+		assertEquals("CSCI 104", tr.getClassName());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals(userID, tr.getTuteeID());
+		tr = requests.get(1);
+		assertEquals(requestID3, tr.getRequestID());
+		assertEquals("CSCI 109", tr.getClassName());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals(userID, tr.getTuteeID());
+		
+		ArrayList<Integer> updatedAvailability = dbConnect.getTutorAvailability(tutorID);
+		assertEquals(1, updatedAvailability.size());
+		assertEquals(1, updatedAvailability.get(0));
+		
+	}
+	
+	@Test
+	void updateRequestStatusClassOverlapTest() {
+		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
+		int tutorID2 = dbConnect.addUser("tutor1@usc.edu", "password", "tutorone", "tutorone", "1231231234", true);
+		ArrayList<Integer> availability = new ArrayList<>();
+		availability.add(0);
+		availability.add(1);
+		dbConnect.updateTutorAvailability(tutorID, availability);
+		int requestID = dbConnect.addRequest(userID, tutorID, "CSCI 103", "0", 0);
+		int requestID2 = dbConnect.addRequest(userID, tutorID2, "CSCI 103", "0", 0);
+		int requestID3 = dbConnect.addRequest(userID, tutorID, "CSCI 109", "3", 0);
+		int requestID4 = dbConnect.addRequest(userID, tutorID, "CSCI 310", "1", 0);
+		dbConnect.updateRequestStatus(requestID, 1);
+		
+		List<TutorRequest> requests = dbConnect.getRequestsTuteeApproved(userID);
+		assertEquals(1, requests.size());
+		TutorRequest tr = requests.get(0);
+		assertEquals(requestID, tr.getRequestID());
+		assertEquals("CSCI 103", tr.getClassName());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals(userID, tr.getTuteeID());
+		
+		requests = dbConnect.getRequestsTuteeRejected(userID);
+		assertEquals(1, requests.size());
+		tr = requests.get(0);
+		assertEquals(requestID2, tr.getRequestID());
+		assertEquals("CSCI 103", tr.getClassName());
+		assertEquals(tutorID2, tr.getTutorID());
+		assertEquals(userID, tr.getTuteeID());
+		
+		ArrayList<Integer> updatedAvailability = dbConnect.getTutorAvailability(tutorID);
+		assertEquals(1, updatedAvailability.size());
+		assertEquals(1, updatedAvailability.get(0));
+		
+	}
+	
+	@Test
+	void getRequestTuteeApprovedTest() {
+		
+	}
+	
+	@Test
+	void getRequestTuteeRejectedTest() { 
+		
+	}
+	
+	@Test
+	void getRequestTutorApprovedTest() {
+		
+	}
+	
+	@Test
+	void getRequestTutorUnapprovedTest() {
+		
 	}
 		
 	@Test
