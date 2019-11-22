@@ -573,25 +573,224 @@ class DBConnectTest {
 	}
 	
 	@Test
-	void getRequestTuteeApprovedTest() {
+	void getRequestsTuteeApprovedTest() {
+		int tuteeID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
 		
+		int requestID1 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 103", "0", 1);
+		int requestID2 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 104", "1", 1);
+		int requestID3 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 109", "2", 1);
+		int requestID4 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 310", "3", 1);
+		int requestID5 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 201", "5", 0);
+		int requestID6 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 270", "6", 2);
+		
+		List<TutorRequest> requests = dbConnect.getRequestsTuteeApproved(tuteeID);
+		assertEquals(4, requests.size());
+		
+		TutorRequest tr = requests.get(0);
+		assertEquals(requestID1, tr.getRequestID());
+		assertEquals(tuteeID, tr.getTuteeID());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals("CSCI 103", tr.getClassName());
+		assertEquals(1, tr.getStatus());
+		assertEquals("0", tr.getTime());
+
+		tr = requests.get(1);
+		assertEquals(requestID2, tr.getRequestID());
+		assertEquals(tuteeID, tr.getTuteeID());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals("CSCI 104", tr.getClassName());
+		assertEquals(1, tr.getStatus());
+		assertEquals("1", tr.getTime());
+		
+		tr = requests.get(2);
+		assertEquals(requestID3, tr.getRequestID());
+		assertEquals(tuteeID, tr.getTuteeID());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals("CSCI 109", tr.getClassName());
+		assertEquals(1, tr.getStatus());
+		assertEquals("2", tr.getTime());
+		
+		tr = requests.get(3);
+		assertEquals(requestID4, tr.getRequestID());
+		assertEquals(tuteeID, tr.getTuteeID());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals("CSCI 310", tr.getClassName());
+		assertEquals(1, tr.getStatus());
+		assertEquals("3", tr.getTime());
+
 	}
 	
 	@Test
-	void getRequestTuteeRejectedTest() { 
+	void getRequestsTuteeRejectedTest() { 
+		int tuteeID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
 		
+		int requestID1 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 103", "0", 2);
+		int requestID2 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 104", "1", 2);
+		int requestID3 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 109", "2", 2);
+		int requestID4 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 310", "3", 2);
+		int requestID5 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 201", "5", 0);
+		int requestID6 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 270", "6", 1);
+		
+		List<TutorRequest> requests = dbConnect.getRequestsTuteeRejected(tuteeID);
+		assertEquals(4, requests.size());
+		
+		TutorRequest tr = requests.get(0);
+		assertEquals(requestID1, tr.getRequestID());
+		assertEquals(tuteeID, tr.getTuteeID());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals("CSCI 103", tr.getClassName());
+		assertEquals(2, tr.getStatus());
+		assertEquals("0", tr.getTime());
+
+		tr = requests.get(1);
+		assertEquals(requestID2, tr.getRequestID());
+		assertEquals(tuteeID, tr.getTuteeID());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals("CSCI 104", tr.getClassName());
+		assertEquals(2, tr.getStatus());
+		assertEquals("1", tr.getTime());
+		
+		tr = requests.get(2);
+		assertEquals(requestID3, tr.getRequestID());
+		assertEquals(tuteeID, tr.getTuteeID());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals("CSCI 109", tr.getClassName());
+		assertEquals(2, tr.getStatus());
+		assertEquals("2", tr.getTime());
+		
+		tr = requests.get(3);
+		assertEquals(requestID4, tr.getRequestID());
+		assertEquals(tuteeID, tr.getTuteeID());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals("CSCI 310", tr.getClassName());
+		assertEquals(2, tr.getStatus());
+		assertEquals("3", tr.getTime());
 	}
 	
 	@Test
-	void getRequestTutorApprovedTest() {
+	void getRequestsTutorApprovedTest() {
+		int tuteeID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
 		
+		int requestID1 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 103", "0", 1);
+		int requestID2 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 104", "1", 1);
+		int requestID3 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 109", "2", 1);
+		int requestID4 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 310", "3", 1);
+		int requestID5 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 201", "5", 0);
+		int requestID6 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 270", "6", 2);
+		
+		List<TutorRequest> requests = dbConnect.getRequestsTutorApproved(tutorID);
+		assertEquals(4, requests.size());
+		
+		TutorRequest tr = requests.get(0);
+		assertEquals(requestID1, tr.getRequestID());
+		assertEquals(tuteeID, tr.getTuteeID());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals("CSCI 103", tr.getClassName());
+		assertEquals(1, tr.getStatus());
+		assertEquals("0", tr.getTime());
+
+		tr = requests.get(1);
+		assertEquals(requestID2, tr.getRequestID());
+		assertEquals(tuteeID, tr.getTuteeID());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals("CSCI 104", tr.getClassName());
+		assertEquals(1, tr.getStatus());
+		assertEquals("1", tr.getTime());
+		
+		tr = requests.get(2);
+		assertEquals(requestID3, tr.getRequestID());
+		assertEquals(tuteeID, tr.getTuteeID());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals("CSCI 109", tr.getClassName());
+		assertEquals(1, tr.getStatus());
+		assertEquals("2", tr.getTime());
+		
+		tr = requests.get(3);
+		assertEquals(requestID4, tr.getRequestID());
+		assertEquals(tuteeID, tr.getTuteeID());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals("CSCI 310", tr.getClassName());
+		assertEquals(1, tr.getStatus());
+		assertEquals("3", tr.getTime());
 	}
 	
 	@Test
-	void getRequestTutorUnapprovedTest() {
+	void getRequestsTutorUnapprovedTest() {
+		int tuteeID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
 		
+		int requestID1 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 103", "0", 0);
+		int requestID2 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 104", "1", 0);
+		int requestID3 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 109", "2", 0);
+		int requestID4 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 310", "3", 0);
+		int requestID5 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 201", "5", 1);
+		int requestID6 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 270", "6", 2);
+		
+		List<TutorRequest> requests = dbConnect.getRequestsTutorUnapproved(tutorID);
+		assertEquals(4, requests.size());
+		
+		TutorRequest tr = requests.get(0);
+		assertEquals(requestID1, tr.getRequestID());
+		assertEquals(tuteeID, tr.getTuteeID());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals("CSCI 103", tr.getClassName());
+		assertEquals(0, tr.getStatus());
+		assertEquals("0", tr.getTime());
+
+		tr = requests.get(1);
+		assertEquals(requestID2, tr.getRequestID());
+		assertEquals(tuteeID, tr.getTuteeID());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals("CSCI 104", tr.getClassName());
+		assertEquals(0, tr.getStatus());
+		assertEquals("1", tr.getTime());
+		
+		tr = requests.get(2);
+		assertEquals(requestID3, tr.getRequestID());
+		assertEquals(tuteeID, tr.getTuteeID());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals("CSCI 109", tr.getClassName());
+		assertEquals(0, tr.getStatus());
+		assertEquals("2", tr.getTime());
+		
+		tr = requests.get(3);
+		assertEquals(requestID4, tr.getRequestID());
+		assertEquals(tuteeID, tr.getTuteeID());
+		assertEquals(tutorID, tr.getTutorID());
+		assertEquals("CSCI 310", tr.getClassName());
+		assertEquals(0, tr.getStatus());
+		assertEquals("3", tr.getTime());
 	}
 		
+	@Test
+	void getRequestEmptyTest() {
+		int tuteeID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
+		int tuteeID2 = dbConnect.addUser("tutee@usc.edu", "password", "tutee", "tutee", "1231231234", false);
+		
+		int requestID1 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 103", "0", 1);
+		int requestID2 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 104", "1", 1);
+		int requestID3 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 109", "2", 1);
+		int requestID4 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 310", "3", 1);
+		int requestID5 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 201", "5", 0);
+		int requestID6 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 270", "6", 2);
+		
+		List<TutorRequest> requests = dbConnect.getRequestsTuteeApproved(tuteeID2);
+		assertEquals(0, requests.size());
+		
+		requests = dbConnect.getRequestsTuteeRejected(tuteeID2);
+		assertEquals(0, requests.size());
+		
+		requests = dbConnect.getRequestsTutorApproved(tuteeID2);
+		assertEquals(0, requests.size());
+		
+		requests = dbConnect.getRequestsTutorUnapproved(tuteeID2);
+		assertEquals(0, requests.size());
+	}
+	
 	@Test
 	public void updateNoClassAvailability() {
 		System.out.println("Update tutor's classes with no classes");
