@@ -938,11 +938,110 @@ class DBConnectTest {
 		assertNotEquals(dbClasses3, classes1);
 		assertNotEquals(dbClasses3, classes2);
 		System.out.println(dbClasses3);
-		
 	}
 	
 	@Test
-	public void updateAvailability() {
+	public void updateNoTimeAvailability() {
+		System.out.println("Update tutor's time availability with no time");
+		String email = "nihao@usc.edu";
+		String password = "mamama";
+		String firstName = "Ji";
+		String lastName = "Dan";
+		String phoneNumber = "3109871234";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
 		
+		List<Integer> times = new ArrayList<Integer>();
+		
+		dbConnect.updateTutorAvailability(userID, times);
+		
+		List<Integer> dbTimes = dbConnect.getTutorAvailability(userID);
+		assertEquals(dbTimes, times);
+	}
+	
+	@Test
+	public void updateOneTimeAvailability() {
+		System.out.println("Update tutor's time availability with 1 timeslot");
+		String email = "jasonmamoa@usc.edu";
+		String password = "yespassword";
+		String firstName = "Jason";
+		String lastName = "Mamoa";
+		String phoneNumber = "1230001233";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		
+		List<Integer> times = new ArrayList<Integer>();
+		times.add(1);
+		
+		dbConnect.updateTutorAvailability(userID, times);
+		
+		List<Integer> dbTimes = dbConnect.getTutorAvailability(userID);
+		assertEquals(dbTimes, times);
+	}
+	
+	@Test
+	public void updateMaxTimeAvailability() {
+		System.out.println("Update tutor's time availability with 56 timeslots");
+		String email = "emilia@usc.edu";
+		String password = "motherofdragons";
+		String firstName = "Emila";
+		String lastName = "Clarke";
+		String phoneNumber = "3101006969";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		
+		List<Integer> times = new ArrayList<Integer>();
+		for(int i=0;i<56;i++) {
+			times.add(i);
+		}
+		
+		dbConnect.updateTutorAvailability(userID, times);
+		
+		List<Integer> dbTimes = dbConnect.getTutorAvailability(userID);
+		assertEquals(dbTimes, times);
+	}
+	
+	@Test
+	public void updateTimeAvailabilityMultipleTimes() {
+		System.out.println("Update tutor's time availability multiple times");
+		String email = "snake@usc.edu";
+		String password = "imasnake";
+		String firstName = "Taylor";
+		String lastName = "Swift";
+		String phoneNumber = "3106121234";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		
+		List<Integer> times1 = new ArrayList<Integer>();
+		for(int i=0;i<56;i++) {
+			times1.add(i);
+		}
+		List<Integer> times2 = new ArrayList<Integer>();
+		List<Integer> times3 = new ArrayList<Integer>();
+		times3.add(10);
+		
+		// iteration 1 with time1
+		dbConnect.updateTutorAvailability(userID, times1);
+		
+		List<Integer> dbTimes1 = dbConnect.getTutorAvailability(userID);
+		assertEquals(dbTimes1, times1);
+		assertNotEquals(dbTimes1, times2);
+		assertNotEquals(dbTimes1, times3);
+		
+		// iteration 2 with time2
+		dbConnect.updateTutorAvailability(userID, times2);
+		
+		List<Integer> dbTimes2 = dbConnect.getTutorAvailability(userID);
+		assertEquals(dbTimes2, times2);
+		assertNotEquals(dbTimes2, times1);
+		assertNotEquals(dbTimes2, times3);
+		
+		// iteration 3 with time3
+		dbConnect.updateTutorAvailability(userID, times3);
+		
+		List<Integer> dbTimes3 = dbConnect.getTutorAvailability(userID);
+		assertEquals(dbTimes3, times3);
+		assertNotEquals(dbTimes3, times1);
+		assertNotEquals(dbTimes3, times2);
 	}
 }

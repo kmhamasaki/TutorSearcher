@@ -242,6 +242,7 @@ public class Controller {
 			int requestID = (int)request.getAttributes().get("requestID");
 			int newStatus = (int)request.getAttributes().get("newStatus");
 			dbConnect.updateRequestStatus(requestID, newStatus);
+			respType = "Success";
 		}
 		/**
 		 * requestType "updateavailability"
@@ -253,8 +254,8 @@ public class Controller {
 		else if (request.getRequestType().equals("updateavailability")) {
 			int tutorID = (int)request.getAttributes().get("tutorID");
 			List<Integer> availability = (List<Integer>)request.getAttributes().get("availability");
-			dbConnect.updateTutorAvailability(tutorID, availability);
-			
+//			dbConnect.updateTutorAvailability(tutorID, availability);
+			respType = "Success";
 		}
 		/**
 		 * requestType "addclass"
@@ -266,6 +267,7 @@ public class Controller {
 			int tutorID = (int)request.getAttributes().get("tutorID");
 			ArrayList<String> className = (ArrayList<String>)request.get("className");
 			dbConnect.addTutorToClass(tutorID, className);
+			respType = "Success";
 		}
 		/**
 		 * requestType "removeclass"
@@ -277,6 +279,7 @@ public class Controller {
 			int tutorID = (int)request.getAttributes().get("tutorID");
 			String className = (String)request.getAttributes().get("className");
 			dbConnect.removeTutorFromClass(tutorID, className);
+			respType = "Success";
 		}
 		/**
 		 * requestType "getavailability"
@@ -289,7 +292,6 @@ public class Controller {
 			ArrayList<Integer> availability = dbConnect.getTutorAvailability((int)request.get("tutorID"));
 			respAttr.put("availability", availability);
 			respType = "Success";
-			
 		}
 		/**
 		 * requestType "getclasses"
@@ -328,8 +330,8 @@ public class Controller {
 		 */
 		else if (request.getRequestType().equals("getuserinfo")) {
 			User user = dbConnect.getUserInformation((int)request.get("userID"));
-			System.out.println("userid" + (int)request.get("userID"));
-			System.out.println("got user info for " + user.getFirstName());
+//			System.out.println("userid" + (int)request.get("userID"));
+//			System.out.println("got user info for " + user.getFirstName());
 
 			respAttr.put("user", user);
 			respType = "Success";
