@@ -792,6 +792,46 @@ class DBConnectTest {
 	}
 	
 	@Test
+	void authenticateBasicTest() {
+		int userID = dbConnect.addUser("person@usc.edu", "password", "personfirst", "personlast", "1231231234", true);
+		User user = dbConnect.authenticate("person@usc.edu", "password");
+		assertNotEquals(null, user);
+		assertEquals("person@usc.edu", user.getEmail());
+		assertEquals("personfirst", user.getFirstName());
+		assertEquals("personlast", user.getLastName());
+		assertEquals("1231231234", user.getPhoneNumber());
+		assertEquals(true, user.getAccountType());
+		
+	}
+	
+	@Test
+	void authenticateNonexistentUserTest() {
+		int userID = dbConnect.addUser("person1@usc.edu", "password", "personfirst", "personlast", "1231231234", true);
+		User user = dbConnect.authenticate("person@usc.edu", "password");
+		assertEquals(null, user);
+	}
+	
+	@Test
+	void authenticateWrongPasswordTest() {
+		int userID = dbConnect.addUser("person@usc.edu", "password", "personfirst", "personlast", "1231231234", true);
+		User user = dbConnect.authenticate("person@usc.edu", "password1");
+		assertEquals(null, user);
+		
+		user = dbConnect.authenticate("person@usc.edu", "PASSWORD");
+		assertEquals(null, user);
+	}
+	
+	@Test
+	void removeTutorFromClassBasicTest() {
+		
+	}
+	
+	@Test
+	void removeTutorFromClassDeleteRequestsTest() { 
+		
+	}
+	
+	@Test
 	public void updateNoClassAvailability() {
 		System.out.println("Update tutor's classes with no classes");
 		String email = "tutor@usc.edu";
