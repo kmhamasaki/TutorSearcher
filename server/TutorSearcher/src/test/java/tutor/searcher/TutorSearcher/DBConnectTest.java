@@ -822,6 +822,27 @@ class DBConnectTest {
 	}
 	
 	@Test
+	void getTutorAvailabilityTest() {
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
+		ArrayList<Integer> availability = new ArrayList<>();
+		availability.add(0);
+		availability.add(1);
+		availability.add(3);
+		dbConnect.updateTutorAvailability(tutorID, availability);
+		
+		ArrayList<Integer> tutorAvailability = dbConnect.getTutorAvailability(tutorID);
+		assertEquals(availability, tutorAvailability);
+		
+		availability = new ArrayList<>();
+		availability.add(20);
+		availability.add(35);
+		dbConnect.updateTutorAvailability(tutorID, availability);
+		
+		tutorAvailability = dbConnect.getTutorAvailability(tutorID);
+		assertEquals(availability, tutorAvailability);
+	}
+	
+	@Test
 	void removeTutorFromClassBasicTest() {
 		
 	}
