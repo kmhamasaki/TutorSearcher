@@ -3,6 +3,7 @@ package com.example.tutorsearcherandroid;
 import android.content.Intent;
 
 import androidx.test.espresso.action.ViewActions;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -10,6 +11,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import junit.framework.TestCase;
 
+import org.hamcrest.core.AllOf;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -22,40 +24,54 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.core.AllOf.allOf;
 
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest extends TestCase {
 
-/*    @Test
-    public void SuccessLoginTest() {
+    @Test
+    public void SuccessTutorLoginTest() {
         ActivityTestRule<MainActivity> activity =
                 new IntentsTestRule<>(MainActivity.class, true, true);
         Intent intent = new Intent();
         activity.launchActivity(intent);
 
-        activity.getActivity().client = new ClientTest();
-
         onView(withId(R.id.login)).perform(click());
-        onView(withId(R.id.username)).perform(typeText("tutor1@usc.edu"));
+        onView(withId(R.id.username)).perform(typeText("successTutor@usc.edu"));
         onView(withId(R.id.password)).perform(typeText("password"));
         onView(withId(R.id.bigLogin)).perform(click());
         intended(hasComponent(ScrollingHomeActivity.class.getName()));
 
-        //TODO: Check Assigned Intents on Following Page
         Intents.release();
     }
 
     @Test
-    public void InvalidEmailTest() {
+    public void SuccessTuteeLoginTest() {
         ActivityTestRule<MainActivity> activity =
                 new IntentsTestRule<>(MainActivity.class, true, true);
         Intent intent = new Intent();
         activity.launchActivity(intent);
 
         onView(withId(R.id.login)).perform(click());
-        onView(withId(R.id.username)).perform(typeText("fakeEmail@usc.edu"));
+        onView(withId(R.id.username)).perform(typeText("successTutee@usc.edu"));
+        onView(withId(R.id.password)).perform(typeText("password"));
+        onView(withId(R.id.bigLogin)).perform(click());
+        intended(hasComponent(ScrollingHomeActivity.class.getName()));
+        Intents.release();
+    }
+
+    @Test
+    public void InvalidLoginTest() {
+        ActivityTestRule<MainActivity> activity =
+                new IntentsTestRule<>(MainActivity.class, true, true);
+        Intent intent = new Intent();
+        activity.launchActivity(intent);
+
+        onView(withId(R.id.login)).perform(click());
+        onView(withId(R.id.username)).perform(typeText("invalidEmail@usc.edu"));
         onView(withId(R.id.password)).perform(typeText("password"));
         onView(withId(R.id.bigLogin)).perform(click());
 
@@ -67,21 +83,25 @@ public class MainActivityTest extends TestCase {
     }
 
     @Test
-    public void SuccessLoginTest() {
+    public void MostRecentSearchTest() {
         ActivityTestRule<MainActivity> activity =
                 new IntentsTestRule<>(MainActivity.class, true, true);
         Intent intent = new Intent();
         activity.launchActivity(intent);
 
-        activity.getActivity().client = new ClientTest();
-
         onView(withId(R.id.login)).perform(click());
-        onView(withId(R.id.username)).perform(typeText("validEmail@usc.edu"));
+        onView(withId(R.id.username)).perform(typeText("successTutee@usc.edu"));
         onView(withId(R.id.password)).perform(typeText("password"));
+
+
         onView(withId(R.id.bigLogin)).perform(click());
         intended(hasComponent(ScrollingHomeActivity.class.getName()));
 
-        //TODO: Check Assigned Intents on Following Page
+        onView(withId(R.id.recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        intended(hasComponent(TutorTimeActivity.class.getName()));
+
+//        intended(hasComponent(ScrollingHomeActivity.class.getName()));
         Intents.release();
-    }*/
+    }
+
 }

@@ -27,7 +27,7 @@ public class ScrollingHomeActivity extends AppCompatActivity implements MyAdapte
 
     private String UserId;
     private String AccountType;
-    private String Class;
+    public String Class;
 
     //Recyler View Variables
     private List<Tutor> TutorList;
@@ -100,6 +100,7 @@ public class ScrollingHomeActivity extends AppCompatActivity implements MyAdapte
             if(AccountType.equals("Tutee")){
                 Request response = (Request) extras.get("TutorList");
                 if(response != null){
+                    System.out.println("Got Response");
                     TutorList = (List<Tutor>) response.get("results");
                     Class = extras.getString("ClassName");
                 }

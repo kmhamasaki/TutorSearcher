@@ -74,9 +74,8 @@ public class TutorTimeActivity extends AppCompatActivity implements View.OnClick
         timeCode = generateTimesBackward(times);
 
         rg = new RadioGroup(this);
-        if(MatchedAvailability == null){
-            System.out.println("Whoops");
-        }
+        rg.setId(R.id.radio_group);
+
         for(int i = 0; i < MatchedAvailability.size(); i ++){
             RadioButton rb = new RadioButton(this);
             rb.setText(times.get(MatchedAvailability.get(i)));
