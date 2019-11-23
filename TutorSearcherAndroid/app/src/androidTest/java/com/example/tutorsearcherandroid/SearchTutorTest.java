@@ -3,6 +3,7 @@ package com.example.tutorsearcherandroid;
 import android.content.Intent;
 
 //import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.Espresso;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
@@ -50,7 +51,6 @@ public class SearchTutorTest extends TestCase {
         //Select Time
         intended(hasComponent(TabbedAvailabilityActivity.class.getName()));
         //TODO: Set one of the check boxes to true
-
         /*onView(withId(R.id.submitButton)).perform(click());
 
         //Select Tutor
@@ -80,9 +80,23 @@ public class SearchTutorTest extends TestCase {
 
         //Select Time
         intended(hasComponent(TabbedAvailabilityActivity.class.getName()));
-
         //TODO: Select unmatched time
+
+        //Go Back and select right time
+        Espresso.pressBack();
+        intended(hasComponent(TabbedAvailabilityActivity.class.getName()));
+        //TODO: Select matched time
         onView(withId(R.id.submitButton)).perform(click());
+
+        //Select Tutor
+        /*intended(hasComponent(SearchResultsActivity.class.getName()));
+        onView(withId(R.id.recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
+        //Select Time
+        intended(hasComponent(TutorTimeActivity.class.getName()));
+        onView(AllOf.allOf(withText("Monday: 9:00 am - 10:00 am"),
+                withParent(withId(R.id.radio_group)))).perform(click());
+        intended(hasComponent(ScrollingHomeActivity.class.getName()));*/
 
         pressBack();
 
