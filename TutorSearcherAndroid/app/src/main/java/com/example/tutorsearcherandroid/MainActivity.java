@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(i);
     }
 
-    private String hashPassword(String unhashedPassword){
+    public static String hashPassword(String unhashedPassword){
         String hashedPassword = "";
         try{
             MessageDigest md = MessageDigest.getInstance("MD5");
