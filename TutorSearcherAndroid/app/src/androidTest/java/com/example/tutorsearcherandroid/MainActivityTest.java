@@ -11,6 +11,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import junit.framework.TestCase;
 
+import org.hamcrest.core.AllOf;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -39,7 +40,7 @@ public class MainActivityTest extends TestCase {
         activity.launchActivity(intent);
 
         onView(withId(R.id.login)).perform(click());
-        onView(withId(R.id.username)).perform(typeText("successTutee@usc.edu"));
+        onView(withId(R.id.username)).perform(typeText("successTutor@usc.edu"));
         onView(withId(R.id.password)).perform(typeText("password"));
         onView(withId(R.id.bigLogin)).perform(click());
         intended(hasComponent(ScrollingHomeActivity.class.getName()));
@@ -55,7 +56,7 @@ public class MainActivityTest extends TestCase {
         activity.launchActivity(intent);
 
         onView(withId(R.id.login)).perform(click());
-        onView(withId(R.id.username)).perform(typeText("successTutor@usc.edu"));
+        onView(withId(R.id.username)).perform(typeText("successTutee@usc.edu"));
         onView(withId(R.id.password)).perform(typeText("password"));
         onView(withId(R.id.bigLogin)).perform(click());
         intended(hasComponent(ScrollingHomeActivity.class.getName()));
@@ -78,6 +79,28 @@ public class MainActivityTest extends TestCase {
                 .inRoot(withDecorView(not(activity.getActivity().getWindow().getDecorView())))
                 .check(matches(isDisplayed()));
 
+        Intents.release();
+    }
+
+    @Test
+    public void MostRecentSearchTest() {
+        ActivityTestRule<MainActivity> activity =
+                new IntentsTestRule<>(MainActivity.class, true, true);
+        Intent intent = new Intent();
+        activity.launchActivity(intent);
+
+        onView(withId(R.id.login)).perform(click());
+        onView(withId(R.id.username)).perform(typeText("successTutee@usc.edu"));
+        onView(withId(R.id.password)).perform(typeText("password"));
+
+
+        onView(withId(R.id.bigLogin)).perform(click());
+        intended(hasComponent(ScrollingHomeActivity.class.getName()));
+
+        onView(withId(R.id.recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        intended(hasComponent(TutorTimeActivity.class.getName()));
+
+//        intended(hasComponent(ScrollingHomeActivity.class.getName()));
         Intents.release();
     }
 
