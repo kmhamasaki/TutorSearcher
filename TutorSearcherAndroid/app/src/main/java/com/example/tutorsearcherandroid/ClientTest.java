@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import tutor.searcher.TutorSearcher.Request;
+import tutor.searcher.TutorSearcher.TutorRequest;
 import tutor.searcher.TutorSearcher.User;
 
 public class ClientTest extends Client {
@@ -47,6 +48,20 @@ public class ClientTest extends Client {
             ArrayList<String> classes = new ArrayList<String>();
             classes.add("CSCI 103");
             attr.put("classes", classes);
+            returnRequest = new Request("success", attr);
+        } else if(incomingRequestType.equals("viewrequests")) {
+            ArrayList<TutorRequest> requests = new ArrayList<TutorRequest>();
+            // TutorRequest(int requestID, int tuteeID, int tutorID, String time, int status,
+            //			String timecreated, String className)
+            TutorRequest tr = new TutorRequest(0, 1, 2, "3", 0,
+                    "TIME", "CSCI 103");
+            tr.setTuteeName("TuteeName1");
+            requests.add(tr);
+            tr = new TutorRequest(0, 1, 2, "9", 0,
+                    "TIME", "CSCI 102");
+            tr.setTuteeName("TuteeName2");
+            requests.add(tr);
+            attr.put("requests", requests);
             returnRequest = new Request("success", attr);
         }
         return null;
