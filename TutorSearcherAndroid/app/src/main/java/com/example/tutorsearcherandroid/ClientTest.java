@@ -44,6 +44,12 @@ public class ClientTest extends Client {
                         false, 1.0);
                 attr.put("user", user);
                 returnRequest = new Request("success", attr);
+            } else if((int) incomingAttributes.get("userID") == 3) {
+                User user = new User(1, "Jill", "Trojan",
+                        "jill@usc.edu", "0987654321", "password",
+                        false, 1.0);
+                attr.put("user", user);
+                returnRequest = new Request("success", attr);
             }
         } else if(incomingRequestType.equals("updateinfo")) {
             returnRequest = new Request("success", attr);
@@ -61,7 +67,7 @@ public class ClientTest extends Client {
                         "TIME", "CSCI 103");
                 tr.setTuteeName("TuteeName1");
                 requests.add(tr);
-                tr = new TutorRequest(0, 1, 2, "9", 0,
+                tr = new TutorRequest(0, 3, 2, "9", 0,
                         "TIME", "CSCI 102");
                 tr.setTuteeName("TuteeName2");
                 requests.add(tr);
