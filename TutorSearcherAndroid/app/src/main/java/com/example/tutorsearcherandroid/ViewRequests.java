@@ -29,7 +29,7 @@ import tutor.searcher.TutorSearcher.TutorRequest;
 public class ViewRequests extends AppCompatActivity
         implements PendingRequestAdapter.OnButtonClickListener {
 
-    private String UserId;
+    public String UserId;
     private String AccountType;
     Application app;
     private RecyclerView recyclerView;

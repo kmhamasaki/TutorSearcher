@@ -4,6 +4,8 @@ import android.content.res.Resources;
 import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -70,3 +72,4 @@ public class RecyclerViewMatcher {
         };
     }
 }
+
