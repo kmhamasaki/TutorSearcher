@@ -1004,4 +1004,44 @@ class DBConnectTest {
 		assertNotEquals(dbTimes3, times1);
 		assertNotEquals(dbTimes3, times2);
 	}
+	
+	@Test
+	public void removeTutorFromClass() {
+		System.out.println("Remove tutor from class");
+		String email = "arianagrande@usc.edu";
+		String password = "butera";
+		String firstName = "Ariana";
+		String lastName = "Grande";
+		String phoneNumber = "3104101300";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+
+		ArrayList<String> classes = new ArrayList<>();
+		classes.add("CSCI 103");
+		classes.add("CSCI 104");
+		dbConnect.addTutorToClass(userID, classes);
+		
+		dbConnect.removeTutorFromClass(userID, "CSCI 103");
+		classes.remove("CSCI 103");
+		ArrayList<String> dbClasses=dbConnect.getTutorClasses(userID);
+		assertEquals(dbClasses,classes);
+	}
+	
+	@Test
+	public void removeTutorFromClassFail() {
+		System.out.println("Remove tutor from class that tutor is not enrolled in");
+		String email = "arianaventi@usc.edu";
+		String password = "joan";
+		String firstName = "Ariana";
+		String lastName = "Venti";
+		String phoneNumber = "69696969";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+
+		ArrayList<String> classes = new ArrayList<>();
+
+		dbConnect.removeTutorFromClass(userID, "CSCI 1");
+		ArrayList<String> dbClasses=dbConnect.getTutorClasses(userID);
+		assertEquals(dbClasses,classes);
+	}
 }
