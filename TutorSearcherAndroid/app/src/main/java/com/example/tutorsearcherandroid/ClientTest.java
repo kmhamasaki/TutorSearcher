@@ -2,8 +2,11 @@ package com.example.tutorsearcherandroid;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import tutor.searcher.TutorSearcher.Request;
+import tutor.searcher.TutorSearcher.Tutee;
+import tutor.searcher.TutorSearcher.Tutor;
 import tutor.searcher.TutorSearcher.User;
 
 public class ClientTest extends Client {
@@ -48,6 +51,37 @@ public class ClientTest extends Client {
             classes.add("CSCI 103");
             attr.put("classes", classes);
             returnRequest = new Request("success", attr);
+        } else if(incomingRequestType.equals("login")) {
+            System.out.println("In LOGIN TEST");
+            if(incomingAttributes.get("email").equals("invalidEmail@usc.edu")){
+                returnRequest = new Request("Error: wrong email or password", attr);
+            }else if(incomingAttributes.get("email").equals("successTutor@usc.edu")){
+                User user = new Tutor(1, "John", "Trojan",
+                        "successTutor@usc.edu", "12344567890", "password",
+                        true,"1 2 3 4", 1.0);
+                attr.put("User",user);
+                returnRequest = new Request("success",attr);
+            }else{
+                User user = new Tutee(1, "John", "Trojan",
+                        "successTutee@usc.edu", "12344567890", false, 1.0);
+                attr.put("User",user);
+                returnRequest = new Request("success",attr);
+            }
+        } else if(incomingRequestType.equals("searchprevious") || incomingRequestType.equals("search")){
+            List<Tutor> results = new ArrayList<>();
+            Tutor t1 = new Tutor(1, "John", "Trojan",
+                    "successTutor@usc.edu", "12344567890", "password",
+                    true,"0 1 2 3 4", 1.0);
+
+            t1.setMatchingAvailabilities((ArrayList<Integer>) t1.getTimeAvailabilities());
+            results.add(t1);
+            Tutor t2 = new Tutor(1, "Jane", "Doe",
+                    "successTutor@usc.edu", "12344567890", "password",
+                    true,"0 1 2 3 4", 1.0);
+            t2.setMatchingAvailabilities((ArrayList<Integer>) t2.getTimeAvailabilities());
+            results.add(t2);
+            attr.put("results",results);
+            returnRequest = new Request("results",attr);
         }
         return null;
     }

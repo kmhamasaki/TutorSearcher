@@ -3,6 +3,7 @@ package com.example.tutorsearcherandroid;
 import android.content.Intent;
 
 //import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -10,6 +11,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import junit.framework.TestCase;
 
+import org.hamcrest.core.AllOf;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -43,27 +45,32 @@ public class RequestTutorTest extends TestCase {
         activity.launchActivity(intent);
 
         //Set Test Tutor List and Class
-        Tutor tutor = new Tutor(1,"Tutor","Tutor",
-                "tutor@usc.edu","8081234567","password",
-                true,"5",5.0);
-        ArrayList<Tutor> t = new ArrayList<>();
-        t.add(tutor);
-//        activity.getActivity().TutorList = t;
-//        activity.getActivity().Class = "CSCI 102";
+
+        intended(hasComponent(TabbedAvailabilityActivity.class.getName()));
 
         //Select Tutor
-//        onView(withId(R.id.recyclerView))
-//                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        intended(hasComponent(TabbedAvailabilityActivity.class.getName()));
+        onView(withId(R.id.recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
         intended(hasComponent(TutorTimeActivity.class.getName()));
         //Select Time
-
-        //TODO: activity.getActivity().client = new ClientTest();
-//        onView(allOf(withText("Monday: 9:00am - 10:00am"),
-//                withParent(withId(R.id.radio_group))))
-//                .check(matches(isChecked()));
+        onView(AllOf.allOf(withText("Monday: 9:00 am - 10:00 am"),
+                withParent(withId(R.id.radio_group)))).perform(click());
 //        onView(withId(R.id.sendRequest)).perform(click());
 //        intended(hasComponent(ScrollingHomeActivity.class.getName()));
+
+        Intents.release();
+    }
+    @Test
+    public void NoResultTest() {
+        ActivityTestRule<SearchResultsActivity> activity =
+                new IntentsTestRule<>(SearchResultsActivity.class, true, true);
+        Intent intent = new Intent();
+        activity.launchActivity(intent);
+
+        //Set Test Tutor List and Class
+
+        intended(hasComponent(TabbedAvailabilityActivity.class.getName()));
+
 
         Intents.release();
     }
