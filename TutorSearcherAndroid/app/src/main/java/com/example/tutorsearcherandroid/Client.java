@@ -14,7 +14,6 @@ import tutor.searcher.TutorSearcher.Request;
 
 public class Client extends AsyncTask<Void, Void, Void> {
 
-
     /*
      * Class Variables
      */
