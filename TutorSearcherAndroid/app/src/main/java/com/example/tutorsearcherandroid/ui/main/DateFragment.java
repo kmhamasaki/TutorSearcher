@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.tutorsearcherandroid.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,12 +25,11 @@ import com.example.tutorsearcherandroid.R;
 public class DateFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM1 = "time";
+    private static final int[] CHECKBOX_ID = new int[]{R.id.time1,R.id.time2,R.id.time3,R.id.time4,R.id.time5,R.id.time6,R.id.time7,R.id.time8};
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private ArrayList<Integer> mTime;
 
     private OnFragmentInteractionListener mListener;
 
@@ -40,15 +42,13 @@ public class DateFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment DateFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DateFragment newInstance(String param1, String param2) {
+    public static DateFragment newInstance(ArrayList<Integer> Times) {
         DateFragment fragment = new DateFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putIntegerArrayList(ARG_PARAM1,Times);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,8 +57,7 @@ public class DateFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mTime = getArguments().getIntegerArrayList(ARG_PARAM1);
         }
     }
 
@@ -66,7 +65,12 @@ public class DateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_date, container, false);
+        View view = inflater.inflate(R.layout.fragment_date, container, false);
+        for(int i = 0; i<mTime.size();i++){
+                    CheckBox cb = view.findViewById(CHECKBOX_ID[mTime.get(i)]);
+                    cb.setChecked(true);
+        }
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
