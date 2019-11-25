@@ -23,9 +23,14 @@ public class Controller {
 	
 	private static Hashtable<RequestThread, Socket> requestThreadsSockets = new Hashtable<RequestThread, Socket>();
 
+	int testing_port = 6780;
 	int port = 6789;
-
 	private static ServerSocket ss = null;
+	boolean run = true;
+
+	public void useTestingPort() {
+		port = testing_port;
+	}
 
 	@PostConstruct
 	void startController() {
@@ -44,7 +49,9 @@ public class Controller {
 			System.out.println();
 		}
 
-		while (true) {
+
+
+		while (run) {
 			Socket controllerThreadsSocket = null;
 			try {
 				controllerThreadsSocket = ss.accept();
@@ -56,6 +63,10 @@ public class Controller {
 			RequestThread rt = new RequestThread(controllerThreadsSocket, this);
 			requestThreadsSockets.put(rt, controllerThreadsSocket);
 		}
+	}
+
+	public void closeServer() {
+		this.run = false;
 	}
 
 	Request processRequest(Request request, RequestThread requestThread) {
