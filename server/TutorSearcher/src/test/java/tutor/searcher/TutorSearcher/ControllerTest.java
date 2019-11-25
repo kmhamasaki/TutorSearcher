@@ -164,7 +164,7 @@ class ControllerTest {
 
         // Tests
 //        assertEquals("Error: email exists", response.getRequestType());
-        assertEquals(null, response.getAttributes().get("userID"));
+        assertEquals(0, response.getAttributes().get("userID"));
     }
 
     @Test
