@@ -80,7 +80,7 @@ public class Controller {
 		 *	"Success"
 		 * Outgoing attributes
 		 *  String "userID"
-		 */		
+		 */
 		if(request.getRequestType().equals("signup")) {
 			// get UserID to send back
 			String email = (String) request.get("email");
