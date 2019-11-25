@@ -32,8 +32,6 @@ public class ViewRequestsAcceptedTest extends TestCase {
         return new RecyclerViewMatcher(recyclerViewId);
     }
 
-    //https://spin.atomicobject.com/2016/04/15/espresso-testing-recyclerviews/
-
     @Test
     public void BasicTest() {
         ActivityTestRule<ViewRequestsAccepted> activity =

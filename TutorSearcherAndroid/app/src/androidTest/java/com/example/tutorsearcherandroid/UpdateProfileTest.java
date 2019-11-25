@@ -9,7 +9,6 @@ import androidx.test.rule.ActivityTestRule;
 
 import junit.framework.TestCase;
 
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -33,7 +32,6 @@ public class UpdateProfileTest extends TestCase {
     public void TuteeTest() {
         ActivityTestRule<UpdateProfile> activity =
                 new IntentsTestRule<>(UpdateProfile.class, true, false);
-        //ActivityTestRule<UpdateProfile> activity = new IntentsTestRule<>(UpdateProfile.class, true, false);
         Intent intent = new Intent();
         intent.putExtra("UserId", "1");
         intent.putExtra("AccountType", "Tutee");
@@ -49,7 +47,6 @@ public class UpdateProfileTest extends TestCase {
     public void TutorTest() {
         ActivityTestRule<UpdateProfile> activity =
                 new IntentsTestRule<>(UpdateProfile.class, true, false);
-        //ActivityTestRule<UpdateProfile> activity = new IntentsTestRule<>(UpdateProfile.class, true, false);
         Intent intent = new Intent();
         intent.putExtra("UserId", "2");
         intent.putExtra("AccountType", "Tutor");
@@ -65,7 +62,6 @@ public class UpdateProfileTest extends TestCase {
     public void UpdateToastTest() {
         ActivityTestRule<UpdateProfile> activity =
                 new IntentsTestRule<>(UpdateProfile.class, true, false);
-        //ActivityTestRule<UpdateProfile> activity = new IntentsTestRule<>(UpdateProfile.class, true, false);
         Intent intent = new Intent();
         intent.putExtra("UserId", "2");
         intent.putExtra("AccountType", "Tutor");
@@ -85,7 +81,6 @@ public class UpdateProfileTest extends TestCase {
         ActivityTestRule<UpdateProfile> activity =
                 new IntentsTestRule<>(UpdateProfile.class, true, false);
         Intent intent = new Intent();
-       // Intents.init();
         intent.putExtra("UserId", "2");
         intent.putExtra("AccountType", "Tutor");
 
@@ -101,7 +96,6 @@ public class UpdateProfileTest extends TestCase {
         ActivityTestRule<UpdateProfile> activity =
                 new IntentsTestRule<>(UpdateProfile.class, true, false);
         Intent intent = new Intent();
-        //Intents.init();
 
         intent.putExtra("UserId", "2");
         intent.putExtra("AccountType", "Tutor");
