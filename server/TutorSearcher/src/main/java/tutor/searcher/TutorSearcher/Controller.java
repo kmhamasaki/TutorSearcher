@@ -23,12 +23,17 @@ public class Controller {
 	
 	private static Hashtable<RequestThread, Socket> requestThreadsSockets = new Hashtable<RequestThread, Socket>();
 
+	int testing_port = 6780;
 	int port = 6789;
-
 	private static ServerSocket ss = null;
+	boolean run = true;
+
+	public void useTestingPort() {
+		port = testing_port;
+	}
 
 	@PostConstruct
-	void startController() {
+	void startController() throws IOException {
 		System.out.println("Launching --Controller--");
 		System.out.println();
 		
@@ -44,8 +49,9 @@ public class Controller {
 			System.out.println();
 		}
 
-		while (true) {
-			Socket controllerThreadsSocket = null;
+		Socket controllerThreadsSocket = null;
+
+		while (this.run) {
 			try {
 				controllerThreadsSocket = ss.accept();
 			} catch (IOException e) {
@@ -56,6 +62,14 @@ public class Controller {
 			RequestThread rt = new RequestThread(controllerThreadsSocket, this);
 			requestThreadsSockets.put(rt, controllerThreadsSocket);
 		}
+//
+//		ss.close();
+//		controllerThreadsSocket.close();
+//		System.out.println("Server closed");
+	}
+
+	public void closeServer() {
+		this.run = false;
 	}
 
 	Request processRequest(Request request, RequestThread requestThread) {
