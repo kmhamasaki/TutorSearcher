@@ -27,6 +27,8 @@ public class SignupActivity extends AppCompatActivity {
     private String UserId;
     private String AccountType;
 
+    Application app;
+
     String email;
     String passwordHash;
     String firstName;
@@ -37,8 +39,7 @@ public class SignupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Application app = (Application)getApplicationContext();
-        client = Client.initClient(app);
+        app = (Application)getApplicationContext();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
@@ -94,7 +95,7 @@ public class SignupActivity extends AppCompatActivity {
         attr.put("phoneNumber", phoneNumber);
 
         System.out.println("Sending from SignupButtonClick");
-        client.setTypeAndAttr("signup", attr);
+        client = Client.initClient("signup", attr, app);
 
         // Pass all inputs to backend
         try {
