@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `tutorsearchertest`.`users` (
   UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 0
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `tutorsearchertest`.`classes` (
     FOREIGN KEY (`tutor_id`)
     REFERENCES `tutorsearchertest`.`users` (`user_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 0
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `tutorsearchertest`.`requests` (
     FOREIGN KEY (`tutor_id`)
     REFERENCES `tutorsearchertest`.`users` (`user_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 0
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
