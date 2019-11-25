@@ -85,5 +85,4 @@ public class SearchTutorTest extends TestCase {
 
         Intents.release();
     }
-
 }

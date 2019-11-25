@@ -43,7 +43,6 @@ public class SignupTest extends TestCase {
 
         onView(withId(R.id.signup_button)).perform(click());
         intended(hasComponent(ChooseClasses.class.getName()));
-//        intended(hasExtra("UserId", "1"));
         Intents.release();
     }
 
@@ -63,7 +62,6 @@ public class SignupTest extends TestCase {
 
         onView(withId(R.id.signup_button)).perform(click());
         intended(hasComponent(ScrollingHomeActivity.class.getName()));
-//        intended(hasExtra("UserId", "1"));
         Intents.release();
     }
 

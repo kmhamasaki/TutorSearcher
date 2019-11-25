@@ -834,16 +834,6 @@ class DBConnectTest {
 	}
 	
 	@Test
-	void removeTutorFromClassBasicTest() {
-		
-	}
-	
-	@Test
-	void removeTutorFromClassDeleteRequestsTest() { 
-		
-	}
-	
-	@Test
 	public void removeTutorFromClassTest() {
 		System.out.println("Remove tutor from class");
 		String email = "arianagrande@usc.edu";

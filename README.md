@@ -44,7 +44,8 @@ The server is tested to be able to run in Eclipse Jee.
 
 ## Server & Database
 1. In MySQL workbench, create a new schema named `tutorsearchertest`
-2. You can either run on command line `mvn clean install` in the `TutorSearcher/server/TutorSearcher` directory or in an IDE, run as Junit test
+2. On the command line, run `mvn spring-boot:run -Drun.arguments="--spring.datasource.url=jdbc:mysql://localhost:3306/tutorsearchertest?serverTimezone=America/Los_Angeles"`
+3. In a new terminal, run `mvn test`
 
 ## Android Application
 

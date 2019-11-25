@@ -2,7 +2,6 @@ package com.example.tutorsearcherandroid;
 
 import android.content.Intent;
 
-import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
@@ -11,7 +10,6 @@ import androidx.test.rule.ActivityTestRule;
 
 import junit.framework.TestCase;
 
-import org.hamcrest.core.AllOf;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -100,7 +98,6 @@ public class MainActivityTest extends TestCase {
         onView(withId(R.id.recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         intended(hasComponent(TutorTimeActivity.class.getName()));
 
-//        intended(hasComponent(ScrollingHomeActivity.class.getName()));
         Intents.release();
     }
 
