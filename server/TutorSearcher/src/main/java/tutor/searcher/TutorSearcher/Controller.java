@@ -49,9 +49,9 @@ public class Controller {
 			System.out.println();
 		}
 
-		Socket controllerThreadsSocket = null;
 
 		while (this.run) {
+			Socket controllerThreadsSocket = null;
 			try {
 				controllerThreadsSocket = ss.accept();
 			} catch (IOException e) {
@@ -63,9 +63,8 @@ public class Controller {
 			requestThreadsSockets.put(rt, controllerThreadsSocket);
 		}
 //
-//		ss.close();
-//		controllerThreadsSocket.close();
-//		System.out.println("Server closed");
+		ss.close();
+		System.out.println("Server closed");
 	}
 
 	public void closeServer() {
