@@ -69,10 +69,10 @@ class ControllerTest {
         Request request = new Request(requestType, respAttr);
         dc.sendRequest(request);
         Request response = dc.getResponse();
+        closeServer(ct);
 
         // Tests
         assertEquals("", response.getRequestType());
-        closeServer(ct);
     }
 
     @Test
@@ -114,11 +114,11 @@ class ControllerTest {
         Request request = new Request(requestType, respAttr);
         dc.sendRequest(request);
         Request response = dc.getResponse();
+        closeServer(ct);
 
         // Tests
         assertEquals("Success", response.getRequestType());
 //        assertEquals("1", response.getAttributes().get("userID"));
-        closeServer(ct);
     }
 
     @Test
@@ -160,11 +160,11 @@ class ControllerTest {
         Request request = new Request(requestType, respAttr);
         dc.sendRequest(request);
         Request response = dc.getResponse();
+        closeServer(ct);
 
         // Tests
         assertEquals("Error: email exists", response.getRequestType());
 //        assertEquals(null, response.getAttributes().get("userID"));
-        closeServer(ct);
     }
 
     @Test
@@ -206,11 +206,11 @@ class ControllerTest {
         // Creating Request object
         dc.sendRequest(request);
         Request response = dc.getResponse();
+        closeServer(ct);
 
         // Tests
         assertEquals("Success", response.getRequestType());
         assertEquals(null, response.getAttributes().get("userID"));
-        closeServer(ct);
     }
 
     @Test
@@ -250,10 +250,10 @@ class ControllerTest {
         Request request = new Request(requestType, respAttr);
         dc.sendRequest(request);
         Request response = dc.getResponse();
+        closeServer(ct);
 
         // Tests
         assertEquals("Success", response.getRequestType());
-        closeServer(ct);
     }
 
     @Test
@@ -291,11 +291,11 @@ class ControllerTest {
         Request request = new Request(requestType, respAttr);
         dc.sendRequest(request);
         Request response = dc.getResponse();
+        closeServer(ct);
 
         // Tests
         assertEquals("Success", response.getRequestType());
         assertEquals(0, response.get("requestID"));
-        closeServer(ct);
     }
 
     @Test
@@ -329,10 +329,10 @@ class ControllerTest {
         Request request = new Request(requestType, respAttr);
         dc.sendRequest(request);
         Request response = dc.getResponse();
+        closeServer(ct);
 
         // Tests
         assertEquals("Success", response.getRequestType());
-        closeServer(ct);
     }
 
     @Test
@@ -366,10 +366,10 @@ class ControllerTest {
         Request request = new Request(requestType, respAttr);
         dc.sendRequest(request);
         Request response = dc.getResponse();
+        closeServer(ct);
 
         // Tests
         assertEquals("Success", response.getRequestType());
-        closeServer(ct);
     }
 
     @Test
@@ -403,10 +403,10 @@ class ControllerTest {
         Request request = new Request(requestType, respAttr);
         dc.sendRequest(request);
         Request response = dc.getResponse();
+        closeServer(ct);
 
         // Tests
         assertEquals("Success", response.getRequestType());
-        closeServer(ct);
     }
 
     @Test
@@ -439,10 +439,10 @@ class ControllerTest {
         Request request = new Request(requestType, respAttr);
         dc.sendRequest(request);
         Request response = dc.getResponse();
+        closeServer(ct);
 
         // Tests
         assertEquals("Success", response.getRequestType());
-        closeServer(ct);
     }
 
     @Test
@@ -476,10 +476,10 @@ class ControllerTest {
         Request request = new Request(requestType, respAttr);
         dc.sendRequest(request);
         Request response = dc.getResponse();
+        closeServer(ct);
 
         // Tests
         assertEquals("Success", response.getRequestType());
-        closeServer(ct);
     }
 
     @Test
@@ -515,10 +515,10 @@ class ControllerTest {
         Request request = new Request(requestType, respAttr);
         dc.sendRequest(request);
         Request response = dc.getResponse();
+        closeServer(ct);
 
         // Tests
         assertEquals("Success", response.getRequestType());
-        closeServer(ct);
     }
 
     @Test
@@ -620,10 +620,10 @@ class ControllerTest {
         Request request = new Request(requestType, respAttr);
         dc.sendRequest(request);
         Request response = dc.getResponse();
+        closeServer(ct);
 
         // Tests
         assertEquals("Success", response.getRequestType());
-        closeServer(ct);
     }
 
     @Test
@@ -656,10 +656,10 @@ class ControllerTest {
         Request request = new Request(requestType, respAttr);
         dc.sendRequest(request);
         Request response = dc.getResponse();
+        closeServer(ct);
 
         // Tests
         assertEquals("Success", response.getRequestType());
-        closeServer(ct);
     }
 }
 
