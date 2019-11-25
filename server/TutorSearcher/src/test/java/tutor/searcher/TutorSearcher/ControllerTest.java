@@ -41,8 +41,8 @@ class ControllerTest {
 
     public void closeServer(ControllerThread ct) throws IOException {
         System.out.println("# Closing Multi-Threaded Controller");
-        ct.closeServer();
         ct = null;
+//        ct.closeServer();
     }
 
     @Test
