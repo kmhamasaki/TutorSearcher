@@ -52,7 +52,9 @@ public class Controller {
 		while (this.run) {
 			Socket controllerThreadsSocket = null;
 			try {
-				controllerThreadsSocket = ss.accept();
+				if(this.run) {
+					controllerThreadsSocket = ss.accept();
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
