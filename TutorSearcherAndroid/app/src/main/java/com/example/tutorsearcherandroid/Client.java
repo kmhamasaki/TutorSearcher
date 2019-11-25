@@ -36,6 +36,10 @@ public class Client extends AsyncTask<Void, Void, Void> {
      * Connect to server
      */
 
+    public void useTestingAddress() {
+        this.address = "localhost";
+    }
+
     Client(String incomingRequestType, HashMap<String,Object> incomingAttributes) {
         this.incomingAttributes = incomingAttributes;
         this.incomingRequestType = incomingRequestType;
@@ -65,11 +69,15 @@ public class Client extends AsyncTask<Void, Void, Void> {
         Request serverData = null;
         try {
             socket = new Socket(address, port);
+
             oos = new ObjectOutputStream(socket.getOutputStream());
             ois = new ObjectInputStream(socket.getInputStream());
-            System.out.println("87");
+//            System.out.println("87");
             //Preprocessing and serialization of data
             Request frontEndData = new Request(incomingRequestType, incomingAttributes);
+
+//            System.out.println("asdas");
+
             oos.writeObject(frontEndData);
 
             oos.flush();

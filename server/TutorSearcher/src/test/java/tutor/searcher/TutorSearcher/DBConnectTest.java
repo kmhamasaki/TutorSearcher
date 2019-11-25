@@ -68,15 +68,6 @@ class DBConnectTest {
 		JdbcTestUtils.deleteFromTables(jdbcTemplate, "requests", "classes", "users");
 	}
 
-	//to delete
-	@Test
-	public void simpleTest() {
-		System.out.println("SIMPLE TEST");
-		int userID = dbConnect.addUser("alicesle@usc.edu", "password", "Alice", "Lee", "1231231234", true);
-		assertEquals(userID, 1);
-		System.out.println("userID: " + userID);
-	}
-	
 	@Test
 	public void addTutorTest() {
 		System.out.println("Add New Tutor");
@@ -125,7 +116,7 @@ class DBConnectTest {
 	}
 	
 	@Test
-	public void addUserAlreadyExist() {
+	public void addUserAlreadyExistsTest() {
 		System.out.println("Add Tutor that already exists");
 		String email = "jessica@usc.edu";
 		String password = "illinois";
@@ -147,7 +138,7 @@ class DBConnectTest {
 	}
 	
 	@Test
-	public void updateFirstName() {
+	public void updateFirstNameTest() {
 		System.out.println("Update first name");
 		String email = "jisoo@usc.edu";
 		String password = "password";
@@ -169,7 +160,7 @@ class DBConnectTest {
 	}
 	
 	@Test
-	public void updateLastName() {
+	public void updateLastNameTest() {
 		System.out.println("Update last name");
 		String email = "jisoo@usc.edu";
 		String password = "password";
@@ -193,7 +184,7 @@ class DBConnectTest {
 	
 	
 	@Test
-	public void updateEmail() {
+	public void updateEmailTest() {
 		System.out.println("Update first name");
 		String email = "jisoo@usc.edu";
 		String password = "password";
@@ -215,7 +206,7 @@ class DBConnectTest {
 	}
 	
 	@Test
-	public void updatePhoneNumber() {
+	public void updatePhoneNumberTest() {
 		System.out.println("Update first name");
 		String email = "jisoo@usc.edu";
 		String password = "password";
@@ -853,7 +844,47 @@ class DBConnectTest {
 	}
 	
 	@Test
-	public void updateNoClassAvailability() {
+	public void removeTutorFromClassTest() {
+		System.out.println("Remove tutor from class");
+		String email = "arianagrande@usc.edu";
+		String password = "butera";
+		String firstName = "Ariana";
+		String lastName = "Grande";
+		String phoneNumber = "3104101300";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+
+		ArrayList<String> classes = new ArrayList<>();
+		classes.add("CSCI 103");
+		classes.add("CSCI 104");
+		dbConnect.addTutorToClass(userID, classes);
+		
+		dbConnect.removeTutorFromClass(userID, "CSCI 103");
+		classes.remove("CSCI 103");
+		ArrayList<String> dbClasses=dbConnect.getTutorClasses(userID);
+		assertEquals(dbClasses,classes);
+	}
+	
+	@Test
+	public void removeTutorFromClassFailTest() {
+		System.out.println("Remove tutor from class that tutor is not enrolled in");
+		String email = "arianaventi@usc.edu";
+		String password = "joan";
+		String firstName = "Ariana";
+		String lastName = "Venti";
+		String phoneNumber = "69696969";
+		Boolean accountType = true;
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+
+		ArrayList<String> classes = new ArrayList<>();
+
+		dbConnect.removeTutorFromClass(userID, "CSCI 1");
+		ArrayList<String> dbClasses=dbConnect.getTutorClasses(userID);
+		assertEquals(dbClasses,classes);
+	}
+	
+	@Test
+	public void updateNoClassAvailabilityTest() {
 		System.out.println("Update tutor's classes with no classes");
 		String email = "tutor@usc.edu";
 		String password = "password";
@@ -871,7 +902,7 @@ class DBConnectTest {
 	}
 	
 	@Test
-	public void updateOneClassAvailability() {
+	public void updateOneClassAvailabilityTest() {
 		System.out.println("Update tutor's classes with one class");
 		String email = "tutor@usc.edu";
 		String password = "password";
@@ -890,7 +921,7 @@ class DBConnectTest {
 	}
 	
 	@Test
-	public void updateMultipleClassAvailability() {
+	public void updateMultipleClassAvailabilityTest() {
 		System.out.println("Update tutor's classes with multiple class");
 		String email = "tutor@usc.edu";
 		String password = "password";
@@ -913,7 +944,7 @@ class DBConnectTest {
 	}
 	
 	@Test
-	public void updateClassAvailabilityMultipleTimes() {
+	public void updateClassAvailabilityMultipleTimesTest() {
 		System.out.println("Update tutor's classes with multiple class");
 		String email = "tutor@usc.edu";
 		String password = "password";
@@ -962,7 +993,7 @@ class DBConnectTest {
 	}
 	
 	@Test
-	public void updateNoTimeAvailability() {
+	public void updateNoTimeAvailabilityTest() {
 		System.out.println("Update tutor's time availability with no time");
 		String email = "nihao@usc.edu";
 		String password = "mamama";
@@ -981,7 +1012,7 @@ class DBConnectTest {
 	}
 	
 	@Test
-	public void updateOneTimeAvailability() {
+	public void updateOneTimeAvailabilityTest() {
 		System.out.println("Update tutor's time availability with 1 timeslot");
 		String email = "jasonmamoa@usc.edu";
 		String password = "yespassword";
@@ -1001,7 +1032,7 @@ class DBConnectTest {
 	}
 	
 	@Test
-	public void updateMaxTimeAvailability() {
+	public void updateMaxTimeAvailabilityTest() {
 		System.out.println("Update tutor's time availability with 56 timeslots");
 		String email = "emilia@usc.edu";
 		String password = "motherofdragons";
@@ -1023,7 +1054,7 @@ class DBConnectTest {
 	}
 	
 	@Test
-	public void updateTimeAvailabilityMultipleTimes() {
+	public void updateTimeAvailabilityMultipleTimesTest() {
 		System.out.println("Update tutor's time availability multiple times");
 		String email = "snake@usc.edu";
 		String password = "imasnake";
@@ -1066,43 +1097,5 @@ class DBConnectTest {
 		assertNotEquals(dbTimes3, times2);
 	}
 	
-	@Test
-	public void removeTutorFromClass() {
-		System.out.println("Remove tutor from class");
-		String email = "arianagrande@usc.edu";
-		String password = "butera";
-		String firstName = "Ariana";
-		String lastName = "Grande";
-		String phoneNumber = "3104101300";
-		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
 
-		ArrayList<String> classes = new ArrayList<>();
-		classes.add("CSCI 103");
-		classes.add("CSCI 104");
-		dbConnect.addTutorToClass(userID, classes);
-		
-		dbConnect.removeTutorFromClass(userID, "CSCI 103");
-		classes.remove("CSCI 103");
-		ArrayList<String> dbClasses=dbConnect.getTutorClasses(userID);
-		assertEquals(dbClasses,classes);
-	}
-	
-	@Test
-	public void removeTutorFromClassFail() {
-		System.out.println("Remove tutor from class that tutor is not enrolled in");
-		String email = "arianaventi@usc.edu";
-		String password = "joan";
-		String firstName = "Ariana";
-		String lastName = "Venti";
-		String phoneNumber = "69696969";
-		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
-
-		ArrayList<String> classes = new ArrayList<>();
-
-		dbConnect.removeTutorFromClass(userID, "CSCI 1");
-		ArrayList<String> dbClasses=dbConnect.getTutorClasses(userID);
-		assertEquals(dbClasses,classes);
-	}
 }
