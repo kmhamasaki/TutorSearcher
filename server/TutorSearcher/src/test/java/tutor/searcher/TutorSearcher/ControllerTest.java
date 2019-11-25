@@ -84,9 +84,9 @@ class ControllerTest {
         System.out.println();
 
         // Setting test parameters
-        String email = "chunghas@usc.edu";
+        String email = "alex@usc.edu";
         String passwordHash = "0CC175B9C0F1B6A831C399E269772661";
-        String firstName = "Chungha";
+        String firstName = "Alex";
         String lastName = "Kim";
         String phoneNumber = "2135052883";
         Boolean accountType = true;
@@ -130,9 +130,9 @@ class ControllerTest {
         System.out.println();
 
         // Setting test parameters
-        String email = "chunghas@usc.edu";
+        String email = "alex@usc.edu";
         String passwordHash = "0CC175B9C0F1B6A831C399E269772661";
-        String firstName = "Chungha";
+        String firstName = "Alex";
         String lastName = "Kim";
         String phoneNumber = "2135052883";
         Boolean accountType = true;
@@ -177,10 +177,10 @@ class ControllerTest {
 
         // Setting test parameters
         int userId = 1;
-        String firstName = "Chungha";
+        String firstName = "Alex";
         String lastName = "Kim";
-        String email = "chunghas@usc.edu";
-        String phoneNumber = "2135052883";
+        String email = "123";
+        String phoneNumber = "1112223333";
         String passwordHash = "0CC175B9C0F1B6A831C399E269772661";
         boolean accountType = true;
         double rating = -1;

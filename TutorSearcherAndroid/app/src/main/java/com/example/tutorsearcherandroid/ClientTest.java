@@ -1,5 +1,6 @@
 package com.example.tutorsearcherandroid;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -124,6 +125,13 @@ public class ClientTest extends Client {
         } else if (incomingRequestType.equals("newrequest")){
             attr.put("requestId", 10);
             returnRequest = new Request("Success",attr);
+        } else if(incomingRequestType.equals("getavailability")){
+            ArrayList<Integer> results = new ArrayList<>();
+            results.add(0);
+            results.add(1);
+            results.add(8);
+            attr.put("availability", results);
+            returnRequest = new Request("results",attr);
         }
         return null;
     }

@@ -67,8 +67,8 @@ public class DateFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_date, container, false);
         for(int i = 0; i<mTime.size();i++){
-                    CheckBox cb = view.findViewById(CHECKBOX_ID[mTime.get(i)]);
-                    cb.setChecked(true);
+            CheckBox cb = view.findViewById(CHECKBOX_ID[mTime.get(i)]);
+            cb.setChecked(true);
         }
         return view;
     }

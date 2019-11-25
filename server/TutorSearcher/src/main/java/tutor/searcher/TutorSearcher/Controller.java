@@ -266,7 +266,7 @@ public class Controller {
 		else if (request.getRequestType().equals("updateavailability")) {
 			int tutorID = (int)request.getAttributes().get("tutorID");
 			List<Integer> availability = (List<Integer>)request.getAttributes().get("availability");
-//			dbConnect.updateTutorAvailability(tutorID, availability);
+			dbConnect.updateTutorAvailability(tutorID, availability);
 			respType = "Success";
 		}
 		/**
