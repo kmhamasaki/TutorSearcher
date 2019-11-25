@@ -52,11 +52,9 @@ public class Controller {
 		while (this.run) {
 			Socket controllerThreadsSocket = null;
 			try {
-				if(this.run) {
-					controllerThreadsSocket = ss.accept();
-				}
+				controllerThreadsSocket = ss.accept();
 			} catch (IOException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 
 			// Keep track of the sockets and threads to effectively log out user
