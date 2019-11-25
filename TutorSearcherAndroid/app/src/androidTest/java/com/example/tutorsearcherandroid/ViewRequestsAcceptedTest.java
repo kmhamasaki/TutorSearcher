@@ -68,7 +68,7 @@ public class ViewRequestsAcceptedTest extends TestCase {
         activity.launchActivity(intent);
         onView(withId(R.id.Home)).perform(click());
         intended(hasComponent(ScrollingHomeActivity.class.getName()));
-
+        Intents.release();
     }
 
 }
