@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.tutorsearcherandroid.ui.main.DateFragment;
@@ -40,11 +41,6 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
         app = (Application)getApplicationContext();
 
         setContentView(R.layout.activity_tabbed_availability);
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -71,12 +67,13 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
                 client.execute().get();
                 Request response = client.getResponse();
 
-                //selectedTimes = (ArrayList<Integer>)response.getAttributes().get("availability");
+                selectedTimes = (ArrayList<Integer>)response.getAttributes().get("availability");
 //                for(int i = 0; i < classes.size(); i++) {
 //                    CheckBox cb = findViewById(CHECKBOX_ID[classToIndex.get(classes.get(i))]);
 //                    cb.setChecked(true);
 //                    System.out.println(classes.get(i));
 //                }
+
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -86,6 +83,13 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
             pageTitle.setText("Set Your Availability");
             submitButton.setText("Save");
         }
+
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), selectedTimes);
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(sectionsPagerAdapter);
+        TabLayout tabs = findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
+
     }
 
     public void onFragmentInteraction(Uri uri){

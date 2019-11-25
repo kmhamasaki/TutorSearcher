@@ -115,6 +115,9 @@ public class ClientTest extends Client {
             results.add(t2);
             attr.put("results",results);
             returnRequest = new Request("results",attr);
+        } else if (incomingRequestType.equals("newrequest")){
+            attr.put("requestId", 10);
+            returnRequest = new Request("Success",attr);
         }
         return null;
     }
