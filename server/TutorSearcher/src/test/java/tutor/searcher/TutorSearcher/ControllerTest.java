@@ -39,8 +39,7 @@ class ControllerTest {
         return ct;
     }
 
-    public void closeServer(ControllerThread ct)
-    {
+    public void closeServer(ControllerThread ct) throws IOException {
         System.out.println("# Closing Multi-Threaded Controller");
         ct.closeServer();
     }
@@ -162,7 +161,7 @@ class ControllerTest {
         Request response = dc.getResponse();
 
         // Tests
-//        assertEquals("Error: email exists", response.getRequestType());
+        assertEquals("Error: email exists", response.getRequestType());
 //        assertEquals(null, response.getAttributes().get("userID"));
         closeServer(ct);
     }
@@ -665,17 +664,13 @@ class ControllerTest {
 
 
 class ControllerThread extends Controller implements Runnable {
-    public void setDbConnect(DBConnect dbConnect) {
+    public synchronized void setDbConnect(DBConnect dbConnect) {
         this.dbConnect = dbConnect;
     }
     @Override
     public void run() {
         useTestingPort();
-        try {
-            startController();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        startController();
     }
 }
 
