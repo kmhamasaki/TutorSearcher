@@ -40,7 +40,7 @@ class ControllerTest {
     }
 
     @Test
-    void InvalidRequest() throws InterruptedException, IOException, ClassNotFoundException {
+    void InvalidRequestTest() throws InterruptedException, IOException, ClassNotFoundException {
         // Testing duplicate sign ups
         System.out.println("Testing invalid request");
         System.out.println();
@@ -67,7 +67,7 @@ class ControllerTest {
     }
 
     @Test
-    void SignUpSuccess() throws InterruptedException, IOException, ClassNotFoundException {
+    void SignUpSuccessTest() throws InterruptedException, IOException, ClassNotFoundException {
         // Testing duplicate sign ups
         System.out.println("Testing successful sign ups");
         System.out.println();
@@ -110,7 +110,7 @@ class ControllerTest {
     }
 
     @Test
-    void SignUpDuplicate() throws InterruptedException, IOException, ClassNotFoundException {
+    void SignUpDuplicateTest() throws InterruptedException, IOException, ClassNotFoundException {
         // Testing duplicate sign ups
         System.out.println("Testing duplicate sign ups");
         System.out.println();
@@ -153,7 +153,7 @@ class ControllerTest {
     }
 
     @Test
-    void UpdateInfoThread() throws InterruptedException, IOException, ClassNotFoundException {
+    void UpdateInfoThreadTest() throws InterruptedException, IOException, ClassNotFoundException {
         // Testing duplicate sign ups
         System.out.println("Testing update info");
         System.out.println();
@@ -197,7 +197,7 @@ class ControllerTest {
     }
 
     @Test
-    void Search() throws InterruptedException, IOException, ClassNotFoundException {
+    void SearchTest() throws InterruptedException, IOException, ClassNotFoundException {
 
         // Tests
         System.out.println("Testing search");
@@ -238,7 +238,7 @@ class ControllerTest {
     }
 
     @Test
-    void NewRequest() throws InterruptedException, IOException, ClassNotFoundException {
+    void NewRequestTest() throws InterruptedException, IOException, ClassNotFoundException {
         // Tests
         System.out.println("Testing new request");
         System.out.println();
@@ -277,7 +277,7 @@ class ControllerTest {
     }
 
     @Test
-    void ViewRequests() throws InterruptedException, IOException, ClassNotFoundException {
+    void ViewRequestsTest() throws InterruptedException, IOException, ClassNotFoundException {
         // Tests
         System.out.println("Testing view requests");
         System.out.println();
@@ -311,7 +311,7 @@ class ControllerTest {
     }
 
     @Test
-    void UpdateRequestStatus() throws InterruptedException, IOException, ClassNotFoundException {
+    void UpdateRequestStatusTest() throws InterruptedException, IOException, ClassNotFoundException {
         // Tests
         System.out.println("Testing update request status");
         System.out.println();
@@ -345,7 +345,7 @@ class ControllerTest {
     }
 
     @Test
-    void UpdateAvailability() throws InterruptedException, IOException, ClassNotFoundException {
+    void UpdateAvailabilityTest() throws InterruptedException, IOException, ClassNotFoundException {
         // Tests
         System.out.println("Testing update availability");
         System.out.println();
@@ -379,7 +379,7 @@ class ControllerTest {
     }
 
     @Test
-    void AddClass() throws InterruptedException, IOException, ClassNotFoundException {
+    void AddClassTest() throws InterruptedException, IOException, ClassNotFoundException {
         // Tests
         System.out.println("Testing add class");
         System.out.println();
@@ -412,7 +412,7 @@ class ControllerTest {
     }
 
     @Test
-    void RemoveClass() throws InterruptedException, IOException, ClassNotFoundException {
+    void RemoveClassTest() throws InterruptedException, IOException, ClassNotFoundException {
         // Tests
         System.out.println("Testing remove class");
         System.out.println();
@@ -446,7 +446,7 @@ class ControllerTest {
     }
 
     @Test
-    void GetAvailability() throws InterruptedException, IOException, ClassNotFoundException {
+    void GetAvailabilityTest() throws InterruptedException, IOException, ClassNotFoundException {
         // Tests
         System.out.println("Testing get availability");
         System.out.println();
@@ -482,7 +482,7 @@ class ControllerTest {
     }
 
     @Test
-    void GetClasses() throws InterruptedException, IOException, ClassNotFoundException {
+    void GetClassesTest() throws InterruptedException, IOException, ClassNotFoundException {
         // Tests
         System.out.println("Testing get classes");
         System.out.println();
@@ -514,7 +514,7 @@ class ControllerTest {
     }
 
     @Test
-    void SearchPrevious() throws InterruptedException, IOException, ClassNotFoundException {
+    void SearchPreviousTest() throws InterruptedException, IOException, ClassNotFoundException {
         // Tests
         System.out.println("Testing search previous");
         System.out.println();
@@ -546,7 +546,7 @@ class ControllerTest {
     }
 
     @Test
-    void GetUserInfo() throws InterruptedException, IOException, ClassNotFoundException {
+    void GetUserInfoTest() throws InterruptedException, IOException, ClassNotFoundException {
         // Tests
         System.out.println("Testing get user info");
         System.out.println();
@@ -578,7 +578,7 @@ class ControllerTest {
     }
 
     @Test
-    void AddRating() throws InterruptedException, IOException, ClassNotFoundException {
+    void AddRatingTest() throws InterruptedException, IOException, ClassNotFoundException {
         // Tests
         System.out.println("Testing add rating");
         System.out.println();
