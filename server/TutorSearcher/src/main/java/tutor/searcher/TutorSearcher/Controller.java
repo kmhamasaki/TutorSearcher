@@ -45,8 +45,8 @@ public class Controller {
 
 		} catch (IOException e) {
 
-			System.out.println("Unable to bind to port " + port);
-			System.out.println();
+//			System.out.println("Unable to bind to port " + port);
+//			System.out.println();
 		}
 
 		while (this.run) {
