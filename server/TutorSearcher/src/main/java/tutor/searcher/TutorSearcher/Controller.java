@@ -33,7 +33,7 @@ public class Controller {
 	}
 
 	@PostConstruct
-	void startController() throws IOException {
+	void startController() {
 		System.out.println("Launching --Controller--");
 		System.out.println();
 		
@@ -49,7 +49,6 @@ public class Controller {
 			System.out.println();
 		}
 
-
 		while (this.run) {
 			Socket controllerThreadsSocket = null;
 			try {
@@ -63,12 +62,11 @@ public class Controller {
 			requestThreadsSockets.put(rt, controllerThreadsSocket);
 		}
 //
-		ss.close();
-		System.out.println("Server closed");
 	}
 
-	public void closeServer() {
-		this.run = false;
+	public void closeServer() throws IOException {
+		ss.close();
+		System.out.println("Server closed");
 	}
 
 	Request processRequest(Request request, RequestThread requestThread) {
