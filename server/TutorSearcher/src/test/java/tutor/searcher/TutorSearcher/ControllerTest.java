@@ -33,8 +33,8 @@ class ControllerTest {
         System.out.println("# Starting Multi-Threaded Controller");
         Thread thread = new Thread(ct);
         thread.start();
-        System.out.println("## Starting 2s Delay");
-        Thread.sleep(2000);
+//        System.out.println("## Starting 2s Delay");
+//        Thread.sleep(2000);
 
         return ct;
     }
@@ -56,7 +56,6 @@ class ControllerTest {
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
         ct.setDbConnect(dbConnect);
-//        Thread.sleep(2000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -70,6 +69,7 @@ class ControllerTest {
         dc.sendRequest(request);
         Request response = dc.getResponse();
         closeServer(ct);
+        Thread.sleep(2000);
 
         // Tests
         assertEquals("", response.getRequestType());
@@ -95,7 +95,6 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
         when(dbConnect.addUser(email, passwordHash, firstName, lastName, phoneNumber, accountType)).thenReturn(1);
         ct.setDbConnect(dbConnect);
-//        Thread.sleep(2000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -115,6 +114,7 @@ class ControllerTest {
         dc.sendRequest(request);
         Request response = dc.getResponse();
         closeServer(ct);
+        Thread.sleep(2000);
 
         // Tests
         assertEquals("Success", response.getRequestType());
@@ -141,7 +141,6 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
         when(dbConnect.addUser(email, passwordHash, firstName, lastName, phoneNumber, accountType)).thenReturn(-1);
         ct.setDbConnect(dbConnect);
-        Thread.sleep(2000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -161,6 +160,7 @@ class ControllerTest {
         dc.sendRequest(request);
         Request response = dc.getResponse();
         closeServer(ct);
+        Thread.sleep(2000);
 
         // Tests
         assertEquals("Error: email exists", response.getRequestType());
@@ -198,7 +198,6 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
         when(dbConnect.addUser(email, passwordHash, firstName, lastName, phoneNumber, accountType)).thenReturn(-1);
         ct.setDbConnect(dbConnect);
-        Thread.sleep(2000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -207,6 +206,7 @@ class ControllerTest {
         dc.sendRequest(request);
         Request response = dc.getResponse();
         closeServer(ct);
+        Thread.sleep(2000);
 
         // Tests
         assertEquals("Success", response.getRequestType());
@@ -241,7 +241,6 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
         when(dbConnect.searchTutors(userId, times, className)).thenReturn(tutors);
         ct.setDbConnect(dbConnect);
-        Thread.sleep(2000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -251,6 +250,7 @@ class ControllerTest {
         dc.sendRequest(request);
         Request response = dc.getResponse();
         closeServer(ct);
+        Thread.sleep(2000);
 
         // Tests
         assertEquals("Success", response.getRequestType());
@@ -282,7 +282,6 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
         when(dbConnect.addRequest(tuteeID, tutorID, className, time, 0)).thenReturn(0);
         ct.setDbConnect(dbConnect);
-        Thread.sleep(2000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -292,6 +291,7 @@ class ControllerTest {
         dc.sendRequest(request);
         Request response = dc.getResponse();
         closeServer(ct);
+        Thread.sleep(2000);
 
         // Tests
         assertEquals("Success", response.getRequestType());
@@ -320,7 +320,6 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
         when(dbConnect.getRequestsTuteeApproved(userID)).thenReturn(null);
         ct.setDbConnect(dbConnect);
-        Thread.sleep(2000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -330,6 +329,7 @@ class ControllerTest {
         dc.sendRequest(request);
         Request response = dc.getResponse();
         closeServer(ct);
+        Thread.sleep(2000);
 
         // Tests
         assertEquals("Success", response.getRequestType());
@@ -357,7 +357,6 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
         when(dbConnect.updateRequestStatus(requestID, newStatus)).thenReturn(true);
         ct.setDbConnect(dbConnect);
-        Thread.sleep(2000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -367,6 +366,7 @@ class ControllerTest {
         dc.sendRequest(request);
         Request response = dc.getResponse();
         closeServer(ct);
+        Thread.sleep(2000);
 
         // Tests
         assertEquals("Success", response.getRequestType());
@@ -394,7 +394,6 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
 //        when(dbConnect.updateTutorAvailability(tutorID, availability)).thenReturn(true);
         ct.setDbConnect(dbConnect);
-        Thread.sleep(2000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -404,6 +403,7 @@ class ControllerTest {
         dc.sendRequest(request);
         Request response = dc.getResponse();
         closeServer(ct);
+        Thread.sleep(2000);
 
         // Tests
         assertEquals("Success", response.getRequestType());
