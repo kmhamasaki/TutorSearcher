@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class ClientSocketTest {
 
     @Test
-    public void InvalidRequest() {
+    public void InvalidRequestTest() {
         // Testing duplicate sign ups
         System.out.println("Testing invalid request");
         System.out.println();
@@ -35,7 +35,7 @@ public class ClientSocketTest {
     }
 
     @Test
-    public void SignUpSuccess() {
+    public void SignUpSuccessTest() {
         // Testing duplicate sign ups
         System.out.println("Testing successful sign ups");
         System.out.println();
@@ -69,7 +69,7 @@ public class ClientSocketTest {
     }
 
     @Test
-    public void SignUpDuplicate() {
+    public void SignUpDuplicateTest() {
         // Testing duplicate sign ups
         System.out.println("Testing duplicate sign ups");
         System.out.println();
@@ -103,7 +103,7 @@ public class ClientSocketTest {
     }
 
     @Test
-    public void UpdateInfo() {
+    public void UpdateInfoTest() {
         // Testing duplicate sign ups
         System.out.println("Testing update info");
         System.out.println();
@@ -135,7 +135,7 @@ public class ClientSocketTest {
     }
 
     @Test
-    public void Search() {
+    public void SearchTest() {
         // Tests
         System.out.println("Testing search");
         System.out.println();
@@ -167,7 +167,7 @@ public class ClientSocketTest {
     }
 
     @Test
-    public void NewRequest() {
+    public void NewRequestTest() {
         // Tests
         System.out.println("Testing new request");
         System.out.println();
@@ -197,7 +197,7 @@ public class ClientSocketTest {
     }
 
     @Test
-    public void ViewRequests() {
+    public void ViewRequestsTest() {
         // Tests
         System.out.println("Testing view requests");
         System.out.println();
@@ -223,7 +223,7 @@ public class ClientSocketTest {
     }
 
     @Test
-    public void UpdateRequestStatus() {
+    public void UpdateRequestStatusTest() {
         // Tests
         System.out.println("Testing update request status");
         System.out.println();
@@ -249,7 +249,7 @@ public class ClientSocketTest {
     }
 
     @Test
-    public void UpdateAvailability() {
+    public void UpdateAvailabilityTest() {
         // Tests
         System.out.println("Testing update availability");
         System.out.println();
@@ -275,7 +275,7 @@ public class ClientSocketTest {
     }
 
     @Test
-    public void AddClass() {
+    public void AddClassTest() {
         // Tests
         System.out.println("Testing add class");
         System.out.println();
@@ -301,7 +301,7 @@ public class ClientSocketTest {
     }
 
     @Test
-    public void RemoveClass() {
+    public void RemoveClassTest() {
         // Tests
         System.out.println("Testing remove class");
         System.out.println();
@@ -327,7 +327,7 @@ public class ClientSocketTest {
     }
 
     @Test
-    public void GetAvailability() {
+    public void GetAvailabilityTest() {
         // Tests
         System.out.println("Testing get availability");
         System.out.println();
@@ -356,7 +356,7 @@ public class ClientSocketTest {
     }
 
     @Test
-    public void GetClasses() {
+    public void GetClassesTest() {
         // Tests
         System.out.println("Testing get classes");
         System.out.println();
@@ -380,7 +380,7 @@ public class ClientSocketTest {
     }
 
     @Test
-    public void SearchPrevious() {
+    public void SearchPreviousTest() {
         // Tests
         System.out.println("Testing search previous");
         System.out.println();
@@ -404,7 +404,7 @@ public class ClientSocketTest {
     }
 
     @Test
-    public void GetUserInfo() {
+    public void GetUserInfoTest() {
         // Tests
         System.out.println("Testing get user info");
         System.out.println();
