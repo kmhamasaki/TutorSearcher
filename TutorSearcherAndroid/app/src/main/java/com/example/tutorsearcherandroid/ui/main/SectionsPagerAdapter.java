@@ -37,7 +37,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         ArrayList<Integer> dateData = new ArrayList<>();
         for(int i=0;i<savedTimes.size(); i++){
             if(savedTimes.get(i)/8==position){
-                dateData.add(i%8);
+                dateData.add(savedTimes.get(i)%8);
             }
         }
         return DateFragment.newInstance(dateData);
