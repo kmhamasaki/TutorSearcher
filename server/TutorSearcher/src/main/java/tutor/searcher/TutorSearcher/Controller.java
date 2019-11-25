@@ -65,6 +65,7 @@ public class Controller {
 	}
 
 	public void closeServer() throws IOException {
+		this.run = false;
 		ss.close();
 		System.out.println("Server closed");
 	}
