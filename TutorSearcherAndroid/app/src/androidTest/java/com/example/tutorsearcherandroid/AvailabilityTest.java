@@ -33,7 +33,7 @@ import static org.hamcrest.Matchers.not;
 public class AvailabilityTest extends TestCase {
 
     @Test
-    public void TutorSignUpAvailabilityTest() {
+    public void A() {
         ActivityTestRule<TabbedAvailabilityActivity> activity =
                 new IntentsTestRule<>(TabbedAvailabilityActivity.class, true, true);
         Intent intent = new Intent();
@@ -82,7 +82,6 @@ public class AvailabilityTest extends TestCase {
         onView(allOf(withId(R.id.time5),isCompletelyDisplayed())).perform(click());
         onView(allOf(withId(R.id.time6),isCompletelyDisplayed())).perform(click());
         onView(allOf(withId(R.id.time7),isCompletelyDisplayed())).perform(click());
-        onView(allOf(withId(R.id.time8),isCompletelyDisplayed())).perform(click());
 
         onView(withId(R.id.submitButton)).perform(click());
 
@@ -114,7 +113,6 @@ public class AvailabilityTest extends TestCase {
         onView(allOf(withId(R.id.time5),isCompletelyDisplayed())).perform(click());
         onView(allOf(withId(R.id.time6),isCompletelyDisplayed())).perform(click());
         onView(allOf(withId(R.id.time7),isCompletelyDisplayed())).perform(click());
-        onView(allOf(withId(R.id.time8),isCompletelyDisplayed())).perform(click());
 
         onView(withText("FRI")).perform(click());
         try {
@@ -139,7 +137,6 @@ public class AvailabilityTest extends TestCase {
         onView(allOf(withId(R.id.time5),isCompletelyDisplayed())).perform(click());
         onView(allOf(withId(R.id.time6),isCompletelyDisplayed())).perform(click());
         onView(allOf(withId(R.id.time7),isCompletelyDisplayed())).perform(click());
-        onView(allOf(withId(R.id.time8),isCompletelyDisplayed())).perform(click());
 
         onView(withText("FRI")).perform(click());
         try {
