@@ -860,6 +860,10 @@ public class DBConnect {
 	//do we need separate functions for UPDATE and ADD? 
 	void updateTutorAvailability(int userID, List<Integer> availability) {
 		
+		System.out.println("updating availability: ");
+		for (Integer i : availability) {
+			System.out.println(i);
+		}
 		final String query = "UPDATE users SET availability=? WHERE user_id=?";
 		jdbc.update(
 			new PreparedStatementCreator() {
