@@ -834,16 +834,6 @@ class DBConnectTest {
 	}
 	
 	@Test
-	void removeTutorFromClassBasicTest() {
-		
-	}
-	
-	@Test
-	void removeTutorFromClassDeleteRequestsTest() { 
-		
-	}
-	
-	@Test
 	public void removeTutorFromClassTest() {
 		System.out.println("Remove tutor from class");
 		String email = "arianagrande@usc.edu";
@@ -888,8 +878,8 @@ class DBConnectTest {
 		System.out.println("Update tutor's classes with no classes");
 		String email = "tutor@usc.edu";
 		String password = "password";
-		String firstName = "Chao";
-		String lastName = "Wang";
+		String firstName = "first";
+		String lastName = "last";
 		String phoneNumber = "1231231234";
 		Boolean accountType = true;
 		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
@@ -906,8 +896,8 @@ class DBConnectTest {
 		System.out.println("Update tutor's classes with one class");
 		String email = "tutor@usc.edu";
 		String password = "password";
-		String firstName = "Chao";
-		String lastName = "Wang";
+		String firstName = "first";
+		String lastName = "last";
 		String phoneNumber = "1231231234";
 		Boolean accountType = true;
 		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
@@ -925,8 +915,8 @@ class DBConnectTest {
 		System.out.println("Update tutor's classes with multiple class");
 		String email = "tutor@usc.edu";
 		String password = "password";
-		String firstName = "Chao";
-		String lastName = "Wang";
+		String firstName = "first";
+		String lastName = "last";
 		String phoneNumber = "1231231234";
 		Boolean accountType = true;
 		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
@@ -948,8 +938,8 @@ class DBConnectTest {
 		System.out.println("Update tutor's classes with multiple class");
 		String email = "tutor@usc.edu";
 		String password = "password";
-		String firstName = "Chao";
-		String lastName = "Wang";
+		String firstName = "first";
+		String lastName = "last";
 		String phoneNumber = "1231231234";
 		Boolean accountType = true;
 		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);

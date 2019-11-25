@@ -23,9 +23,14 @@ public class Controller {
 	
 	private static Hashtable<RequestThread, Socket> requestThreadsSockets = new Hashtable<RequestThread, Socket>();
 
+	int testing_port = 6780;
 	int port = 6789;
-
 	private static ServerSocket ss = null;
+	boolean run = true;
+
+	public void useTestingPort() {
+		port = testing_port;
+	}
 
 	@PostConstruct
 	void startController() {
@@ -40,22 +45,29 @@ public class Controller {
 
 		} catch (IOException e) {
 
-			System.out.println("Unable to bind to port " + port);
-			System.out.println();
+//			System.out.println("Unable to bind to port " + port);
+//			System.out.println();
 		}
 
-		while (true) {
+		while (this.run) {
 			Socket controllerThreadsSocket = null;
 			try {
 				controllerThreadsSocket = ss.accept();
 			} catch (IOException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 
 			// Keep track of the sockets and threads to effectively log out user
 			RequestThread rt = new RequestThread(controllerThreadsSocket, this);
 			requestThreadsSockets.put(rt, controllerThreadsSocket);
 		}
+//
+	}
+
+	public void closeServer() throws IOException {
+		this.run = false;
+		ss.close();
+		System.out.println("Server closed");
 	}
 
 	Request processRequest(Request request, RequestThread requestThread) {
@@ -80,7 +92,7 @@ public class Controller {
 		 *	"Success"
 		 * Outgoing attributes
 		 *  String "userID"
-		 */		
+		 */
 		if(request.getRequestType().equals("signup")) {
 			// get UserID to send back
 			String email = (String) request.get("email");
@@ -254,7 +266,7 @@ public class Controller {
 		else if (request.getRequestType().equals("updateavailability")) {
 			int tutorID = (int)request.getAttributes().get("tutorID");
 			List<Integer> availability = (List<Integer>)request.getAttributes().get("availability");
-//			dbConnect.updateTutorAvailability(tutorID, availability);
+			dbConnect.updateTutorAvailability(tutorID, availability);
 			respType = "Success";
 		}
 		/**

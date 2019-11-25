@@ -266,11 +266,8 @@ public class DBConnect {
 				 new ResultSetExtractor<Boolean>() {
 		            public Boolean extractData(ResultSet resultSet) throws SQLException,
 		              DataAccessException {
-		            	if (resultSet.next()) {
-		            		return true;
-		            	}
-		            	return false;
-		            }
+						return resultSet.next();
+					}
 				});
 		
 		if (exists) {
@@ -320,11 +317,8 @@ public class DBConnect {
 				 new ResultSetExtractor<Boolean>() {
 		            public Boolean extractData(ResultSet resultSet) throws SQLException,
 		              DataAccessException {
-		            	if (resultSet.next()) {
-		            		return true;
-		            	}
-		            	return false;
-		            }
+						return resultSet.next();
+					}
 				});
 		
 		if (exists) {
@@ -732,10 +726,7 @@ public class DBConnect {
 		public boolean test(T t) {
 			// TODO Auto-generated method stub
 			Tutor tutor = (Tutor)t;
-			if (tutor.getMatchingAvailabilities().isEmpty()) {
-				return true;
-			}
-			return false;
+			return tutor.getMatchingAvailabilities().isEmpty();
 		}
 		
 	}
@@ -869,6 +860,10 @@ public class DBConnect {
 	//do we need separate functions for UPDATE and ADD? 
 	void updateTutorAvailability(int userID, List<Integer> availability) {
 		
+		System.out.println("updating availability: ");
+		for (Integer i : availability) {
+			System.out.println(i);
+		}
 		final String query = "UPDATE users SET availability=? WHERE user_id=?";
 		jdbc.update(
 			new PreparedStatementCreator() {
@@ -906,7 +901,7 @@ public class DBConnect {
                 			resultSet.getInt("tutor_id"), resultSet.getString("time"), resultSet.getInt("status"),
                 			resultSet.getString("time_created"), resultSet.getString("class"));
                 	if (tutorRequest.getStatus() == 0) {
-                		if (!availability.contains(tutorRequest.getTime().toString())) {
+                		if (!availability.contains(tutorRequest.getTime())) {
                 			//this means that new availability doesn't contain the time
                 			// that was previously requested anymore
                 			//so we need to delete it

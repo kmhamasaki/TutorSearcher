@@ -13,8 +13,7 @@ public class RequestThread extends Thread {
     private boolean end = false;
 
     public RequestThread(Socket s, Controller controller) {
-
-//        System.out.println("RequestThread created.");
+        System.out.println("RequestThread created.");
 
         this.controller = controller;
 
