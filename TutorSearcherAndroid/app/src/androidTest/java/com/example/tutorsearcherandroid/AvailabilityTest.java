@@ -31,7 +31,7 @@ import static org.hamcrest.Matchers.not;
 
 @RunWith(AndroidJUnit4.class)
 public class AvailabilityTest extends TestCase {
-/*
+
     @Test
     public void TutorSignUpAvailabilityTest() {
         ActivityTestRule<TabbedAvailabilityActivity> activity =
@@ -102,15 +102,11 @@ public class AvailabilityTest extends TestCase {
         activity.launchActivity(intent);
 
         onView(withText("TUE")).perform(click());
-
-        onView(allOf(withId(R.id.time1),isCompletelyDisplayed())).perform(click());
-        onView(allOf(withId(R.id.time2),isCompletelyDisplayed())).perform(click());
-        onView(allOf(withId(R.id.time3),isCompletelyDisplayed())).perform(click());
-        onView(allOf(withId(R.id.time4),isCompletelyDisplayed())).perform(click());
-        onView(allOf(withId(R.id.time5),isCompletelyDisplayed())).perform(click());
-        onView(allOf(withId(R.id.time6),isCompletelyDisplayed())).perform(click());
-        onView(allOf(withId(R.id.time7),isCompletelyDisplayed())).perform(click());
-        onView(allOf(withId(R.id.time8),isCompletelyDisplayed())).perform(click());
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(allOf(withId(R.id.time1),isCompletelyDisplayed())).perform(click());
         onView(allOf(withId(R.id.time2),isCompletelyDisplayed())).perform(click());
         onView(allOf(withId(R.id.time3),isCompletelyDisplayed())).perform(click());
@@ -120,6 +116,40 @@ public class AvailabilityTest extends TestCase {
         onView(allOf(withId(R.id.time7),isCompletelyDisplayed())).perform(click());
         onView(allOf(withId(R.id.time8),isCompletelyDisplayed())).perform(click());
 
+        onView(withText("FRI")).perform(click());
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        onView(allOf(withId(R.id.time3),isCompletelyDisplayed())).perform(click());
+        onView(allOf(withId(R.id.time5),isCompletelyDisplayed())).perform(click());
+        onView(allOf(withId(R.id.time7),isCompletelyDisplayed())).perform(click());
+
+        onView(withText("TUE")).perform(click());
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        onView(allOf(withId(R.id.time1),isCompletelyDisplayed())).perform(click());
+        onView(allOf(withId(R.id.time2),isCompletelyDisplayed())).perform(click());
+        onView(allOf(withId(R.id.time3),isCompletelyDisplayed())).perform(click());
+        onView(allOf(withId(R.id.time4),isCompletelyDisplayed())).perform(click());
+        onView(allOf(withId(R.id.time5),isCompletelyDisplayed())).perform(click());
+        onView(allOf(withId(R.id.time6),isCompletelyDisplayed())).perform(click());
+        onView(allOf(withId(R.id.time7),isCompletelyDisplayed())).perform(click());
+        onView(allOf(withId(R.id.time8),isCompletelyDisplayed())).perform(click());
+
+        onView(withText("FRI")).perform(click());
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        onView(allOf(withId(R.id.time3),isCompletelyDisplayed())).perform(click());
+        onView(allOf(withId(R.id.time5),isCompletelyDisplayed())).perform(click());
+        onView(allOf(withId(R.id.time7),isCompletelyDisplayed())).perform(click());
         onView(withId(R.id.submitButton)).perform(click());
 
         onView(withText("Please select at least one time slot."))
@@ -128,10 +158,10 @@ public class AvailabilityTest extends TestCase {
 
         Intents.release();
     }
-    */
+
 
     @Test
-    public void TutorEditAvailability(){
+    public void TutorEditAvailabilityTest(){
         ActivityTestRule<TabbedAvailabilityActivity> activity =
                 new IntentsTestRule<>(TabbedAvailabilityActivity.class, true, true);
         Intent intent = new Intent();
@@ -143,7 +173,7 @@ public class AvailabilityTest extends TestCase {
 
         onView(withText("TUE")).perform(click());
         try {
-            Thread.sleep(2000);
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -154,6 +184,35 @@ public class AvailabilityTest extends TestCase {
         onView(withId(R.id.submitButton)).perform(click());
 
         intended(hasComponent(UpdateProfile.class.getName()));
+        Intents.release();
+    }
+
+    @Test
+    public void AvailabilitySearchTest(){
+        ActivityTestRule<TabbedAvailabilityActivity> activity =
+                new IntentsTestRule<>(TabbedAvailabilityActivity.class, true, true);
+        Intent intent = new Intent();
+        intent.putExtra("SourcePage","SearchTutor");
+        intent.putExtra("UserId","1");
+        intent.putExtra("AccountType","Tutee");
+
+        activity.launchActivity(intent);
+
+        onView(withText("MON")).perform(click());
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        onView(allOf(withId(R.id.time1),isCompletelyDisplayed())).perform(click());
+        onView(allOf(withId(R.id.time2),isCompletelyDisplayed())).perform(click());
+        onView(allOf(withId(R.id.time3),isCompletelyDisplayed())).perform(click());
+        onView(allOf(withId(R.id.time4),isCompletelyDisplayed())).perform(click());
+        onView(allOf(withId(R.id.time6),isCompletelyDisplayed())).perform(click());
+
+        onView(withId(R.id.submitButton)).perform(click());
+
+        intended(hasComponent(SearchResultsActivity.class.getName()));
         Intents.release();
     }
 }
