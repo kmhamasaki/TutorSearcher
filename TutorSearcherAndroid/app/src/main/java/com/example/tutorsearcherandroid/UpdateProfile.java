@@ -19,6 +19,7 @@ public class UpdateProfile extends AppCompatActivity {
 
     Client client;
 
+    Application app;
     private String UserId;
     private String AccountType;
     private User user;
@@ -26,8 +27,7 @@ public class UpdateProfile extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Application app = (Application)getApplicationContext();
-        client = Client.initClient(app);
+        app = (Application)getApplicationContext();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_profile);
@@ -49,7 +49,7 @@ public class UpdateProfile extends AppCompatActivity {
         try {
             HashMap<String, Object> attr = new HashMap<>();
             attr.put("userID", Integer.parseInt(UserId));
-            client.setTypeAndAttr("getuserinfo", attr);
+            client = Client.initClient("getuserinfo", attr, app);
 
             // Pass all inputs to backend
             client.execute().get();
@@ -104,7 +104,7 @@ public class UpdateProfile extends AppCompatActivity {
         try {
             HashMap<String, Object> attr = new HashMap<>();
             attr.put("user", user);
-            client.setTypeAndAttr("updateinfo", attr);
+            client = Client.initClient("updateinfo", attr, app);
 
             // Pass all inputs to backend
             client.execute().get();
@@ -141,7 +141,7 @@ public class UpdateProfile extends AppCompatActivity {
             //Get most recent search
             HashMap<String,Object> attr = new HashMap<>();
             attr.put("userID",Integer.parseInt(UserId));
-            client.setTypeAndAttr("searchprevious",attr);
+            client = Client.initClient("searchprevious",attr, app);
             client.execute();
             Request response = null;
             while(response == null){
