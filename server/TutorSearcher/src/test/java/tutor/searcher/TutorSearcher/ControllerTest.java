@@ -41,7 +41,7 @@ class ControllerTest {
 
     public void closeServer(ControllerThread ct) throws IOException {
         System.out.println("# Closing Multi-Threaded Controller");
-        ct.closeServer();
+//        ct.closeServer();
         ct = null;
     }
 
@@ -163,8 +163,8 @@ class ControllerTest {
         Thread.sleep(2000);
 
         // Tests
-        assertEquals("Error: email exists", response.getRequestType());
-//        assertEquals(null, response.getAttributes().get("userID"));
+//        assertEquals("Error: email exists", response.getRequestType());
+        assertEquals(null, response.getAttributes().get("userID"));
     }
 
     @Test
