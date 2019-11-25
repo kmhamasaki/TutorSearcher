@@ -37,6 +37,7 @@ class ControllerTest {
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
         ct.setDbConnect(dbConnect);
+        Thread.sleep(1000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -72,6 +73,7 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
         when(dbConnect.addUser(email, passwordHash, firstName, lastName, phoneNumber, accountType)).thenReturn(1);
         ct.setDbConnect(dbConnect);
+        Thread.sleep(1000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -114,6 +116,7 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
         when(dbConnect.addUser(email, passwordHash, firstName, lastName, phoneNumber, accountType)).thenReturn(-1);
         ct.setDbConnect(dbConnect);
+        Thread.sleep(1000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -167,6 +170,7 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
         when(dbConnect.addUser(email, passwordHash, firstName, lastName, phoneNumber, accountType)).thenReturn(-1);
         ct.setDbConnect(dbConnect);
+        Thread.sleep(1000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -207,8 +211,8 @@ class ControllerTest {
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
         when(dbConnect.searchTutors(userId, times, className)).thenReturn(tutors);
-
         ct.setDbConnect(dbConnect);
+        Thread.sleep(1000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -246,6 +250,7 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
         when(dbConnect.addRequest(tuteeID, tutorID, className, time, 0)).thenReturn(0);
         ct.setDbConnect(dbConnect);
+        Thread.sleep(1000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -280,6 +285,7 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
         when(dbConnect.getRequestsTuteeApproved(userID)).thenReturn(null);
         ct.setDbConnect(dbConnect);
+        Thread.sleep(1000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -313,6 +319,7 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
         when(dbConnect.updateRequestStatus(requestID, newStatus)).thenReturn(true);
         ct.setDbConnect(dbConnect);
+        Thread.sleep(1000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -346,6 +353,7 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
 //        when(dbConnect.updateTutorAvailability(tutorID, availability)).thenReturn(true);
         ct.setDbConnect(dbConnect);
+        Thread.sleep(1000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -378,6 +386,7 @@ class ControllerTest {
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
         ct.setDbConnect(dbConnect);
+        Thread.sleep(1000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -411,6 +420,7 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
 //        when(dbConnect.removeTutorFromClass(tutorID, className)).return(null);
         ct.setDbConnect(dbConnect);
+        Thread.sleep(1000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -446,6 +456,7 @@ class ControllerTest {
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
         ct.setDbConnect(dbConnect);
+        Thread.sleep(1000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -477,6 +488,7 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
         when(dbConnect.getTutorClasses(tutorID)).thenReturn(null);
         ct.setDbConnect(dbConnect);
+        Thread.sleep(1000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -508,6 +520,7 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
         when(dbConnect.searchTutorsPrevious(userID)).thenReturn(null);
         ct.setDbConnect(dbConnect);
+        Thread.sleep(1000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -539,6 +552,7 @@ class ControllerTest {
         DBConnect dbConnect = mock(DBConnect.class);
         when(dbConnect.getUserInformation(userId)).thenReturn(null);
         ct.setDbConnect(dbConnect);
+        Thread.sleep(1000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
@@ -571,6 +585,7 @@ class ControllerTest {
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
         ct.setDbConnect(dbConnect);
+        Thread.sleep(1000);
 
         // Start Controller and DummyTestClient
         DummyTestClient dc = new DummyTestClient();
