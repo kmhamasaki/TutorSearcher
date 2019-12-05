@@ -41,10 +41,10 @@ public class ClientSocketTest {
         System.out.println();
 
         // Setting test parameters
-        String email = "chunghas@usc.edu";
+        String email = "email@usc.edu";
         String passwordHash = "0CC175B9C0F1B6A831C399E269772661";
-        String firstName = "Chungha";
-        String lastName = "Kim";
+        String firstName = "first";
+        String lastName = "last";
         String phoneNumber = "2135052883";
         Boolean accountType = true;
 
@@ -75,10 +75,10 @@ public class ClientSocketTest {
         System.out.println();
 
         // Setting test parameters
-        String email = "chunghas@usc.edu";
+        String email = "email@usc.edu";
         String passwordHash = "0CC175B9C0F1B6A831C399E269772661";
-        String firstName = "Chungha";
-        String lastName = "Kim";
+        String firstName = "first";
+        String lastName = "last";
         String phoneNumber = "2135052883";
         Boolean accountType = true;
 
@@ -110,9 +110,9 @@ public class ClientSocketTest {
 
         // Setting test parameters
         int userId = 1;
-        String firstName = "Chungha";
-        String lastName = "Kim";
-        String email = "chunghas@usc.edu";
+        String firstName = "first";
+        String lastName = "last";
+        String email = "email@usc.edu";
         String phoneNumber = "2135052883";
         String passwordHash = "0CC175B9C0F1B6A831C399E269772661";
         boolean accountType = true;

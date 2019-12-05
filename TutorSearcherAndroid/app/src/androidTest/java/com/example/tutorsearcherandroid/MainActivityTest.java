@@ -2,6 +2,7 @@ package com.example.tutorsearcherandroid;
 
 import android.content.Intent;
 
+import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
@@ -39,7 +40,9 @@ public class MainActivityTest extends TestCase {
 
         onView(withId(R.id.login)).perform(click());
         onView(withId(R.id.username)).perform(typeText("successTutor@usc.edu"));
+        onView(withId(R.id.password)).perform(ViewActions.closeSoftKeyboard());
         onView(withId(R.id.password)).perform(typeText("password"));
+        onView(withId(R.id.password)).perform(ViewActions.closeSoftKeyboard());
         onView(withId(R.id.bigLogin)).perform(click());
         intended(hasComponent(ScrollingHomeActivity.class.getName()));
 
@@ -55,7 +58,9 @@ public class MainActivityTest extends TestCase {
 
         onView(withId(R.id.login)).perform(click());
         onView(withId(R.id.username)).perform(typeText("successTutee@usc.edu"));
+        onView(withId(R.id.password)).perform(ViewActions.closeSoftKeyboard());
         onView(withId(R.id.password)).perform(typeText("password"));
+        onView(withId(R.id.password)).perform(ViewActions.closeSoftKeyboard());
         onView(withId(R.id.bigLogin)).perform(click());
         intended(hasComponent(ScrollingHomeActivity.class.getName()));
         Intents.release();
@@ -70,7 +75,9 @@ public class MainActivityTest extends TestCase {
 
         onView(withId(R.id.login)).perform(click());
         onView(withId(R.id.username)).perform(typeText("invalidEmail@usc.edu"));
+        onView(withId(R.id.password)).perform(ViewActions.closeSoftKeyboard());
         onView(withId(R.id.password)).perform(typeText("password"));
+        onView(withId(R.id.password)).perform(ViewActions.closeSoftKeyboard());
         onView(withId(R.id.bigLogin)).perform(click());
 
         onView(withText("Wrong email and password combination"))
@@ -89,8 +96,9 @@ public class MainActivityTest extends TestCase {
 
         onView(withId(R.id.login)).perform(click());
         onView(withId(R.id.username)).perform(typeText("successTutee@usc.edu"));
+        onView(withId(R.id.password)).perform(ViewActions.closeSoftKeyboard());
         onView(withId(R.id.password)).perform(typeText("password"));
-
+        onView(withId(R.id.password)).perform(ViewActions.closeSoftKeyboard());
 
         onView(withId(R.id.bigLogin)).perform(click());
         intended(hasComponent(ScrollingHomeActivity.class.getName()));
