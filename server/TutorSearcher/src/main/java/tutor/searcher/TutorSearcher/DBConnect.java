@@ -567,9 +567,10 @@ public class DBConnect {
                 	Boolean accountType = resultSet.getBoolean("tutor");
                 	String availability = resultSet.getString("availability");
                 	double rating = resultSet.getDouble("rating");
+                	String bio = resultSet.getString("bio");
                 	if (availability != null) {
                     	System.out.println("adding " + email);
-                    	result.add(new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability, rating));
+                    	result.add(new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability, rating, bio));
 
                 	}
                 	
@@ -760,11 +761,12 @@ public class DBConnect {
 			                	double rating = resultSet.getDouble("rating");
 			                	System.out.println("authenticated");
 			                	System.out.println(firstName + " " + lastName);
+			                	String bio = resultSet.getString("bio");
 			                	if (accountType) {
-			                		return new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability, rating);
+			                		return new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability, rating, bio);
 			                	}
 			                	else {
-			                		return new Tutee(userID, firstName, lastName, email, phoneNumber, accountType, rating);
+			                		return new Tutee(userID, firstName, lastName, email, phoneNumber, accountType, rating, bio);
 			                	}
 		                	}
 		                	else {

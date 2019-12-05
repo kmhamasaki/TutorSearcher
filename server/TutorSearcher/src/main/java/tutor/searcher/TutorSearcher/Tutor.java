@@ -52,6 +52,21 @@ public class Tutor extends User implements Serializable {
 	// Sat 41 - 48
 	// Sun 49 - 56
 
+	public Tutor(int userID, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
+			String availability, double rating, String bio) {
+		// TODO Auto-generated constructor stub
+		super(userID, firstName, lastName, email, phoneNumber,  accountType, rating, bio);
+		this.timeAvailability = availability;
+		if (availability != null && !availability.equals("")) {
+			String[] timesStr = availability.split(" ");
+			this.timeAvailabilities = new ArrayList<>();
+			for (int i = 0; i < timesStr.length; i++) {
+				this.timeAvailabilities.add(Integer.parseInt(timesStr[i]));
+			}
+		}
+		
+	}
+
 	public List<Integer> getTimeAvailabilities() {
 		return timeAvailabilities;
 	}
