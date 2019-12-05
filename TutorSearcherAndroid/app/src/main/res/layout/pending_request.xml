@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="197dp"
+        android:layout_height="482dp"
         android:layout_margin="4dp"
         android:background="#F8BBD0">
 
@@ -45,7 +45,7 @@
 
         <TextView
             android:id="@+id/time"
-            android:layout_width="338dp"
+            android:layout_width="355dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tutee_name"
             android:layout_alignParentStart="true"
@@ -55,8 +55,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="11dp"
-            android:layout_marginEnd="11dp"
-            android:layout_marginRight="11dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
             android:layout_weight="1"
             android:text="ClassTime"
             android:textSize="24dp" />
@@ -84,6 +84,20 @@
             android:layout_marginRight="61dp"
             android:layout_marginBottom="18dp"
             android:text="Reject" />
+
+        <TextView
+            android:id="@+id/bio"
+            android:layout_width="355dp"
+            android:layout_height="93dp"
+            android:layout_above="@+id/accept_button"
+            android:layout_below="@+id/time"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="198dp"
+            android:layout_marginBottom="15dp"
+            android:text="mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm" />
 
     </RelativeLayout>
 

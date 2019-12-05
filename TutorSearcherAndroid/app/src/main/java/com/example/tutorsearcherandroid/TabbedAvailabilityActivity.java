@@ -67,7 +67,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
                 client.execute().get();
                 Request response = client.getResponse();
 
-                //selectedTimes = (ArrayList<Integer>)response.getAttributes().get("availability");
+                selectedTimes = (ArrayList<Integer>)response.getAttributes().get("availability");
 //                for(int i = 0; i < classes.size(); i++) {
 //                    CheckBox cb = findViewById(CHECKBOX_ID[classToIndex.get(classes.get(i))]);
 //                    cb.setChecked(true);
