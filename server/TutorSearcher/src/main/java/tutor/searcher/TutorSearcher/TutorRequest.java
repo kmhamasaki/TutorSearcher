@@ -16,6 +16,16 @@ public class TutorRequest implements Serializable {
 	private int status;
 	private String timeCreated;
 	private String className;
+	private String bio;
+	
+	public String getBio() {
+		return bio;
+	}
+
+	public void setBio(String bio) {
+		this.bio = bio;
+	}
+
 	private double tuteeRating;
 	private double tutorRating;
 
@@ -29,6 +39,18 @@ public class TutorRequest implements Serializable {
 		this.status = status;
 		this.timeCreated = timecreated;
 		this.className = className;
+	}
+	
+	public TutorRequest(int requestID, int tuteeID, int tutorID, String time, int status,
+			String timecreated, String className, String bio) {
+		this.requestID = requestID;
+		this.tuteeID = tuteeID;
+		this.tutorID = tutorID;
+		this.time = time;
+		this.status = status;
+		this.timeCreated = timecreated;
+		this.className = className;
+		this.bio = bio;
 	}
 
 	public String getTuteeName() {
