@@ -13,7 +13,7 @@ public class User implements Serializable {
 	private Boolean accountType;
 	private String passwordHash;
 	private double rating;
-
+	private String bio;
 
 
 	public User(int userID, String firstName, String lastName, String email, String phoneNumber, 
@@ -29,6 +29,20 @@ public class User implements Serializable {
 		this.rating = rating;
 	}
 
+	public User(int userID, String firstName, String lastName, String email, String phoneNumber, 
+			String passwordHash, Boolean accountType, double rating, String bio) {
+		super();
+		UserID = userID;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.accountType = accountType;
+		this.passwordHash = passwordHash;
+		this.rating = rating;
+		this.bio = bio;
+	}
+	
 	public User(int userID, String firstName, String lastName, String email, 
 			String phoneNumber, Boolean accountType, double rating) {
 		super();
@@ -94,6 +108,14 @@ public class User implements Serializable {
 	
 	public Boolean getAccountType() {
 		return accountType;
+	}
+	
+	public String getBio() {
+		return bio;
+	}
+	
+	public void setBio(String bio) {
+		this.bio = bio;
 	}
 	
 

@@ -93,7 +93,7 @@ class ControllerTest {
 
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
-        when(dbConnect.addUser(email, passwordHash, firstName, lastName, phoneNumber, accountType)).thenReturn(1);
+        when(dbConnect.addUser(email, passwordHash, firstName, lastName, phoneNumber, accountType, "")).thenReturn(1);
         ct.setDbConnect(dbConnect);
 
         // Start Controller and DummyTestClient
@@ -139,7 +139,7 @@ class ControllerTest {
 
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
-        when(dbConnect.addUser(email, passwordHash, firstName, lastName, phoneNumber, accountType)).thenReturn(-1);
+        when(dbConnect.addUser(email, passwordHash, firstName, lastName, phoneNumber, accountType, "")).thenReturn(-1);
         ct.setDbConnect(dbConnect);
 
         // Start Controller and DummyTestClient
@@ -196,7 +196,8 @@ class ControllerTest {
 
         // DBConnect mocks
         DBConnect dbConnect = mock(DBConnect.class);
-        when(dbConnect.addUser(email, passwordHash, firstName, lastName, phoneNumber, accountType)).thenReturn(-1);
+        String bio = "";
+        when(dbConnect.addUser(email, passwordHash, firstName, lastName, phoneNumber, accountType, bio)).thenReturn(-1);
         ct.setDbConnect(dbConnect);
 
         // Start Controller and DummyTestClient

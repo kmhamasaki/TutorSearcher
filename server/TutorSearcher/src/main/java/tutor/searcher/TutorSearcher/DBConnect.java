@@ -254,7 +254,7 @@ public class DBConnect {
 	// true = tutor
 	// false = tutee
 	int addUser(String email, String passwordHash, String firstName, String lastName, String phoneNumber,
-			Boolean accountType) {
+			Boolean accountType, String bio) {
 		
 		String query = "SELECT * FROM users WHERE email=?";
 		Boolean exists = jdbc.query(query, 
@@ -275,7 +275,7 @@ public class DBConnect {
 		}
 		
 		String insertQuery = "INSERT INTO users (email, password_hash, tutor, phone_number,"
-			+ "first_name, last_name, rating, num_ratings) VALUES (?,?,?,?,?,?,?, ?)";
+			+ "first_name, last_name, rating, num_ratings, bio) VALUES (?,?,?,?,?,?,?, ?, ?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbc.update(
 		    new PreparedStatementCreator() {
@@ -291,6 +291,7 @@ public class DBConnect {
 			        ps.setString(6, lastName);
 			        ps.setDouble(7, -1);
 			        ps.setInt(8, 0);
+			        ps.setString(9, bio);
 		            return ps;
 		        }
 		    },
@@ -1013,7 +1014,7 @@ public class DBConnect {
                 	//	(int userID, String firstName, String lastName, String email, String phoneNumber, String passwordHash, Boolean accountType) {
                 	return new User(resultSet.getInt("user_id"), resultSet.getString("first_name"), resultSet.getString("last_name"),
                 			resultSet.getString("email"), resultSet.getString("phone_number"), resultSet.getString("password_hash"),
-                			resultSet.getBoolean("tutor"), resultSet.getDouble("rating"));
+                			resultSet.getBoolean("tutor"), resultSet.getDouble("rating"), resultSet.getString("bio"));
                 	
                 	
                 }
@@ -1028,5 +1029,40 @@ public class DBConnect {
 
 	public void setJdbc(JdbcTemplate jdbc) {
 		this.jdbc = jdbc;
+	}
+	
+	public void addBio(String bio) {
+		final String query = "UPDATE users SET users.bio=?";
+		jdbc.update(
+			new PreparedStatementCreator() {
+				@Override
+				public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+					PreparedStatement ps = connection.prepareStatement(query);
+					ps.setString(1, bio);
+					return ps;
+				}
+			}
+		);
+	}
+	
+	public String getBio(int userID) {
+		String query = "SELECT * FROM users WHERE user_id=?";
+		String bio = jdbc.query(query, 
+				new PreparedStatementSetter() {
+					public void setValues(PreparedStatement preparedStatement) throws SQLException {
+						preparedStatement.setInt(1,  userID);
+					}
+				}, 
+				 new ResultSetExtractor<String>() {
+		            public String extractData(ResultSet resultSet) throws SQLException,
+		              DataAccessException {
+		            	String bio = "";
+		            	if (resultSet.next()) {
+		            		bio = resultSet.getString("bio");
+		            	}
+						return bio;
+					}
+				});
+		return bio;
 	}
 }

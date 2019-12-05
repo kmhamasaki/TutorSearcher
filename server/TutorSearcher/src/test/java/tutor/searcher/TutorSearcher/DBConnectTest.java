@@ -78,7 +78,7 @@ class DBConnectTest {
 		String phoneNumber = "1112223333";
 		Boolean accountType = true;
 		System.out.println("hi");
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType, "");
 		User user = dbConnect.getUserInformation(userID);
 		assertEquals(user.getEmail(), email);
 		assertEquals(user.getPasswordHash(), password);
@@ -101,7 +101,7 @@ class DBConnectTest {
 		String lastName = "The";
 		String phoneNumber = "2221113333";
 		Boolean accountType = false;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType, "");
 		User user = dbConnect.getUserInformation(userID);
 		assertEquals(user.getEmail(), email);
 		assertEquals(user.getPasswordHash(), password);
@@ -124,14 +124,14 @@ class DBConnectTest {
 		String lastName = "Only Child";
 		String phoneNumber = "3332221111";
 		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType, "");
 		String email2 = "jessica@usc.edu";
 		String password2 = "p";
 		String firstName2 = "a";
 		String lastName2 = "b";
 		String phoneNumber2 = "911";
 		Boolean accountType2 = false;
-		int userID2 = dbConnect.addUser(email2, password2, firstName2, lastName2, phoneNumber2, accountType2);
+		int userID2 = dbConnect.addUser(email2, password2, firstName2, lastName2, phoneNumber2, accountType2, "");
 		assertEquals(userID2, -1);
 		System.out.println(firstName+" " +lastName+" in your area");
 		System.out.println(firstName2+" " +lastName2+" failed to be added");
@@ -146,9 +146,9 @@ class DBConnectTest {
 		String lastName = "Kim";
 		String phoneNumber = "3101001000";
 		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType, "");
 		
-		User userUpdate = new User(userID, firstName, lastName, email, phoneNumber, password, accountType, 0);
+		User userUpdate = new User(userID, firstName, lastName, email, phoneNumber, password, accountType, 0, "");
 		String newFirstName = "Kimmy";
 		userUpdate.setFirstName(newFirstName);
 		dbConnect.updateUserInformation(userUpdate);
@@ -168,7 +168,7 @@ class DBConnectTest {
 		String lastName = "Kim";
 		String phoneNumber = "3101001000";
 		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType, "");
 		
 		User userUpdate = new User(userID, firstName, lastName, email, phoneNumber, password, accountType, 0);
 		String newLastName = "Park";
@@ -192,7 +192,7 @@ class DBConnectTest {
 		String lastName = "Kim";
 		String phoneNumber = "3101001000";
 		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType, "");
 		
 		User userUpdate = new User(userID, firstName, lastName, email, phoneNumber, password, accountType, 0);
 		String newPassword = "iamveryscary";
@@ -214,7 +214,7 @@ class DBConnectTest {
 		String lastName = "Kim";
 		String phoneNumber = "3101001000";
 		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType, "");
 		
 		User userUpdate = new User(userID, firstName, lastName, email, phoneNumber, password, accountType, 0);
 		String newPhoneNumber = "6262002000";
@@ -230,7 +230,7 @@ class DBConnectTest {
 
 	@Test
 	public void searchTutorsSingleTutorTest() {
-		int userID = dbConnect.addUser("tutor@usc.edu", "password", "tutorfirst", "tutorlast", "1231231234", true);
+		int userID = dbConnect.addUser("tutor@usc.edu", "password", "tutorfirst", "tutorlast", "1231231234", true, "");
 		ArrayList<Integer> availability = new ArrayList<>();
 		availability.add(0);
 		availability.add(1);
@@ -241,14 +241,14 @@ class DBConnectTest {
 		classes.add("CSCI 104");
 		dbConnect.addTutorToClass(userID, classes);
 		
-		int userID2 = dbConnect.addUser("tutor1@usc.edu", "password", "tutor1first", "tutor1last", "1231231234", true);
+		int userID2 = dbConnect.addUser("tutor1@usc.edu", "password", "tutor1first", "tutor1last", "1231231234", true, "");
 		ArrayList<Integer> availability2 = new ArrayList<>();
 		availability2.add(4);
 		availability2.add(5);
 		dbConnect.updateTutorAvailability(userID2, availability2);
 		dbConnect.addTutorToClass(userID2, classes);
 		
-		int tuteeID = dbConnect.addUser("tutee@usc.edu", "password", "tuteefirst", "tuteelast", "1231231234", false);
+		int tuteeID = dbConnect.addUser("tutee@usc.edu", "password", "tuteefirst", "tuteelast", "1231231234", false, "");
 		
 		ArrayList<Integer> times = new ArrayList<>();
 		times.add(0);
@@ -273,7 +273,7 @@ class DBConnectTest {
 	 */
 	@Test
 	public void searchTutorsMultipleTutorsTest() {
-		int userID = dbConnect.addUser("tutor@usc.edu", "password", "tutorfirst", "tutorlast", "1231231234", true);
+		int userID = dbConnect.addUser("tutor@usc.edu", "password", "tutorfirst", "tutorlast", "1231231234", true, "");
 		ArrayList<Integer> availability = new ArrayList<>();
 		availability.add(0);
 		availability.add(1);
@@ -284,14 +284,14 @@ class DBConnectTest {
 		classes.add("CSCI 104");
 		dbConnect.addTutorToClass(userID, classes);
 		
-		int userID2 = dbConnect.addUser("tutor1@usc.edu", "password", "tutor1first", "tutor1last", "1231231234", true);
+		int userID2 = dbConnect.addUser("tutor1@usc.edu", "password", "tutor1first", "tutor1last", "1231231234", true, "");
 		ArrayList<Integer> availability2 = new ArrayList<>();
 		availability2.add(0);
 		availability2.add(1);
 		dbConnect.updateTutorAvailability(userID2, availability2);
 		dbConnect.addTutorToClass(userID2, classes);
 		
-		int userID3 = dbConnect.addUser("tutor2@usc.edu", "password", "tutor2first", "tutor2last", "1231231234", true);
+		int userID3 = dbConnect.addUser("tutor2@usc.edu", "password", "tutor2first", "tutor2last", "1231231234", true, "");
 		availability2.add(3);
 		availability2.add(4);
 		availability2.add(5);
@@ -299,14 +299,14 @@ class DBConnectTest {
 		classes.add("CSCI 310");
 		dbConnect.addTutorToClass(userID3, classes);
 		
-		int userID4 = dbConnect.addUser("tutor3@usc.edU", "password", "tutor3first", "tutor3last", "1231231234", true);
+		int userID4 = dbConnect.addUser("tutor3@usc.edU", "password", "tutor3first", "tutor3last", "1231231234", true, "");
 		ArrayList<Integer> availability3 = new ArrayList<>();
 		availability3.add(25);
 		ArrayList<String> classes2 = new ArrayList<>();
 		classes2.add("CSCI 103");
 		dbConnect.addTutorToClass(userID4, classes2);
 		
-		int tuteeID = dbConnect.addUser("tutee@usc.edu", "password", "tuteefirst", "tuteelast", "1231231234", false);
+		int tuteeID = dbConnect.addUser("tutee@usc.edu", "password", "tuteefirst", "tuteelast", "1231231234", false, "");
 		
 		ArrayList<Integer> times = new ArrayList<>();
 		times.add(0);
@@ -361,7 +361,7 @@ class DBConnectTest {
 	
 	@Test
 	void searchTutorsNoResultsTests() {
-		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
+		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false, "");
 		ArrayList<Integer> times = new ArrayList<>();
 		times.add(0);
 		times.add(5);
@@ -375,8 +375,8 @@ class DBConnectTest {
 	 */
 	@Test
 	void addRequestBasicTest() {
-		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
-		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
+		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false, "");
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true, "");
 		int requestID = dbConnect.addRequest(userID, tutorID, "CSCI 103", "0", 0);
 		assertNotEquals(-1, requestID);
 		
@@ -408,12 +408,12 @@ class DBConnectTest {
 	@Test
 	void addRequestRejectedTest() {
 		//same timeslot
-		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
-		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
+		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false, "");
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true, "");
 		int requestID = dbConnect.addRequest(userID, tutorID, "CSCI 103", "0", 1);
 		assertNotEquals(-1, requestID);
 		
-		int tutorID2 = dbConnect.addUser("tutor2@usc.edu", "password", "tutor2", "tutor2", "1231231234", true);
+		int tutorID2 = dbConnect.addUser("tutor2@usc.edu", "password", "tutor2", "tutor2", "1231231234", true, "");
 		int requestID2 = dbConnect.addRequest(userID, tutorID2, "CSCI 104", "0", 0);
 		assertEquals(-1, requestID2);
 		
@@ -422,15 +422,15 @@ class DBConnectTest {
 		assertEquals(-1, requestID3);
 		
 		//different tutee should work
-		int tuteeID2 = dbConnect.addUser("tutee@usc.edu", "password", "tutee", "tutee", "1231231234", false);
+		int tuteeID2 = dbConnect.addUser("tutee@usc.edu", "password", "tutee", "tutee", "1231231234", false, "");
 		int requestID4 = dbConnect.addRequest(tuteeID2, tutorID, "CSCI 103", "1", 0);
 		assertNotEquals(-1, requestID4);
 	}
 	
 	@Test
 	void updateRequestStatusBasicAcceptedTest() {
-		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
-		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
+		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false, "");
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true, "");
 		ArrayList<Integer> availability = new ArrayList<>();
 		availability.add(0);
 		availability.add(1);
@@ -454,8 +454,8 @@ class DBConnectTest {
 	
 	@Test
 	void updateRequestStatusBasicRejectedTest() {
-		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
-		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
+		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false, "");
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true, "");
 		ArrayList<Integer> availability = new ArrayList<>();
 		availability.add(0);
 		availability.add(1);
@@ -487,8 +487,8 @@ class DBConnectTest {
 	 */
 	@Test
 	void updateRequestStatusTimeOverlapTest() {
-		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
-		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
+		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false, "");
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true, "");
 		ArrayList<Integer> availability = new ArrayList<>();
 		availability.add(0);
 		availability.add(1);
@@ -528,9 +528,9 @@ class DBConnectTest {
 	
 	@Test
 	void updateRequestStatusClassOverlapTest() {
-		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
-		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
-		int tutorID2 = dbConnect.addUser("tutor1@usc.edu", "password", "tutorone", "tutorone", "1231231234", true);
+		int userID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false, "");
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true, "");
+		int tutorID2 = dbConnect.addUser("tutor1@usc.edu", "password", "tutorone", "tutorone", "1231231234", true, "");
 		ArrayList<Integer> availability = new ArrayList<>();
 		availability.add(0);
 		availability.add(1);
@@ -565,8 +565,8 @@ class DBConnectTest {
 	
 	@Test
 	void getRequestsTuteeApprovedTest() {
-		int tuteeID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
-		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
+		int tuteeID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false, "");
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true, "");
 		
 		int requestID1 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 103", "0", 1);
 		int requestID2 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 104", "1", 1);
@@ -614,8 +614,8 @@ class DBConnectTest {
 	
 	@Test
 	void getRequestsTuteeRejectedTest() { 
-		int tuteeID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
-		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
+		int tuteeID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false, "");
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true, "");
 		
 		int requestID1 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 103", "0", 2);
 		int requestID2 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 104", "1", 2);
@@ -662,8 +662,8 @@ class DBConnectTest {
 	
 	@Test
 	void getRequestsTutorApprovedTest() {
-		int tuteeID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
-		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
+		int tuteeID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false, "");
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true, "");
 		
 		int requestID1 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 103", "0", 1);
 		int requestID2 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 104", "1", 1);
@@ -710,8 +710,8 @@ class DBConnectTest {
 	
 	@Test
 	void getRequestsTutorUnapprovedTest() {
-		int tuteeID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
-		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
+		int tuteeID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false, "");
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true, "");
 		
 		int requestID1 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 103", "0", 0);
 		int requestID2 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 104", "1", 0);
@@ -758,9 +758,9 @@ class DBConnectTest {
 		
 	@Test
 	void getRequestEmptyTest() {
-		int tuteeID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false);
-		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
-		int tuteeID2 = dbConnect.addUser("tutee@usc.edu", "password", "tutee", "tutee", "1231231234", false);
+		int tuteeID = dbConnect.addUser("test@usc.edu", "password", "testfirst", "testlast", "1231231234", false, "");
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true, "");
+		int tuteeID2 = dbConnect.addUser("tutee@usc.edu", "password", "tutee", "tutee", "1231231234", false, "");
 		
 		int requestID1 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 103", "0", 1);
 		int requestID2 = dbConnect.addRequest(tuteeID, tutorID, "CSCI 104", "1", 1);
@@ -784,7 +784,7 @@ class DBConnectTest {
 	
 	@Test
 	void authenticateBasicTest() {
-		int userID = dbConnect.addUser("person@usc.edu", "password", "personfirst", "personlast", "1231231234", true);
+		int userID = dbConnect.addUser("person@usc.edu", "password", "personfirst", "personlast", "1231231234", true, "");
 		User user = dbConnect.authenticate("person@usc.edu", "password");
 		assertNotEquals(null, user);
 		assertEquals("person@usc.edu", user.getEmail());
@@ -797,14 +797,14 @@ class DBConnectTest {
 	
 	@Test
 	void authenticateNonexistentUserTest() {
-		int userID = dbConnect.addUser("person1@usc.edu", "password", "personfirst", "personlast", "1231231234", true);
+		int userID = dbConnect.addUser("person1@usc.edu", "password", "personfirst", "personlast", "1231231234", true, "");
 		User user = dbConnect.authenticate("person@usc.edu", "password");
 		assertEquals(null, user);
 	}
 	
 	@Test
 	void authenticateWrongPasswordTest() {
-		int userID = dbConnect.addUser("person@usc.edu", "password", "personfirst", "personlast", "1231231234", true);
+		int userID = dbConnect.addUser("person@usc.edu", "password", "personfirst", "personlast", "1231231234", true, "");
 		User user = dbConnect.authenticate("person@usc.edu", "password1");
 		assertEquals(null, user);
 		
@@ -814,7 +814,7 @@ class DBConnectTest {
 	
 	@Test
 	void getTutorAvailabilityTest() {
-		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true);
+		int tutorID = dbConnect.addUser("tutor@usc.edu", "password", "tutor", "tutor", "1231231234", true, "");
 		ArrayList<Integer> availability = new ArrayList<>();
 		availability.add(0);
 		availability.add(1);
@@ -842,7 +842,7 @@ class DBConnectTest {
 		String lastName = "Grande";
 		String phoneNumber = "3104101300";
 		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType, "");
 
 		ArrayList<String> classes = new ArrayList<>();
 		classes.add("CSCI 103");
@@ -864,7 +864,7 @@ class DBConnectTest {
 		String lastName = "Venti";
 		String phoneNumber = "69696969";
 		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType, "");
 
 		ArrayList<String> classes = new ArrayList<>();
 
@@ -882,7 +882,7 @@ class DBConnectTest {
 		String lastName = "last";
 		String phoneNumber = "1231231234";
 		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType, "");
 		
 		ArrayList<String> classes = new ArrayList<String>();
 		dbConnect.addTutorToClass(userID, classes);
@@ -900,7 +900,7 @@ class DBConnectTest {
 		String lastName = "last";
 		String phoneNumber = "1231231234";
 		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType, "");
 		
 		ArrayList<String> classes = new ArrayList<String>();
 		classes.add("CSCI 201");
@@ -919,7 +919,7 @@ class DBConnectTest {
 		String lastName = "last";
 		String phoneNumber = "1231231234";
 		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType, "");
 		
 		ArrayList<String> classes = new ArrayList<String>();
 		classes.add("CSCI 201");
@@ -942,7 +942,7 @@ class DBConnectTest {
 		String lastName = "last";
 		String phoneNumber = "1231231234";
 		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType, "");
 		
 		ArrayList<String> classes1 = new ArrayList<String>();
 		classes1.add("CSCI 360");
@@ -991,7 +991,8 @@ class DBConnectTest {
 		String lastName = "Dan";
 		String phoneNumber = "3109871234";
 		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		String bio ="";
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType, bio);
 		
 		List<Integer> times = new ArrayList<Integer>();
 		
@@ -1010,7 +1011,7 @@ class DBConnectTest {
 		String lastName = "Mamoa";
 		String phoneNumber = "1230001233";
 		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType, "");
 		
 		List<Integer> times = new ArrayList<Integer>();
 		times.add(1);
@@ -1030,7 +1031,7 @@ class DBConnectTest {
 		String lastName = "Clarke";
 		String phoneNumber = "3101006969";
 		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType, "");
 		
 		List<Integer> times = new ArrayList<Integer>();
 		for(int i=0;i<56;i++) {
@@ -1052,7 +1053,7 @@ class DBConnectTest {
 		String lastName = "Swift";
 		String phoneNumber = "3106121234";
 		Boolean accountType = true;
-		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType);
+		int userID = dbConnect.addUser(email, password, firstName, lastName, phoneNumber, accountType, "");
 		
 		List<Integer> times1 = new ArrayList<Integer>();
 		for(int i=0;i<56;i++) {
