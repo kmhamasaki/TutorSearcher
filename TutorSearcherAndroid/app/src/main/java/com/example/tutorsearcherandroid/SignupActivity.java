@@ -144,7 +144,7 @@ public class SignupActivity extends AppCompatActivity {
 
             // Success, tutee, go to home page
             if (AccountType.equals("Tutee")) {
-                openHomeActivity();
+                openBioActivity();
             }
 
             // Success, tutor, go to availability page.
@@ -174,6 +174,15 @@ public class SignupActivity extends AppCompatActivity {
         i.putExtra("UserId", UserId);
         i.putExtra("AccountType", AccountType);
 
+        startActivity(i);
+    }
+
+    public void openBioActivity() {
+        Intent i = new Intent(this, BioActivity.class);
+        i.putExtra("UserId",UserId);
+        i.putExtra("AccountType", AccountType);
+        i.putExtra("SourcePage", "Signup");
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
 

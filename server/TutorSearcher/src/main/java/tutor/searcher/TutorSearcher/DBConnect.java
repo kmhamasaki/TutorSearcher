@@ -1034,14 +1034,15 @@ public class DBConnect {
 		this.jdbc = jdbc;
 	}
 	
-	public void addBio(String bio) {
-		final String query = "UPDATE users SET users.bio=?";
+	public void addBio(String bio, int userID) {
+		final String query = "UPDATE users SET users.bio=? WHERE user_id=?";
 		jdbc.update(
 			new PreparedStatementCreator() {
 				@Override
 				public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 					PreparedStatement ps = connection.prepareStatement(query);
 					ps.setString(1, bio);
+					ps.setInt(2, userID);
 					return ps;
 				}
 			}

@@ -177,7 +177,7 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
                     e.printStackTrace();
                 }
 
-                openHomeActivity();
+                openBioActivity();
             }
         }
 
@@ -206,6 +206,15 @@ public class TabbedAvailabilityActivity extends AppCompatActivity
         Intent i = new Intent(this, UpdateProfile.class);
         i.putExtra("UserId",UserId);
         i.putExtra("AccountType", AccountType);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+    }
+
+    public void openBioActivity() {
+        Intent i = new Intent(this, BioActivity.class);
+        i.putExtra("UserId",UserId);
+        i.putExtra("AccountType", AccountType);
+        i.putExtra("SourcePage", "Signup");
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
