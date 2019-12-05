@@ -10,7 +10,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema tutorsearcher
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `tutorsearcher` ;
 
 -- -----------------------------------------------------
 -- Schema tutorsearcher
@@ -34,11 +33,12 @@ CREATE TABLE IF NOT EXISTS `tutorsearcher`.`users` (
   `tutee_search_times` VARCHAR(200) NULL DEFAULT NULL,
   `rating` DOUBLE NULL DEFAULT NULL,
   `num_ratings` INT(10) NULL DEFAULT NULL,
+  `bio` VARCHAR(1000) NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 22
+AUTO_INCREMENT = 0
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `tutorsearcher`.`classes` (
     FOREIGN KEY (`tutor_id`)
     REFERENCES `tutorsearcher`.`users` (`user_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 53
+AUTO_INCREMENT = 0
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `tutorsearcher`.`requests` (
     FOREIGN KEY (`tutor_id`)
     REFERENCES `tutorsearcher`.`users` (`user_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 29
+AUTO_INCREMENT = 0
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
