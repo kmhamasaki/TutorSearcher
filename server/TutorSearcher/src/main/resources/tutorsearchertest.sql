@@ -8,20 +8,18 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema mydb
 -- -----------------------------------------------------
 -- -----------------------------------------------------
--- Schema tutorsearcher
+-- Schema tutorsearchertest
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `tutorsearchertest`;
+
 -- -----------------------------------------------------
--- Schema tutorsearcher
+-- Schema tutorsearchertest
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `tutorsearchertest` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
 USE `tutorsearchertest` ;
 
 -- -----------------------------------------------------
--- Table `tutorsearcher`.`users`
+-- Table `tutorsearchertest`.`users`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tutorsearchertest`.`users`;
-
 CREATE TABLE IF NOT EXISTS `tutorsearchertest`.`users` (
   `user_id` INT(10) NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(45) NOT NULL,
@@ -35,20 +33,19 @@ CREATE TABLE IF NOT EXISTS `tutorsearchertest`.`users` (
   `tutee_search_times` VARCHAR(200) NULL DEFAULT NULL,
   `rating` DOUBLE NULL DEFAULT NULL,
   `num_ratings` INT(10) NULL DEFAULT NULL,
+  `bio` VARCHAR(1000) NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 1
+AUTO_INCREMENT = 0
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `tutorsearcher`.`classes`
+-- Table `tutorsearchertest`.`classes`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tutorsearchertest`.`classes`;
-
 CREATE TABLE IF NOT EXISTS `tutorsearchertest`.`classes` (
   `classes_id` INT(11) NOT NULL AUTO_INCREMENT,
   `class_name` VARCHAR(45) NOT NULL,
@@ -60,16 +57,14 @@ CREATE TABLE IF NOT EXISTS `tutorsearchertest`.`classes` (
     FOREIGN KEY (`tutor_id`)
     REFERENCES `tutorsearchertest`.`users` (`user_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 1
+AUTO_INCREMENT = 0
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `tutorsearcher`.`requests`
+-- Table `tutorsearchertest`.`requests`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tutorsearchertest`.`requests`;
-
 CREATE TABLE IF NOT EXISTS `tutorsearchertest`.`requests` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `tutee_id` INT(10) NOT NULL,
@@ -89,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `tutorsearchertest`.`requests` (
     FOREIGN KEY (`tutor_id`)
     REFERENCES `tutorsearchertest`.`users` (`user_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 1
+AUTO_INCREMENT = 0
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
