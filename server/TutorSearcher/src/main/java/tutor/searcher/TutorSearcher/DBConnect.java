@@ -529,13 +529,14 @@ public class DBConnect {
 		jdbc.update(new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-				String query = "UPDATE users SET password_hash=?, phone_number=?, first_name=?, last_name=? WHERE user_id=?";
+				String query = "UPDATE users SET password_hash=?, phone_number=?, first_name=?, last_name=?, bio=? WHERE user_id=?";
 				PreparedStatement ps = connection.prepareStatement(query);
 				ps.setString(1, user.getPasswordHash());
 				ps.setString(2, user.getPhoneNumber());
 				ps.setString(3, user.getFirstName());
 				ps.setString(4, user.getLastName());
 				ps.setInt(5, user.getUserId());
+				ps.setString(6, user.getBio());
 				return ps;
 			}
 		});
