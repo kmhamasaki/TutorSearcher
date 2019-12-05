@@ -11,6 +11,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +28,9 @@ public class Controller {
 	int port = 6789;
 	private static ServerSocket ss = null;
 	boolean run = true;
+	
+	@Value("${spring.datasource.url}")
+	private String url;
 
 	public void useTestingPort() {
 		port = testing_port;
@@ -35,6 +39,7 @@ public class Controller {
 	@PostConstruct
 	void startController() {
 		System.out.println("Launching --Controller--");
+		System.out.println("using url: " + url);
 		System.out.println();
 		
 		try {
@@ -102,8 +107,9 @@ public class Controller {
 			String phoneNumber = (String)request.get("phoneNumber");
 
 			Boolean accountType = (Boolean)request.get("accountType");
+			String bio = (String)request.get("bio");
 
-			int userID = dbConnect.addUser(email, passwordHash, firstName, lastName, phoneNumber, accountType);
+			int userID = dbConnect.addUser(email, passwordHash, firstName, lastName, phoneNumber, accountType, bio);
 
 			// if not successful in adding it
 			if(userID == -1) {
