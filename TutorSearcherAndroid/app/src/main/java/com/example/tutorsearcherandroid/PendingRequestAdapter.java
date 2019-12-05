@@ -34,6 +34,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
         public TextView tutee_name;
         public TextView class_name;
         public TextView time;
+        public TextView bio;
         public Button accept_button;
         public Button reject_button;
 
@@ -43,6 +44,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
             tutee_name = itemView.findViewById(R.id.tutee_name);
             class_name = itemView.findViewById(R.id.class_name);
             time = itemView.findViewById(R.id.time);
+            bio = itemView.findViewById(R.id.bio);
             accept_button = itemView.findViewById(R.id.accept_button);
             reject_button = itemView.findViewById(R.id.reject_button);
 
@@ -94,10 +96,12 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
         TextView tutee_name = viewholder.tutee_name;
         TextView class_name = viewholder.class_name;
         TextView time = viewholder.time;
+        TextView bio = viewholder.bio;
 
         tutee_name.setText(tr.getTuteeName());
         class_name.setText(tr.getClassName());
         time.setText(TutorTimeActivity.generateTimesForward().get(Integer.parseInt(tr.getTime())));
+        bio.setText((tr.getBio()));
 
     }
 

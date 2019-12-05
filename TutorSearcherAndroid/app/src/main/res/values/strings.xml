@@ -9,6 +9,7 @@
     <string name="prompt_first_name">First name</string>
     <string name="prompt_last_name">Last name</string>
     <string name="prompt_phone_number">Phone number</string>
+    <string name="prompt_bio">Bio</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_register">Register</string>
     <string name="action_sign_in_short">Sign in</string>

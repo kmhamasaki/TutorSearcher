@@ -78,6 +78,14 @@ public class ViewRequests extends AppCompatActivity
             Request response = client.getResponse();
 
             requestList = (List<TutorRequest>) response.get("requests");
+            
+            for(TutorRequest req : requestList) {
+                HashMap<String,Object> attr = new HashMap<String,Object>();
+                attr.put("userID", req.getTuteeID());
+                client = Client.initClient("getbio", attr, app);
+
+                req.setBio((String)client.getResponse().get("bio"));
+            }
 
         } catch(Exception e) {
             e.printStackTrace();
