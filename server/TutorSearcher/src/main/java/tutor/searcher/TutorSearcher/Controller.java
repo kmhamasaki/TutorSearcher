@@ -367,6 +367,29 @@ public class Controller {
 			dbConnect.addRating((int)request.get("userID"), (double)request.get("rating"));
 			respType = "Success";
 		}
+		/**
+		 * requestType "addbio"
+		 * adds/updates bio (overwrites it)
+		 * incoming attribute
+		 * 	String bio
+		 */
+		else if (request.getRequestType().equals("addbio")) {
+			String bio = (String)request.get("bio");
+			dbConnect.addBio(bio);
+			respType = "Success";
+		}
+		/**
+		 * requestType "getbio"
+		 * gets bio 
+		 * incoming attribute
+		 * 	int userID
+		 */
+		else if (request.getRequestType().equals("getbio")) {
+			int userID = (int)request.get("userID");
+			String bio = dbConnect.getBio(userID);
+			respAttr.put("bio", bio);
+			respType = "Success";
+		}
 //		System.out.println(respType);
 
 		Request response = new Request(respType, respAttr);
