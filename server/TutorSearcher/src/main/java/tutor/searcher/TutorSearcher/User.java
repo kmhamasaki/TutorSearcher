@@ -55,7 +55,21 @@ public class User implements Serializable {
 		this.rating = rating;
 	}
 	
+	public User(int userID, String firstName, String lastName, String email, 
+			String phoneNumber, Boolean accountType, double rating, String bio) {
+		super();
+		UserID = userID;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.accountType = accountType;
+		this.rating = rating;
+		this.bio = bio;
+	}
 	
+	
+
 	public double getRating() {
 		return rating;
 	}
