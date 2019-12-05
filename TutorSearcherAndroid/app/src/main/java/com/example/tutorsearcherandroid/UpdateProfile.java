@@ -59,7 +59,6 @@ public class UpdateProfile extends AppCompatActivity {
             EditText firstName = findViewById(R.id.firstName);
             EditText lastName = findViewById(R.id.lastName);
             EditText phoneNumber = findViewById(R.id.phoneNumber);
-            EditText bio = findViewById(R.id.bio);
 
             firstName.setText(user.getFirstName());
             lastName.setText(user.getLastName());
@@ -75,7 +74,6 @@ public class UpdateProfile extends AppCompatActivity {
         String lname = ((EditText)findViewById(R.id.lastName)).getText().toString();
         String phonenumber = ((EditText)findViewById(R.id.phoneNumber)).getText().toString();
         String password = ((EditText)findViewById(R.id.password)).getText().toString();
-        String bio = ((EditText)findViewById(R.id.bio)).getText().toString();
 
         //FirstName Empty
         if(fname.equals("")){
@@ -103,14 +101,6 @@ public class UpdateProfile extends AppCompatActivity {
         }
         user.setPasswordHash(password);
 
-        // ok to have empty bio
-        if(bio.length()>127){
-            Toast t = Toast.makeText(this, "Please be more concise with your bio. Nobody wants to read a f**king essay.",
-                    Toast.LENGTH_LONG);
-            t.show();
-            return;
-        }
-        //user.setBio(bio);
 
         System.out.println(user.getFirstName());
         try {
@@ -139,6 +129,14 @@ public class UpdateProfile extends AppCompatActivity {
 
     public void onUpdateClassesClick(View view) {
         Intent i = new Intent(this, ChooseClasses.class);
+        i.putExtra("UserId", UserId);
+        i.putExtra("AccountType", AccountType);
+        i.putExtra("SourcePage", "UpdateProfile");
+        startActivity(i);
+    }
+
+    public void onUpdateBioClick(View view) {
+        Intent i = new Intent(this, BioActivity.class);
         i.putExtra("UserId", UserId);
         i.putExtra("AccountType", AccountType);
         i.putExtra("SourcePage", "UpdateProfile");

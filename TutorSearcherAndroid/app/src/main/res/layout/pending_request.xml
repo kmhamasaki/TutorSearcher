@@ -87,7 +87,7 @@
 
         <TextView
             android:id="@+id/bio"
-            android:layout_width="352dp"
+            android:layout_width="348dp"
             android:layout_height="85dp"
             android:layout_above="@+id/accept_button"
             android:layout_below="@+id/time"

@@ -375,7 +375,8 @@ public class Controller {
 		 */
 		else if (request.getRequestType().equals("addbio")) {
 			String bio = (String)request.get("bio");
-			dbConnect.addBio(bio);
+			int userID = (int)request.get("userID");
+			dbConnect.addBio(bio, userID);
 			respType = "Success";
 		}
 		/**
