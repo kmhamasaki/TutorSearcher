@@ -34,6 +34,7 @@ public class SignupActivity extends AppCompatActivity {
     String firstName;
     String lastName;
     String phoneNumber;
+    String bioMsg;
 
     RadioButton selectedButton;
 
@@ -93,6 +94,10 @@ public class SignupActivity extends AppCompatActivity {
         attr.put("firstName", firstName);
         attr.put("lastName", lastName);
         attr.put("phoneNumber", phoneNumber);
+
+        bioMsg = "Hello, I'm " + firstName;
+        attr.put("bio", bioMsg);
+        System.out.println(bioMsg);
 
         System.out.println("Sending from SignupButtonClick");
         client = Client.initClient("signup", attr, app);
