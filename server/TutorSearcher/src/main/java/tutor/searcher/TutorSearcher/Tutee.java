@@ -11,4 +11,11 @@ public class Tutee extends User implements Serializable {
 		super(userID, firstName, lastName, email, phoneNumber, accountType, rating);
 	}
 
+	public Tutee(int userID, String firstName, String lastName, String email, String phoneNumber, Boolean accountType,
+			double rating, String bio) {
+		// TODO Auto-generated constructor stub
+		super(userID, firstName, lastName, email, phoneNumber, accountType, rating, bio);
+
+	}
+
 }
