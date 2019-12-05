@@ -16,7 +16,6 @@ public class User implements Serializable {
 	private String bio;
 
 
-
 	public User(int userID, String firstName, String lastName, String email, String phoneNumber, 
 			String passwordHash, Boolean accountType, double rating) {
 		super();
@@ -109,6 +108,14 @@ public class User implements Serializable {
 	
 	public Boolean getAccountType() {
 		return accountType;
+	}
+	
+	public String getBio() {
+		return bio;
+	}
+	
+	public void setBio(String bio) {
+		this.bio = bio;
 	}
 	
 
