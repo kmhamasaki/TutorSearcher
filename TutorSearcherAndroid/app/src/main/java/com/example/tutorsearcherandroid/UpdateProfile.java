@@ -59,10 +59,12 @@ public class UpdateProfile extends AppCompatActivity {
             EditText firstName = findViewById(R.id.firstName);
             EditText lastName = findViewById(R.id.lastName);
             EditText phoneNumber = findViewById(R.id.phoneNumber);
+            EditText bio = findViewById(R.id.bio);
 
             firstName.setText(user.getFirstName());
             lastName.setText(user.getLastName());
             phoneNumber.setText(user.getPhoneNumber());
+            //bio.setText(user.getBio());
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -73,6 +75,7 @@ public class UpdateProfile extends AppCompatActivity {
         String lname = ((EditText)findViewById(R.id.lastName)).getText().toString();
         String phonenumber = ((EditText)findViewById(R.id.phoneNumber)).getText().toString();
         String password = ((EditText)findViewById(R.id.password)).getText().toString();
+        String bio = ((EditText)findViewById(R.id.bio)).getText().toString();
 
         //FirstName Empty
         if(fname.equals("")){
@@ -99,6 +102,15 @@ public class UpdateProfile extends AppCompatActivity {
             password = SignupActivity.hashPassword(password);
         }
         user.setPasswordHash(password);
+
+        // ok to have empty bio
+        if(bio.length()>127){
+            Toast t = Toast.makeText(this, "Please be more concise with your bio. Nobody wants to read a f**king essay.",
+                    Toast.LENGTH_LONG);
+            t.show();
+            return;
+        }
+        //user.setBio(bio);
 
         System.out.println(user.getFirstName());
         try {
