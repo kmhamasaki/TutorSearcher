@@ -78,12 +78,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         Tutor tutor = tutorResults.get(position);
 
         //Set Item Views
-        TextView textView = viewholder.nameTextView;
+        TextView nameView = viewholder.nameTextView;
         String tutorName = tutor.getFirstName();
-        textView.setText(tutorName);
-//        TextView textView1 = viewholder.bioTextView;
-//        String textView1 = tutor.getBio();
-//        textView.setText(textView1);
+        nameView.setText(tutorName);
+
+        TextView bioView = viewholder.bioTextView;
+        String bio = tutor.getBio();
+        System.out.print("Tutor bio: ");
+        System.out.println(tutor.getBio());
+        bioView.setText(bio);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
