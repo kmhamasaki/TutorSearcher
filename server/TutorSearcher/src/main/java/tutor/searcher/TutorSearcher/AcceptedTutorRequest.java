@@ -6,6 +6,8 @@ public class AcceptedTutorRequest {
 	private String name;
 	private String className;
 	private String time;
+	private int tutorId;
+	private int requestId;
 
 	
 	public AcceptedTutorRequest(String email, String phoneNumber, String name, String className, String time, double rating) {
@@ -16,6 +18,19 @@ public class AcceptedTutorRequest {
 		this.className = className;
 		this.rating = rating;
 		this.time = time;
+	}
+	
+	public AcceptedTutorRequest(String email, String phoneNumber, String name, String className, String time, double rating,
+			int tutorId, int requestId) {
+		super();
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.name = name;
+		this.className = className;
+		this.rating = rating;
+		this.time = time;
+		this.tutorId = tutorId;
+		this.requestId = requestId;
 	}
 	public String getEmail() {
 		return email;
@@ -53,6 +68,13 @@ public class AcceptedTutorRequest {
 	public void setTime(String time) {
 		this.time = time;
 	}
+	public int getTutorId() {
+		return tutorId;
+	}
+	public int getRequestId() {
+		return requestId;
+	}
+	
 	private double rating;
 	
 }
