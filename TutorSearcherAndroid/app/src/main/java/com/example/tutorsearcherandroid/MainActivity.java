@@ -1,7 +1,9 @@
 package com.example.tutorsearcherandroid;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +26,7 @@ import tutor.searcher.TutorSearcher.Tutor;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private SharedPreferences sharedPreferences;
     TextView response;
     EditText editTextAddress, editTextPort;
     Button buttonConnect, buttonClear;
@@ -41,9 +44,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        app = (Application)getApplicationContext();
+        sharedPreferences = getSharedPreferences("LoginData",
+                Context.MODE_PRIVATE);
+        String savedAccountType = "";
+        String savedUserId = "";
+        if (sharedPreferences.contains("accountType")) {
+            savedAccountType = sharedPreferences.getString("accountType", "");
+        }
+        if (sharedPreferences.contains("userId")) {
+            savedUserId = sharedPreferences.getString("userId", "");
+        }
+        if(!savedAccountType.isEmpty() && !savedUserId.isEmpty()){
+            openHomeActivity(savedAccountType,savedUserId);
+        }
+
         setContentView(R.layout.activity_main);
 
-        app = (Application)getApplicationContext();
 
         Button login = findViewById(R.id.login);
         Button register = findViewById(R.id.register);
@@ -93,9 +110,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 // handle case when user clicks "sign in" after entering his user and pass
             case R.id.bigLogin:
-                // authentication function <- FUNCTION NEEDS TO RETURN ACCOUNT TYPE (tutor or tutee)
-                // FILL IN CAM
-
 
                 HashMap<String, Object> attr = new HashMap<>();
                 attr.put("email",((android.widget.TextView)findViewById(R.id.username)).getText().toString());
@@ -106,7 +120,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 System.out.println(hashedPassword);
                 attr.put("passwordHash", hashedPassword);
 
-                //TODO: Connect to backend
                 //Pass all inputs to backend
                 System.out.println(attr.get("email"));
                 System.out.println(attr.get("passwordHash"));
@@ -129,19 +142,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     System.out.println("Success: Logging in user - ");
                     //Save User Information and Redirect to Appropriate Home Page
                     attr = response.getAttributes();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
 
+                    // Tutor
                     if(attr.get("User").getClass() == Tutor.class){
                         System.out.println("Logging in Tutor");
                         Tutor tutor = (Tutor) attr.get("User");
                         String userId = Integer.toString(tutor.getUserId());
                         FirebaseMessaging.getInstance().subscribeToTopic(userId);
+                        editor.putString("accountType", "Tutor");
+                        editor.putString("userId", userId);
+                        editor.commit();
                         openHomeActivity("Tutor", userId);
                         break;
-                    }else {
+                    }
+                    // Tutee
+                    else {
                         System.out.println("Logging in Tutee");
                         Tutee tutee = (Tutee) attr.get("User");
                         String userId = Integer.toString(tutee.getUserId());
                         FirebaseMessaging.getInstance().subscribeToTopic(userId);
+                        editor.putString("accountType", "Tutee");
+                        editor.putString("userId", userId);
+                        editor.commit();
                         openHomeActivity("Tutee", userId);
                         break;
                     }

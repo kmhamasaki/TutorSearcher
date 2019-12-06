@@ -23,6 +23,7 @@ public class BioActivity extends AppCompatActivity {
     private String AccountType;
     Application app;
     TextView bio;
+    TextView bioHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +32,17 @@ public class BioActivity extends AppCompatActivity {
         app = (Application)getApplicationContext();
 
         bio = (TextView) findViewById(R.id.bio);
+        bioHeader = (TextView) findViewById(R.id.bio_header);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             sourcePage = extras.getString("SourcePage");
             UserId = extras.getString("UserId");
             AccountType = extras.getString("AccountType");
+        }
+        if(AccountType.equals("Tutor")){
+            bioHeader.setText("What would you like Tutees to know about you?");
+        }else if(AccountType.equals("Tutee")){
+            bioHeader.setText("What would you like Tutors to know about you?");
         }
 
         if(sourcePage.equals("UpdateProfile")) {
