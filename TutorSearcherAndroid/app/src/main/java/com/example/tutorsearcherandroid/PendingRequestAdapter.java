@@ -105,7 +105,11 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
         class_name.setText(tr.getClassName());
         time.setText(TutorTimeActivity.generateTimesForward().get(Integer.parseInt(tr.getTime())));
         bio.setText((tr.getBio()));
-        rating.setText("Rating: " + Client.round(tr.getTuteeRating()));
+        if(tr.getTuteeRating() == -1) {
+            rating.setText("No ratings yet.");
+        } else {
+            rating.setText("Rating: " + Client.round(tr.getTuteeRating()));
+        }
 
     }
 

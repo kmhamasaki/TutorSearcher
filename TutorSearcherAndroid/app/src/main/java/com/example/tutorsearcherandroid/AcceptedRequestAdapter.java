@@ -12,11 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import tutor.searcher.TutorSearcher.AcceptedTutorRequest;
+import tutor.searcher.TutorSearcher.TutorRequest;
 
 
 public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequestAdapter.ViewHolder> {
 
-    private List<AcceptedTutorRequest> requests;
+    private List<TutorRequest> requests;
     private String accountType;
     private OnButtonClickListener mListener;
 
@@ -64,7 +65,7 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
     }
 
     // Constructor
-    public AcceptedRequestAdapter(List<AcceptedTutorRequest> requests, String accountType) {
+    public AcceptedRequestAdapter(List<TutorRequest> requests, String accountType) {
         this.requests = requests;
         this.accountType = accountType;
     }
@@ -86,7 +87,7 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
     @Override
     public void onBindViewHolder(AcceptedRequestAdapter.ViewHolder viewholder, int position) {
 
-        AcceptedTutorRequest tr = requests.get(position);
+        TutorRequest tr = requests.get(position);
 
         //Set Item Views
         TextView tutee_name = viewholder.tutee_name;
@@ -100,7 +101,7 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
         class_name.setText(tr.getClassName());
         email.setText(tr.getEmail());
         phone_number.setText(tr.getPhoneNumber());
-        time.setText(tr.getTime());
+        time.setText(TutorTimeActivity.generateTimesForward().get(Integer.parseInt(tr.getTime())));
 
     }
 
