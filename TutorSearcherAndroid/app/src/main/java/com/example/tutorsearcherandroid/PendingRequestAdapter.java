@@ -108,6 +108,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
         if(tr.getTuteeRating() == -1) {
             rating.setText("No ratings yet.");
         } else {
+            System.out.println(tr.getTuteeRating());
             rating.setText("Rating: " + Client.round(tr.getTuteeRating()));
         }
 

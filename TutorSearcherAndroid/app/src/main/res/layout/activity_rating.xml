@@ -43,7 +43,7 @@
         android:layout_marginLeft="296dp"
         android:layout_marginTop="16dp"
         android:text="Home"
-        android:onClick="onHomeClick"
+        android:onClick="onHomeButtonClick"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

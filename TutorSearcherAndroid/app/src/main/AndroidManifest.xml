@@ -12,7 +12,6 @@
         android:roundIcon="@drawable/tutorsearchernotext"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RateActivity"></activity>
         <activity android:name=".BioActivity" />
 
         <service android:name=".MyFirebaseInstanceIDService">
