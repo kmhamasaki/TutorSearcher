@@ -39,7 +39,7 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
         public TextView phone_number;
         public TextView time;
 
-        public Button accept_button;
+        public Button rate_button;
         public Button reject_button;
 
 
@@ -50,7 +50,16 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
             email = itemView.findViewById(R.id.email);
             phone_number = itemView.findViewById(R.id.phone_number);
             time = itemView.findViewById(R.id.time);
+            rate_button = itemView.findViewById(R.id.rate_tutor_button);
 
+            rate_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    System.out.println("AcceptedRequestAdapter.onClick");
+                    int position = getAdapterPosition();
+                    listener.onButtonClick(position, true);
+                }
+            });
         }
     }
 
@@ -85,12 +94,14 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
         TextView time = viewholder.time;
         TextView email = viewholder.email;
         TextView phone_number = viewholder.phone_number;
+        Button rate_button = viewholder.rate_button;
 
         tutee_name.setText(tr.getName());
         class_name.setText(tr.getClassName());
         email.setText(tr.getEmail());
         phone_number.setText(tr.getPhoneNumber());
         time.setText(tr.getTime());
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)

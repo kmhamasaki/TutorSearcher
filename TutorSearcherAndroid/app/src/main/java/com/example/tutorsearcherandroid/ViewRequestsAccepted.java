@@ -3,11 +3,15 @@ package com.example.tutorsearcherandroid;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,7 +88,8 @@ public class ViewRequestsAccepted extends AppCompatActivity
                 user = (User)response.get("user");
                 requestList.add(new AcceptedTutorRequest(user.getEmail(), user.getPhoneNumber(),
                         user.getFirstName(), req.getClassName(),
-                        TutorTimeActivity.generateTimesForward().get(Integer.parseInt(req.getTime())),0));
+                        TutorTimeActivity.generateTimesForward().get(Integer.parseInt(req.getTime())),0,
+                        req.getTutorID()));
             }
 
         } catch(Exception e) {
@@ -125,8 +130,15 @@ public class ViewRequestsAccepted extends AppCompatActivity
     @Override
     public void onButtonClick(int position, Boolean accept) {
         System.out.println("ViewRequestsAccepted.onButtonClick");
-        // James intent here
+        int tutorID = requestList.get(position).getTutorId();
+        Intent i = new Intent(this, ScrollingHomeActivity.class);
+        i.putExtra("UserId", UserId);
+        i.putExtra("AccountType", AccountType);
+        i.putExtra("TutorId", tutorID);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
     }
+
+
     public void onClick(View view) {
 
     }
