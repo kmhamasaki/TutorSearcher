@@ -45,7 +45,7 @@ public class RateActivity extends AppCompatActivity {
     public void onClick() {
         RatingBar rating_bar = findViewById(R.id.ratingBar);
         int rating = (int)rating_bar.getRating();
-        if(rating != 0) {
+        if(rating > 0) {
             try {
                 HashMap<String,Object> attr = new HashMap<String,Object>();
                 attr.put("requestId", RequestId);
