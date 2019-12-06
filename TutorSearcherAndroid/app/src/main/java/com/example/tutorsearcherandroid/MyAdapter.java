@@ -32,12 +32,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // each data item is just a string in this case
         public TextView nameTextView;
         public TextView bioTextView;
+        public TextView ratingTextView;
         //TODO: Add more profile information
 
         public ViewHolder(View itemView, final OnTutorClickListener listener) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.time);
             bioTextView = itemView.findViewById(R.id.bio);
+            ratingTextView = itemView.findViewById(R.id.rating);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -87,6 +89,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         System.out.print("Tutor bio: ");
         System.out.println(tutor.getBio());
         bioView.setText(bio);
+
+        TextView ratingView = viewholder.ratingTextView;
+        if(tutor.getRating() == -1) {
+            ratingView.setText("No ratings yet.");
+        } else {
+//            System.out.println(tr.getTuteeRating());
+            ratingView.setText("Rating: " + Client.round(tutor.getRating()));
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
