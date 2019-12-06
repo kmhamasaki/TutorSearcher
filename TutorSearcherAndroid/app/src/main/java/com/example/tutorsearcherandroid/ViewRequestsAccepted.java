@@ -33,7 +33,7 @@ public class ViewRequestsAccepted extends AppCompatActivity
     private RecyclerView recyclerView;
     private AcceptedRequestAdapter rAdapter; //Bridge between list and recyclerview
     private RecyclerView.LayoutManager rLayoutManager;
-    private List<AcceptedTutorRequest> requestList = new ArrayList<AcceptedTutorRequest>();
+    private List<TutorRequest> requestList = new ArrayList<TutorRequest>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +70,12 @@ public class ViewRequestsAccepted extends AppCompatActivity
             client.execute().get();
             Request response = client.getResponse();
 
-            List<TutorRequest> tutorRequests = (List<TutorRequest>) response.get("requests");
+            requestList = (List<TutorRequest>) response.get("requests");
 
             int userID;
             User user;
             HashMap<String,Object> attr = new HashMap<String,Object>();
-            for(TutorRequest req : tutorRequests) {
+            for(TutorRequest req : requestList) {
                 if(AccountType.equals("Tutor")) {
                     userID = req.getTuteeID();
                 } else {
@@ -86,10 +86,9 @@ public class ViewRequestsAccepted extends AppCompatActivity
                 client.execute().get();
                 response = client.getResponse();
                 user = (User)response.get("user");
-                requestList.add(new AcceptedTutorRequest(user.getEmail(), user.getPhoneNumber(),
-                        user.getFirstName(), req.getClassName(),
-                        TutorTimeActivity.generateTimesForward().get(Integer.parseInt(req.getTime())),0,
-                        req.getTutorID()));
+                req.setEmail(user.getEmail());
+                req.setPhoneNumber(user.getPhoneNumber());
+                req.setName(user.getFirstName());
             }
 
         } catch(Exception e) {
@@ -130,12 +129,19 @@ public class ViewRequestsAccepted extends AppCompatActivity
     @Override
     public void onButtonClick(int position, Boolean accept) {
         System.out.println("ViewRequestsAccepted.onButtonClick");
-        int tutorID = requestList.get(position).getTutorId();
-        Intent i = new Intent(this, ScrollingHomeActivity.class);
+        int RequestId = requestList.get(position).getRequestID();
+        Intent i = new Intent(this, RateActivity.class);
         i.putExtra("UserId", UserId);
         i.putExtra("AccountType", AccountType);
-        i.putExtra("TutorId", tutorID);
+        i.putExtra("RequestId", RequestId);
+        if(AccountType.equals("Tutor"))
+            i.putExtra("GivenRating", requestList.get(position).getGivenTuteeRating());
+        else
+            i.putExtra("GivenRating", requestList.get(position).getGivenTutorRating());
+
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+
     }
 
 
