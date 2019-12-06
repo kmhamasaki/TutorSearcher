@@ -130,14 +130,17 @@ public class ViewRequestsAccepted extends AppCompatActivity
     public void onButtonClick(int position, Boolean accept) {
         System.out.println("ViewRequestsAccepted.onButtonClick");
         int RequestId = requestList.get(position).getRequestID();
-        Intent i = new Intent(this, RateActivity.class);
+        Intent i = new Intent(this, RatingActivity.class);
         i.putExtra("UserId", UserId);
         i.putExtra("AccountType", AccountType);
         i.putExtra("RequestId", RequestId);
-        if(AccountType.equals("Tutor"))
+        if(AccountType.equals("Tutor")) {
             i.putExtra("GivenRating", requestList.get(position).getGivenTuteeRating());
-        else
+            i.putExtra("Name", requestList.get(position).getName());
+        } else {
             i.putExtra("GivenRating", requestList.get(position).getGivenTutorRating());
+            i.putExtra("Name", requestList.get(position).getName());
+        }
 
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);

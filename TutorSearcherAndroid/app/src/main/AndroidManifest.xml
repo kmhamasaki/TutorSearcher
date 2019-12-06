@@ -12,7 +12,6 @@
         android:roundIcon="@drawable/tutorsearchernotext"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RateActivity"></activity>
         <activity android:name=".BioActivity" />
 
         <service android:name=".MyFirebaseInstanceIDService">
@@ -29,9 +28,7 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".RatingActivity"
-            android:label="@string/title_activity_rating" />
+        <activity android:name=".RatingActivity" />
         <activity
             android:name=".ScrollingHomeActivity"
             android:label="@string/title_activity_scrolling_home"

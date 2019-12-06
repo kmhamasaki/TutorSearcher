@@ -268,12 +268,14 @@ public class DBConnect {
 					tutorRequest.setTuteeName(tuteeName);
 					tutorRequest.setTutorName(tutorName);
 					
-					int givenTutorRating = resultSet.getInt("tutor_rating");
-					int givenTuteeRating = resultSet.getInt("tutee_rating");
+					int givenTutorRating = resultSet.getInt("tutee_rating");
+					int givenTuteeRating = resultSet.getInt("tutor_rating");
+
 					tutorRequest.setGivenTuteeRating(givenTuteeRating);
 					tutorRequest.setGivenTutorRating(givenTutorRating);
 					
 					double tuteeRating = getTotalTuteeRating(tuteeID);
+					System.out.println("here1" + tuteeRating);
 					tutorRequest.setTuteeRating(tuteeRating);
 
 					result.add(tutorRequest);
