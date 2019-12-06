@@ -363,10 +363,60 @@ public class Controller {
 		 * 	double rating - new rating
 		 * 
 		 */
-		else if (request.getRequestType().equals("addrating")) {
-			dbConnect.addRating((int)request.get("userID"), (double)request.get("rating"));
+//		else if (request.getRequestType().equals("addrating")) {
+//			dbConnect.addRating((int)request.get("userID"), (double)request.get("rating"));
+//			respType = "Success";
+//		}
+		/**
+		 * requestType "updatetutorrating"
+		 * this is the TUTEE giving TUTOR a rating
+		 * incoming attributes
+		 * 	int requestID
+		 * 	int rating - new rating
+		 */
+		else if (request.getRequestType().equals("updatetutorrating")) {
+			int requestID = (int)request.get("requestID");
+			int rating = (int)request.get("rating");
+			dbConnect.updateRating(requestID, rating, true);
+		}
+		/**
+		 * requestType "updatetutorrating"
+		 * this is the TUTEE giving TUTOR a rating
+		 * incoming attributes
+		 * 	int requestID
+		 * 	int rating - new rating
+		 */
+		else if (request.getRequestType().equals("updatetuteerating")) {
+			int requestID = (int)request.get("requestID");
+			int rating = (int)request.get("rating");
+			dbConnect.updateRating(requestID, rating, false);
+
+		}
+		/**
+		 * requestType "gettotalrating"
+		 * get the user's rating
+		 * incoming attributes
+		 * 	int userID 
+		 * 	boolean accountType (0 if tutee 1 if tutor)
+		 * returns
+		 * 	double rating
+		 */
+		else if (request.getRequestType().equals("gettotalrating")) {
+			int userID = (int)request.get("userID");
+			boolean accountType = (boolean)request.get("accountType");
+			double rating = 0;
+			if (accountType) {
+				rating = dbConnect.getTotalTutorRating(userID);
+
+			}
+			else {
+				rating = dbConnect.getTotalTuteeRating(userID);
+			}
+			
+			respAttr.put("rating", rating);
 			respType = "Success";
 		}
+
 		/**
 		 * requestType "addbio"
 		 * adds/updates bio (overwrites it)
