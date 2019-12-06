@@ -79,7 +79,9 @@ public class DBConnect {
 				num++;
 			}
 		}
-		
+		if (num == 0) {
+			return -1;
+		}
 		return sum / num;
 	}
 	
@@ -113,7 +115,9 @@ public class DBConnect {
 				num++;
 			}
 		}
-		
+		if (num == 0) {
+			return -1;
+		}
 		return sum / num;
 		
 	}

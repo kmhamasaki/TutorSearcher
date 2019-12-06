@@ -380,8 +380,8 @@ public class Controller {
 			dbConnect.updateRating(requestID, rating, true);
 		}
 		/**
-		 * requestType "updatetutorrating"
-		 * this is the TUTEE giving TUTOR a rating
+		 * requestType "updatetuteerating"
+		 * this is the TUTOR giving TUTEE a rating
 		 * incoming attributes
 		 * 	int requestID
 		 * 	int rating - new rating
