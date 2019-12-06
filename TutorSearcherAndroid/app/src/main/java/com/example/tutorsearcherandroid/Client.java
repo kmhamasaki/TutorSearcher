@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.HashMap;
+import java.text.DecimalFormat;
 
 import tutor.searcher.TutorSearcher.Request;
 
@@ -131,6 +132,11 @@ public class Client extends AsyncTask<Void, Void, Void> {
         } else {
             return new ClientTest(incomingRequestType, incomingAttributes);
         }
+    }
+
+    static String round(double num) {
+        DecimalFormat df = new DecimalFormat("#.#");
+        return df.format(num);
     }
 
 }
