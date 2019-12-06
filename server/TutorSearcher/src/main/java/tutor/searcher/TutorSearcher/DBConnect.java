@@ -54,18 +54,18 @@ public class DBConnect {
 				+ "requests.time, requests.status, requests.time_created, requests.tutor_rating " +
 				"FROM requests " +
 				"WHERE requests.tutor_id = ? AND requests.status = 1";
-		List<Double> requests = jdbc.query(query, 
+		List<Integer> requests = jdbc.query(query, 
 		new PreparedStatementSetter() {
 			public void setValues(PreparedStatement preparedStatement) throws SQLException {
 				preparedStatement.setInt(1,  userID);
 			}
 		}, 
-		 new ResultSetExtractor<List<Double>>() {
-            public List<Double> extractData(ResultSet resultSet) throws SQLException,
+		 new ResultSetExtractor<List<Integer>>() {
+            public List<Integer> extractData(ResultSet resultSet) throws SQLException,
               DataAccessException {
-            	ArrayList<Double> result = new ArrayList<>();
+            	ArrayList<Integer> result = new ArrayList<>();
                 while (resultSet.next()) {                	
-					double tutorRating = resultSet.getDouble("tutor_rating");
+					int tutorRating = resultSet.getInt("tutor_rating");
 					result.add(tutorRating);
                 }
                 return result;
@@ -73,7 +73,7 @@ public class DBConnect {
 		});
 		double sum = 0;
 		double num = 0;
-		for (Double i : requests) {
+		for (Integer i : requests) {
 			if (i != -1) {
 				sum += i;
 				num++;
@@ -90,26 +90,27 @@ public class DBConnect {
 				+ "requests.time, requests.status, requests.time_created, requests.tutee_rating " +
 				"FROM requests " +
 				"WHERE requests.tutee_id = ? AND requests.status = 1";
-		List<Double> requests = jdbc.query(query, 
+		List<Integer> requests = jdbc.query(query, 
 		new PreparedStatementSetter() {
 			public void setValues(PreparedStatement preparedStatement) throws SQLException {
 				preparedStatement.setInt(1,  userID);
 			}
 		}, 
-		 new ResultSetExtractor<List<Double>>() {
-            public List<Double> extractData(ResultSet resultSet) throws SQLException,
+		 new ResultSetExtractor<List<Integer>>() {
+            public List<Integer> extractData(ResultSet resultSet) throws SQLException,
               DataAccessException {
-            	ArrayList<Double> result = new ArrayList<>();
+            	ArrayList<Integer> result = new ArrayList<>();
                 while (resultSet.next()) {                	
-					double tuteeRating = resultSet.getDouble("tutee_rating");
+					int tuteeRating = resultSet.getInt("tutee_rating");
 					result.add(tuteeRating);
+					System.out.println("adding rating " + tuteeRating);
                 }
                 return result;
             }
 		});
 		double sum = 0;
 		double num = 0;
-		for (Double i : requests) {
+		for (Integer i : requests) {
 			if (i != -1) {
 				sum += i;
 				num++;
@@ -695,7 +696,13 @@ public class DBConnect {
                 	String phoneNumber = resultSet.getString("phone_number");
                 	Boolean accountType = resultSet.getBoolean("tutor");
                 	String availability = resultSet.getString("availability");
-                	double rating = resultSet.getDouble("rating");
+                	double rating = 0;
+                	if (accountType) {
+                		rating = getTotalTutorRating(userID);
+                	}
+                	else {
+                		rating = getTotalTuteeRating(userID);
+                	}
                 	String bio = resultSet.getString("bio");
                 	if (availability != null) {
                     	System.out.println("adding " + email);
