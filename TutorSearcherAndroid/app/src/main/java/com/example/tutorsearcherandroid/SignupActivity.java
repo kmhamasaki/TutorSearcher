@@ -1,7 +1,9 @@
 package com.example.tutorsearcherandroid;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
@@ -24,6 +26,8 @@ import tutor.searcher.TutorSearcher.Request;
 public class SignupActivity extends AppCompatActivity {
     Client client;
 
+    private SharedPreferences sharedPreferences;
+
     private String UserId;
     private String AccountType;
 
@@ -42,6 +46,8 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         app = (Application)getApplicationContext();
         super.onCreate(savedInstanceState);
+        sharedPreferences = getSharedPreferences("LoginData",
+                Context.MODE_PRIVATE);
         setContentView(R.layout.activity_signup);
 
     }
@@ -141,14 +147,23 @@ public class SignupActivity extends AppCompatActivity {
 
             UserId = (String) response.getAttributes().get("userID");
             FirebaseMessaging.getInstance().subscribeToTopic(UserId);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
 
             // Success, tutee, go to home page
             if (AccountType.equals("Tutee")) {
+                editor.putString("accountType", "Tutee");
+                editor.putString("userId", UserId);
+                editor.commit();
+
                 openBioActivity();
             }
 
             // Success, tutor, go to availability page.
             else {
+                editor.putString("accountType", "Tutor");
+                editor.putString("userId", UserId);
+                editor.commit();
+
                 openClassesActivity();
                 //openAvailabilityActivity();
             }

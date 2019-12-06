@@ -1,6 +1,8 @@
 package com.example.tutorsearcherandroid;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +27,8 @@ import tutor.searcher.TutorSearcher.Tutor;
 
 public class ScrollingHomeActivity extends AppCompatActivity implements MyAdapter.OnTutorClickListener {
 
+    private SharedPreferences sharedPreferences;
+
     private String UserId;
     private String AccountType;
     public String Class;
@@ -38,6 +42,8 @@ public class ScrollingHomeActivity extends AppCompatActivity implements MyAdapte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = getSharedPreferences("LoginData",
+                Context.MODE_PRIVATE);
         setContentView(R.layout.activity_scrolling_home);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -157,7 +163,17 @@ public class ScrollingHomeActivity extends AppCompatActivity implements MyAdapte
 
     public void openMainActivity(View view) {
         //logs user out and redirects to login page
+
+        // remove push notifs
         FirebaseMessaging.getInstance().unsubscribeFromTopic(UserId);
+
+        // clear log in state
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("accountType");
+        editor.remove("userId");
+        editor.commit();
+
+        // start home intent
         Intent i = new Intent(this, MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         finish();
