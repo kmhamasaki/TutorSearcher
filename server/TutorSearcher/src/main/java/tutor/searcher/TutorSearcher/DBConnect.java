@@ -79,7 +79,9 @@ public class DBConnect {
 				num++;
 			}
 		}
-		
+		if (num == 0) {
+			return -1;
+		}
 		return sum / num;
 	}
 	
@@ -113,7 +115,9 @@ public class DBConnect {
 				num++;
 			}
 		}
-		
+		if (num == 0) {
+			return -1;
+		}
 		return sum / num;
 		
 	}
@@ -158,7 +162,7 @@ public class DBConnect {
 					
 
 					int givenTutorRating = resultSet.getInt("tutor_rating");
-					int givenTuteeRating = resultSet.getInt("tutor_rating");
+					int givenTuteeRating = resultSet.getInt("tutee_rating");
 					tutorRequest.setGivenTuteeRating(givenTuteeRating);
 					tutorRequest.setGivenTutorRating(givenTutorRating);
 					
@@ -212,7 +216,7 @@ public class DBConnect {
 					tutorRequest.setTutorName(tutorName);
 					
 					int givenTutorRating = resultSet.getInt("tutor_rating");
-					int givenTuteeRating = resultSet.getInt("tutor_rating");
+					int givenTuteeRating = resultSet.getInt("tutee_rating");
 					tutorRequest.setGivenTuteeRating(givenTuteeRating);
 					tutorRequest.setGivenTutorRating(givenTutorRating);
 					
@@ -266,6 +270,7 @@ public class DBConnect {
 					
 					int givenTutorRating = resultSet.getInt("tutee_rating");
 					int givenTuteeRating = resultSet.getInt("tutor_rating");
+
 					tutorRequest.setGivenTuteeRating(givenTuteeRating);
 					tutorRequest.setGivenTutorRating(givenTutorRating);
 					
@@ -328,7 +333,7 @@ public class DBConnect {
 					tutorRequest.setTuteeRating(tuteeRating);
 					
 					int givenTutorRating = resultSet.getInt("tutor_rating");
-					int givenTuteeRating = resultSet.getInt("tutor_rating");
+					int givenTuteeRating = resultSet.getInt("tutee_rating");
 					tutorRequest.setGivenTuteeRating(givenTuteeRating);
 					tutorRequest.setGivenTutorRating(givenTutorRating);
 
