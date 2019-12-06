@@ -18,6 +18,8 @@ public class RateActivity extends AppCompatActivity {
 
     private String UserId;
     private String AccountType;
+    private String Name;
+
     private int GivenRating;
     Application app;
     private int RequestId;
@@ -34,7 +36,11 @@ public class RateActivity extends AppCompatActivity {
             RequestId = extras.getInt("RequestId");
             AccountType = extras.getString("AccountType");
             GivenRating = extras.getInt("GivenRating");
+            Name = extras.getString("Name");
         }
+
+        TextView message = findViewById(R.id.rate_message);
+        message.setText("Rate " + Name);
 
         RatingBar rating_bar = findViewById(R.id.ratingBar);
         if(GivenRating != -1) {

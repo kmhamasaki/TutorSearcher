@@ -134,10 +134,13 @@ public class ViewRequestsAccepted extends AppCompatActivity
         i.putExtra("UserId", UserId);
         i.putExtra("AccountType", AccountType);
         i.putExtra("RequestId", RequestId);
-        if(AccountType.equals("Tutor"))
+        if(AccountType.equals("Tutor")) {
             i.putExtra("GivenRating", requestList.get(position).getGivenTuteeRating());
-        else
+            i.putExtra("Name", requestList.get(position).getName());
+        } else {
             i.putExtra("GivenRating", requestList.get(position).getGivenTutorRating());
+            i.putExtra("Name", requestList.get(position).getName());
+        }
 
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);

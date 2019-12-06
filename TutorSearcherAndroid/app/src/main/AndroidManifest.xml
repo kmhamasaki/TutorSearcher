@@ -29,9 +29,7 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".RatingActivity"
-            android:label="@string/title_activity_rating" />
+        <activity android:name=".RatingActivity" />
         <activity
             android:name=".ScrollingHomeActivity"
             android:label="@string/title_activity_scrolling_home"
