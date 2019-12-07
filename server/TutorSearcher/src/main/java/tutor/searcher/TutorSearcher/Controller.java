@@ -37,7 +37,7 @@ public class Controller {
 	}
 
 	@PostConstruct
-	void startController() {
+	public void startController() {
 		System.out.println("Launching --Controller--");
 		System.out.println("using url: " + url);
 		System.out.println();
@@ -75,7 +75,7 @@ public class Controller {
 		System.out.println("Server closed");
 	}
 
-	Request processRequest(Request request, RequestThread requestThread) {
+	Request processRequest(Request request, RequestThread requestThread) throws IOException {
 //		System.out.println("Process Request Type: " + request.getRequestType());
 		HashMap<String, Object> respAttr = new HashMap<String, Object>();
 		String respType = "";
@@ -118,7 +118,6 @@ public class Controller {
 				respType = "Success";
 				respAttr.put("userID", Integer.toString(userID));
 			}
-
 		} 
 		
 		/** 
@@ -439,6 +438,21 @@ public class Controller {
 			int userID = (int)request.get("userID");
 			String bio = dbConnect.getBio(userID);
 			respAttr.put("bio", bio);
+			respType = "Success";
+		}
+		/**
+		 * requestType "updateProfilePicture"
+		 * Updates profile picture
+		 * incoming attribute
+		 * 	int userID
+		 * 	byte[] profilePicBlob
+		 */
+		else if (request.getRequestType().equals("updateProfilePicture")) {
+			int userID = (int)request.get("userID");
+			byte[] profilePicBlob = (byte[]) request.get("profilePicBlob");
+
+			dbConnect.updateProfilePicture(userID, profilePicBlob);
+
 			respType = "Success";
 		}
 //		System.out.println(respType);
