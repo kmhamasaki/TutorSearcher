@@ -445,14 +445,12 @@ public class Controller {
 		 * Updates profile picture
 		 * incoming attribute
 		 * 	int userID
-		 * 	byte[] profilePicBlob
+		 * 	String profilePicBlob
 		 */
 		else if (request.getRequestType().equals("updateProfilePicture")) {
 			int userID = (int)request.get("userID");
 			String profilePicBlob = (String) request.get("profilePicBlob");
-
 			dbConnect.updateProfilePicture(userID, profilePicBlob);
-
 			respType = "Success";
 		}
 
