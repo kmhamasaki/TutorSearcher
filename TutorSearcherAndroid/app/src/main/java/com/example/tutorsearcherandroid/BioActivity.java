@@ -160,8 +160,8 @@ public class BioActivity extends AppCompatActivity {
                 Bitmap profilePic = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
                 String profilePicBlob = ProfilePictureUtil.BitMapToString(profilePic);
 
-                System.out.println(profilePicBlob);
-
+                ImageView profilePicImageView = (ImageView) findViewById(R.id.profile_image_view);
+                profilePicImageView.setImageBitmap(profilePic);
 
                 HashMap<String, Object> attr = new HashMap<>();
                 attr.put("userID", Integer.parseInt(UserId));
