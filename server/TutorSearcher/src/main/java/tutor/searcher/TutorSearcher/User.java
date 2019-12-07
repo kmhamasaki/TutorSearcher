@@ -144,11 +144,11 @@ public class User implements Serializable {
 		this.bio = bio;
 	}
 
-	public byte[] getProfilePictureBlob() {
+	public String getProfilePictureBlob() {
 		return profilePictureBlob;
 	}
 
-	public void setProfilePictureBlob(byte[] profilePictureBlob) {
+	public void setProfilePictureBlob(String profilePictureBlob) {
 		this.profilePictureBlob = profilePictureBlob;
 	}
 
