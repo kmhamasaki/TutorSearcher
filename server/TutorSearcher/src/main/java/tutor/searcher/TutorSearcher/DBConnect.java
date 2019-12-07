@@ -745,7 +745,7 @@ public class DBConnect {
 		
 	}
 	//could probably be optimized into one sql query 
-	List<Tutor> searchTutorsPrevious(int userID) {
+	ArrayList<Object> searchTutorsPrevious(int userID) {
 		String query = "SELECT * FROM users WHERE user_id= ?";
 		String previousSearchTime = "";
 		String previousSearchClass = "";
@@ -794,7 +794,11 @@ public class DBConnect {
 		for (int i = 0; i < timesStr.length; i++) {
 			times.add(Integer.parseInt(timesStr[i]));
 		}
-		return searchTutors(userID, times, result.get(1));
+		
+		ArrayList<Object> pairthing = new ArrayList<>();
+		pairthing.add(searchTutors(userID, times, result.get(1)));
+		pairthing.add(result.get(1));
+		return pairthing;
 	}
 
 
