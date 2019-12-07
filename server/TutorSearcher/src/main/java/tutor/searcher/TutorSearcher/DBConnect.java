@@ -1166,12 +1166,13 @@ public class DBConnect {
               DataAccessException {
                 if (resultSet.next()) {
 
+                	// Need to add
+                	// , resultSet.getString("profile_picture_blob")
+
                 	//	(int userID, String firstName, String lastName, String email, String phoneNumber, String passwordHash, Boolean accountType) {
                 	return new User(resultSet.getInt("user_id"), resultSet.getString("first_name"), resultSet.getString("last_name"),
                 			resultSet.getString("email"), resultSet.getString("phone_number"), resultSet.getString("password_hash"),
                 			resultSet.getBoolean("tutor"), resultSet.getDouble("rating"), resultSet.getString("bio"));
-                	
-                	
                 }
                 return null;
             }
