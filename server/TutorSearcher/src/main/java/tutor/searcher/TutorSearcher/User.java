@@ -144,4 +144,12 @@ public class User implements Serializable {
 		this.bio = bio;
 	}
 
+	public byte[] getProfilePictureBlob() {
+		return profilePictureBlob;
+	}
+
+	public void setProfilePictureBlob(byte[] profilePictureBlob) {
+		this.profilePictureBlob = profilePictureBlob;
+	}
+
 }
