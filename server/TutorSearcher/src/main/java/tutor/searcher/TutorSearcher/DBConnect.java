@@ -793,7 +793,21 @@ public class DBConnect {
 		}
 		return searchTutors(userID, times, result.get(1));
 	}
-	
+
+	public void updateProfilePicture(int userID, byte[] profilePicBlob) {
+		System.out.println("updateProfilePicture " + userID);
+		jdbc.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				String query = "UPDATE users SET profile_picture_blob=? WHERE user_id=?";
+				PreparedStatement ps = connection.prepareStatement(query);
+				ps.setString(1, profilePicBlob.toString());
+				ps.setInt(2, userID);
+				return ps;
+			}
+		});
+	}
+
 	class SortTutorsByTime implements Comparator<Tutor> {
 		private ArrayList<Integer> time;
 		public SortTutorsByTime(ArrayList<Integer> time) {
