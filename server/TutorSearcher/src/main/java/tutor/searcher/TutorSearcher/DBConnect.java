@@ -698,6 +698,7 @@ public class DBConnect {
                 	String phoneNumber = resultSet.getString("phone_number");
                 	Boolean accountType = resultSet.getBoolean("tutor");
                 	String availability = resultSet.getString("availability");
+                	String profilePic = resultSet.getString("profile_picture_blob");
                 	double rating = 0;
                 	if (accountType) {
                 		rating = getTotalTutorRating(userID);
@@ -708,7 +709,9 @@ public class DBConnect {
                 	String bio = resultSet.getString("bio");
                 	if (availability != null) {
                     	System.out.println("adding " + email);
-                    	result.add(new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability, rating, bio));
+                    	Tutor tutor = new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability, rating, bio);
+                    	tutor.setProfilePictureBlob(profilePic.getBytes());
+                    	result.add(tutor);
 
                 	}
                 	
@@ -1172,7 +1175,7 @@ public class DBConnect {
                 	//	(int userID, String firstName, String lastName, String email, String phoneNumber, String passwordHash, Boolean accountType) {
                 	return new User(resultSet.getInt("user_id"), resultSet.getString("first_name"), resultSet.getString("last_name"),
                 			resultSet.getString("email"), resultSet.getString("phone_number"), resultSet.getString("password_hash"),
-                			resultSet.getBoolean("tutor"), resultSet.getDouble("rating"), resultSet.getString("bio"));
+                			resultSet.getBoolean("tutor"), resultSet.getDouble("rating"), resultSet.getString("bio"), resultSet.getString("profile_picture_blob"));
                 }
                 return null;
             }
