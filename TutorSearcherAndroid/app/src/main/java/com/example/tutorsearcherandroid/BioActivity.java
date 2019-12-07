@@ -89,7 +89,12 @@ public class BioActivity extends AppCompatActivity {
             Toast t = Toast.makeText(this, "Testing.",
                     Toast.LENGTH_LONG);
             t.show();
-            return;
+
+            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+            photoPickerIntent.setType("image/*");
+            startActivityForResult(photoPickerIntent, 1);
+
+//            return;
 
         }
     }
