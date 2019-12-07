@@ -80,11 +80,6 @@ public class BioActivity extends AppCompatActivity {
                 Client client = Client.initClient("getProfilePicBlob", attr, app);
                 client.execute().get();
                 Request response = client.getResponse();
-
-                String a = (String) response.get("profilePicBlob");
-                System.out.println("HELLOOSADASDSADSASD");
-                System.out.println(a);
-
                 profilePic.setImageBitmap(ProfilePictureUtil.StringToBitMap((String)response.get("profilePicBlob")));
 
 

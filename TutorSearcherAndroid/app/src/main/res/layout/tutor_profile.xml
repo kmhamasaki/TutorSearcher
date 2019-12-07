@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -14,15 +15,15 @@
 
         <TextView
             android:id="@+id/time"
-            android:layout_width="354dp"
+            android:layout_width="244dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginStart="26dp"
-            android:layout_marginLeft="26dp"
+            android:layout_marginStart="136dp"
+            android:layout_marginLeft="136dp"
             android:layout_marginTop="9dp"
             android:layout_marginEnd="23dp"
             android:layout_marginRight="23dp"
@@ -31,16 +32,16 @@
 
         <TextView
             android:id="@+id/rating"
-            android:layout_width="355dp"
+            android:layout_width="246dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/time"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginStart="26dp"
-            android:layout_marginLeft="26dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginStart="135dp"
+            android:layout_marginLeft="135dp"
+            android:layout_marginTop="26dp"
             android:layout_marginEnd="22dp"
             android:layout_marginRight="22dp"
             android:layout_weight="1"
@@ -65,6 +66,24 @@
             android:layout_marginBottom="8dp"
             android:text="mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm"
             android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/profilepicture"
+            android:layout_width="96dp"
+            android:layout_height="107dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="22dp"
+            android:layout_marginLeft="22dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="285dp"
+            android:layout_marginRight="285dp"
+            android:layout_marginBottom="61dp"
+            tools:srcCompat="@tools:sample/avatars" />
 
     </RelativeLayout>
 
