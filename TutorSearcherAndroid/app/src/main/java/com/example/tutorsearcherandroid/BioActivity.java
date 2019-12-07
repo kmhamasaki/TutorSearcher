@@ -44,10 +44,7 @@ public class BioActivity extends AppCompatActivity {
         app = (Application)getApplicationContext();
 
         // Picture
-        String pictureBlob = "[B@437a94cc";
-        Bitmap jank = BitmapFactory.decodeByteArray(pictureBlob.getBytes(), 0, pictureBlob.getBytes().length);
-        ImageView imageView = (ImageView) findViewById(R.id.profile_image_view);
-        imageView.setImageBitmap(jank);
+        ImageView profilePic = (ImageView) findViewById(R.id.profile_image_view);
 
         bio = (TextView) findViewById(R.id.bio);
         bioHeader = (TextView) findViewById(R.id.bio_header);
@@ -76,6 +73,25 @@ public class BioActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            try {
+                HashMap<String, Object> attr = new HashMap<>();
+                attr.put("userID", Integer.parseInt(UserId));
+                Client client = Client.initClient("getProfilePicBlob", attr, app);
+                client.execute().get();
+                Request response = client.getResponse();
+
+                String a = (String) response.get("profilePicBlob");
+                System.out.println("HELLOOSADASDSADSASD");
+                System.out.println(a);
+
+                profilePic.setImageBitmap(ProfilePictureUtil.StringToBitMap((String)response.get("profilePicBlob")));
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -144,9 +160,13 @@ public class BioActivity extends AppCompatActivity {
                 Bitmap profilePic = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
                 String profilePicBlob = ProfilePictureUtil.BitMapToString(profilePic);
 
+                System.out.println(profilePicBlob);
+
+
                 HashMap<String, Object> attr = new HashMap<>();
                 attr.put("userID", Integer.parseInt(UserId));
-                
+                attr.put("profilePicBlob", profilePicBlob);
+
                 Client client = Client.initClient("updateProfilePicture", attr, app);
                 client.execute();
 

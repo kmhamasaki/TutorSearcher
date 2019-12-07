@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `tutorsearcher`.`users` (
   `rating` DOUBLE NULL DEFAULT NULL,
   `num_ratings` INT(10) NULL DEFAULT NULL,
   `bio` VARCHAR(1000) NULL DEFAULT NULL,
-  `profile_picture_blob` TEXT NULL DEFAULT NULL,
+  `profile_picture_blob` LONGTEXT NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)

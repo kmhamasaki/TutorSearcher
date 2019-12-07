@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -711,7 +710,7 @@ public class DBConnect {
                 	if (availability != null) {
                     	System.out.println("adding " + email);
                     	Tutor tutor = new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability, rating, bio);
-                    	tutor.setProfilePictureBlob(profilePic.getBytes());
+                    	tutor.setProfilePictureBlob(profilePic);
                     	result.add(tutor);
 
                 	}
@@ -811,6 +810,27 @@ public class DBConnect {
 				return ps;
 			}
 		});
+	}
+
+	public String getProfilePicBlob(int userID) {
+		String query = "SELECT * FROM users WHERE user_id=?";
+		String profile_picture_blob = jdbc.query(query,
+				new PreparedStatementSetter() {
+					public void setValues(PreparedStatement preparedStatement) throws SQLException {
+						preparedStatement.setInt(1,  userID);
+					}
+				},
+				new ResultSetExtractor<String>() {
+					public String extractData(ResultSet resultSet) throws SQLException,
+							DataAccessException {
+						String profile_picture_blob = "";
+						if (resultSet.next()) {
+							profile_picture_blob = resultSet.getString("profile_picture_blob");
+						}
+						return profile_picture_blob;
+					}
+				});
+		return profile_picture_blob;
 	}
 
 	class SortTutorsByTime implements Comparator<Tutor> {

@@ -3,10 +3,7 @@ package tutor.searcher.TutorSearcher;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.annotation.PostConstruct;
 
@@ -449,8 +446,21 @@ public class Controller {
 		 */
 		else if (request.getRequestType().equals("updateProfilePicture")) {
 			int userID = (int)request.get("userID");
-			String profilePicBlob = (String) request.get("profilePicBlob");
-			dbConnect.updateProfilePicture(userID, profilePicBlob);
+
+			Object a = request.get("profilePicBlob");
+			System.out.println("Hello");
+			System.out.println(a.getClass());
+
+			String b = (String) a;
+
+			dbConnect.updateProfilePicture(userID, b);
+			respType = "Success";
+		}
+		else if (request.getRequestType().equals("getProfilePicBlob")) {
+			int userID = (int)request.get("userID");
+			String profilePicBlob = dbConnect.getProfilePicBlob(userID);
+
+			respAttr.put("profilePicBlob", profilePicBlob);
 			respType = "Success";
 		}
 
