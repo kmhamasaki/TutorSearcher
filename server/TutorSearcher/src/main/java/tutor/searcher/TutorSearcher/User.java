@@ -14,7 +14,7 @@ public class User implements Serializable {
 	private String passwordHash;
 	private double rating;
 	private String bio;
-	private byte[] profilePictureBlob;
+	private String profilePictureBlob;
 
 	public User(int userID, String firstName, String lastName, String email, String phoneNumber, 
 			String passwordHash, Boolean accountType, double rating) {
@@ -43,7 +43,7 @@ public class User implements Serializable {
 		this.bio = bio;
 	}
 	public User(int userID, String firstName, String lastName, String email, String phoneNumber, 
-			String passwordHash, Boolean accountType, double rating, String bio, String profilePictureBlobString) {
+			String passwordHash, Boolean accountType, double rating, String bio, String profilePictureBlob) {
 		super();
 		UserID = userID;
 		this.firstName = firstName;
@@ -54,7 +54,7 @@ public class User implements Serializable {
 		this.passwordHash = passwordHash;
 		this.rating = rating;
 		this.bio = bio;
-		this.profilePictureBlob = profilePictureBlobString.getBytes();
+		this.profilePictureBlob = profilePictureBlob;
 	}
 	
 	public User(int userID, String firstName, String lastName, String email, 

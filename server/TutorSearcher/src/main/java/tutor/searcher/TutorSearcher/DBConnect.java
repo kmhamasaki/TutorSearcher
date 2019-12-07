@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -797,14 +798,15 @@ public class DBConnect {
 		return searchTutors(userID, times, result.get(1));
 	}
 
-	public void updateProfilePicture(int userID, byte[] profilePicBlob) {
+
+	public void updateProfilePicture(int userID, String profilePicBlob) {
 		System.out.println("updateProfilePicture " + userID);
 		jdbc.update(new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				String query = "UPDATE users SET profile_picture_blob=? WHERE user_id=?";
 				PreparedStatement ps = connection.prepareStatement(query);
-				ps.setString(1, profilePicBlob.toString());
+				ps.setString(1, profilePicBlob);
 				ps.setInt(2, userID);
 				return ps;
 			}
@@ -927,9 +929,6 @@ public class DBConnect {
 		                	else {
 		                		return null;
 		                	}
-		                	
-		                	
-		                	
 		                }
 		                return null;
 		            }
