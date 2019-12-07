@@ -108,7 +108,7 @@ public class ScrollingHomeActivity extends AppCompatActivity implements MyAdapte
                 if(response != null){
                     System.out.println("Got Response");
                     TutorList = (List<Tutor>) response.get("results");
-                    Class = extras.getString("ClassName");
+                    Class = (String) response.get("className");
                 }
             }
         }
@@ -196,6 +196,7 @@ public class ScrollingHomeActivity extends AppCompatActivity implements MyAdapte
         i.putExtra("Tutor", tutor);
         System.out.println(tutor.getMatchingAvailabilities().get(0));
         i.putExtra("ClassName",Class);
+        System.out.println(Class);
         startActivity(i);
     }
 

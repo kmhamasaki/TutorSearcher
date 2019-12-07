@@ -332,8 +332,10 @@ public class Controller {
 		 */
 		else if (request.getRequestType().equals("searchprevious")) {
 			ArrayList<Object> results = dbConnect.searchTutorsPrevious((int)request.get("userID"));
-			respAttr.put("results", (List<Tutor>)results.get(0));
-			respAttr.put("className", (String)results.get(1));
+			if(results != null) {
+				respAttr.put("results", (List<Tutor>)results.get(0));
+				respAttr.put("className", (String)results.get(1));
+			}
 			respType = "Success";
 		}
 		/**
