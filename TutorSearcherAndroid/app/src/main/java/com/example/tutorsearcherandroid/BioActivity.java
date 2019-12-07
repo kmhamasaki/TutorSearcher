@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -41,6 +42,12 @@ public class BioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bio);
         app = (Application)getApplicationContext();
+
+        // Picture
+        String pictureBlob = "[B@437a94cc";
+        Bitmap jank = BitmapFactory.decodeByteArray(pictureBlob.getBytes(), 0, pictureBlob.getBytes().length);
+        ImageView imageView = (ImageView) findViewById(R.id.profile_image_view);
+        imageView.setImageBitmap(jank);
 
         bio = (TextView) findViewById(R.id.bio);
         bioHeader = (TextView) findViewById(R.id.bio_header);
@@ -135,20 +142,11 @@ public class BioActivity extends AppCompatActivity {
 
             try {
                 Bitmap profilePic = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                profilePic.compress(Bitmap.CompressFormat.PNG, 1, stream);
-                byte[] profilePicBlob = stream.toByteArray();
-
-                Bitmap jank = BitmapFactory.decodeByteArray(profilePicBlob, 0, profilePicBlob.length);
-
-                ImageView imageView = (ImageView) findViewById(R.id.profile_image_view);
-                imageView.setImageBitmap(jank);
-
-//                System.out.println(profilePicBlob);
+                String profilePicBlob = ProfilePictureUtil.BitMapToString(profilePic);
 
                 HashMap<String, Object> attr = new HashMap<>();
                 attr.put("userID", Integer.parseInt(UserId));
-                attr.put("profilePicBlob", profilePicBlob);
+                
                 Client client = Client.initClient("updateProfilePicture", attr, app);
                 client.execute();
 
