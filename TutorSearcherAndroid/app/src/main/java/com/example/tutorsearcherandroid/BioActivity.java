@@ -62,29 +62,36 @@ public class BioActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        String bioText = bio.getText().toString();
-        if(bioText.length()>127){
-            Toast t = Toast.makeText(this, "Please shorten your bio to 127 characters.",
+        if(view.getId() == R.id.submit_button) {
+            String bioText = bio.getText().toString();
+            if(bioText.length()>127){
+                Toast t = Toast.makeText(this, "Please shorten your bio to 127 characters.",
+                        Toast.LENGTH_LONG);
+                t.show();
+                return;
+            }
+
+            if(bioText.length() != 0) {
+                HashMap<String, Object> attr = new HashMap<>();
+                attr.put("userID", Integer.parseInt(UserId));
+                attr.put("bio", bioText);
+                Client client = Client.initClient("addbio", attr, app);
+                client.execute();
+            }
+
+            if(sourcePage.equals("UpdateProfile")) {
+                openUpdateProfile();
+            } else {
+                openHome();
+            }
+
+        } else if(view.getId() == R.id.upload_profile_image_button) {
+            Toast t = Toast.makeText(this, "Testing.",
                     Toast.LENGTH_LONG);
             t.show();
             return;
+
         }
-
-        if(bioText.length() != 0) {
-            HashMap<String, Object> attr = new HashMap<>();
-            attr.put("userID", Integer.parseInt(UserId));
-            attr.put("bio", bioText);
-            Client client = Client.initClient("addbio", attr, app);
-            client.execute();
-        }
-
-        if(sourcePage.equals("UpdateProfile")) {
-            openUpdateProfile();
-        } else {
-            openHome();
-        }
-
-
     }
 
     public void openHome() {
