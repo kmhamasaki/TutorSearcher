@@ -10,7 +10,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema tutorsearcher
 -- -----------------------------------------------------
-
+DROP SCHEMA IF EXISTS `tutorsearcher`;
 -- -----------------------------------------------------
 -- Schema tutorsearcher
 -- -----------------------------------------------------
@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `tutorsearcher`.`users` (
   `rating` DOUBLE NULL DEFAULT NULL,
   `num_ratings` INT(10) NULL DEFAULT NULL,
   `bio` VARCHAR(1000) NULL DEFAULT NULL,
+  `profile_picture_blob` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
@@ -73,6 +74,8 @@ CREATE TABLE IF NOT EXISTS `tutorsearcher`.`requests` (
   `time` VARCHAR(45) NOT NULL,
   `status` INT(11) NOT NULL,
   `time_created` VARCHAR(45) NOT NULL,
+  `tutor_rating` INT(11) NULL DEFAULT NULL,
+  `tutee_rating` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   INDEX `tutor_id_fk_idx` (`tutor_id` ASC) VISIBLE,
