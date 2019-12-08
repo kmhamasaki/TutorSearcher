@@ -27,6 +27,15 @@ public class TutorRequest implements Serializable {
 	private String phoneNumber;
 	private String name;
 
+	private String profilePictureBlob;
+
+	public String getProfilePictureBlob() {
+		return profilePictureBlob;
+	}
+
+	public void setProfilePictureBlob(String profilePictureBlob) {
+		this.profilePictureBlob = profilePictureBlob;
+	}
 
 	public int getGivenTutorRating() {
 		return givenTutorRating;
