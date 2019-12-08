@@ -8,8 +8,9 @@ import java.io.ByteArrayOutputStream;
 
 public class ProfilePictureUtil {
     public static String BitMapToString(Bitmap bitmap){
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
         ByteArrayOutputStream baos = new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        scaledBitmap.compress(Bitmap.CompressFormat.PNG,20, baos);
         byte[] b = baos.toByteArray();
 
         String temp = Base64.encodeToString(b, Base64.DEFAULT);
