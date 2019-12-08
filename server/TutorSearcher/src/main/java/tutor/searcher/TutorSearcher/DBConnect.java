@@ -452,6 +452,7 @@ public class DBConnect {
 	}
 	//account type is the ACCOUNT TYPE THAT IS RECEIVING THE RATING 
 	void updateRating(int requestID, int rating, boolean accountType) {
+		System.out.println("here");
 		if (accountType == true) { //UPDATE TUTOR'S RATING
 			final String query = "UPDATE requests SET requests.tutor_rating=? WHERE requests.id=?";
 			jdbc.update(
@@ -713,7 +714,7 @@ public class DBConnect {
                 		rating = getTotalTuteeRating(userID);
                 	}
                 	String bio = resultSet.getString("bio");
-                	if (availability != null) {
+                	if (availability != null && !availability.equals("")) {
                     	System.out.println("adding " + email);
                     	Tutor tutor = new Tutor(userID, firstName, lastName, email, phoneNumber, accountType, availability, rating, bio);
                     	tutor.setProfilePictureBlob(profilePic);
