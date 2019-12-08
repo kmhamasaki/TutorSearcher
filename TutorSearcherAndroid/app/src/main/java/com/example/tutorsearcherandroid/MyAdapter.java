@@ -4,12 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.HashMap;
 import java.util.List;
 
+import tutor.searcher.TutorSearcher.Request;
 import tutor.searcher.TutorSearcher.Tutor;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
@@ -33,6 +36,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public TextView nameTextView;
         public TextView bioTextView;
         public TextView ratingTextView;
+        public ImageView profileImageView;
         //TODO: Add more profile information
 
         public ViewHolder(View itemView, final OnTutorClickListener listener) {
@@ -40,6 +44,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             nameTextView = itemView.findViewById(R.id.time);
             bioTextView = itemView.findViewById(R.id.bio);
             ratingTextView = itemView.findViewById(R.id.rating);
+            profileImageView = itemView.findViewById(R.id.profilepicture);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -80,6 +85,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         Tutor tutor = tutorResults.get(position);
 
         //Set Item Views
+        ImageView profileImageView = viewholder.profileImageView;
         TextView nameView = viewholder.nameTextView;
         String tutorName = tutor.getFirstName();
         nameView.setText(tutorName);
@@ -97,6 +103,26 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 //            System.out.println(tr.getTuteeRating());
             ratingView.setText("Rating: " + Client.round(tutor.getRating()));
         }
+
+
+
+
+
+
+//        HashMap<String, Object> attr = new HashMap<>();
+//        attr.put("userID", tutor.getUserId());
+//        Client client = Client.initClient("getProfilePicBlob", attr, app);
+//        client.execute().get();
+//        Request response = client.getResponse();
+//        profilePic.setImageBitmap(ProfilePictureUtil.StringToBitMap((String)response.get("profilePicBlob")));
+
+
+
+
+        System.out.println(tutor.getProfilePictureBlob());
+
+        profileImageView.setImageBitmap(ProfilePictureUtil.StringToBitMap(tutor.getProfilePictureBlob()));
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
