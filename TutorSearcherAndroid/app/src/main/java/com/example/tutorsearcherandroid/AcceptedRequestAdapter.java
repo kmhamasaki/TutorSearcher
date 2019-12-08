@@ -41,7 +41,6 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
         public TextView time;
 
         public Button rate_button;
-        public Button reject_button;
 
 
         public ViewHolder(View itemView, final OnButtonClickListener listener) {
@@ -102,6 +101,12 @@ public class AcceptedRequestAdapter extends RecyclerView.Adapter<AcceptedRequest
         email.setText(tr.getEmail());
         phone_number.setText(tr.getPhoneNumber());
         time.setText(TutorTimeActivity.generateTimesForward().get(Integer.parseInt(tr.getTime())));
+        if(accountType.equals("Tutor")) {
+            rate_button.setText("Rate Tutee");
+        }
+        else if(accountType.equals("Tutee")) {
+            rate_button.setText("Rate Tutor");
+        }
 
     }
 

@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="264dp"
+        android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:background="#C8E6C9">
 
@@ -22,11 +22,23 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="18dp"
             android:layout_marginLeft="18dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginTop="12dp"
             android:layout_weight="1"
             android:text="Tutee Name"
-            android:textSize="30sp" />
+            android:textSize="28dp" />
+
+        <TextView
+            android:id="@+id/class_name"
+            android:layout_width="294dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tutee_name"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="8dp"
+            android:text="Class Name"
+            android:textSize="18dp" />
 
         <TextView
             android:id="@+id/time"
@@ -39,12 +51,12 @@
             android:layout_alignParentRight="true"
             android:layout_marginStart="18dp"
             android:layout_marginLeft="18dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="17dp"
             android:layout_marginRight="17dp"
             android:layout_weight="1"
             android:text="Class Time"
-            android:textSize="24sp" />
+            android:textSize="18dp" />
 
         <TextView
             android:id="@+id/email"
@@ -57,12 +69,12 @@
             android:layout_alignParentRight="true"
             android:layout_marginStart="18dp"
             android:layout_marginLeft="18dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="17dp"
             android:layout_marginRight="17dp"
             android:layout_weight="1"
             android:text="@string/prompt_email"
-            android:textSize="24dp" />
+            android:textSize="18dp" />
 
         <TextView
             android:id="@+id/phone_number"
@@ -75,37 +87,23 @@
             android:layout_alignParentRight="true"
             android:layout_marginStart="18dp"
             android:layout_marginLeft="18dp"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="17dp"
             android:layout_marginRight="17dp"
+            android:layout_marginBottom="12dp"
             android:layout_weight="1"
             android:text="@string/prompt_phone_number"
-            android:textSize="24dp" />
-
-        <TextView
-            android:id="@+id/class_name"
-            android:layout_width="294dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tutee_name"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginStart="18dp"
-            android:layout_marginLeft="18dp"
-            android:layout_marginTop="7dp"
-            android:text="Class Name"
-            android:textSize="26sp" />
+            android:textSize="18dp" />
 
         <Button
             android:id="@+id/rate_tutor_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="37dp"
-            android:layout_marginLeft="37dp"
-            android:layout_marginTop="16dp"
-            android:layout_toEndOf="@+id/tutee_name"
-            android:layout_toRightOf="@+id/tutee_name"
-            android:text="Rate Tutor" />
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="18dp"
+            android:text="Rate" />
 
     </RelativeLayout>
 
