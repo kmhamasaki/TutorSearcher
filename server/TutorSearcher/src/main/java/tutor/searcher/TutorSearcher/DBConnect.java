@@ -12,7 +12,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -658,20 +657,26 @@ public class DBConnect {
 	
 	void updateUserInformation(User user) {
 		System.out.println("updateUserInformation " + user.getFirstName());
-		jdbc.update(new PreparedStatementCreator() {
+		System.out.println("id " + user.getUserId());
+		final String query = "UPDATE users SET password_hash=?, phone_number=?, first_name=?, last_name=?, bio=? WHERE user_id=?";
+		System.out.println(query);
+		int num = jdbc.update(new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-				String query = "UPDATE users SET password_hash=?, phone_number=?, first_name=?, last_name=?, bio=? WHERE user_id=?";
 				PreparedStatement ps = connection.prepareStatement(query);
 				ps.setString(1, user.getPasswordHash());
 				ps.setString(2, user.getPhoneNumber());
 				ps.setString(3, user.getFirstName());
+				System.out.println("2updateUserInformation " + user.getFirstName());
+
 				ps.setString(4, user.getLastName());
-				ps.setInt(5, user.getUserId());
-				ps.setString(6, user.getBio());
+				ps.setString(5, user.getBio());
+
+				ps.setInt(6, user.getUserId());
 				return ps;
 			}
 		});
+		System.out.println("rows "  + num);
 	}
 	
 	List<Tutor> searchTutors(int userID, ArrayList<Integer> times, String className) {
