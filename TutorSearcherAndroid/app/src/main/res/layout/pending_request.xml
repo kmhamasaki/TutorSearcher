@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="350dp"
+        android:layout_height="362dp"
         android:layout_margin="8dp"
         android:background="#D6F1FF">
 
@@ -17,26 +18,32 @@
             android:id="@+id/tutee_name"
             android:layout_width="175dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="18dp"
             android:layout_marginBottom="4dp"
+            android:layout_toEndOf="@+id/profile_photo"
+            android:layout_toRightOf="@+id/profile_photo"
             android:layout_weight="1"
             android:text="Tutee Name"
             android:textSize="24dp" />
 
         <TextView
             android:id="@+id/class_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="174dp"
+            android:layout_height="32dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginStart="51dp"
+            android:layout_marginLeft="51dp"
+            android:layout_marginTop="74dp"
+            android:layout_marginEnd="38dp"
+            android:layout_marginRight="38dp"
             android:layout_marginBottom="4dp"
+            android:layout_toEndOf="@+id/profile_photo"
+            android:layout_toRightOf="@+id/profile_photo"
             android:layout_weight="1"
             android:text="Class Name"
             android:textSize="24dp" />
@@ -52,7 +59,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="72dp"
             android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"
             android:layout_weight="1"
@@ -68,11 +75,11 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
+            android:layout_marginStart="23dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginRight="25dp"
             android:layout_weight="1"
             android:text="Rating "
             android:textSize="16dp" />
@@ -86,7 +93,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="76dp"
             android:layout_marginLeft="76dp"
-            android:layout_marginBottom="19dp"
+            android:layout_marginBottom="11dp"
             android:text="Accept" />
 
         <Button
@@ -96,25 +103,37 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="61dp"
-            android:layout_marginRight="61dp"
-            android:layout_marginBottom="18dp"
+            android:layout_marginEnd="76dp"
+            android:layout_marginRight="76dp"
+            android:layout_marginBottom="10dp"
             android:text="Reject" />
 
         <TextView
             android:id="@+id/bio"
-            android:layout_width="345dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="95dp"
             android:layout_above="@+id/accept_button"
             android:layout_below="@+id/rating"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="11dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="13dp"
+            android:layout_marginBottom="7dp"
             android:lines="6"
             android:text="mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm" />
+
+        <ImageView
+            android:id="@+id/profile_photo"
+            android:layout_width="108dp"
+            android:layout_height="108dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="9dp"
+            tools:srcCompat="@tools:sample/avatars[12]" />
 
     </RelativeLayout>
 

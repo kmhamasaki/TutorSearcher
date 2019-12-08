@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +39,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
         public TextView rating;
         public Button accept_button;
         public Button reject_button;
+        public ImageView profile_photo;
 
 
         public ViewHolder(View itemView, final OnButtonClickListener listener) {
@@ -49,6 +51,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
             rating = itemView.findViewById(R.id.rating);
             accept_button = itemView.findViewById(R.id.accept_button);
             reject_button = itemView.findViewById(R.id.reject_button);
+            profile_photo = itemView.findViewById(R.id.profile_photo);
 
             accept_button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -100,6 +103,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
         TextView time = viewholder.time;
         TextView bio = viewholder.bio;
         TextView rating = viewholder.rating;
+        ImageView profile_photo = viewholder.profile_photo;
 
         tutee_name.setText(tr.getTuteeName());
         class_name.setText(tr.getClassName());
@@ -112,6 +116,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
             rating.setText("Rating: " + Client.round(tr.getTuteeRating()));
         }
 
+        profile_photo.setImageBitmap(ProfilePictureUtil.StringToBitMap(tr.getProfilePictureBlob()));
     }
 
     // Return the size of your dataset (invoked by the layout manager)

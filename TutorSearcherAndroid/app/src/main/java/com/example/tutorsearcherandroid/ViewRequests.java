@@ -25,6 +25,8 @@ import java.util.Map;
 
 import tutor.searcher.TutorSearcher.Request;
 import tutor.searcher.TutorSearcher.TutorRequest;
+import tutor.searcher.TutorSearcher.User;
+
 
 public class ViewRequests extends AppCompatActivity
         implements PendingRequestAdapter.OnButtonClickListener {
@@ -82,11 +84,13 @@ public class ViewRequests extends AppCompatActivity
             for(TutorRequest req : requestList) {
                 HashMap<String,Object> attr = new HashMap<String,Object>();
                 attr.put("userID", req.getTuteeID());
-                client = Client.initClient("getbio", attr, app);
+                client = Client.initClient("getuserinfo", attr, app);
                 client.execute().get();
-                String bio = (String)client.getResponse().get("bio");
+                User user = (User) client.getResponse().get("user");
+                String bio = user.getBio();
                 System.out.println(bio);
                 req.setBio(bio);
+                req.setProfilePictureBlob(user.getProfilePictureBlob());
             }
 
         } catch(Exception e) {
