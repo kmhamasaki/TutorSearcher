@@ -1,12 +1,25 @@
 # TutorSearcher
 An Andoid app to search for tutors at USC
 
+# Improvements during the spring
+* Implement user rating system 
+  * Ratings are implemented as a number from 0 to 5 
+  * They are shown in the pending requests and the search results
+  * Tutors and tutees can both rate each other from accepted requests
+  * Ratings are shown in search results and pending requests
+* Add tutor bio to search results list and the pending requests 
+  * All users should be able to add a bio at registration time and update it with their profile
+* Pressing notification should not force user to sign in again
+* Maintain login state even if the user kills the app 
+* Maintain profile picture for users 
+* In Tutor’s update availability page, their current availability should be shown marked
+
 
 # Set up the environment
 
 ## Database
 
-1. If you do not have MySQL installed, please install MySQL server from [this website](https://dev.mysql.com/downloads/mysql/). Take note of your username and password. 
+1. If you do not have MySQL installed, please install MySQL server from [this website](https://dev.mysql.com/downloads/windows/installer/). Take note of your username and password. 
 2. Install [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) also if it is not installed already.
 3. Click on the server under My Connections
 4. Click the button under File and paste in the SQL script found under `TutorSearcher/server/TutorSearcher/src/main/resources/tutorsearcher.sql`
